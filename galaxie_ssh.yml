@@ -20,6 +20,16 @@
     notify:
       - restart sshd
 
+  - name: PrintLastLog yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^PrintLastLog"
+      line="PrintLastLog yes"
+      state=present
+    notify:
+      - restart sshd
+
+
 # Logging
   - name: SyslogFacility AUTH
     lineinfile:
