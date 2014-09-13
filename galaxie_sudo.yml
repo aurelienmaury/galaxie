@@ -1,0 +1,52 @@
+  - hosts: galaxie
+    sudo: True
+    connection: ssh # or paramiko
+
+    vars:
+      adminuser: 'tuxa'
+      createuser: 'ansibleremote'
+      createpassword: 'myamazingpassword'
+
+    tasks:
+      - name: Setup | create user
+         command: useradd -m {{ createuser }} creates=/home/{{ createuser }}
+        sudo: true
+ 
+      - name: Setup | set user password
+        shell: usermod -p $(echo '{{ createpassword }}' | openssl passwd -1 -stdin) {{ createuser }}
+        sudo: true
+ 
+      - name: Setup | authorized key upload
+        authorized_key: user={{ createuser }}
+          key="{{ lookup('file', 'mypublickey.pub') }}"
+          path='/home/{{ createuser }}/.ssh/authorized_keys' manage_dir=no
+          manage_dir=no
+        sudo: true
+ 
+      - name: Sudoers | update sudoers file and validate
+          lineinfile: "dest=/etc/sudoers
+          insertafter=EOF
+          line='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+          regexp='{{ createuser }} ALL=(ALL) NOPASSWD: ALL'
+          state=present"
+        sudo: true
+
+        - name: Copy sudoers file for safety
+          command: cp -f /etc/sudoers /etc/sudoers.tmp
+
+        - name: Create sudoers file backup
+          command: cp -f /etc/sudoers /etc/sudoers.bak
+
+        - name: Create admins group
+          group: name=sudo system=yes state=present
+
+        - name: make sure we can sudo as sudo group
+          lineinfile: dest=/etc/sudoers.tmp state=present regexp='^%sudo' line='%sudo ALL=(ALL) ALL'
+
+        - name: also make sure ssh-agent works via sudo
+          lineinfile: dest=/etc/sudoers.tmp state=present regexp='^Defaults env_keep\+\=SSH_AUTH_SOCK' line='Defaults env_keep+=SSH_AUTH_SOCK'
+
+        - name: Final sudoers file check
+          shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers
+
+        - name: Add 

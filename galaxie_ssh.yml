@@ -1,0 +1,211 @@
+- hosts: galaxie
+  sudo: true
+  tasks:
+#Server Setting
+  - name: Protocol 2
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^Protocol"
+      line="Protocol 2"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: DebianBanner no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^DebianBanner"
+      line="DebianBanner no"
+      state=present
+    notify:
+      - restart sshd
+
+# Logging
+  - name: SyslogFacility AUTH
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^SyslogFacility"
+      line="SyslogFacility AUTH"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: LogLevel INFO
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^LogLevel"
+      line="LogLevel INFO"
+      state=present
+    notify:
+      - restart sshd
+
+#Authentification
+  - name: LoginGraceTime 60
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^LoginGraceTime"
+      line="LoginGraceTime 60"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: StrictModes yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^StrictModes"
+      line="StrictModes yes"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: PermitRootLogin no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitRootLogin"
+      line="PermitRootLogin no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: RSAAuthentication no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^RSAAuthentication"
+      line="RSAAuthentication no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: PubkeyAuthentication yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^PubkeyAuthentication"
+      line="PubkeyAuthentication yes"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: AuthorizedKeysFile      %h/.ssh/authorized_keys 
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^AuthorizedKeysFile"
+      line="AuthorizedKeysFile %h/.ssh/authorized_keys"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: IgnoreRhosts yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^IgnoreRhosts"
+      line="IgnoreRhosts yes"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: RhostsRSAAuthentication no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^RhostsRSAAuthentication"
+      line="RhostsRSAAuthentication no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: HostbasedAuthentication no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^HostbasedAuthentication"
+      line="HostbasedAuthentication no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: PermitEmptyPasswords no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitEmptyPasswords"
+      line="PermitEmptyPasswords no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: ChallengeResponseAuthentication no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^ChallengeResponseAuthentication"
+      line="ChallengeResponseAuthentication no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: PasswordAuthentication no
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^PasswordAuthentication"
+      line="PasswordAuthentication no"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: Disallow SSH GSS API authentication
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^GSSAPIAuthentication"
+      line="GSSAPIAuthentication no"
+      state=present
+    notify:
+      - restart sshd
+
+# Custum for optimize bandwidh but use CPU
+  - name: Compression yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^Compression"
+      line="Compression yes"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: CompressionLevel 9 for client
+    lineinfile:
+      dest=/etc/ssh/ssh_config
+      regexp="^CompressionLevel"
+      line="CompressionLevel 9"
+      state=present
+    notify:
+      - restart sshd
+
+# Custum for persistant Tunnel
+  - name: ClientAliveInterval 120
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^ClientAliveInterval"
+      line="ClientAliveInterval 120"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: TCPKeepAlive yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^TCPKeepAlive"
+      line="TCPKeepAlive yes"
+      state=present
+    notify:
+      - restart sshd
+
+  - name: ClientAliveCountMax 600
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^ClientAliveCountMax"
+      line="ClientAliveCountMax 600"
+      state=present
+    notify:
+      - restart sshd
+
+  handlers:
+  - name: restart sshd
+    service: 
+      name=ssh
+      state=restarted

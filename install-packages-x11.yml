@@ -1,0 +1,59 @@
+- hosts: desktop
+  sudo: true
+  tasks:
+   - name: Update Apt
+     apt: update_cache=yes cache_valid_time=3600
+   - name: Install required software
+     action: apt pkg={{item}} state=installed
+     with_items:
+      - gimp
+      - iceweasel
+      - iceweasel-l10n-fr
+      - icedove
+      - icedove-l10n-fr
+      - iceowl-l10n-fr
+      - iceowl-extension
+      - icedtea-plugin
+      - openjdk-7-jre
+      - ardour3
+      - jackd2
+      - jackd2-firewire
+      - calf-plugins
+      - pavucontrol
+      - audacity
+      - libreoffice-l10n-fr
+      - libreoffice-draw
+      - libreoffice-calc
+      - libreoffice-writer
+      - libreoffice-gtk
+      - gimp-texturize
+      - gimp-dds
+      - evince-gtk
+      - flashplugin-nonfree
+      - wicd-gtk
+      - xchat
+      - vim-gtk
+      - xbmc
+      - xbmc-pvr-tvheadend-hts
+      - vlc
+      - vlc-plugin-pulse
+      - browser-plugin-vlc
+      - gmusicbrowser
+      - handbrake
+      - handbrake-cli
+      - blender
+      - dia
+      - mkvtoolnix-gui
+      - qt4-qtconfig
+   - name: Remove not require software
+     action: apt pkg={{item}} state=absent purge=yes
+     with_items:
+      - orage
+      - abiword
+      - abiword-common
+      - abiword-plugin-grammar
+      - abiword-plugin-mathview
+      - gnumeric
+      - gnumeric-common
+      - gnumeric-doc
+      - gnumeric-plugins-extra

@@ -1,0 +1,9 @@
+                  ________        __                 __
+                 /  _____/_____  |  | _____  ___  __|__| ____
+                /   \  ___\__  \ |  | \__  \ \  \/  /  |/ __ \
+                \    \_\  \/ __ \|  |__/ __ \_>    <|  \  ___/_
+                 \________(_____ /____(_____ /__/\_ \__|\_____/
+
+Server    : {{ ansible_distribution }} {{ ansible_distribution_version }}
+Hostname  : {{ ansible_hostname }}
+eth0 IPv4 : {{ ansible_eth0.ipv4.address }}

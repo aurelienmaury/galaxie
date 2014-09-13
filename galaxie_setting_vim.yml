@@ -1,0 +1,19 @@
+- hosts: galaxie
+  sudo: true
+  tasks:
+#Vim Setting
+  - name: Enable syntax color
+    lineinfile:
+      dest=/etc/vim/vimrc
+      regexp="^syntax"
+      insertafter="^\"syntax "
+      line="syntax on"
+      state=present
+
+  - name: Select Background color
+    lineinfile:
+      dest=/etc/vim/vimrc
+      regexp="^set background="
+      insertafter="^\"set background=dark"
+      line="set background=dark"
+      state=present
