@@ -9,3 +9,6 @@
 
     - name: Push a empty issue.net file
       template: src=templates/issue.net dest=/etc/issue.net owner=root group=root mode=0644
+
+    - name: Push a empty /var/run/motd.dynamic file
+      template: src=templates/motd.dynamic dest=/var/run/motd.dynamic owner=root group=root mode=0644

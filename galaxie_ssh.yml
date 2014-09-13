@@ -214,6 +214,14 @@
     notify:
       - restart sshd
 
+  - name: Desable check local mail after login
+    lineinfile:
+      dest=/etc/pam.d/sshd
+      backrefs=yes
+      state=present
+      regexp="^session    optional     pam_mail.so standard noenv"
+      line="#session    optional     pam_mail.so standard noenv \\# [1]"
+
   handlers:
   - name: restart sshd
     service: 
