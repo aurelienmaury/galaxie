@@ -1,0 +1,47 @@
+<sources>
+    <programs>
+        <default pathversion="1"></default>
+    </programs>
+    <video>
+        <default pathversion="1"></default>
+        <source>
+            <name>Enfants</name>
+            <path pathversion="1">smb://JUPITER/media/Enfants/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>Parents</name>
+            <path pathversion="1">smb://JUPITER/media/Parents/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>TV Episode</name>
+            <path pathversion="1">smb://JUPITER/media/TV Episode/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>Youtube</name>
+            <path pathversion="1">smb://JUPITER/media/Youtube/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </video>
+    <music>
+        <default pathversion="1"></default>
+        <source>
+            <name>Discographie</name>
+            <path pathversion="1">smb://JUPITER/media/Discographie/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </music>
+    <pictures>
+        <default pathversion="1"></default>
+        <source>
+            <name>Photos</name>
+            <path pathversion="1">smb://JUPITER/media/Photos/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </pictures>
+    <files>
+        <default pathversion="1"></default>
+    </files>
+</sources>

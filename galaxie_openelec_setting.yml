@@ -1,0 +1,4 @@
+- hosts: openelec
+  tasks:
+    - name: Distribute motd file
+      shell: ls

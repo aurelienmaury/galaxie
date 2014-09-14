@@ -1,0 +1,44 @@
+<settings>
+    <setting id="TrailerQ" value="No" />
+    <setting id="allcritics" value="All Critics" />
+    <setting id="certificationssource" value="IMDb" />
+    <setting id="certprefix" value="Rated " />
+    <setting id="countrysource" value="IMDb" />
+    <setting id="creditssource" value="IMDb" />
+    <setting id="fanart" value="true" />
+    <setting id="fanarttvfanart" value="true" />
+    <setting id="fanarttvposter" value="true" />
+    <setting id="fullimdbsearch" value="false" />
+    <setting id="genressource" value="IMDb" />
+    <setting id="imdbakatitles" value="France" />
+    <setting id="imdbcertcountry" value="USA" />
+    <setting id="imdbsearch" value="true" />
+    <setting id="imdbsearchlanguage" value="None" />
+    <setting id="imdbthumbs" value="true" />
+    <setting id="imdbtop250" value="true" />
+    <setting id="impawards" value="true" />
+    <setting id="movieposterdb" value="true" />
+    <setting id="mratingsource" value="IMDb" />
+    <setting id="outlinesource" value="IMDb" />
+    <setting id="plotsource" value="IMDb" />
+    <setting id="studiosource" value="IMDb" />
+    <setting id="taglinesource" value="IMDb" />
+    <setting id="titlesource" value="IMDb" />
+    <setting id="tmdbcertcountry" value="us" />
+    <setting id="tmdbgenreslanguage" value="en" />
+    <setting id="tmdbplotlanguage" value="en" />
+    <setting id="tmdbsearch" value="false" />
+    <setting id="tmdbset" value="true" />
+    <setting id="tmdbsetlanguage" value="fr" />
+    <setting id="tmdbtaglinelanguage" value="en" />
+    <setting id="tmdbtags" value="None" />
+    <setting id="tmdbthumblanguage" value="fr" />
+    <setting id="tmdbthumbs" value="true" />
+    <setting id="tmdbtitlelanguage" value="en" />
+    <setting id="tmdbtrailer" value="true" />
+    <setting id="tmdbtrailerlanguage" value="en" />
+    <setting id="tomato" value="TomatoMeter" />
+    <setting id="trakttvfanart" value="true" />
+    <setting id="trakttvposter" value="true" />
+    <setting id="trakttvtrailer" value="false" />
+</settings>

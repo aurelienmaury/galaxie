@@ -1,0 +1,5 @@
+<favourites>
+    <favourite name="Rockabilly Radio" thumb="http://static.radio.fr/images/broadcasts/51/63/8386/t100.png">PlayMedia(&quot;plugin://plugin.audio.radio_de/station/8386&quot;)</favourite>
+    <favourite name="RMF Baby" thumb="http://static.radio.fr/images/broadcasts/1c/fa/10186/t100.png">PlayMedia(&quot;plugin://plugin.audio.radio_de/station/10186&quot;)</favourite>
+    <favourite name="CANAL 80 - Top of Loustics" thumb="http://static.radio.fr/images/broadcasts/06/66/21411/t100.png">PlayMedia(&quot;plugin://plugin.audio.radio_de/station/21411&quot;)</favourite>
+</favourites>
