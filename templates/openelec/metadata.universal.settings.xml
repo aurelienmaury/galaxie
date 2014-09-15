@@ -11,9 +11,9 @@
     <setting id="fullimdbsearch" value="false" />
     <setting id="genressource" value="IMDb" />
     <setting id="imdbakatitles" value="France" />
-    <setting id="imdbcertcountry" value="USA" />
+    <setting id="imdbcertcountry" value="France" />
     <setting id="imdbsearch" value="true" />
-    <setting id="imdbsearchlanguage" value="None" />
+    <setting id="imdbsearchlanguage" value="fr-fr" />
     <setting id="imdbthumbs" value="true" />
     <setting id="imdbtop250" value="true" />
     <setting id="impawards" value="true" />
@@ -36,7 +36,7 @@
     <setting id="tmdbthumbs" value="true" />
     <setting id="tmdbtitlelanguage" value="en" />
     <setting id="tmdbtrailer" value="true" />
-    <setting id="tmdbtrailerlanguage" value="en" />
+    <setting id="tmdbtrailerlanguage" value="fr" />
     <setting id="tomato" value="TomatoMeter" />
     <setting id="trakttvfanart" value="true" />
     <setting id="trakttvposter" value="true" />
