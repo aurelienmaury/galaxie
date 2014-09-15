@@ -1,0 +1,47 @@
+- hosts: galaxie_pvr
+  sudo: true
+  tasks:
+   - name: Update Apt
+     apt: update_cache=yes cache_valid_time=3600
+   - name: Install required software
+     action: apt pkg={{item}} state=installed
+     with_items:
+      - debhelper
+      - pkg-config
+      - libavahi-client-dev
+      - libssl-dev
+      - zlib1g-dev
+      - wget
+      - bzip2
+      - libcurl4-gnutls-dev
+      - git-core
+      - liburiparser-dev
+      - libavahi-client3
+      - zlib1g
+      - liburiparser1
+      - xmltv-util
+      - tar
+      - unzip
+
+   - action: shell date '+%F'
+     register: mydate
+ 
+   - name: Delete previous installation
+     file: path=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }} state=absent
+
+   - name: Creates directory /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}
+     action: file dest=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}  state=directory
+
+   - name: Download Git master of TVHeadend
+     shell: chdir=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }} git clone https://github.com/tvheadend/tvheadend.git
+   
+   - name: Building ...
+     shell: chdir=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend ./Autobuild.sh
+
+   - name: Test if package here
+     shell: /usr/bin/test -e /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend_*.deb
+     register: package_is_here
+
+   - name: Install Package
+     shell: dpkg -i /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend_*.deb
+     when: package_is_here
