@@ -62,8 +62,10 @@ then
     ssh $HOST "mkdir .xbmc/userdata/addon_data/metadata.universal"
     scp $TEMPLATE_DIR/metadata.universal.settings.xml $HOST:.xbmc/userdata/addon_data/metadata.universal/settings.xml
     echo ""
+   
+   #REboot in case the admin need
+   #ssh $HOST "reboot"
 
-    
 else
     echo "Abort $HOST cause not a live..."
     echo ""
