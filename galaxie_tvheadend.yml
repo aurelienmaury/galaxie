@@ -29,17 +29,17 @@
    - action: shell date '+%F'
      register: mydate
  
-#   - name: Delete previous installation
-#     file: path={{ build_dir  }}{{ mydate.stdout }} state=absent
+   - name: Delete previous installation
+     file: path={{ build_dir  }}{{ mydate.stdout }} state=absent
 
-#   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
-#     action: file dest={{ build_dir  }}{{ mydate.stdout }}  state=directory
+   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
+     action: file dest={{ build_dir  }}{{ mydate.stdout }}  state=directory
 
-#   - name: Download Git master of TVHeadend
-#     shell: chdir={{ build_dir  }}{{ mydate.stdout }} git clone {{ git_src  }}
+   - name: Download Git master of TVHeadend
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }} git clone {{ git_src  }}
    
-#   - name: Building ...
-#     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/tvheadend ./Autobuild.sh
+   - name: Building ...
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/tvheadend ./Autobuild.sh
 
    - action: shell ls {{ build_dir  }}{{ mydate.stdout }}/tvheadend_*.deb
      register: package_path
