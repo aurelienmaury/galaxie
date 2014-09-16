@@ -62,6 +62,37 @@ then
     ssh $HOST "mkdir .xbmc/userdata/addon_data/metadata.universal"
     scp $TEMPLATE_DIR/metadata.universal.settings.xml $HOST:.xbmc/userdata/addon_data/metadata.universal/settings.xml
     echo ""
+
+    #Add Weater Addon
+    echo "Copy metadata.universal-2.6.0.zip to $HOST:.xbmc/addons/packages/metadata.universal-2.6.0.zip"
+    scp $TEMPLATE_DIR/metadata.universal-2.6.0.zip $HOST:.xbmc/addons/packages/metadata.universal-2.6.0.zip
+    ssh $HOST "cd .xbmc/addons/ && rm -rf ./metadata.universal && unzip ./packages/metadata.universal-2.6.0.zip"
+    echo "Inject the setting of metadata.universal"
+    ssh $HOST "rm -rf .xbmc/userdata/addon_data/metadata.universal"
+    ssh $HOST "mkdir .xbmc/userdata/addon_data/metadata.universal"
+    scp $TEMPLATE_DIR/metadata.universal.settings.xml $HOST:.xbmc/userdata/addon_data/metadata.universal/settings.xml
+    echo ""
+
+    #Add Youtube Addon
+    echo "Copy metadata.universal-2.6.0.zip to $HOST:.xbmc/addons/packages/metadata.universal-2.6.0.zip"
+    scp $TEMPLATE_DIR/metadata.universal-2.6.0.zip $HOST:.xbmc/addons/packages/metadata.universal-2.6.0.zip
+    ssh $HOST "cd .xbmc/addons/ && rm -rf ./metadata.universal && unzip ./packages/metadata.universal-2.6.0.zip"
+    echo "Inject the setting of metadata.universal"
+    ssh $HOST "rm -rf .xbmc/userdata/addon_data/metadata.universal"
+    ssh $HOST "mkdir .xbmc/userdata/addon_data/metadata.universal"
+    scp $TEMPLATE_DIR/metadata.universal.settings.xml $HOST:.xbmc/userdata/addon_data/metadata.universal/settings.xml
+    echo ""
+
+    #Add Radio Addon
+    echo "Copy metadata.universal-2.6.0.zip to $HOST:.xbmc/addons/packages/metadata.universal-2.6.0.zip"
+    scp $TEMPLATE_DIR/metadata.universal-2.6.0.zip $HOST:.xbmc/addons/packages/metadata.universal-2.6.0.zip
+    ssh $HOST "cd .xbmc/addons/ && rm -rf ./metadata.universal && unzip ./packages/metadata.universal-2.6.0.zip"
+    echo "Inject the setting of metadata.universal"
+    ssh $HOST "rm -rf .xbmc/userdata/addon_data/metadata.universal"
+    ssh $HOST "mkdir .xbmc/userdata/addon_data/metadata.universal"
+    scp $TEMPLATE_DIR/metadata.universal.settings.xml $HOST:.xbmc/userdata/addon_data/metadata.universal/settings.xml
+    echo ""
+
    
    #REboot in case the admin need
    #ssh $HOST "reboot"

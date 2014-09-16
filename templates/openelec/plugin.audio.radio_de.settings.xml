@@ -1,0 +1,5 @@
+<settings>
+    <setting id="force_viewmode" value="true" />
+    <setting id="language" value="2" />
+    <setting id="not_first_run" value="1" />
+</settings>
