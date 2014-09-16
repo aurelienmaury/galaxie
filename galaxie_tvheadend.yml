@@ -1,5 +1,10 @@
 - hosts: galaxie_pvr
   sudo: true
+
+  vars:
+    build_dir: /usr/src/galaxie_tvheadend_build_
+    git_src: https://github.com/tvheadend/tvheadend.git
+
   tasks:
    - name: Update Apt
      apt: update_cache=yes cache_valid_time=3600
@@ -20,26 +25,35 @@
       - zlib1g
       - liburiparser1
       - xmltv-util
-      - tar
-      - unzip
 
    - action: shell date '+%F'
      register: mydate
  
-   - name: Delete previous installation
-     file: path=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }} state=absent
+#   - name: Delete previous installation
+#     file: path={{ build_dir  }}{{ mydate.stdout }} state=absent
 
-   - name: Creates directory /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}
-     action: file dest=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}  state=directory
+#   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
+#     action: file dest={{ build_dir  }}{{ mydate.stdout }}  state=directory
 
-   - name: Download Git master of TVHeadend
-     shell: chdir=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }} git clone https://github.com/tvheadend/tvheadend.git
+#   - name: Download Git master of TVHeadend
+#     shell: chdir={{ build_dir  }}{{ mydate.stdout }} git clone {{ git_src  }}
    
-   - name: Building ...
-     shell: chdir=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend ./Autobuild.sh
+#   - name: Building ...
+#     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/tvheadend ./Autobuild.sh
 
-   - action: shell ls /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend_*.deb
+   - action: shell ls {{ build_dir  }}{{ mydate.stdout }}/tvheadend_*.deb
      register: package_path
 
    - name: Install Package
      apt: deb={{ package_path.stdout }}
+
+   - name: Copy init file
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/tvheadend/debian cp tvheadend.init /etc/init.d/tvheadend
+
+   - name: Change permission of init file
+     shell: chmod 755 /etc/init.d/tvheadend
+     notify: restart tvheadend
+
+  handlers:
+   - name: restart tvheadend
+     service: name=tvheadend state=restarted

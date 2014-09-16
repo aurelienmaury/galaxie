@@ -1,0 +1,46 @@
+# Remember to exchange the XXXXYYYY-Z with the serial number of your HDHomeRun
+# tuner:
+
+# Auto detect tuner type is not possible in all cases, so you can force it
+# DVB-C
+# DVB-T
+# ATSC
+
+[11117BBD-0]
+tuner_type=DVB-T
+
+[11117BBD-1]
+tuner_type=DVB-T
+
+[12212EE6-0]
+tuner_type=DVB-T
+
+[12212EE6-1]
+tuner_type=DVB-T
+
+# You can use a full name including tuner ID. Meaning the tuner will appear as
+# "HDHomeRun DVB-C 1234EA3D-0" instead of just "HDHomeRun DVB-C" in for example
+# TVHeadend.
+
+[11117BBD-0]
+use_full_name=true
+
+[11117BBD-1]
+use_full_name=true
+
+[12212EE6-0]
+use_full_name=true
+
+[12212EE6-1]
+use_full_name=true
+
+# You can disable certain tuners. As default all detected hdhomeruns are used
+
+#[XXXXYYYY-2]
+#disable=true
+
+
+# Enable additional logging  from libhdhomerun itself
+[libhdhomerun]
+enable=true
+logfile=/var/log/dvbhdhomerun_libhdhomerun.log
