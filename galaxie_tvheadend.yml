@@ -38,10 +38,8 @@
    - name: Building ...
      shell: chdir=/usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend ./Autobuild.sh
 
-   - name: Test if package here
-     shell: /usr/bin/test -e /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend_*.deb
-     register: package_is_here
+   - action: shell ls /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend_*.deb
+     register: package_path
 
    - name: Install Package
-     shell: dpkg -i /usr/src/galaxie_tvheadend_build_{{ mydate.stdout }}/tvheadend_*.deb
-     when: package_is_here
+     apt: deb={{ package_path.stdout }}
