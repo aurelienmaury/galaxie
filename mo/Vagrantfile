@@ -1,0 +1,29 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "wheezy-box" do |debianbox|
+
+    debianbox.vm.box = "puppetlabs/debian-7.4-64-nocm"
+
+    debianbox.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+      v.cpus = 2
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+
+    debianbox.vm.network "private_network", ip: "192.168.240.2"
+
+    # PORT FORWARDING
+    debianbox.vm.network :forwarded_port, host: 4280, guest: 80
+
+    debianbox.vm.provision "ansible" do |ansible|
+      ansible.playbook = "galaxie-0-00-zoe.yml"
+      ansible.limit = 'galaxie'
+      ansible.sudo = true
+      ansible.inventory_path = 'host.inventory'
+      ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
+      ansible.verbose = true
+    end
+  end
+end

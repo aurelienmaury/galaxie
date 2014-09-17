@@ -1,0 +1,21 @@
+---
+- name: Prepares target hosts to Galaxie's playbooks
+  hosts: galaxie
+  sudo: yes
+
+  vars_files:
+    - "galaxie-0-vars.yml"
+
+  tasks:
+
+    - name: Setup | zoe group
+      group:
+        name="{{ ansibleUser }}"
+        state=present
+
+    - name: Setup | zoe user
+      user:
+        name="{{ ansibleUser }}"
+        generate_ssh_key=yes
+        state=present
+
