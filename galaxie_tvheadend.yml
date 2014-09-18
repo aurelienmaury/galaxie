@@ -44,16 +44,43 @@
    - action: shell ls {{ build_dir  }}{{ mydate.stdout }}/tvheadend_*.deb
      register: package_path
 
+   - name: Create hts group
+     group: name=hts state=present gid=4201
+
+   - name: Create hts user
+     user: name=hts
+         createhome=yes 
+         state=present
+         generate_ssh_key=yes
+         uid=4201
+         group=hts
+         groups=cdrom,floppy,audio,dip,video
+     register: newuser
+
+   - name: Generate random password for hts user only on creation
+     shell: usermod -p `/usr/bin/openssl rand -base64 32` hts
+     when: newuser.changed
+
+   - name: Transfert a previous Tvheadend .hts directory backup
+     copy: src=/home/tuxa/hts.tar.gz dest=/home/hts/hts.tar.gz owner=hts group=hts mode=0644
+
+   - name: Extract that hts.tar.gs file
+     shell: chdir=/home/hts tar -xzf hts.tar.gz
+
+   - name: Restore permissions
+     file: path=/home/hts/.hts owner=hts group=hts recurse=yes
+     notify: restart tvheadend
+
+   - name: Push 59-dvbhdhomerun-utils.rules udev rules file
+     template: src=templates/tvheadend_59-dvbhdhomerun-utils.rules dest=/etc/udev/rules.d/59-dvbhdhomerun-utils.rules owner=root group=root mode=0644
+     notify: restart udev
+
    - name: Install Package
      apt: deb={{ package_path.stdout }}
-
-   - name: Copy init file
-     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/tvheadend/debian cp tvheadend.init /etc/init.d/tvheadend
-
-   - name: Change permission of init file
-     shell: chmod 755 /etc/init.d/tvheadend
-     notify: restart tvheadend
 
   handlers:
    - name: restart tvheadend
      service: name=tvheadend state=restarted
+
+   - name: restart udev
+     service: name=udev state=restarted
