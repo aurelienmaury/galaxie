@@ -1,0 +1,134 @@
+---
+- hosts: galaxie
+  sudo: true
+  vars:
+    http_proxy: nabu.galaxie.ici:8118
+    domain: galaxie.ici
+  tasks:
+
+  - name: Set http_proxy
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export http_proxy="
+      line="export http_proxy=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set https_proxy
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export https_proxy="
+      line="export https_proxy=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set ftp_proxy
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export ftp_proxy="
+      line="export ftp_proxy=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set rsync_proxy
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export rsync_proxy="
+      line="export rsync_proxy=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set no proxy for localhost
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export no_proxy="
+      line='export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com,.{{ domain }}"'
+      state=present
+
+  - name: Set HTTP_PROXY
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export HTTP_PROXY="
+      line="export HTTP_PROXY=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set HTTPS_PROXY
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export HTTPS_PROXY="
+      line="export HTTPS_PROXY=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set FTP_PROXY
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export FTP_PROXY="
+      line="export FTP_PROXY=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set RSYNC_PROXY
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export RSYNC_PROXY="
+      line="export RSYNC_PROXY=http://{{ http_proxy }}/"
+      state=present
+
+  - name: Set NO_PROXY
+    lineinfile:
+      dest=/etc/bash.bashrc
+      regexp="^export NO_PROXY="
+      line='export NO_PROXY="localhost,127.0.0.1,localaddress,.localdomain.com,.{{ domain }}"'
+      state=present
+
+
+  # Wget proxy setting
+  - name: Set https_proxy on wgetec file
+    lineinfile:
+      dest=/etc/wgetrc
+      regexp="^https_proxy"
+      line="https_proxy = http://{{ http_proxy }}/"
+      insertafter="#https_proxy = http://proxy.yoyodyne.com:18023/"
+      state=present
+
+  - name: Set http_proxy on wgetec file
+    lineinfile:
+      dest=/etc/wgetrc
+      regexp="^http_proxy"
+      line="http_proxy = http://{{ http_proxy }}/"
+      insertafter="#http_proxy = http://proxy.yoyodyne.com:18023/"
+      state=present
+
+  - name: Set ftp_proxy on wgetec file
+    lineinfile:
+      dest=/etc/wgetrc
+      regexp="^ftp_proxy"
+      line="ftp_proxy = http://{{ http_proxy }}/"
+      insertafter="#ftp_proxy = http://proxy.yoyodyne.com:18023/"
+      state=present
+
+  - name: Enable proxy on  wgetec file
+    lineinfile:
+      dest=/etc/wgetrc
+      regexp="^use_proxy"
+      line="use_proxy = on"
+      insertafter="#use_proxy = on"
+      state=present
+
+  # Apt proxy setting
+  # Acquire::http::Proxy "http://nabu.galaxie.ici:8118";
+  - name: Enable Acquire::http::Proxy on /etc/apt/apt.conf file
+    lineinfile:
+      dest=/etc/apt/apt.conf
+      regexp="^Acquire::http::Proxy"
+      line='Acquire::http::Proxy "http://{{ http_proxy }}/";'
+      state=present
+
+  - name: Enable Acquire::ftp::Proxy on /etc/apt/apt.conf file
+    lineinfile:
+      dest=/etc/apt/apt.conf
+      regexp="^Acquire::ftp::Proxy"
+      line='Acquire::ftp::Proxy "http://{{ http_proxy }}/";'
+      state=present
+
+  - name: Enable Acquire::https::Proxy on /etc/apt/apt.conf file
+    lineinfile:
+      dest=/etc/apt/apt.conf
+      regexp="^Acquire::https::Proxy"
+      line='Acquire::https::Proxy "http://{{ http_proxy }}/";'
+      state=present
