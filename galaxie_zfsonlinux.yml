@@ -31,24 +31,24 @@
    - action: shell date '+%F'
      register: mydate
  
-#   - name: Delete previous installation
-#     file: path={{ build_dir  }}{{ mydate.stdout }} state=absent
+   - name: Delete previous installation
+     file: path={{ build_dir  }}{{ mydate.stdout }} state=absent
 
-#   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
-#     action: file dest={{ build_dir  }}{{ mydate.stdout }}  state=directory
+   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
+     action: file dest={{ build_dir  }}{{ mydate.stdout }}  state=directory
 
-#   - name: Download Git master of SPL
-#     git: repo={{ git_spl_src  }}
-#          dest={{ build_dir  }}{{ mydate.stdout }}/spl
+   - name: Download Git master of SPL
+     git: repo={{ git_spl_src  }}
+          dest={{ build_dir  }}{{ mydate.stdout }}/spl
 
-#   - name: Building SPL (autogen) ...
-#     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/spl ./autogen.sh
+   - name: Building SPL (autogen) ...
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/spl ./autogen.sh
 
-#   - name: Building SPL (configure) ...
-#     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/spl ./configure
+   - name: Building SPL (configure) ...
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/spl ./configure
 
-#   - name: Building SPL (make deb-utils deb-kmod) ...
-#     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/spl make deb-utils deb-kmod
+   - name: Building SPL (make deb-utils deb-kmod) ...
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/spl make deb-utils deb-kmod
 
    - name : Install SPL Packages
      action: shell dpkg -i {{ build_dir  }}{{ mydate.stdout }}/spl/*.deb
@@ -68,3 +68,8 @@
 
    - name : Install ZFS Packages
      action: shell dpkg -i {{ build_dir  }}{{ mydate.stdout }}/zfs/*.deb
+     notify: restart zfs
+
+  handlers:
+   - name: restart zfs
+     service: name=zfs state=restarted

@@ -8,4 +8,4 @@ ansible-playbook galaxie_bashrc.yml
 ansible-playbook galaxie_setting_vim.yml
 ansible-playbook galaxie_dvbhdhomerun.yml
 ansible-playbook galaxie_tvheadend.yml
-ansible-playbook galaxie_zfs.yml
+ansible-playbook galaxie_zfsonlinux.yml
