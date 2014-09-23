@@ -11,7 +11,8 @@ by password. You could have either:
 * user account with su password to supply
 
 Use the right combination of options to get the initial connection. This first steps are to normalize ZOE access
-for the other playbooks.
+for the other playbooks. The ```sudo: yes``` at the top of the playbook, and options like 
+```[ --su, --ask-su-pass, --ask-pass]``` should help you achieve initial connection.
 
 ## Initial setup
 
