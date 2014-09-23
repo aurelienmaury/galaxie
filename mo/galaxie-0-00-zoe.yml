@@ -35,6 +35,9 @@
         generate_ssh_key=yes
         state=present
 
+    - name: Change password
+      shell: usermod -p $(echo '{{ randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ ansibleUser }}
+
     - name: User is sudoer
       lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
 
@@ -51,6 +54,16 @@
         user="{{ ansibleUser }}"
         key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
         state=absent
+
+    - name: check python-apt package present
+      shell: dpkg -s python-apt
+      ignore_errors: yes
+      register: pythonAptPresence
+      when: ansible_distribution == 'Debian'
+
+    - name: install python-apt
+      command: /usr/bin/apt-get install python-apt -y
+      when: ansible_distribution == 'Debian' and pythonAptPresence|failed
 
 
 

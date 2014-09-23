@@ -1,5 +1,5 @@
 ---
 ansibleUser: 'zoe'
-ansibleInitialPassword: 'zoe'
+randomPasswordSeed: 'ZOE is Open and Extendable'
 
 currentPubkeyFile: ''
