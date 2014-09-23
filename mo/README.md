@@ -1,28 +1,59 @@
-Stage 0
-=======
-Where the magic begins
-----------------------
+ZOE is Open and Extendable
+==========================
 
+## Initial setup
 
-0 - ZOE is Open and Extendable
-------------------------------
+When adding a freshly installed host to the design:
 
-When adding a freshly installed machine to the design:
+* name it in your head, let's name it _elvira_ for this example.
 
-* name it in your head, let's name it _alice_ for this example.
-* create a ssh key for ansible access:
+* place its reference in the desired group in host.inventory with a host var called _newKey_ pointing to a local private key file. 
+Doesn't matter if this file does not exist yet, it will be generated soon.
+
 ```
-ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa.alice
+# it's even better if you already have a dnsmasq in your network so you can refer to this 
+# host by its network official name, configured by a MAC address matching in the DHCP.
+
+[galaxie]
+192.168.0.42 newKey=~/.ssh/id_rsa.elvira
 ```
 
-* place its reference in the desired group in host.inventory
-  * it's even better if you already have a dnsmasq in your network so you can refer to this 
-  machine by its network official name, configured by a MAC address matching in the DHCP.
-
+* we assume that you already have a root account (or a sudo-all account on elvira).
 * install an access for zoe by running:
 
 ```
-ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --limit=$MY_NEW_MACHINE_REF --user=$DEFAULT_USER_WITH_SUDO --ask-pass
+ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=$DEFAULT_USER_WITH_SUDO --limit=192.168.0.42 --ask-pass -c paramiko
 ```
 
-that will create standardized group and user for the others playbook to run smoothly. 
+* you will be prompted for your password and the playbook will setup everything for ZOE access.
+* when finished, return to the inventory and change the name of the variable like this:
+
+```
+[galaxie]
+192.168.0.42 ansible_ssh_private_key_file=~/.ssh/id_rsa.elvira
+```
+
+* Your elvira is now ready to be managed by ZOE.
+
+## Key rotation
+
+* Go to your inventory and add a newKey variable for the host you want to rotate key:
+
+```
+[galaxie]
+192.168.0.42 ansible_ssh_private_key_file=~/.ssh/id_rsa.elvira newKey=~/.ssh/id_rsa.elvira-newer
+```
+
+* Apply the playbook:
+
+```
+ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=zoe --limit=192.168.0.42
+```
+
+* Make the newKey value become the ansible_ssh_private_key_file value:
+
+```
+[galaxie]
+192.168.0.42 ansible_ssh_private_key_file=~/.ssh/id_rsa.elvira-newer
+```
+* Done.

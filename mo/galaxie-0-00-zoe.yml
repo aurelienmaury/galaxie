@@ -7,7 +7,7 @@
     - "galaxie-0-vars.yml"
 
   tasks:
-    - name: "Setup | Is key locally present"
+    - name: New key is present
       when: newKey is defined
       stat:
         path="{{newKey}}"
@@ -15,19 +15,19 @@
       delegate_to: localhost
       sudo: no
 
-    - name: "Setup | key generation"
+    - name: New key not present => generation
       command: "ssh-keygen -t rsa -b 2048 -f {{newKey}}"
       when: newKey is defined and not localKey.stat.exists
       delegate_to: localhost
       sudo: no
 
-    - name: Setup | zoe group
+    - name: Group is present
       group:
         name="{{ ansibleUser }}"
         gid=4200
         state=present
 
-    - name: Setup | zoe user
+    - name: User is present
       user:
         name="{{ ansibleUser }}"
         uid=4200
@@ -35,14 +35,22 @@
         generate_ssh_key=yes
         state=present
 
-    - name: Setup | access key upload
+    - name: User is sudoer
+      lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
+
+    - name: New key is authorized for user
+      when: newKey is defined
       authorized_key:
         user="{{ ansibleUser }}"
         key="{{ lookup('file', newKey+'.pub') }}"
+        state=present
 
+    - name: Current key is banished for user
+      when: newKey is defined and ansible_ssh_private_key_file is defined
+      authorized_key:
+        user="{{ ansibleUser }}"
+        key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
+        state=absent
 
-    - name: validate sudoers
-      lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
-      tags: reg
 
 

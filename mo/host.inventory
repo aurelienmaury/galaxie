@@ -1,5 +1,5 @@
 [galaxie]
-10.1.4.88 newKey=~/.ssh/id_rsa.alice2
+10.1.4.184 ansible_ssh_private_key_file=~/.ssh/id_rsa.alice3 newKey=~/.ssh/id_rsa.alice2
 
 
 # SERVERS GROUPED BY SERVICES
