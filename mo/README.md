@@ -31,7 +31,7 @@ Doesn't matter if this file does not exist yet, it will be generated soon.
 ```
 
 * we assume that you already have a root account (or a sudo-all account on elvira).
-* install an access for zoe by running:
+* install an access for ZOE by running:
 
 ```
 ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=$DEFAULT_USER_WITH_SUDO --limit=192.168.0.42 --ask-pass -c paramiko
