@@ -1,6 +1,18 @@
 ZOE is Open and Extendable
 ==========================
 
+## DISCLAIMER
+
+When you add a new host, you need to play a bit with ansible-playbook options to initiate the first connection
+by password. You could have either:
+
+* root account with password
+* user account with sudo already installed
+* user account with su password to supply
+
+Use the right combination of options to get the initial connection. This first steps are to normalize ZOE access
+for the other playbooks.
+
 ## Initial setup
 
 When adding a freshly installed host to the design:

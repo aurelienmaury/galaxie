@@ -65,5 +65,10 @@
       command: /usr/bin/apt-get install python-apt -y
       when: ansible_distribution == 'Debian' and pythonAptPresence|failed
 
+    - name: install sudo
+      apt:
+        pkg=sudo
+        state=present
+
 
 
