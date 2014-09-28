@@ -13,21 +13,21 @@
     <audiooutput>
         <ac3passthrough default="true">true</ac3passthrough>
         <ac3transcode default="true">false</ac3transcode>
-        <audiodevice>PI:Analogue</audiodevice>
+        <audiodevice default="true">PI:HDMI</audiodevice>
         <channels default="true">1</channels>
         <config default="true">2</config>
         <dtshdpassthrough default="true">false</dtshdpassthrough>
         <dtspassthrough default="true">false</dtspassthrough>
         <dualaudio default="true">false</dualaudio>
         <eac3passthrough default="true">false</eac3passthrough>
-        <guisoundmode default="true">1</guisoundmode>
+        <guisoundmode>2</guisoundmode>
         <normalizelevels default="true">true</normalizelevels>
         <passthrough default="true">false</passthrough>
         <passthroughdevice default="true">PI:HDMI</passthroughdevice>
         <processquality default="true">30</processquality>
         <samplerate default="true">48000</samplerate>
-        <stereoupmix default="true">false</stereoupmix>
-        <streamsilence default="true">1</streamsilence>
+        <stereoupmix>true</stereoupmix>
+        <streamsilence>-1</streamsilence>
         <truehdpassthrough default="true">false</truehdpassthrough>
     </audiooutput>
     <cache>
@@ -81,7 +81,7 @@
         <addonforeignfilter default="true">false</addonforeignfilter>
         <addonnotifications default="true">true</addonnotifications>
         <settinglevel>3</settinglevel>
-        <systemtotaluptime>1882</systemtotaluptime>
+        <systemtotaluptime>2817</systemtotaluptime>
     </general>
     <input>
         <enablejoystick default="true">true</enablejoystick>
@@ -114,7 +114,7 @@
         <skincolors default="true">SKINDEFAULT</skincolors>
         <skintheme default="true">SKINDEFAULT</skintheme>
         <skinzoom default="true">0</skinzoom>
-        <soundskin default="true">SKINDEFAULT</soundskin>
+        <soundskin>OFF</soundskin>
         <startupwindow default="true">10000</startupwindow>
     </lookandfeel>
     <masterlock>
@@ -134,7 +134,7 @@
     <musiclibrary>
         <albumsscraper default="true">metadata.album.universal</albumsscraper>
         <artistsscraper default="true">metadata.artists.universal</artistsscraper>
-        <backgroundupdate default="true">false</backgroundupdate>
+        <backgroundupdate>true</backgroundupdate>
         <downloadinfo>true</downloadinfo>
         <enabled default="true">true</enabled>
         <overridetags>true</overridetags>
@@ -146,7 +146,7 @@
         <crossfade default="true">0</crossfade>
         <crossfadealbumtracks default="true">true</crossfadealbumtracks>
         <queuebydefault default="true">false</queuebydefault>
-        <replaygainavoidclipping default="true">false</replaygainavoidclipping>
+        <replaygainavoidclipping>true</replaygainavoidclipping>
         <replaygainnogainpreamp default="true">89</replaygainnogainpreamp>
         <replaygainpreamp default="true">89</replaygainpreamp>
         <replaygaintype default="true">1</replaygaintype>
@@ -189,7 +189,7 @@
         <usehttpproxy>true</usehttpproxy>
     </network>
     <pictures>
-        <displayresolution default="true">14</displayresolution>
+        <displayresolution>22</displayresolution>
         <generatethumbs default="true">true</generatethumbs>
         <showvideos default="true">true</showvideos>
         <useexifrotation default="true">true</useexifrotation>
@@ -202,11 +202,11 @@
         <wakeonaccess default="true">false</wakeonaccess>
     </powermanagement>
     <pvrmanager>
-        <backendchannelorder default="true">true</backendchannelorder>
+        <backendchannelorder>false</backendchannelorder>
         <enabled>true</enabled>
         <hideconnectionlostwarning default="true">false</hideconnectionlostwarning>
         <syncchannelgroups default="true">true</syncchannelgroups>
-        <usebackendchannelnumbers default="true">false</usebackendchannelnumbers>
+        <usebackendchannelnumbers>true</usebackendchannelnumbers>
     </pvrmanager>
     <pvrmenu>
         <closechannelosdonswitch default="true">false</closechannelosdonswitch>
@@ -224,7 +224,7 @@
         <channelentrytimeout default="true">0</channelentrytimeout>
         <confirmchannelswitch default="true">false</confirmchannelswitch>
         <playminimized default="true">true</playminimized>
-        <scantime default="true">10</scantime>
+        <scantime>1</scantime>
         <signalquality default="true">true</signalquality>
         <startlast>2</startlast>
     </pvrplayback>
@@ -273,7 +273,7 @@
         <upnpserver default="true">false</upnpserver>
         <useairplaypassword default="true">false</useairplaypassword>
         <webserver default="true">true</webserver>
-        <webserverpassword default="true"></webserverpassword>
+        <webserverpassword>xbmc</webserverpassword>
         <webserverport default="true">80</webserverport>
         <webserverusername default="true">xbmc</webserverusername>
         <webskin default="true">webinterface.default</webskin>
@@ -286,7 +286,7 @@
     </slideshow>
     <smb>
         <winsserver default="true">0.0.0.0</winsserver>
-        <workgroup default="true">WORKGROUP</workgroup>
+        <workgroup>GALAXIE</workgroup>
     </smb>
     <subtitles>
         <align default="true">0</align>
@@ -309,7 +309,7 @@
     </system>
     <videolibrary>
         <actorthumbs default="true">true</actorthumbs>
-        <backgroundupdate default="true">false</backgroundupdate>
+        <backgroundupdate>true</backgroundupdate>
         <enabled default="true">true</enabled>
         <flattentvshows default="true">1</flattentvshows>
         <groupmoviesets default="true">false</groupmoviesets>
@@ -318,7 +318,7 @@
     </videolibrary>
     <videoplayer>
         <adjustrefreshrate default="true">0</adjustrefreshrate>
-        <autoplaynextitem default="true">false</autoplaynextitem>
+        <autoplaynextitem>true</autoplaynextitem>
         <decodingmethod default="true">1</decodingmethod>
         <errorinaspect default="true">0</errorinaspect>
         <hqscalers default="true">0</hqscalers>
@@ -360,7 +360,7 @@
         <monitor default="true">Default</monitor>
         <monitorsingle default="true">false</monitorsingle>
         <preferedstereoscopicmode default="true">0</preferedstereoscopicmode>
-        <resolution>20</resolution>
+        <resolution>22</resolution>
         <screen default="true">0</screen>
         <screenmode>00192001080060.00000pstd</screenmode>
         <stereoscopicmode default="true">0</stereoscopicmode>
@@ -368,7 +368,7 @@
         <vsync default="true">2</vsync>
     </videoscreen>
     <weather>
-        <addon default="true"></addon>
+        <addon>weather.wunderground</addon>
         <currentlocation default="true">1</currentlocation>
     </weather>
     <window>
@@ -399,6 +399,9 @@
         <setting type="bool" name="skin.confluence.View508HideInfo">false</setting>
         <setting type="bool" name="skin.confluence.ActivateTvTunes">false</setting>
         <setting type="bool" name="skin.confluence.View509HideInfo">false</setting>
+        <setting type="bool" name="skin.confluence.ShowWeatherFanart">false</setting>
+        <setting type="bool" name="skin.confluence.WeatherScript_Enable">false</setting>
+        <setting type="bool" name="skin.confluence.HideVisualizationFanart">false</setting>
         <setting type="string" name="skin.confluence.CustomBackgroundPath"></setting>
         <setting type="string" name="skin.confluence.HomeVideosButton1"></setting>
         <setting type="string" name="skin.confluence.HomeVideosButton2"></setting>
@@ -421,6 +424,8 @@
         <setting type="string" name="skin.confluence.HomeProgramButton4"></setting>
         <setting type="string" name="skin.confluence.HomeProgramButton5"></setting>
         <setting type="string" name="skin.confluence.Home_Custom_Back_TV_Folder"></setting>
+        <setting type="string" name="skin.confluence.WeatherFanartDir"></setting>
+        <setting type="string" name="skin.confluence.WeatherScript_Label"></setting>
     </skinsettings>
     <resolutions />
     <defaultvideosettings>
@@ -473,7 +478,7 @@
         </musicnavartists>
         <musicnavsongs>
             <viewmode>65536</viewmode>
-            <sortmethod>1</sortmethod>
+            <sortmethod>9</sortmethod>
             <sortorder>1</sortorder>
             <sortattributes>0</sortattributes>
         </musicnavsongs>
@@ -532,10 +537,10 @@
             <sortattributes>0</sortattributes>
         </videonavtitles>
         <videonavtvshows>
-            <viewmode>65536</viewmode>
-            <sortmethod>1</sortmethod>
+            <viewmode>65586</viewmode>
+            <sortmethod>27</sortmethod>
             <sortorder>1</sortorder>
-            <sortattributes>0</sortattributes>
+            <sortattributes>1</sortattributes>
         </videonavtvshows>
         <videonavyears>
             <viewmode>65536</viewmode>

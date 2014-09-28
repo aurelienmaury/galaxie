@@ -1,0 +1,92 @@
+- hosts: zoe_test
+  sudo: true
+  vars:
+     project_dir: /usr/src/galaxie_zoe_voice
+
+     lium_french_f0_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20F0%20Broadcast%20News%20Acoustic%20Model/lium_french_f0.tar.gz/download
+     lium_french_f0_file: lium_french_f0.tar.gz
+
+     french3g62K_lm_dmp_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20Language%20Model/french3g62K.lm.dmp.bz2/download
+     french3g62K_lm_dmp_file: french3g62K.lm.dmp.bz2
+
+  tasks:
+   - name: Update Apt
+     apt: update_cache=yes cache_valid_time=3600
+
+   - name: Install required software
+     action: apt pkg={{item}} state=installed
+     with_items:
+      - python-pocketsphinx
+      - libpocketsphinx1
+      - gstreamer0.10-pocketsphinx
+      - python-pyaudio
+      - pocketsphinx
+
+   - name: Ask for pocketsphinx pkg-config path
+     action: shell pkg-config --variable=modeldir pocketsphinx
+     register: pocketsphinx_pkg_config_path
+
+   - name: Creates directory project_dir
+     action: file dest={{ project_dir }}  state=directory
+
+### lium_french_f0.tar.gz ###
+
+   - name: stats lium_french_f0.tar.gz
+     stat: path={{ project_dir }}/{{ lium_french_f0_file }}
+     register: lium_french_f0_file_stat
+
+   - name: Download lium_french_f0 French model sources
+     get_url: url={{ lium_french_f0_url }} dest={{ project_dir }}/{{ lium_french_f0_file }}
+     when: not lium_french_f0_file_stat.stat.exists
+
+   - name: Test if lium_french_f0.tar.gz all is all ready here
+     stat: path={{ project_dir }}/{{ lium_french_f0_file }}
+     register: lium_french_f0_file_stat
+
+   - name: Untar lium_french_f0.tar.gz
+     unarchive: src={{ project_dir }}/{{ lium_french_f0_file }} dest={{ project_dir }} copy=no
+     when: lium_french_f0_file_stat.stat.exists
+
+   - name: Restore root permission
+     file: path={{ project_dir }} owner=root group=root recurse=yes
+
+   - name: Creates directory hmm/fr_FR
+     action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/hmm/fr_FR  state=directory
+
+   - name: Delete directory hmm/fr_FR/french_f0
+     action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/hmm/fr_FR/french_f0  state=absent
+
+   - name: Mouve french_f0/* to  pocketsphinx/hmm/fr_FR/french_f0 directory
+     command: mv {{ project_dir }}/lium_french_f0 {{ pocketsphinx_pkg_config_path.stdout }}/hmm/fr_FR/french_f0
+
+### french3g62K.lm.dmp.bz2 ###
+
+   - name: stats french3g62K.lm.dmp.bz2
+     stat: path={{ project_dir }}/{{ french3g62K_lm_dmp_file }}
+     register: french3g62K_lm_dmp_file_stat
+
+   - name: Download french3g62K.lm.dmp French model sources
+     get_url: url={{ french3g62K_lm_dmp_url }} dest={{ project_dir }}/{{ french3g62K_lm_dmp_file }}
+     when: not french3g62K_lm_dmp_file_stat.stat.exists
+
+   - name: stats french3g62K.lm.dmp.bz2
+     stat: path={{ project_dir }}/{{ french3g62K_lm_dmp_file }}
+     register: french3g62K_lm_dmp_file_stat
+
+   - name: unbip2 french3g62K.lm.dmp.bz2
+     command: chdir={{ project_dir }} bunzip2 -k {{ french3g62K_lm_dmp_file }}
+     when: french3g62K_lm_dmp_file_stat.stat.exists
+
+   - name: Restore root permission
+     file: path={{ project_dir }} owner=root group=root recurse=yes
+
+   - name: Creates directory /lm/fr_FR
+     action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR  state=directory
+
+   - name: Delete pocketsphinx/lm/fr_FR/ directory/french3g62K.lm.dmp
+     action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR/french3g62K.lm.dmp state=absent
+
+   - name: Move french3g62K.lm.dmp to  pocketsphinx/lm/fr_FR/ directory
+     command: mv {{ project_dir }}/french3g62K.lm.dmp {{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR/
+
+

@@ -30,16 +30,30 @@ then
     scp $TEMPLATE_DIR/settings.xml $HOST:$XBMC_USERDATA/addon_data/pvr.hts/settings.xml
     echo ""
 
+    #Pubish Video Audio setting 
     if [ $HOST = tv1 ]
     then
         echo "Copy guisettings.xml.1080p to $HOST:$XBMC_USERDATA/guisettings.xml"
         scp $TEMPLATE_DIR/guisettings.xml.1080p $HOST:$XBMC_USERDATA/guisettings.xml
-    else
+    fi
+    if [ $HOST = tv2 ]
+    then
+        echo "Copy guisettings.xml.720p to $HOST:$XBMC_USERDATA/guisettings.xml"
+        scp $TEMPLATE_DIR/guisettings.xml.720p $HOST:$XBMC_USERDATA/guisettings.xml
+    fi
+    if [ $HOST = tv3 ]
+    then
+        echo "Copy guisettings.xml.720p to $HOST:$XBMC_USERDATA/guisettings.xml"
+        scp $TEMPLATE_DIR/guisettings.xml.720p $HOST:$XBMC_USERDATA/guisettings.xml
+    fi
+    if [ $HOST = tv4 ]
+    then
         echo "Copy guisettings.xml.720p to $HOST:$XBMC_USERDATA/guisettings.xml"
         scp $TEMPLATE_DIR/guisettings.xml.720p $HOST:$XBMC_USERDATA/guisettings.xml
     fi
     echo ""
-
+    
+    # Network path for media share
     echo "Copy favourites.xml to $HOST:$XBMC_USERDATA/favourites.xml"
     scp $TEMPLATE_DIR/favourites.xml $HOST:$XBMC_USERDATA/favourites.xml
     echo ""
