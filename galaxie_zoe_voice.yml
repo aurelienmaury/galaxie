@@ -2,12 +2,14 @@
   sudo: true
   vars:
      project_dir: /usr/src/galaxie_zoe_voice
+     acoustic_model_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20F0%20Broadcast%20News%20Acoustic%20Model/lium_french_f0.tar.gz/download
+     acoustic_model_file: lium_french_f0.tar.gz
 
-     lium_french_f0_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20F0%20Broadcast%20News%20Acoustic%20Model/lium_french_f0.tar.gz/download
-     lium_french_f0_file: lium_french_f0.tar.gz
+     trigram_language_model_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20Language%20Model/french3g62K.lm.dmp.bz2/download
+     trigram_language_model_file: french3g62K.lm.dmp.bz2
 
-     french3g62K_lm_dmp_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20Language%20Model/french3g62K.lm.dmp.bz2/download
-     french3g62K_lm_dmp_file: french3g62K.lm.dmp.bz2
+     pronunciation_dictionary_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20Language%20Model/frenchWords62K.dic/download
+     pronunciation_dictionary_file: frenchWords62K.dic
 
   tasks:
    - name: Update Apt
@@ -20,7 +22,42 @@
       - libpocketsphinx1
       - gstreamer0.10-pocketsphinx
       - python-pyaudio
+      - python-aiml
       - pocketsphinx
+      - gstreamer0.10-pulseaudio
+      - libao4
+      - libasound2-plugins
+      - libgconfmm-2.6-1c2
+      - libglademm-2.4-1c2a
+      - libpulse-mainloop-glib0
+      - libpulse0
+      - libsox-fmt-pulse
+      - paman
+      - paprefs
+      - pavucontrol
+      - pavumeter
+      - pulseaudio
+      - pulseaudio-esound-compat
+      - pulseaudio-module-bluetooth
+      - pulseaudio-module-gconf
+      - pulseaudio-module-jack
+      - pulseaudio-module-lirc
+      - pulseaudio-module-x11
+      - pulseaudio-module-zeroconf
+      - pulseaudio-utils
+      - oss-compat
+
+   - name: Remove unrequired software
+     action: apt pkg={{item}} state=absent
+     with_items:
+      - pulseaudio-module-lirc-dbg
+      - pulseaudio-dbg
+      - libpulse0-dbg
+      - libpulse-dev
+      - pulseaudio-module-zeroconf-dbg
+      - libpulse-mainloop-glib0-dbg
+      - pulseaudio-esound-compat-dbg
+      
 
    - name: Ask for pocketsphinx pkg-config path
      action: shell pkg-config --variable=modeldir pocketsphinx
@@ -29,23 +66,19 @@
    - name: Creates directory project_dir
      action: file dest={{ project_dir }}  state=directory
 
-### lium_french_f0.tar.gz ###
+### accoustic model ###
 
    - name: stats lium_french_f0.tar.gz
-     stat: path={{ project_dir }}/{{ lium_french_f0_file }}
-     register: lium_french_f0_file_stat
+     stat: path={{ project_dir }}/{{ acoustic_model_file }}
+     register: acoustic_model_file_stat
 
    - name: Download lium_french_f0 French model sources
-     get_url: url={{ lium_french_f0_url }} dest={{ project_dir }}/{{ lium_french_f0_file }}
-     when: not lium_french_f0_file_stat.stat.exists
-
-   - name: Test if lium_french_f0.tar.gz all is all ready here
-     stat: path={{ project_dir }}/{{ lium_french_f0_file }}
-     register: lium_french_f0_file_stat
+     get_url: url={{ acoustic_model_url }} dest={{ project_dir }}/{{ acoustic_model_file }}
+     when: not acoustic_model_file_stat.stat.exists
 
    - name: Untar lium_french_f0.tar.gz
-     unarchive: src={{ project_dir }}/{{ lium_french_f0_file }} dest={{ project_dir }} copy=no
-     when: lium_french_f0_file_stat.stat.exists
+     unarchive: src={{ project_dir }}/{{ acoustic_model_file }} dest={{ project_dir }} copy=no
+     when: acoustic_model_file_stat.stat.exists
 
    - name: Restore root permission
      file: path={{ project_dir }} owner=root group=root recurse=yes
@@ -59,23 +92,19 @@
    - name: Mouve french_f0/* to  pocketsphinx/hmm/fr_FR/french_f0 directory
      command: mv {{ project_dir }}/lium_french_f0 {{ pocketsphinx_pkg_config_path.stdout }}/hmm/fr_FR/french_f0
 
-### french3g62K.lm.dmp.bz2 ###
+### trigram language ###
 
    - name: stats french3g62K.lm.dmp.bz2
-     stat: path={{ project_dir }}/{{ french3g62K_lm_dmp_file }}
-     register: french3g62K_lm_dmp_file_stat
+     stat: path={{ project_dir }}/{{ trigram_language_model_file }}
+     register: trigram_language_model_file_stat
 
    - name: Download french3g62K.lm.dmp French model sources
-     get_url: url={{ french3g62K_lm_dmp_url }} dest={{ project_dir }}/{{ french3g62K_lm_dmp_file }}
-     when: not french3g62K_lm_dmp_file_stat.stat.exists
-
-   - name: stats french3g62K.lm.dmp.bz2
-     stat: path={{ project_dir }}/{{ french3g62K_lm_dmp_file }}
-     register: french3g62K_lm_dmp_file_stat
+     get_url: url={{ trigram_language_model_url }} dest={{ project_dir }}/{{ trigram_language_model_file }}
+     when: not trigram_language_model_file_stat.stat.exists
 
    - name: unbip2 french3g62K.lm.dmp.bz2
-     command: chdir={{ project_dir }} bunzip2 -k {{ french3g62K_lm_dmp_file }}
-     when: french3g62K_lm_dmp_file_stat.stat.exists
+     command: chdir={{ project_dir }} bunzip2 -k {{ trigram_language_model_file }}
+     when: trigram_language_model_file_stat.stat.exists
 
    - name: Restore root permission
      file: path={{ project_dir }} owner=root group=root recurse=yes
@@ -83,10 +112,139 @@
    - name: Creates directory /lm/fr_FR
      action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR  state=directory
 
-   - name: Delete pocketsphinx/lm/fr_FR/ directory/french3g62K.lm.dmp
+   - name: Delete pocketsphinx/lm/fr_FR/french3g62K.lm.dmp
      action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR/french3g62K.lm.dmp state=absent
 
    - name: Move french3g62K.lm.dmp to  pocketsphinx/lm/fr_FR/ directory
      command: mv {{ project_dir }}/french3g62K.lm.dmp {{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR/
 
+### pronunciation dictionary (lexicon) ###
 
+   - name: stats frenchWords62K.dic
+     stat: path={{ project_dir }}/{{ pronunciation_dictionary_file }}
+     register: pronunciation_dictionary_file_stat
+
+   - name: Download pronunciation dictionary
+     get_url: url={{ pronunciation_dictionary_url }} dest={{ project_dir }}/{{ pronunciation_dictionary_file }}
+     when: not pronunciation_dictionary_file_stat.stat.exists
+
+   - name: Restore root permission
+     file: path={{ project_dir }} owner=root group=root recurse=yes
+
+   - name: Creates directory /lm/fr_FR
+     action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR  state=directory
+
+   - name: Delete pocketsphinx/lm/fr_FR/frenchWords62K.dic
+     action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR/frenchWords62K.dic state=absent
+
+   - name: Move frenchWords62K.dic to  pocketsphinx/lm/fr_FR/frenchWords62K.dic
+     command: cp {{ project_dir }}/frenchWords62K.dic {{ pocketsphinx_pkg_config_path.stdout }}/lm/fr_FR/
+
+### Configure pulseaudio ###
+
+##  Setting up ALSA ###
+   - name: stats /etc/asound.conf.ORIG
+     stat: path=/etc/asound.conf.ORIG
+     register: asound_conf_ORIG
+
+   - name: Backup /etc/asound.conf to /etc/asound.conf.ORIG
+     command: cp -pf /etc/asound.conf /etc/asound.conf.ORIG
+     when: not asound_conf_ORIG.stat.exists
+
+   - name: Push a new asound.conf file
+     template: src=templates/asound.conf dest=/etc/asound.conf owner=root group=root mode=0644
+
+## Set up the PulseAudio daemon for network connections  ##
+   - name: stats /etc/pulse/system.pa.ORIG
+     stat: path=/etc/pulse/system.pa.ORIG
+     register: pulse_system_pa_ORIG
+
+   - name: cp -fvp /etc/pulse/system.pa to /etc/pulse/system.pa.ORIG
+     command: cp -fvp /etc/pulse/system.pa /etc/pulse/system.pa.ORIG
+     when: not pulse_system_pa_ORIG.stat.exists
+
+   - name: Set up the PulseAudio daemon for network connections
+     lineinfile:
+      dest=/etc/pulse/system.pa
+      regexp="^load-module module-native-protocol-tcp auth-ip-acl="
+      line="load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;192.168.0.0/16 auth-anonymous=1"
+      state=present
+
+   - name: Set up the Zeroconf module for PulseAudio daemon
+     lineinfile:
+      dest=/etc/pulse/system.pa
+      line="load-module module-zeroconf-publish"
+      state=present
+
+## Change default sound driver from alsa to pulseaudio  ##
+   - name: stats /etc/libao.conf.ORIG
+     stat: path=/etc/libao.conf.ORIG
+     register: libao_conf_ORIG
+
+   - name: cp -fvp /etc/libao.conf /etc/libao.conf.ORIG
+     command: cp -fvp /etc/libao.conf /etc/libao.conf.ORIG
+     when: not libao_conf_ORIG.stat.exists
+
+   - name: Change default sound driver from alsa to pulseaudio
+     lineinfile:
+      dest=/etc/libao.conf
+      regexp="^default_driver="
+      line="default_driver=pulse"
+      state=present
+
+   - name: stats /etc/pulse/daemon.conf.ORIG
+     stat: path=/etc/pulse/daemon.conf.ORIG
+     register: daemon_conf_ORIG
+
+   - name: cp -fvp /etc/pulse/daemon.conf /etc/pulse/daemon.conf.ORIG
+     command: cp -fvp /etc/pulse/daemon.conf /etc/pulse/daemon.conf.ORIG
+     when: not daemon_conf_ORIG.stat.exists
+
+   - name: Set "high-priority = yes" on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; high-priority ="
+      line="high-priority = yes"
+      state=present
+
+   - name: Set "nice-level = 5"  on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; nice-level ="
+      line="nice-level = 5"
+      state=present
+
+   - name: Set "exit-idle-time = -1"  on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; exit-idle-time ="
+      line="exit-idle-time = -1"
+      state=present
+
+   - name: Set "resample-method = src-sinc-medium-quality"  on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; resample-method ="
+      line="resample-method = src-sinc-medium-quality"
+      state=present
+
+   - name: Set "default-sample-format = s16le"  on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; default-sample-format ="
+      line="default-sample-format = s16le"
+      state=present
+
+   - name: Set "default-sample-rate = 48000"  on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; default-sample-rate ="
+      line="default-sample-rate = 48000"
+      state=present
+
+   - name: Set "default-sample-channels = 2"  on /etc/pulse/daemon.conf file
+     lineinfile:
+      dest=/etc/pulse/daemon.conf
+      regexp="^; default-sample-channels ="
+      line="default-sample-channels = 2"
+      state=present
