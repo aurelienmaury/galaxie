@@ -35,7 +35,7 @@ Doesn't matter if this file does not exist yet, it will be generated soon.
 * install an access for ZOE by running:
 
 ```
-ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=$DEFAULT_USER_WITH_SUDO --limit=192.168.0.42 --ask-pass -c paramiko
+ansible-playbook -i host.inventory galaxie-zoe_access.yml --user=$DEFAULT_USER_WITH_SUDO --limit=192.168.0.42 --ask-pass -c paramiko
 ```
 
 * you will be prompted for your password and the playbook will setup everything for ZOE access.
@@ -60,7 +60,7 @@ ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=$DEFAULT_USER_WIT
 * Apply the playbook:
 
 ```
-ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=zoe --limit=192.168.0.42
+ansible-playbook -i host.inventory galaxie-zoe_access.yml --user=zoe --limit=192.168.0.42
 ```
 
 * Make the newKey value become the ansible_ssh_private_key_file value:
@@ -70,3 +70,7 @@ ansible-playbook -i host.inventory galaxie-0-00-zoe.yml --user=zoe --limit=192.1
 192.168.0.42 ansible_ssh_private_key_file=~/.ssh/id_rsa.elvira-newer
 ```
 * Done.
+
+# User interface simplification proposal
+
+* galaxie swallow $TARGET_GROUP $HOST_NAME_OR_IP : prompts for sudoable user, adds host in the right group in host inventory, fills newKey value, launches galaxie-zoe_access.yml, renames newKey to ansible private key.
