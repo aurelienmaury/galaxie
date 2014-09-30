@@ -1,0 +1,24 @@
+- hosts: galaxie
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name: Message Of The Day is Galaxie
+      template:
+        src=templates/motd.j2
+        dest=/etc/motd
+        owner=root
+        group=root
+        mode=0644
+
+    - name: Issues and dynamic motd files are empty
+      copy:
+        src=files/empty
+        dest= "{{ item }}"
+        owner=root
+        group=root
+        mode=0644
+      with_items:
+        - /etc/issue
+        - /etc/issue.net
+        - /etc/motd.dynamic

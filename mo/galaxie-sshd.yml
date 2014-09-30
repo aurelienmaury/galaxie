@@ -1,0 +1,51 @@
+- hosts: galaxie
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name: sshd is configureg the galaxie way
+      lineinfile:
+        dest=/etc/ssh/sshd_config
+        regexp="{{ item.regexp }}"
+        line="{{ item.line }}"
+        state=present
+      with_items:
+        - { regexp: "^Protocol",        line: "Protocol 2" }
+        - { regexp: "^DebianBanner",    line: "DebianBanner no" }
+        - { regexp: "^PrintLastLog",    line: "PrintLastLog yes" }
+        - { regexp: "^SyslogFacility",  line: "SyslogFacility AUTH" }
+        - { regexp: "^LogLevel",        line: "LogLevel INFO" }
+        - { regexp: "^LoginGraceTime",  line: "LoginGraceTime 60" }
+        - { regexp: "^StrictModes",     line: "StrictModes yes" }
+        - { regexp: "^TCPKeepAlive",    line: "TCPKeepAlive yes" }
+        - { regexp: "^Compression ",     line: "Compression yes" }
+        - { regexp: "^IgnoreRhosts",    line: "IgnoreRhosts yes" }
+        - { regexp: "^PermitRootLogin",     line: "PermitRootLogin no" }
+        - { regexp: "^RSAAuthentication",   line: "RSAAuthentication no" }
+        - { regexp: "^CompressionLevel",    line: "CompressionLevel 9" }
+        - { regexp: "^ClientAliveInterval", line: "ClientAliveInterval 120" }
+        - { regexp: "^ClientAliveCountMax", line: "ClientAliveCountMax 600" }
+        - { regexp: "^PubkeyAuthentication",  line: "PubkeyAuthentication yes" }
+        - { regexp: "^AuthorizedKeysFile",    line: "AuthorizedKeysFile %h/.ssh/authorized_keys" }
+        - { regexp: "^RhostsRSAAuthentication", line: "RhostsRSAAuthentication no" }
+        - { regexp: "^HostbasedAuthentication", line: "HostbasedAuthentication no" }
+        - { regexp: "^PermitEmptyPasswords",    line: "PermitEmptyPasswords no" }
+        - { regexp: "^PasswordAuthentication",  line: "PasswordAuthentication no" }
+        - { regexp: "^GSSAPIAuthentication",    line: "GSSAPIAuthentication no" }
+        - { regexp: "^ChallengeResponseAuthentication", line: "ChallengeResponseAuthentication no" }
+      notify:
+        - restart sshd
+
+    - name: Disable check local mail after login
+      lineinfile:
+        dest=/etc/pam.d/sshd
+        backrefs=yes
+        state=present
+        regexp="^session    optional     pam_mail.so standard noenv"
+        line="#session    optional     pam_mail.so standard noenv \\# [1]"
+
+  handlers:
+    - name: restart sshd
+      service:
+        name=ssh
+        state=restarted

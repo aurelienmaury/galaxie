@@ -4,7 +4,7 @@
   sudo: yes
 
   vars_files:
-    - "galaxie-0-vars.yml"
+    - "galaxie-vars.yml"
 
   tasks:
     - name: New key is present
@@ -60,6 +60,10 @@
       ignore_errors: yes
       register: pythonAptPresence
       when: ansible_distribution == 'Debian'
+
+    - name: install python-apt (update apt before installation)
+      command: /usr/bin/apt-get update -y
+      when: ansible_distribution == 'Debian' and pythonAptPresence|failed
 
     - name: install python-apt
       command: /usr/bin/apt-get install python-apt -y

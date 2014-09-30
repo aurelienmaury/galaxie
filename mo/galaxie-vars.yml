@@ -3,3 +3,5 @@ ansibleUser: 'zoe'
 randomPasswordSeed: 'ZOE is Open and Extendable'
 
 currentPubkeyFile: ''
+
+toplevel_timeservers: ['192.168.1.71']

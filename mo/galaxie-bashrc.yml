@@ -1,0 +1,28 @@
+- hosts: galaxie
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name: /etc/.bash.bashrc is ok
+      copy:
+        src= files/bash.bashrc
+        dest= /etc/bash.bashrc
+        owner= root
+        group= root
+        mode= 0644
+
+    - name: /etc/skel/.bashrc is ok
+      copy:
+        src= files/skel.bashrc
+        dest= /etc/skel/.bashrc
+        owner= root
+        group= root
+        mode= 0644
+
+    - name: /home/zoe/.bashrc is ok
+      copy:
+        src= files/skel.bashrc
+        dest= /home/zoe/.bashrc
+        owner= zoe
+        group= zoe
+        mode= 0644

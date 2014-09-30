@@ -1,0 +1,13 @@
+                  ________        __                 __
+                 /  _____/_____  |  | _____  ___  __|__| ____
+                /   \  ___\__  \ |  | \__  \ \  \/  /  |/ __ \
+                \    \_\  \/ __ \|  |__/ __ \_>    <|  \  ___/_
+                 \________(_____ /____(_____ /__/\_ \__|\_____/
+
+Hostname  : {{ ansible_hostname }}
+{% if ansible_eth0.ipv4.address | default() %}
+eth0 IPv4 : {{ ansible_eth0.ipv4.address }}
+{% endif %}
+{% if ansible_eth0.ipv6.address | default() %}
+eth0 IPv6 : {{ ansible_eth0.ipv6.address  }}
+{% endif %}
