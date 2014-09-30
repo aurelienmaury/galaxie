@@ -17,3 +17,22 @@
       insertafter="^\"set background=dark"
       line="set background=dark"
       state=present
+
+  #Really ???
+  - name: Add source $VIMRUNTiME/mswin.vim
+    lineinfile:
+      dest=/etc/vim/vimrc
+      regexp="^source $VIMRUNTIME/mswin.vim"
+      line="source $VIMRUNTIME/mswin.vim"
+      state=present
+
+  #Are you sure ??? Yes CTRL-X CTRL-C CTRL-V CTRL-S CTRL-Z etc etc ...
+  # CTRL-P is still the complation menu
+  - name: Add source $VIMRUNTiME/mswin.vim    
+    lineinfile:vim
+      dest=/etc/vim/vimrc
+      regexp="^behave mswin"
+      line="behave mswin"
+      state=present
+
+
