@@ -1,10 +1,10 @@
 [galaxie]
-192.168.42.22 ansible_ssh_private_key_file=~/.ssh/id_rsa.homepi
 
 
 # SERVERS GROUPED BY SERVICES
 
 [ntp]
+192.168.42.5 ansible_ssh_private_key_file=~/.ssh/id_rsa.labpi
 
 
 [servers:children]

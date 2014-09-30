@@ -73,6 +73,13 @@
       apt:
         pkg=sudo
         state=present
+        update-cache=yes
+      when: ansible_distribution == 'Debian'
+
+    - name: system upgrade
+      apt:
+        upgrade=yes
+      when: ansible_distribution == 'Debian'
 
 
 

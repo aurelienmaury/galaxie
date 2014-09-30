@@ -3,7 +3,7 @@
   sudo: true
 
   tasks:
-    - name: sshd is configureg the galaxie way
+    - name: sshd is configured the galaxie way
       lineinfile:
         dest=/etc/ssh/sshd_config
         regexp="{{ item.regexp }}"
@@ -22,7 +22,6 @@
         - { regexp: "^IgnoreRhosts",    line: "IgnoreRhosts yes" }
         - { regexp: "^PermitRootLogin",     line: "PermitRootLogin no" }
         - { regexp: "^RSAAuthentication",   line: "RSAAuthentication no" }
-        - { regexp: "^CompressionLevel",    line: "CompressionLevel 9" }
         - { regexp: "^ClientAliveInterval", line: "ClientAliveInterval 120" }
         - { regexp: "^ClientAliveCountMax", line: "ClientAliveCountMax 600" }
         - { regexp: "^PubkeyAuthentication",  line: "PubkeyAuthentication yes" }
@@ -33,6 +32,15 @@
         - { regexp: "^PasswordAuthentication",  line: "PasswordAuthentication no" }
         - { regexp: "^GSSAPIAuthentication",    line: "GSSAPIAuthentication no" }
         - { regexp: "^ChallengeResponseAuthentication", line: "ChallengeResponseAuthentication no" }
+      notify:
+        - restart sshd
+
+    - name: CompressionLevel set to 9
+      lineinfile:
+        dest=/etc/ssh/ssh_config
+        regexp="^CompressionLevel"
+        line="CompressionLevel 9"
+        state=present
       notify:
         - restart sshd
 
