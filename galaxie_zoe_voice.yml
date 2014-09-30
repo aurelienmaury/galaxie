@@ -11,6 +11,35 @@
      pronunciation_dictionary_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20Language%20Model/frenchWords62K.dic/download
      pronunciation_dictionary_file: frenchWords62K.dic
 
+     ## MBROLA Variable ##
+     # http://tcts.fpms.ac.be/synthesis/mbrola/
+     # mbrola GNU/Linux binary
+     mbrola_linux_binary_url: http://tcts.fpms.ac.be/synthesis/mbrola/bin/pclinux/mbr301h.zip
+     mbrola_linux_binary_file: mbr301h.zip
+     # fr1: French Male (4.4Mb)    Faculte Polytech. De Mons
+     mbrola_voices_fr1_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr1/fr1-990204.zip
+     mbrola_voices_fr1_file: fr1-990204.zip
+     # fr2: French Female (4.8Mb)    Celine Egea
+     mbrola_voices_fr2_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr2/fr2-980806.zip
+     mbrola_voices_fr2_file: fr2-980806.zip
+     # fr3: French Male (4.8Mb)    Babel Technology
+     mbrola_voices_fr3_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr3/fr3-990324.zip
+     mbrola_voices_fr3_file: fr3-990324.zip
+     # fr4: French Female (5.4Mb)  Babel Technology
+     mbrola_voices_fr4_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr4/fr4-990521.zip
+     mbrola_voices_fr4_file: fr4-990521.zip
+     # fr5: French Belgian (4.8Mb) Faculte Polytech. De Mons
+     mbrola_voices_fr5_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr5/fr5-991020.zip
+     mbrola_voices_fr5_file: fr5-991020.zip  
+     # fr6: French Male (4.4Mb)    Faculte Polytech. De Mons
+     mbrola_voices_fr6_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr6/fr6-010330.zip
+     mbrola_voices_fr6_file: fr6-010330.zip
+     # fr7: French Belgian (3.7Mb) Faculte Polytech. De Mons
+     mbrola_voices_fr7_url: http://tcts.fpms.ac.be/synthesis/mbrola/dba/fr7/fr7-010330.zip
+     mbrola_voices_fr7_file: fr7-010330.zip
+     # mbrola install directory
+     mbrola_install_directory: /opt/mbrola
+
   tasks:
    - name: Update Apt
      apt: update_cache=yes cache_valid_time=3600
@@ -18,13 +47,13 @@
    - name: Install required software
      action: apt pkg={{item}} state=installed
      with_items:
-      - python-pocketsphinx
+      - pocketsphinx
       - libpocketsphinx1
-      - gstreamer0.10-pocketsphinx
       - python-pyaudio
       - python-aiml
-      - pocketsphinx
+      - python-pocketsphinx
       - gstreamer0.10-pulseaudio
+      - gstreamer0.10-pocketsphinx
       - libao4
       - libasound2-plugins
       - libgconfmm-2.6-1c2
@@ -46,6 +75,8 @@
       - pulseaudio-module-zeroconf
       - pulseaudio-utils
       - oss-compat
+      - speech-dispatcher
+      - espeak
 
    - name: Remove unrequired software
      action: apt pkg={{item}} state=absent
@@ -89,7 +120,7 @@
    - name: Delete directory hmm/fr_FR/french_f0
      action: file dest={{ pocketsphinx_pkg_config_path.stdout }}/hmm/fr_FR/french_f0  state=absent
 
-   - name: Mouve french_f0/* to  pocketsphinx/hmm/fr_FR/french_f0 directory
+   - name: Move french_f0/* to  pocketsphinx/hmm/fr_FR/french_f0 directory
      command: mv {{ project_dir }}/lium_french_f0 {{ pocketsphinx_pkg_config_path.stdout }}/hmm/fr_FR/french_f0
 
 ### trigram language ###
@@ -248,3 +279,130 @@
       regexp="^; default-sample-channels ="
       line="default-sample-channels = 2"
       state=present
+
+### MBROLA installation ###
+## Source: http://bothari.free.fr/weblog/post/Ubuntu-Text-to-Speech-%28TTS%29
+
+   - name: Test mbrola_linux_binary_file
+     stat: path={{ project_dir }}/{{ mbrola_linux_binary_file }}
+     register: mbrola_linux_binary_file_stat
+   - name: Test mbrola_voices_fr1_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr1_file }}
+     register: mbrola_voices_fr1_file_stat
+   - name: Test mbrola_voices_fr2_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr2_file }}
+     register: mbrola_voices_fr2_file_stat
+   - name: Test mbrola_voices_fr3_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr3_file }}
+     register: mbrola_voices_fr3_file_stat
+   - name: Test mbrola_voices_fr4_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr4_file }}
+     register: mbrola_voices_fr4_file_stat
+   - name: Test mbrola_voices_fr5_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr5_file }}
+     register: mbrola_voices_fr5_file_stat
+   - name: Test mbrola_voices_fr6_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr6_file }}
+     register: mbrola_voices_fr6_file_stat
+   - name: Test mbrola_voices_fr7_file  
+     stat: path={{ project_dir }}/{{ mbrola_voices_fr7_file }}
+     register: mbrola_voices_fr7_file_stat
+
+   - name: Download mbrola_linux_binary_file
+     get_url: url={{ mbrola_linux_binary_url }} dest={{ project_dir }}/{{ mbrola_linux_binary_file }}
+     when: not mbrola_linux_binary_file_stat.stat.exists
+   - name: Download mbrola_voices_fr1_file
+     get_url: url={{ mbrola_voices_fr1_url }} dest={{ project_dir }}/{{ mbrola_voices_fr1_file }}
+     when: not mbrola_voices_fr1_file_stat.stat.exists
+   - name: Download mbrola_voices_fr2_file
+     get_url: url={{ mbrola_voices_fr2_url }} dest={{ project_dir }}/{{ mbrola_voices_fr2_file }}
+     when: not mbrola_voices_fr2_file_stat.stat.exists
+   - name: Download mbrola_voices_fr3_file
+     get_url: url={{ mbrola_voices_fr3_url }} dest={{ project_dir }}/{{ mbrola_voices_fr3_file }}
+     when: not mbrola_voices_fr3_file_stat.stat.exists
+   - name: Download mbrola_voices_fr4_file
+     get_url: url={{ mbrola_voices_fr4_url }} dest={{ project_dir }}/{{ mbrola_voices_fr4_file }}
+     when: not mbrola_voices_fr4_file_stat.stat.exists
+   - name: Download mbrola_voices_fr5_file
+     get_url: url={{ mbrola_voices_fr5_url }} dest={{ project_dir }}/{{ mbrola_voices_fr5_file }}
+     when: not mbrola_voices_fr5_file_stat.stat.exists
+   - name: Download mbrola_voices_fr6_file
+     get_url: url={{ mbrola_voices_fr6_url }} dest={{ project_dir }}/{{ mbrola_voices_fr6_file }}
+     when: not mbrola_voices_fr6_file_stat.stat.exists
+   - name: Download mbrola_voices_fr7_file
+     get_url: url={{ mbrola_voices_fr7_url }} dest={{ project_dir }}/{{ mbrola_voices_fr7_file }}
+     when: not mbrola_voices_fr7_file_stat.stat.exists
+
+   - name: Creates mbrola_install_directory
+     action: file dest={{ mbrola_install_directory }} state=directory
+   - name: Creates /usr/share/mbrola directory
+     action: file dest=/usr/share/mbrola state=directory
+   - name: Creates mbrola_voices_fr4 directory
+     action: file dest=/usr/share/mbrola/fr4 state=directory
+
+
+   - name: Unarchive mbrola_linux_binary_file
+     unarchive: src={{ project_dir }}/{{ mbrola_linux_binary_file }} dest={{ mbrola_install_directory }} copy=no
+   - name: Unarchive mbrola_voices_fr1_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr1_file }} dest=/usr/share/mbrola/ copy=no
+   - name: Unarchive mbrola_voices_fr2_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr2_file }} dest=/usr/share/mbrola/ copy=no
+   - name: Unarchive mbrola_voices_fr3_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr3_file }} dest=/usr/share/mbrola/ copy=no
+   - name: Unarchive mbrola_voices_fr4_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr4_file }} dest=/usr/share/mbrola/fr4 copy=no
+   - name: Unarchive mbrola_voices_fr5_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr5_file }} dest=/usr/share/mbrola/ copy=no
+   - name: Unarchive mbrola_voices_fr6_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr6_file }} dest=/usr/share/mbrola/ copy=no
+   - name: Unarchive mbrola_voices_fr7_file
+     unarchive: src={{ project_dir }}/{{ mbrola_voices_fr7_file }} dest=/usr/share/mbrola/ copy=no         
+
+         
+   - name: Restore root permission
+     file: path={{ mbrola_install_directory }}  owner=root group=root recurse=yes
+   - name: Enable executable permission for mbrola binary
+     file: path={{ mbrola_install_directory }}/mbrola-linux-i386  owner=root group=root mode=0755
+   - name: Create symlink to /usr/bin/mbrola
+     file: src={{ mbrola_install_directory }}/mbrola-linux-i386 dest=/usr/bin/mbrola state=link
+
+### speech-dispatcher ###
+   - name: stats /etc/speech-dispatcher/speechd.conf.ORIG
+     stat: path=/etc/speech-dispatcher/speechd.conf.ORIG
+     register: speechd_conf_ORIG
+
+   - name: cp -fvp /etc/speech-dispatcher/speechd.conf /etc/speech-dispatcher/speechd.conf.ORIG
+     command: cp -fvp /etc/speech-dispatcher/speechd.conf /etc/speech-dispatcher/speechd.conf.ORIG
+     when: not speechd_conf_ORIG.stat.exists
+
+   - name: Set DefaultVoiceType  "FEMALE1"
+     lineinfile:
+      dest=/etc/speech-dispatcher/speechd.conf
+      regexp='^DefaultVoiceType'
+      line='DefaultVoiceType  "FEMALE1"'
+      insertafter='^# DefaultVoiceType  "MALE1"'
+      state=present
+
+   - name: Set DefaultLanguage  "fr"
+     lineinfile:
+      dest=/etc/speech-dispatcher/speechd.conf
+      regexp='^DefaultLanguage'
+      line='DefaultLanguage  "fr"'
+      insertafter='^# DefaultLanguage "en"'
+      state=present
+
+   - name: Set AddModule "espeak-generic" "sd_generic" "espeak-generic.conf"
+     lineinfile:
+      dest=/etc/speech-dispatcher/speechd.conf
+      regexp='^AddModule "espeak-generic" "sd_generic" "espeak-generic.conf"'
+      line='AddModule "espeak-generic" "sd_generic" "espeak-generic.conf"'
+      insertafter='#AddModule "pico"        "sd_pico"     "pico.conf"'
+      state=present
+
+   - name: DefaultModule espeak-generic
+     lineinfile:
+      dest=/etc/speech-dispatcher/speechd.conf
+      regexp='^DefaultModule'
+      line='DefaultModule espeak-generic'
+      state=present
+
