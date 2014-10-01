@@ -145,8 +145,8 @@ def record():
             audio_started = True              
             if DEBUG:
                 print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-                print bcolors.BLACK+"["+bcolors.ENDC,
-                print bcolors.RED+" Ecoute     "+bcolors.ENDC,
+                print bcolors.BLACK+"\b["+bcolors.ENDC,
+                print bcolors.WARNING+" Ecoute  "+bcolors.ENDC,
                 print bcolors.BLACK+"]"+bcolors.ENDC,
                 sys.stdout.flush()
 
@@ -174,8 +174,8 @@ def record_to_file(path):
 def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     
     print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-    print bcolors.BLACK+"["+bcolors.ENDC,
-    print bcolors.RED+" Analyse    "+bcolors.ENDC,
+    print bcolors.BLACK+"\b["+bcolors.ENDC,
+    print bcolors.RED+" Analyse "+bcolors.ENDC,
     print bcolors.BLACK+"]"+bcolors.ENDC,
     sys.stdout.flush()
     
@@ -194,14 +194,14 @@ def decodeSpeech(hmmd,lmdir,dictp,wavfile):
 
 def tts(text):
     if not text == "": 
-        print bcolors.BLACK+"IA   :> "+bcolors.WARNING+text+bcolors.ENDC
+        print bcolors.BLACK+"\bIA   :> "+bcolors.WARNING+text+bcolors.ENDC
         os.system(espeack_cmd % text)
 
 def stt():
     record_to_file(wavfile)
     recognised = decodeSpeech(hmdir,lmd,dictd,wavfile)
     if not recognised == "": 
-        print bcolors.BLACK+"Human:> "+bcolors.WARNING+recognised+bcolors.ENDC
+        print bcolors.BLACK+"\bHuman:> "+bcolors.WARNING+recognised+bcolors.ENDC
     return recognised
 
 if __name__ == '__main__':
@@ -209,8 +209,8 @@ if __name__ == '__main__':
     while True:
         
         print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-        print bcolors.BLACK+"["+bcolors.ENDC,
-        print bcolors.RED+"Prêt       "+bcolors.ENDC,
+        print bcolors.BLACK+"\b["+bcolors.ENDC,
+        print bcolors.OKGREEN+"Prêt    "+bcolors.ENDC,
         print bcolors.BLACK+"]"+bcolors.ENDC,
         sys.stdout.flush()
         
