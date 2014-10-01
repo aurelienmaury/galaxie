@@ -210,7 +210,7 @@ if __name__ == '__main__':
         
         print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
         print bcolors.BLACK+"\b["+bcolors.ENDC,
-        print bcolors.OKGREEN+"Prêt    "+bcolors.ENDC,
+        print bcolors.OKGREEN+" Prêt    "+bcolors.ENDC,
         print bcolors.BLACK+"]"+bcolors.ENDC,
         sys.stdout.flush()
         
