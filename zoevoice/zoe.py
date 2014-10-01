@@ -10,9 +10,14 @@ from sys import byteorder
 import copy
 import pyaudio
 import wave
-import sys,os
 import aiml
-import datetime
+import commands
+import sys
+import time 
+import commands
+from os import system
+import marshal # sesje 
+import os.path
 
 hmdir = "/usr/share/pocketsphinx/model/hmm/fr_FR/french_f0"
 lmd = "/usr/share/pocketsphinx/model/lm/fr_FR/french3g62K.lm.dmp"
@@ -29,22 +34,56 @@ CHANNELS = 1
 TRIM_APPEND = RATE / 4
 DEBUG = 1
 
+
 k = aiml.Kernel()
-k.learn("FrenchAIML/atomique_ed.aiml")
-k.learn("FrenchAIML/comment_ed.aiml")
-k.learn("FrenchAIML/estu_ed.aiml")
-k.learn("FrenchAIML/humour_ed.aiml")
-k.learn("FrenchAIML/ou_ed.aiml")
-k.learn("FrenchAIML/pourquoi_ed.aiml")
-k.learn("FrenchAIML/quand_ed.aiml")
-k.learn("FrenchAIML/quel_ed.aiml")
-k.learn("FrenchAIML/questceque_ed.aiml")
-k.learn("FrenchAIML/qui_ed.aiml")
-k.learn("FrenchAIML/srai_ed.aiml")
-k.learn("FrenchAIML/that_ed.aiml")
-k.learn("zoe.aiml")
+zoe="zoe.br"
+
+# read dictionary and create brain in file zoe.brp
+
+if os.path.isfile(zoe):
+    k.bootstrap(brainFile = zoe)
+else:
+    homedir=os.getcwd()
+    #Change to the directory whe	re the AIML files are located
+    os.chdir('./dic') # going to dictionary
+    list=os.listdir('./');
+    for item in list: #load dictionary one by one 
+        k.learn(item)
+	  
+    
+    k.setPredicate("master","ravi")
+	
+    #Change back to homedir to save the brain for subsequent loads
+    os.chdir(homedir)
+    k.saveBrain(zoe) # save new brain
+# name of bot
+k.setBotPredicate('name', "Zoet")
+
 
 wavfile = "recording.wav"
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    BLACK = '\033[36m'
+    RED =  '\033[31m'
+    GREEN =  '\033[32m'
+    BLUE =  '\033[34m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
+    def disable(self):
+        self.HEADER = ''
+        self.OKBLUE = ''
+        self.OKGREEN = ''
+        self.WARNING = ''
+        self.BLACK=''
+        self.RED=''
+        self.FAIL = ''
+        self.ENDC = ''
+
 
 def is_silent(data_chunk):
     """Returns 'True' if below the 'silent' threshold"""
@@ -105,7 +144,11 @@ def record():
         elif not silent:
             audio_started = True              
             if DEBUG:
-                print 'Ecoute ...'
+                print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
+                print bcolors.BLACK+"["+bcolors.ENDC,
+                print bcolors.RED+" Ecoute     "+bcolors.ENDC,
+                print bcolors.BLACK+"]"+bcolors.ENDC,
+                sys.stdout.flush()
 
     sample_width = p.get_sample_size(FORMAT)
     stream.stop_stream()
@@ -129,38 +172,51 @@ def record_to_file(path):
     wave_file.close()
 
 def decodeSpeech(hmmd,lmdir,dictp,wavfile):
-
+    
+    print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
+    print bcolors.BLACK+"["+bcolors.ENDC,
+    print bcolors.RED+" Analyse    "+bcolors.ENDC,
+    print bcolors.BLACK+"]"+bcolors.ENDC,
+    sys.stdout.flush()
+    
     import pocketsphinx as ps
     import sphinxbase
-    if DEBUG:
-        print 'Analyse...'
+    
     speechRec = ps.Decoder(hmm = hmmd, lm = lmdir, dict = dictp)
     wavFile = file(wavfile,'rb')
     wavFile.seek(44)
     speechRec.decode_raw(wavFile)
     result = speechRec.get_hyp()
+    print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
+    sys.stdout.flush()
 
     return result[0]
 
 def tts(text):
     if not text == "": 
-        print 'IA   :> ',text
+        print bcolors.BLACK+"IA   :> "+bcolors.WARNING+text+bcolors.ENDC
         os.system(espeack_cmd % text)
 
 def stt():
     record_to_file(wavfile)
     recognised = decodeSpeech(hmdir,lmd,dictd,wavfile)
     if not recognised == "": 
-        print 'Human:> ',recognised
+        print bcolors.BLACK+"Human:> "+bcolors.WARNING+recognised+bcolors.ENDC
     return recognised
 
 if __name__ == '__main__':
     espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
     while True:
-        if DEBUG:
-            print 'Pret ...'
+        
+        print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
+        print bcolors.BLACK+"["+bcolors.ENDC,
+        print bcolors.RED+"Prêt       "+bcolors.ENDC,
+        print bcolors.BLACK+"]"+bcolors.ENDC,
+        sys.stdout.flush()
+        
         recognised = stt()
         tts(k.respond(recognised))
+        
         if recognised == "lance un navigateur" or recognised == "lance un médiateur":
             os.system("iceweasel");
             tts("C'est fait")
