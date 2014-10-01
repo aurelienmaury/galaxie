@@ -11,7 +11,7 @@
 
 
 <category><pattern>XGOOGLE *</pattern><template>
-<![CDATA[<a target="_new" href="http://www.google.com/search?q=<personf/>">]]>Google Search<![CDATA[</a>]]>
+<![CDATA[<a target="_new" href="https://www.google.fr/search?q=<personf/>">]]>Google Search<![CDATA[</a>]]>
 </template></category>
 
 </aiml>

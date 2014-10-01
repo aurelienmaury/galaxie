@@ -9,39 +9,58 @@ from struct import pack
 from sys import byteorder
 import copy
 import pyaudio
+import audioop
 import wave
-import aiml
 import commands
 import sys
-import time 
 import commands
 from os import system
-import marshal # sesje 
+import aiml
+import marshal 
 import os.path
+import time
+import tempfile
+import subprocess
 
-hmdir = "/usr/share/pocketsphinx/model/hmm/fr_FR/french_f0"
-lmd = "/usr/share/pocketsphinx/model/lm/fr_FR/french3g62K.lm.dmp"
-dictd = "/usr/share/pocketsphinx/model/lm/fr_FR/frenchWords62K.dic"
+# Write STDERR to /dev/null
+#f = open('/dev/null', 'w')
+#sys.stderr = f
 
-THRESHOLD = 1500  # audio levels not normalised.
+# VARIALE for Voice reconize
+pocketsphinx_share_path = subprocess.Popen("pkg-config --variable=modeldir pocketsphinx", stdout=subprocess.PIPE, shell=True)
+(pocketsphinx_share_path_output, pocket_sphinx_share_path_err) = pocketsphinx_share_path.communicate()
+pocketsphinx_share_path_output = pocketsphinx_share_path_output.replace('\n', '')
+print pocketsphinx_share_path_output+'/lm/fr_FR/frenchWords62K.dic'
+if os.path.isfile(pocketsphinx_share_path_output+'/lm/fr_FR/frenchWords62K.dic'):
+    hmdir =  pocketsphinx_share_path_output + "/hmm/fr_FR/french_f0"
+    lmd = pocketsphinx_share_path_output + "/lm/fr_FR/french3g62K.lm.dmp"
+    dictd = pocketsphinx_share_path_output + "/lm/fr_FR/frenchWords62K.dic"
+else:
+    print 'pocketsphinx is require for zoevoice'
+    os.system(sys.exit(0));
+
+# VARIABLES for Noise Gate Regarding
+THRESHOLD = 2000  # audio levels not normalised.
 CHUNK_SIZE = 1024
-SILENT_CHUNKS = 0.1 * 44100 / 1024  # about 3sec
+SILENT_CHUNKS = 0.3 * 44100 / 1024  # about 3sec
 FORMAT = pyaudio.paInt16
 FRAME_MAX_VALUE = 2 ** 15 - 1
-NORMALIZE_MINUS_ONE_dB = 10 ** (-0.5 / 20)
+NORMALIZE_MINUS_ONE_dB = 10 ** (-0.3 / 20)
 RATE = 16000
 CHANNELS = 1
-TRIM_APPEND = RATE / 4
+TRIM_APPEND = RATE / 10
 DEBUG = 1
 
 
+# ALICE BRAIN INT
 k = aiml.Kernel()
-zoe="zoe.br"
+zoe_brain="zoe.br"
+zoe_session="zoe.ses"
 
 # read dictionary and create brain in file zoe.brp
 
-if os.path.isfile(zoe):
-    k.bootstrap(brainFile = zoe)
+if os.path.isfile(zoe_brain):
+    k.bootstrap(brainFile = zoe_brain)
 else:
     homedir=os.getcwd()
     #Change to the directory whe	re the AIML files are located
@@ -49,27 +68,43 @@ else:
     list=os.listdir('./');
     for item in list: #load dictionary one by one 
         k.learn(item)
-	  
     
-    k.setPredicate("master","ravi")
+    k.setPredicate("master","Zoe")
+    #k.setPredicate("master","ravi")
+    #k.setPredicate(pred, value, "Zoe")
 	
     #Change back to homedir to save the brain for subsequent loads
     os.chdir(homedir)
-    k.saveBrain(zoe) # save new brain
+    k.saveBrain(zoe_brain) # save new brain
 # name of bot
-k.setBotPredicate('name', "Zoet")
+k.setBotPredicate('name', "Zoe")
+
+#Load session
+if os.path.isfile(zoe_session):
+    sessionFile = file(zoe_session, "rb")
+    session = marshal.load(sessionFile)
+    for pred,value in session.items():
+        k.setPredicate(pred, value, "Zoe")
 
 
-wavfile = "recording.wav"
+#Temporaty file
+wavfile = tempfile.gettempdir() + '/zoevoice_'+str(int(time.time())) + '.wav'
+
+#Espeack command line
+#espeack_cmd = "espeak -x -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
+#espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
+espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e /usr/share/mbrola/fr4/fr4 - -.au | paplay"
+
+#Variable it contain the text ecognised by the voice to text
+global recognised
 
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    BLACK = '\033[36m'
+    YELLOW = '\033[93m'
+    NORMAL = '\033[36m'
     RED =  '\033[31m'
-    GREEN =  '\033[32m'
     BLUE =  '\033[34m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'
@@ -78,11 +113,12 @@ class bcolors:
         self.HEADER = ''
         self.OKBLUE = ''
         self.OKGREEN = ''
-        self.WARNING = ''
-        self.BLACK=''
+        self.YELLOW = ''
+        self.NORMAL=''
         self.RED=''
         self.FAIL = ''
         self.ENDC = ''
+
 
 
 def is_silent(data_chunk):
@@ -142,13 +178,8 @@ def record():
             else: 
                 silent_chunks = 0
         elif not silent:
-            audio_started = True              
-            if DEBUG:
-                print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-                print bcolors.BLACK+"\b["+bcolors.ENDC,
-                print bcolors.WARNING+" Ecoute  "+bcolors.ENDC,
-                print bcolors.BLACK+"]"+bcolors.ENDC,
-                sys.stdout.flush()
+            audio_started = True
+            prompt(2)              
 
     sample_width = p.get_sample_size(FORMAT)
     stream.stop_stream()
@@ -160,7 +191,7 @@ def record():
     return sample_width, data_all
 
 def record_to_file(path):
-    "Records from the microphone and outputs the resulting data to 'path'"
+    #"Records from the microphone and outputs the resulting data to 'path'"
     sample_width, data = record()
     data = pack('<' + ('h' * len(data)), *data)
 
@@ -173,12 +204,8 @@ def record_to_file(path):
 
 def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     
-    print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-    print bcolors.BLACK+"\b["+bcolors.ENDC,
-    print bcolors.RED+" Analyse "+bcolors.ENDC,
-    print bcolors.BLACK+"]"+bcolors.ENDC,
-    sys.stdout.flush()
-    
+    prompt(3)
+ 
     import pocketsphinx as ps
     import sphinxbase
     
@@ -187,47 +214,57 @@ def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     wavFile.seek(44)
     speechRec.decode_raw(wavFile)
     result = speechRec.get_hyp()
-    print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-    sys.stdout.flush()
+    
+    prompt(0)
 
     return result[0]
 
+def prompt(state):
+    print "\b"*20,
+    if state == 1:
+       print bcolors.NORMAL+"\b["+bcolors.ENDC,
+       print bcolors.OKGREEN+"\bPrêt   "+bcolors.ENDC,
+       print bcolors.NORMAL+"\b >"+bcolors.ENDC,
+    if state == 2:
+       print bcolors.NORMAL+"\b["+bcolors.ENDC,
+       print bcolors.YELLOW+"\bEcoute "+bcolors.ENDC,
+       print bcolors.NORMAL+"\b >"+bcolors.ENDC,
+    if state == 3:
+       print bcolors.NORMAL+"\b["+bcolors.ENDC,
+       print bcolors.RED+"\bAnalyse"+bcolors.ENDC,
+       print bcolors.NORMAL+"\b >"+bcolors.ENDC,
+    sys.stdout.flush()
+    
+  
 def tts(text):
     if not text == "": 
-        print bcolors.BLACK+"\bIA   :> "+bcolors.WARNING+text+bcolors.ENDC
+        print bcolors.NORMAL+"\bIA   :> "+bcolors.YELLOW+text+bcolors.ENDC
         os.system(espeack_cmd % text)
 
 def stt():
     record_to_file(wavfile)
     recognised = decodeSpeech(hmdir,lmd,dictd,wavfile)
+    os.remove(wavfile)
     if not recognised == "": 
-        print bcolors.BLACK+"\bHuman:> "+bcolors.WARNING+recognised+bcolors.ENDC
+        print bcolors.NORMAL+"\bHuman:> "+bcolors.YELLOW+recognised+bcolors.ENDC
     return recognised
+    
 
-if __name__ == '__main__':
-    espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
+def main():
+    
     while True:
         
-        print "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",
-        print bcolors.BLACK+"\b["+bcolors.ENDC,
-        print bcolors.OKGREEN+" Prêt    "+bcolors.ENDC,
-        print bcolors.BLACK+"]"+bcolors.ENDC,
-        sys.stdout.flush()
+        prompt(1)
         
         recognised = stt()
-        tts(k.respond(recognised))
+        tts(k.respond(recognised, 'Zoe'))
         
         if recognised == "lance un navigateur" or recognised == "lance un médiateur":
             os.system("iceweasel");
             tts("C'est fait")
-        elif recognised == "comment vas -tu" or recognised == "comment veux -tu" or recognised == "comment va" or recognised == "comment veux" or recognised == "comment ça va":
-            tts("Bien merci")
-            tts("Et toi ?")
-            recognised = stt()
-            if recognised == "mal" or recognised == "non":
-                tts("Ha ?")      
         elif recognised == "je vais me coucher":
             tts("OK, veux tu que je ferme tout ?")
+            prompt(1)
             recognised = stt()
             if recognised == "oui":
                 tts("OK, je fais ça")
@@ -235,7 +272,14 @@ if __name__ == '__main__':
                 os.system(sys.exit(0));
         elif recognised == "ferme":
             tts("Au revoir")
+            session = k.getSessionData("Zoe")
+            sessionFile = file(zoe_session, "wb")
+            marshal.dump(session, sessionFile)
+            sessionFile.close()
             os.system(sys.exit(0));
         elif recognised == "ferme toi":
             tts("Au revoir")
             os.system(sys.exit(0));
+
+if __name__ == '__main__':
+    main()
