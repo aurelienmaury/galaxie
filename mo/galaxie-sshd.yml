@@ -9,6 +9,7 @@
         regexp="^{{ item.key }} "
         line="{{ item.key }} {{ item.value }}"
         state=present
+        backup=yes
       with_items:
         - { key: "Protocol",        value: "2" }
         - { key: "DebianBanner",    value: "no" }
@@ -41,6 +42,7 @@
         regexp="^{{ item.key }} "
         line="{{ item.key }} {{ item.value }}"
         state=present
+        backup=yes
       with_items:
         - { key: "CompressionLevel", value: "9" }
       notify:
