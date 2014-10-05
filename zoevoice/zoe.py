@@ -16,11 +16,16 @@ import sys
 import commands
 from os import system
 import aiml
+#For save Session on marshal format
 import marshal 
+#For list directory
 import os.path
 import time
+#Cross platform TEMP dir location
 import tempfile
 import subprocess
+
+
 
 # VARIALE for Voice reconize
 pocketsphinx_share_path = subprocess.Popen("pkg-config --variable=modeldir pocketsphinx", stdout=subprocess.PIPE, shell=True)
@@ -35,12 +40,13 @@ else:
     os.system(sys.exit(0));
 
 # VARIABLES for Noise Gate Regarding
-THRESHOLD = 2500  # audio levels not normalised.
+THRESHOLD = 1750  # audio levels not normalised.
 CHUNK_SIZE = 1024
 SILENT_CHUNKS = 0.3 * 44100 / 1024  # about 3sec
-FORMAT = pyaudio.paInt16
+#FORMAT = pyaudio.paInt16
+FORMAT = pyaudio.paALSA
 FRAME_MAX_VALUE = 2 ** 15 - 1
-NORMALIZE_MINUS_ONE_dB = 10 ** (-0.3 / 20)
+NORMALIZE_MINUS_ONE_dB = 10 ** (-3 / 20)
 RATE = 16000
 CHANNELS = 1
 TRIM_APPEND = RATE / 10
@@ -50,32 +56,10 @@ DEBUG = 1
 k = aiml.Kernel()
 zoe_brain="zoe.br"
 zoe_session="zoe.ses"
+zoe_session_name="Zoe"
+modules_dir= os.getcwd() + '/modules'
+brains_dir= os.getcwd() + '/brains'
 
-# read dictionary and create brain in file zoe.brp
-
-if os.path.isfile(zoe_brain):
-    k.bootstrap(brainFile = zoe_brain)
-else:
-    homedir=os.getcwd()
-    #Change to the directory whe	re the AIML files are located
-    os.chdir('./dic') # going to dictionary
-    list=os.listdir('./');
-    for item in list: #load dictionary one by one 
-        k.learn(item)
-    
-    k.setPredicate("master","Zoe")
-    #Change back to homedir to save the brain for subsequent loads
-    os.chdir(homedir)
-    k.saveBrain(zoe_brain) # save new brain
-# name of bot
-k.setBotPredicate('name', "Zoe")
-
-#Load session
-if os.path.isfile(zoe_session):
-    sessionFile = file(zoe_session, "rb")
-    session = marshal.load(sessionFile)
-    for pred,value in session.items():
-        k.setPredicate(pred, value, "Zoe")
 
 
 #Temporaty file
@@ -85,7 +69,7 @@ wavfile = tempfile.gettempdir() + '/zoevoice_'+str(int(time.time())) + '.wav'
 #espeack_cmd = "espeak -x -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
 #espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
 espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
-wavegain_cmd = "wavegain -y -d 4 \"%s\""
+#wavegain_cmd = "wavegain -y -d 3 \"%s\""
 galaxie_update_server_cmd = "xterm -hold -e /home/tuxa/ansible/bin/ansible-playbook ~/galaxie/update-server.yml -K&"
 #Variable it contain the text ecognised by the voice to text
 global recognised
@@ -103,6 +87,7 @@ class bcolors:
         self.NORMAL=''
         self.RED=''
         self.ENDC = ''
+
 
 def is_silent(data_chunk):
     """Returns 'True' if below the 'silent' threshold"""
@@ -162,7 +147,7 @@ def record():
     stream.close()
     p.terminate()
     data_all = trim(data_all)  # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
-    #data_all = normalize(data_all)
+    data_all = normalize(data_all)
     return sample_width, data_all
 
 def record_to_file(path):
@@ -175,9 +160,9 @@ def record_to_file(path):
     wave_file.setframerate(RATE)
     wave_file.writeframes(data)
     wave_file.close()
-    os.system(wavegain_cmd % path)
+    #filter_noise(wavfile)
+    #os.system(wavegain_cmd % path)
     
-
 def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     prompt(3)
     import pocketsphinx as ps
@@ -188,10 +173,11 @@ def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     speechRec.decode_raw(wavFile)
     result = speechRec.get_hyp()
     prompt(0)
+    #print result[0], q
     return result[0]
 
 def prompt(state):
-    print "\b"*20,
+    print "\b" * 20,
     if state == 1:
        print bcolors.NORMAL+"\b["+bcolors.ENDC,
        print bcolors.OKGREEN+"\bPrêt   "+bcolors.ENDC,
@@ -215,22 +201,58 @@ def tts(text):
 def stt():
     record_to_file(wavfile)
     recognised = decodeSpeech(hmdir,lmd,dictd,wavfile)
-    os.remove(wavfile)
     if not recognised == "": 
         print bcolors.NORMAL+"\bHuman:> "+bcolors.YELLOW+recognised+bcolors.ENDC
+    os.remove(wavfile)
     return recognised
- 
+
+
+def load_module(module_name):
+    os.chdir(modules_dir + '/' + module_name)
+    list=os.listdir('./');
+    for item in list:
+       if item.endswith('.aiml'):
+            #print item
+            #Add to k brain all .aiml file
+            k.learn(item)
+
+# read dictionary and create brain in file zoe.brp
+def load_brain():
+    os.chdir(brains_dir)
+    if os.path.isfile(zoe_brain):
+        k.bootstrap(brainFile = zoe_brain)
+    else:
+        load_module('zoe')
+        load_module('date')
+        #load_module('alice')
+        os.chdir(brains_dir)
+        k.setPredicate("master",zoe_session_name)
+        k.saveBrain(zoe_brain) # save new brain
+    # name of bot
+    k.setBotPredicate('name', zoe_session_name)
+
+def load_session():
+    os.chdir(brains_dir)
+    if os.path.isfile(zoe_session):
+        sessionFile = file(zoe_session, "rb")
+        session = marshal.load(sessionFile)
+        for pred,value in session.items():
+            k.setPredicate(pred, value, zoe_session_name)
+    
 def save_session():
-    session = k.getSessionData("Zoe")
+    os.chdir(brains_dir)
+    session = k.getSessionData(zoe_session_name)
     sessionFile = file(zoe_session, "wb")
     marshal.dump(session, sessionFile)
     sessionFile.close()   
 
 def main():
+    load_brain()
+    load_session()
     while True:
         prompt(1)
         recognised = stt()
-        tts(k.respond(recognised, 'Zoe'))
+        tts(k.respond(recognised, zoe_session_name))
         
         if recognised == "lance un navigateur" or recognised == "lance un médiateur":
             os.system("iceweasel");
