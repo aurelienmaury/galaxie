@@ -38,9 +38,6 @@
     - name: Change password
       shell: usermod -p $(echo '{{ galaxie.randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ galaxie.user }}
 
-    - name: User is sudoer
-      lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
-
     - name: New key is authorized for user
       when: newKey is defined
       authorized_key:
@@ -74,7 +71,11 @@
         pkg=sudo
         state=present
         update-cache=yes
+        cache_valid_time=3600
       when: ansible_distribution == 'Debian'
+
+    - name: User is sudoer
+      lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
 
     - name: system upgrade
       apt:
