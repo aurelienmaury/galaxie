@@ -1,13 +1,15 @@
-- hosts: desktop
+- hosts: desktops
   user: zoe
   sudo: true
 
   tasks:
-    - name: Install required software
+    - name: Update apt
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install desktop tools
       apt:
-        pkg= "{{item}}"
+        pkg="{{item}}"
         state= present
-        update_cache= yes
       with_items:
         - gimp
         - iceweasel

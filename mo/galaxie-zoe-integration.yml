@@ -23,20 +23,20 @@
 
     - name: Group is present
       group:
-        name="{{ ansibleUser }}"
+        name="{{ galaxie.user }}"
         gid=4200
         state=present
 
     - name: User is present
       user:
-        name="{{ ansibleUser }}"
+        name="{{ galaxie.user }}"
         uid=4200
-        groups="{{ ansibleUser }},sudo"
+        groups="{{ galaxie.user }},sudo"
         generate_ssh_key=yes
         state=present
 
     - name: Change password
-      shell: usermod -p $(echo '{{ randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ ansibleUser }}
+      shell: usermod -p $(echo '{{ galaxie.randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ galaxie.user }}
 
     - name: User is sudoer
       lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
@@ -44,14 +44,14 @@
     - name: New key is authorized for user
       when: newKey is defined
       authorized_key:
-        user="{{ ansibleUser }}"
+        user="{{ galaxie.user }}"
         key="{{ lookup('file', newKey+'.pub') }}"
         state=present
 
     - name: Current key is banished for user
       when: newKey is defined and ansible_ssh_private_key_file is defined
       authorized_key:
-        user="{{ ansibleUser }}"
+        user="{{ galaxie.user }}"
         key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
         state=absent
 
@@ -81,5 +81,8 @@
         upgrade=yes
       when: ansible_distribution == 'Debian'
 
+    - name: next step
+      debug: msg="Integrated in Zoe's family, change 'newKey' to 'ansible_ssh_private_key_file' in your inventory for server {{ inventory_hostname }}"
+      when: newKey is defined
 
 

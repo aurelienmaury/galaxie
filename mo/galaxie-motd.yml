@@ -1,3 +1,4 @@
+---
 - hosts: galaxie
   user: zoe
   sudo: true

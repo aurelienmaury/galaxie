@@ -1,7 +1,7 @@
 ---
-ansibleUser: 'zoe'
-randomPasswordSeed: 'ZOE is Open and Extendable'
-
-currentPubkeyFile: ''
-
-toplevel_timeservers: ['192.168.1.71']
+galaxie:
+  user: zoe
+  randomPasswordSeed: 'ZOE is Open and Extendable'
+  time:
+    referrals:
+      - '192.168.1.71'

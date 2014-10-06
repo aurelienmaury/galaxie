@@ -1,0 +1,42 @@
+- hosts: galaxie
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name: Update apt
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install required software
+      apt:
+        pkg="{{item}}"
+        state=installed
+      with_items:
+        - bash-completion
+        - dnsutils
+        - htop
+        - module-assistant
+        - git
+        - wget
+        - vim
+        - mc
+        - ntp
+        - rsync
+        - sshfs
+        - screen
+        - minicom
+
+    - name: Remove not require software
+      apt:
+        pkg="{{item}}"
+        state=absent
+        purge=yes
+      with_items:
+        - nano
+        - emacs
+        - ntpdate
+        - nfs-common
+        - nfs-kernel-server
+        - rpcbind
+
+
+# TODO: configure NTP as client of ntp servers stated in host.inventory if not in group ntp
