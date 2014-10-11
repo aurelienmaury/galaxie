@@ -18,6 +18,7 @@
         - git
         - wget
         - vim
+        - emacs
         - mc
         - ntp
         - rsync
@@ -32,7 +33,6 @@
         purge=yes
       with_items:
         - nano
-        - emacs
         - ntpdate
         - nfs-common
         - nfs-kernel-server

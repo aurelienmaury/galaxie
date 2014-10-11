@@ -1,0 +1,72 @@
+---
+- name: users
+  user:
+    name={{ item }}
+    system=yes
+    createhome=no
+    state=present
+  with_items:
+    - '{{ tinydns.service_name }}'
+    - '{{ tinydns.dnslog_user }}'
+
+
+- name: directories
+  file:
+    path={{ item }}
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  with_items:
+    - '{{ tinydns.multilog_dir }}'
+    - '{{ tinydns.supervise_dir }}'
+
+
+- name: tinydns-conf output directory exists ?
+  shell:
+    test -d {{ tinydns.supervise_dir }}/{{ tinydns.service_name }}
+  register:
+    tinydnsConfDirExists
+  ignore_errors:
+    yes
+
+
+- name: tinydns-conf
+  when:
+    tinydnsConfDirExists|failed
+  shell:
+    tinydns-conf {{ tinydns.service_name }} {{ tinydns.dnslog_user }} {{ tinydns.supervise_dir }}/{{ tinydns.service_name }} {{ tinydns.interface }}
+
+
+- name: multilog directory
+  file:
+    path={{ tinydns.multilog_dir }}/{{ tinydns.service_name }}
+    owner={{ tinydns.dnslog_user }}
+    group={{ tinydns.dnslog_user }}
+    state=directory
+    mode=2755
+
+
+- name: point logger to correct service
+  lineinfile:
+    dest={{ tinydns.supervise_dir }}/{{ tinydns.service_name }}/log/run
+    regexp='^exec'
+    line='exec setuidgid {{ tinydns.dnslog_user }} {{ tinydns.multilog_user }} t {{ tinydns.multilog_dir }}/{{ tinydns.service_name }}'
+    backup=yes
+
+
+- name: delete old logger launcher
+  file:
+    path={{ tinydns.supervise_dir }}/{{ tinydns.service_name }}/log/main
+    state=absent
+
+- name: check if service registered
+  shell:
+    /usr/sbin/update-service --list | grep {{ tinydns.service_name }}
+  register:
+    serviceRegistered
+  ignore_errors:
+    yes
+  notify:
+    - register service
+    - restart service

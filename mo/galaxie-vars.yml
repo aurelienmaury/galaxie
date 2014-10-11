@@ -4,4 +4,7 @@ galaxie:
   randomPasswordSeed: 'ZOE is Open and Extendable'
   time:
     referrals:
-      - '192.168.1.71'
+      - 'pool.ntp.org'
+      - 'pool.ntp.org'
+      - 'pool.ntp.org'
+      - 'pool.ntp.org'

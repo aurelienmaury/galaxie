@@ -1,0 +1,10 @@
+---
+- hosts: mail_servers
+  user: root
+  sudo: no
+
+  vars_files:
+    - "qmail-vars.yml"
+
+  roles:
+     - galaxie_qmail

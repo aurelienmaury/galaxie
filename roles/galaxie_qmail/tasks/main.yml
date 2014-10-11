@@ -1,0 +1,317 @@
+---
+
+###############################################################################
+#
+# init - Very first init
+#
+- name: update
+  command:
+    /usr/bin/apt-get update -y
+  tags: init
+
+- name: upgrade
+  command:
+    /usr/bin/apt-get upgrade -y
+  tags: init
+
+- name: install python-apt
+  command:
+    /usr/bin/apt-get install python-apt -y
+  tags: init
+
+
+###############################################################################
+#
+# Info checking and notify relaunch of services
+#
+- name: check if service qmail-send is registered
+  shell:
+    /usr/sbin/update-service --list | grep {{ qmail.service_send }}
+  register:
+    serviceSendRegistered
+  ignore_errors:
+    yes
+  notify:
+    - register qmail-send service
+    - restart qmail-send service
+
+- name: check if service qmail-smtp is registered
+  shell:
+    /usr/sbin/update-service --list | grep {{ qmail.service_smtpd }}
+  register:
+    serviceSmtpRegistered
+  ignore_errors:
+    yes
+  notify:
+    - register qmail-smtp service
+    - restart qmail-smtp service
+
+# il en faut un
+
+
+###############################################################################
+#
+# install - Building and installing
+#
+- name: create groups
+  group:
+    name={{ item }}
+    state=present
+    system=yes
+  with_items:
+    - qmail
+    - nofiles
+  tags: install
+
+- name: create users
+  user:
+    name={{ item.username }}
+    system=yes
+    home={{ qmail.qmail_dir }}
+    state=present
+    group={{ item.group }}
+  with_items:
+    - { group: nofiles, username: qmaild }
+    - { group: nofiles, username: qmaill }
+    - { group: nofiles, username: qmailp }
+    - { group: qmail, username: qmailq }
+    - { group: qmail, username: qmailr }
+    - { group: qmail, username: qmails }
+  tags: install
+
+- name: create user 'alias'
+  user:
+    name=alias
+    system=yes
+    home={{ qmail.qmail_dir }}/alias
+    state=present
+    group=nofiles
+  tags: install
+
+- name: packages for qmail building
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items:
+    - build-essential
+    - daemontools
+    - daemontools-run
+    - ucspi-tcp
+    - passwd
+    - libssl-dev
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: qmail source directory
+  file:
+    path={{ qmail.source_dir }}
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: get qmail sources
+  get_url:
+    url=http://cr.yp.to/software/qmail-1.03.tar.gz
+    dest={{ qmail.source_dir }}
+    sha256sum=21ed6c562cbb55092a66197c35c8222b84115d1acab0854fdb1ad1f301626f88
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: get qmail patches
+  get_url:
+    url=http://qmail.jms1.net/patches/qmail-1.03-jms1-7.10.patch
+    dest={{ qmail.source_dir }}
+    sha256sum=3807b4adfc7dbf83e3e2e9e0c841b3443e3bc468bc91ffd240dd420a7fcaa84b
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: empty build directory
+  file:
+    path={{ item }}
+    state=absent
+    force=yes
+  with_items:
+    - '{{ qmail.source_dir }}/qmail-1.03'
+    - '{{ qmail.source_dir }}/qmail-1.03-jms1-7.10'
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: apply qmail patches
+  shell: '{{ item }}'
+  with_items:
+    - tar xvzf {{ qmail.source_dir }}/qmail-1.03.tar.gz -C {{ qmail.source_dir }}
+    - cd {{ qmail.source_dir }}/qmail-1.03 && patch < {{ qmail.source_dir }}/qmail-1.03-jms1-7.10.patch
+    - mv {{ qmail.source_dir }}/qmail-1.03 {{ qmail.source_dir }}/qmail-1.03-jms1-7.10
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: build and install qmail
+  shell: '{{ item }}'
+  with_items:
+    - cd {{ qmail.source_dir }}/qmail-1.03-jms1-7.10 && make
+    - cd {{ qmail.source_dir }}/qmail-1.03-jms1-7.10 && make man
+    - cd {{ qmail.source_dir }}/qmail-1.03-jms1-7.10 && make setup check
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+
+###############################################################################
+#
+# system - Preparing system for launch
+#
+- name: supervise dir
+  file:
+    path={{ qmail.supervise_dir }}
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  tags: system
+
+- name: create multilog directories
+  file:
+    path={{ qmail.multilog_dir }}/{{ item }}
+    owner={{ qmail.qmaill_user }}
+    group=root
+    state=directory
+    mode=2755
+  with_items:
+    - '{{ qmail.service_send }}'
+    - '{{ qmail.service_smtpd }}'
+  tags: system
+
+- name: qmail-send & qmail-smtp service directories
+  file:
+    path={{ qmail.supervise_dir }}/{{ item }}
+    state=directory
+    owner=root
+    group=root
+    mode=1755
+  with_items:
+    - '{{ qmail.service_send }}'
+    - '{{ qmail.service_smtpd }}'
+  tags: system
+
+- name: remove duplicate services
+  apt:
+    pkg={{ item }}
+    state=absent
+    purge=yes
+  with_items:
+    - exim4
+    - exim4-daemon-light
+    - postfix
+    - sendmail
+    - sendmail-base
+    - sendmail-bin
+    - sendmail-cf
+  tags: system
+
+- name: get local mta
+  get_url:
+    url=http://qmailrocks.thibs.com/downloads/deb-packages/mta-local_1.0_all.deb
+    dest={{ qmail.source_dir }}
+  tags: system
+
+- name: install local mta
+  apt:
+    deb={{ qmail.source_dir }}/mta-local_1.0_all.deb
+  tags: system
+
+- name: symlink to use qmail instead of default mta
+  file:
+    src={{ item.src }}
+    dest={{ item.dest }}
+    state=link
+    force=yes
+  with_items:
+    - { src: '{{ qmail.qmail_dir }}/bin/sendmail', dest: '/usr/lib/sendmail' }
+    - { src: '{{ qmail.qmail_dir }}/bin/sendmail', dest: '/usr/sbin/sendmail' }
+  tags: system
+
+###############################################################################
+#
+# Fine grained configuration
+#
+- name: qmail configuration
+  template:
+    src={{ item }}.j2
+    dest={{ qmail.qmail_dir }}/control/{{ item }}
+    mode=0644
+  with_items:
+    - defaultdelivery
+    - concurrencyremote
+    - concurrencyincoming
+    - spfbehavior
+    - bouncefrom
+    - doublebouncehost
+    - doublebounceto
+    - databytes
+    - timeoutsmtpd
+    - me
+  tags: config
+
+- name: qmail-send & qmail-smtpd runnners
+  template:
+    src={{ item.tmpl }}
+    dest={{ qmail.supervise_dir }}/{{ item.service }}/run
+    mode=0700
+  with_items:
+    - { service: '{{ qmail.service_send }}', tmpl: 'service-qmail-send-run.j2' }
+    - { service: '{{ qmail.service_smtpd }}', tmpl: 'service-qmail-smtpd-run.j2' }
+  tags: config
+
+- name: qmail-smtpd tcp.cdb Makefile
+  template:
+    src=service-qmail-smtpd-makefile.j2
+    dest={{ qmail.supervise_dir }}/{{ qmail.service_smtpd }}/Makefile
+    mode=0644
+    owner=root
+    group=root
+  tags: config
+
+- name: qmail-smtpd tcp.cdb
+  template:
+    src=service-qmail-smtpd-tcpdb.j2
+    dest={{ qmail.supervise_dir }}/{{ qmail.service_smtpd }}/tcp
+    mode=0644
+    owner=root
+    group=root
+  notify: rebuild qmail-smtpd tcpdb
+  tags: config
+
+- name: qmail-smtpd tcp.cdb Makefile
+  template:
+    src=service-qmail-smtpd-makefile.j2
+    dest={{ qmail.supervise_dir }}/{{ qmail.service_smtpd }}/Makefile
+    mode=0644
+    owner=root
+    group=root
+  tags: config
+
+- name: qmail-send & qmail-smtpd service log directories
+  file:
+    path={{ qmail.supervise_dir }}/{{ item }}/log
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  with_items:
+    - '{{ qmail.service_send }}'
+    - '{{ qmail.service_smtpd }}'
+  tags: config
+
+- name: qmail-send & qmail-smtpd service log runners
+  template:
+    src=service-any-log-run.j2
+    dest={{ qmail.supervise_dir }}/{{ item.service }}/log/run
+    mode=0700
+  with_items:
+    - { service: '{{ qmail.service_send }}', log_dest: '{{ qmail.multilog_dir }}/{{ qmail.service_send }}'}
+    - { service: '{{ qmail.service_smtpd }}', log_dest: '{{ qmail.multilog_dir }}/{{ qmail.service_smtpd }}' }
+  tags: config
+
+

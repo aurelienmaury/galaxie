@@ -1,0 +1,30 @@
+---
+
+- name: register qmail-send service
+  shell:
+    /usr/sbin/update-service --add {{ qmail.supervise_dir }}/{{ qmail.service_send }}
+  when: serviceSendRegistered|failed
+
+- name: restart qmail-send service
+  shell:
+    /usr/sbin/update-service --remove {{ qmail.supervise_dir }}/{{ qmail.service_send }} &&
+    /usr/sbin/update-service --add {{ qmail.supervise_dir }}/{{ qmail.service_send }}
+  when: serviceSendRegistered|success
+
+- name: register qmail-smtp service
+  shell:
+    /usr/sbin/update-service --add {{ qmail.supervise_dir }}/{{ qmail.service_smtpd }}
+  when: serviceSmtpRegistered|failed
+
+- name: restart qmail-smtp service
+  shell:
+    /usr/sbin/update-service --remove {{ qmail.supervise_dir }}/{{ qmail.service_smtpd }} &&
+    /usr/sbin/update-service --add {{ qmail.supervise_dir }}/{{ qmail.service_smtpd }}
+  when: serviceSmtpRegistered|success
+
+- name: rebuild qmail-smtpd tcpdb
+  shell:
+    cd {{ qmail.supervise_dir }}/{{ qmail.service_smtpd }} && make
+  notify:
+    - register qmail-smtp service
+    - restart qmail-smtp service

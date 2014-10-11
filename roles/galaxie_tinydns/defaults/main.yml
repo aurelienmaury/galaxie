@@ -1,0 +1,8 @@
+---
+tinydns:
+  service_name: tinydns
+  dnslog_user: dnslog
+  multilog_user: multilog
+  supervise_dir: /var/lib/supervise
+  multilog_dir: /var/multilog
+  interface: 127.0.0.1

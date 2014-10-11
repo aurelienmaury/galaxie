@@ -1,0 +1,7 @@
+---
+- hosts: tableaux-restauration.fr
+  user: m4momo
+  sudo: yes
+
+  roles:
+     - galaxie_tinydns

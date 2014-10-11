@@ -6,6 +6,9 @@
     - name: Update apt
       apt: update_cache=yes cache_valid_time=3600
 
+
+# TODO : activate branche apt non-free
+
     - name: Install desktop tools
       apt:
         pkg="{{item}}"
@@ -38,8 +41,6 @@
         - wicd-gtk
         - xchat
         - vim-gtk
-        - xbmc
-        - xbmc-pvr-tvheadend-hts
         - vlc
         - vlc-plugin-pulse
         - browser-plugin-vlc
@@ -50,6 +51,12 @@
         - dia
         - mkvtoolnix-gui
         - qt4-qtconfig
+
+# if aussi dans le groupe tvs :
+#        - xbmc
+#        - xbmc-pvr-tvheadend-hts
+# + config commune aux tvs
+# à faire à 2
 
     - name: Remove not require software
       apt:
@@ -66,3 +73,6 @@
         - gnumeric-common
         - gnumeric-doc
         - gnumeric-plugins-extra
+
+
+# s'assurer de l'absence d'autre imple de JRE

@@ -9,9 +9,11 @@
         dest=/etc/ssh/sshd_config
         regexp="^{{ item.key }} "
         line="{{ item.key }} {{ item.value }}"
+        insertafter="{{ item.key }} "
         state=present
         backup=yes
       with_items:
+        - { key: "ListenAddress",   value: "{{ansible_default_ipv4.address}}" }
         - { key: "Protocol",        value: "2" }
         - { key: "DebianBanner",    value: "no" }
         - { key: "PrintLastLog",    value: "yes" }

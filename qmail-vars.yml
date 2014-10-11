@@ -1,0 +1,26 @@
+---
+qmail:
+  supervise_dir: /var/lib/supervise
+  multilog_user: multilog
+  multilog_dir: /var/multilog
+  qmaill_user: qmaill
+  service_name: qmail
+  service_send: qmail-send
+  service_smtpd: qmail-smtpd
+  service_ip: "{{ ansible_default_ipv4.address }}"
+  source_dir: /usr/src/qmail
+  qmail_dir: /var/qmail
+  domain: galaxie.eu.org
+  me: galaxie.eu.org
+  conf:
+    default_delivery: ./Maildir/
+
+galaxie:
+  qmail:
+    dir: /var/qmail
+
+    domain:
+      main: galaxie.eu.org
+
+    conf:
+      delivery: ./Maildir/

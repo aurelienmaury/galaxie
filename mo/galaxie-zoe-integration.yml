@@ -1,10 +1,13 @@
 ---
 - name: Prepares target hosts to Galaxie's playbooks
   hosts: galaxie
-  sudo: yes
+  user: root
 
   vars_files:
     - "galaxie-vars.yml"
+
+  vars_prompt:
+    newPassword: "Which password to set for current connection user? (Blank if you don't want to change)"
 
   tasks:
     - name: New key is present
@@ -35,8 +38,12 @@
         generate_ssh_key=yes
         state=present
 
-    - name: Change password
+    - name: Change password for galaxie
       shell: usermod -p $(echo '{{ galaxie.randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ galaxie.user }}
+
+    - name: Change password for current user
+      shell: usermod -p $(echo '{{ galaxie.randomPasswordSeed }}' | mkpasswd --method=SHA-512 --stdin) {{ ansible_user_id }}
+      when: newPassword is defined and newPassword != ""
 
     - name: New key is authorized for user
       when: newKey is defined
@@ -86,4 +93,17 @@
       debug: msg="Integrated in Zoe's family, change 'newKey' to 'ansible_ssh_private_key_file' in your inventory for server {{ inventory_hostname }}"
       when: newKey is defined
 
+# caler sur pool.ntp.org
+# relancer ntpd
 
+
+#- name: waiting for ntp sync (up to 15 minutes, in general under 1 minute)
+#  shell ntpq --peers | tr -s " " | cut -d " " -f1,2 | grep -e "^\*" | grep -v "127\."
+#  register: ntpSync
+#  until: ntpSync is defined and ntpSync != ""
+#  retries: 90
+#  delay: 10
+
+
+# regenerer les clés serveur
+# http://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/

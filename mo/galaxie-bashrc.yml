@@ -2,6 +2,10 @@
   user: zoe
   sudo: true
 
+
+# activate bash_completion
+# valeur de PS1 vers ligne 39
+
   tasks:
     - name: /etc/.bash.bashrc is ok
       copy:
