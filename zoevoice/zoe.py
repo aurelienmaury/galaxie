@@ -1,9 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-#Instead of adding silence at start and end of recording (values=0) I add the original audio . This makes audio sound more natural as volume is >0. See trim()
-#I also fixed issue with the previous code - accumulated silence counter needs to be cleared once recording is resumed.
-
 from array import array
 from struct import pack
 from sys import byteorder
@@ -13,31 +10,13 @@ import audioop
 import wave
 import commands
 import sys
-import commands
 from os import system
 import aiml
-#For save Session on marshal format
 import marshal 
-#For list directory
 import os.path
 import time
-#Cross platform TEMP dir location
 import tempfile
 import subprocess
-
-
-
-# VARIALE for Voice reconize
-pocketsphinx_share_path = subprocess.Popen("pkg-config --variable=modeldir pocketsphinx", stdout=subprocess.PIPE, shell=True)
-(pocketsphinx_share_path_output, pocket_sphinx_share_path_err) = pocketsphinx_share_path.communicate()
-pocketsphinx_share_path_output = pocketsphinx_share_path_output.replace('\n', '')
-if os.path.isfile(pocketsphinx_share_path_output+'/lm/fr_FR/frenchWords62K.dic'):
-    hmdir =  pocketsphinx_share_path_output + "/hmm/fr_FR/french_f0"
-    lmd = pocketsphinx_share_path_output + "/lm/fr_FR/french3g62K.lm.dmp"
-    dictd = pocketsphinx_share_path_output + "/lm/fr_FR/frenchWords62K.dic"
-else:
-    print 'pocketsphinx is require for zoevoice'
-    os.system(sys.exit(0));
 
 # VARIABLES for Noise Gate Regarding
 THRESHOLD = 1750  # audio levels not normalised.
@@ -52,6 +31,9 @@ CHANNELS = 1
 TRIM_APPEND = RATE / 10
 DEBUG = 1
 
+#Temporaty file
+wavfile = tempfile.gettempdir() + '/zoevoice_' + str(int(time.time())) + '.wav'
+
 # ALICE BRAIN INT
 k = aiml.Kernel()
 zoe_brain="zoe.br"
@@ -60,10 +42,70 @@ zoe_session_name="Zoe"
 modules_dir= os.getcwd() + '/modules'
 brains_dir= os.getcwd() + '/brains'
 
+# VARIALE for Voice reconize
+# Permit to select the right directory for model
+lang='fr_FR'
 
+#Zoevoice models dierctory, permit to difuse Zoevoie with necessary file for work out of the box
+model_dir= os.getcwd() + '/model'
 
-#Temporaty file
-wavfile = tempfile.gettempdir() + '/zoevoice_'+str(int(time.time())) + '.wav'
+#Pocketsphinx directory where models are installed by default
+pocketsphinx_share_path = subprocess.Popen("pkg-config --variable=modeldir pocketsphinx", stdout=subprocess.PIPE, shell=True)
+(pocketsphinx_share_path_output, pocket_sphinx_share_path_err) = pocketsphinx_share_path.communicate()
+pocketsphinx_share_path_output = pocketsphinx_share_path_output.replace('\n', '')
+
+#Multilanguage support is not implemented just French yet
+if lang == 'fr_FR':
+    hmdir_name='lium_french_f0'
+    lmd_file_name='french3g62K.lm.dmp'
+    dictd_file_name='frenchWords62K.dic'
+elif lang == en_UK:
+    #Not implemented
+    hmdir_name='lium_french_f0'
+    lmd_file_name='french3g62K.lm.dmp'
+    dictd_file_name='frenchWords62K.dic'
+
+# look at that :)
+local_hmdir = model_dir + '/hmm/' + lang + '/' + hmdir_name
+local_lmd = model_dir + '/lm/' + lang + '/' + lmd_file_name
+local_dictd = model_dir + '/lm/' + lang + '/' + dictd_file_name
+pocketsphinx_hmdir = pocketsphinx_share_path_output + '/hmm/' + lang + '/' + hmdir_name
+pocketsphinx_lmd = pocketsphinx_share_path_output + '/lm/' + lang + '/' + lmd_file_name
+pocketsphinx_dictd = pocketsphinx_share_path_output + '/lm/' + lang + '/' + dictd_file_name
+
+dictd = model_dir + '/lm/' + lang + '/' + dictd_file_name
+
+# VARIALE for Voice reconize
+# Load local model_dir before pocketsphinx one
+if os.path.isdir(local_hmdir):
+    hmdir =  local_hmdir
+elif os.path.isfile():
+    hmdir = pocketsphinx_hmdir
+else:
+    print 'Pocketsphinx is require for Zoevoice'
+    print 'Intall it properlly before use it program'
+    os.system(sys.exit(0));
+
+#Load local lm.dump before pocketsphinx one
+if os.path.isfile(local_lmd):
+    lmd = local_lmd
+elif os.path.isfile(pocketsphinx_lmd):
+    lmd = pocketsphinx_lmd
+else:
+    print 'A model lm.dmp is require for Zoevoice'
+    print 'Put it on :' + local_lmd
+    os.system(sys.exit(0));
+
+#Load local .dic before pocketsphinx one
+if os.path.isfile(local_dictd):
+    dictd = local_dictd
+elif os.path.isfile(pocketsphinx_dictd):
+    dictd = pocketsphinx_dictd
+else:
+    print 'A model .dic is require for Zoevoice'
+    print 'Put it on :' + local_dictd
+    os.system(sys.exit(0));
+
 
 #Espeack command line
 #espeack_cmd = "espeak -x -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
@@ -151,7 +193,7 @@ def record():
     return sample_width, data_all
 
 def record_to_file(path):
-    #"Records from the microphone and outputs the resulting data to 'path'"
+    """Records from the microphone and outputs the resulting data to 'path'"""
     sample_width, data = record()
     data = pack('<' + ('h' * len(data)), *data)
     wave_file = wave.open(path, 'wb')
@@ -173,7 +215,6 @@ def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     speechRec.decode_raw(wavFile)
     result = speechRec.get_hyp()
     prompt(0)
-    #print result[0], q
     return result[0]
 
 def prompt(state):
@@ -201,29 +242,34 @@ def tts(text):
 def stt():
     record_to_file(wavfile)
     recognised = decodeSpeech(hmdir,lmd,dictd,wavfile)
-    if not recognised == "": 
+    if not recognised == '':
         print bcolors.NORMAL+"\bHuman:> "+bcolors.YELLOW+recognised+bcolors.ENDC
     os.remove(wavfile)
     return recognised
 
 
 def load_module(module_name):
-    os.chdir(modules_dir + '/' + module_name)
+    os.chdir(modules_dir + '/' + module_name + '/' + lang)
     list=os.listdir('./');
     for item in list:
        if item.endswith('.aiml'):
-            #print item
-            #Add to k brain all .aiml file
             k.learn(item)
 
-# read dictionary and create brain in file zoe.brp
+def reload_modules():
+    os.chdir(brains_dir)
+    os.remove(zoe_brain)
+    load_brain()
+    save_session()    
+
 def load_brain():
+    """ read dictionary and create brain in file zoe.brp"""
     os.chdir(brains_dir)
     if os.path.isfile(zoe_brain):
         k.bootstrap(brainFile = zoe_brain)
     else:
         load_module('zoe')
         load_module('date')
+        load_module('meteo')
         #load_module('alice')
         os.chdir(brains_dir)
         k.setPredicate("master",zoe_session_name)
@@ -256,6 +302,9 @@ def main():
         
         if recognised == "lance un navigateur" or recognised == "lance un médiateur":
             os.system("iceweasel");
+            tts("C'est fait")
+        elif recognised == "mis à jour des modules" or recognised == "mise jour des modules" or recognised == "mise à jour des modules":
+            reload_modules()
             tts("C'est fait")
         elif recognised == "je vais me coucher":
             tts("OK, veux tu que je ferme tout ?")

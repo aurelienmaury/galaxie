@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Module   : meteo.aiml   -   version :   0.1   -   MàJ : 5/10/2014  -->
+<!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
+<!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+<!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
+
+<!-- Demande la temperature -->
+
+<category><pattern>DONNE MOI LA TEMPERATURE</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
+<category><pattern>* MOI LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
+<category><pattern>DEUX MOIS LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
+<category><pattern>DEUX MOINS LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
+<category><pattern>D UN MOIS LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
+
+</aiml>
