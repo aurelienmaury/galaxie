@@ -1,0 +1,2 @@
+#! /bin/bash
+tail -f /var/multilog/tinydns/current | tai64nlocal
