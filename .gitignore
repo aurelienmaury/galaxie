@@ -5,3 +5,4 @@
 *.iws
 .DS_Store
 *~
+.anjuta

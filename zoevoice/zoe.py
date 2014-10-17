@@ -19,7 +19,7 @@ import tempfile
 import subprocess
 
 # VARIABLES for Noise Gate Regarding
-THRESHOLD = 1750  # audio levels not normalised.
+THRESHOLD = 1500  # audio levels not normalised.
 CHUNK_SIZE = 1024
 SILENT_CHUNKS = 0.3 * 44100 / 1024  # about 3sec
 #FORMAT = pyaudio.paInt16
@@ -79,7 +79,7 @@ dictd = model_dir + '/lm/' + lang + '/' + dictd_file_name
 # Load local model_dir before pocketsphinx one
 if os.path.isdir(local_hmdir):
     hmdir =  local_hmdir
-elif os.path.isfile():
+elif os.path.isdir(pocketsphinx_hmdir):
     hmdir = pocketsphinx_hmdir
 else:
     print 'Pocketsphinx is require for Zoevoice'
@@ -112,7 +112,9 @@ else:
 #espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
 espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
 #wavegain_cmd = "wavegain -y -d 3 \"%s\""
+bassband_cmd = "sox \"%s\" \"%s\".tmp.wav sinc 200-6000"
 galaxie_update_server_cmd = "xterm -hold -e /home/tuxa/ansible/bin/ansible-playbook ~/galaxie/update-server.yml -K&"
+
 #Variable it contain the text ecognised by the voice to text
 global recognised
 
@@ -133,6 +135,7 @@ class bcolors:
 
 def is_silent(data_chunk):
     """Returns 'True' if below the 'silent' threshold"""
+    #print max(data_chunk)
     return max(data_chunk) < THRESHOLD
 
 def normalize(data_all):
@@ -204,6 +207,8 @@ def record_to_file(path):
     wave_file.close()
     #filter_noise(wavfile)
     #os.system(wavegain_cmd % path)
+    os.system(bassband_cmd % (wavfile,wavfile))
+    os.rename(wavfile+'.tmp.wav', wavfile)
     
 def decodeSpeech(hmmd,lmdir,dictp,wavfile):
     prompt(3)
@@ -236,14 +241,16 @@ def prompt(state):
   
 def tts(text):
     if not text == "": 
-        print bcolors.NORMAL+"\bZoé  :> "+bcolors.YELLOW+text+bcolors.ENDC
+        print bcolors.NORMAL+"\bNestor:> "+bcolors.YELLOW+text+bcolors.ENDC
         os.system(espeack_cmd % text)
 
 def stt():
     record_to_file(wavfile)
     recognised = decodeSpeech(hmdir,lmd,dictd,wavfile)
     if not recognised == '':
-        print bcolors.NORMAL+"\bHuman:> "+bcolors.YELLOW+recognised+bcolors.ENDC
+        #recognised.decode('iso-8859-1').encode('utf8')
+        #recognised.decode('utf8').encode('iso-8859-1')
+        print bcolors.NORMAL+"\bHuman :> "+bcolors.YELLOW+recognised+bcolors.ENDC
     os.remove(wavfile)
     return recognised
 
@@ -270,7 +277,7 @@ def load_brain():
         load_module('zoe')
         load_module('date')
         load_module('meteo')
-        #load_module('alice')
+        load_module('alice')
         os.chdir(brains_dir)
         k.setPredicate("master",zoe_session_name)
         k.saveBrain(zoe_brain) # save new brain
@@ -303,7 +310,7 @@ def main():
         if recognised == "lance un navigateur" or recognised == "lance un médiateur":
             os.system("iceweasel");
             tts("C'est fait")
-        elif recognised == "mis à jour des modules" or recognised == "mise jour des modules" or recognised == "mise à jour des modules":
+        elif recognised == "mis à jour des modules" or recognised == "mise jour des modules" or recognised == "mise à jour des modules" or recognised == "mise à jour de modules":
             reload_modules()
             tts("C'est fait")
         elif recognised == "je vais me coucher":

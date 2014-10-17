@@ -3,6 +3,23 @@
 
 <!-- J'ecoute-->
 <category>
+    <pattern>NESTOR</pattern>
+    <template>
+        <random>
+            <li>Oui</li>
+            <li>Je t'écoute</li>
+            <li>J'écoute</li>
+        </random>
+    </template>
+</category>
+<category>
+    <pattern>TU ES LÀ</pattern>
+    <template><srai>NESTOR</srai></template>
+</category>
+
+
+
+<category>
   <pattern>QUEL EST TON NOM</pattern>
   <template>Je m'appel Zoé</template>
 </category>
@@ -57,17 +74,20 @@
     <template><srai>HELLO</srai></template>
 </category>
 
-<category>
-<pattern>BIEN</pattern>
-<that>BONJOUR</that>
-<template>Comment vas tu ?</template>
-</category>
 
 <category>
-  <pattern>COMMENT CA VA</pattern>
-  <template>Genial je decouvre le monde aujourd'hui</template>
+  <pattern>COMMENT ÇA VA</pattern>
+    <template>
+        <random>
+            <li>Bien</li>
+            <li>Genial je decouvre le monde aujourd'hui</li>
+        </random>
+  </template>
 </category>
-
+<category>
+  <pattern>COMMENT VAS TU/pattern>
+  <template><srai>COMMENT ÇA VA</srai></template>
+</category>
 
 <!-- Quem -->
 </aiml>

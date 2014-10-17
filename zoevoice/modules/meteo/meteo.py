@@ -185,16 +185,12 @@ def print_human_dump(data):
     """Temperature, Kelvin (subtract 273.15 to convert to Celsius) """
     if 'main_temp' in data:
         api_main_temp = float(data['main_temp'])
-        print str(convert_f2c(api_main_temp)) + '°C',
+        print str(convert_f2c(api_main_temp)) + '° Celcius',
 
     if 'weather_0_description' in data:
         api_weather_0_description  = data['weather_0_description']
         api_weather_0_description.encode('utf-8')
-        print api_weather_0_description + ' ',
-
-    if 'weather_0_id' in data:
-        api_weather_0_id  = int(data['weather_0_id'])
-        print to_weather_condition_description(api_weather_0_id)
+        print api_weather_0_description + ' '
 
 def get_current_weather_data_by_city_name():
     options = 'weather?q=%s&lang=%s&mode=%s' % (api_q, api_lang, api_mode)
@@ -202,7 +198,8 @@ def get_current_weather_data_by_city_name():
     request = urllib.urlopen(url)
     data = request.read()
     data = json.loads(data)
-    print(json.dumps(flatten_dict(data), indent=4, sort_keys=True))
+    # DEBUG Infos   
+    #print(json.dumps(flatten_dict(data), indent=4, sort_keys=True))
     data = flatten_dict(data)
     print_human_dump(data)
     return data

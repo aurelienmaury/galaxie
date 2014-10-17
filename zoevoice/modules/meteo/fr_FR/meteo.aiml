@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <aiml version="1.0">
 
-<!-- Module   : meteo.aiml   -   version :   0.1   -   MÃ J : 5/10/2014  -->
+<!-- Module   : meteo.aiml   -   version :   0.1   -   MàJ : 5/10/2014  -->
 <!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
 <!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
@@ -9,10 +9,16 @@
 
 <!-- Demande la temperature -->
 
-<category><pattern>DONNE MOI LA TEMPERATURE</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
-<category><pattern>* MOI LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
-<category><pattern>DEUX MOIS LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
-<category><pattern>DEUX MOINS LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
-<category><pattern>D UN MOIS LA TEMPERATURE</pattern><template><srai>DONNE MOI LA TEMPERATURE</srai></template></category>
+<category><pattern>DONNE MOI LA TEMPÉRATURE</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
+<category><pattern>* MOI LA TEMPÉRATURE</pattern><template><srai>DONNE MOI LA TEMPÉRATURE</srai></template></category>
+<category><pattern>DEUX MOIS LA TEMPÉRATURE</pattern><template><srai>DONNE MOI LA TEMPÉRATURE</srai></template></category>
+<category><pattern>DEUX MOINS LA TEMPÉRATURE</pattern><template><srai>DONNE MOI LA TEMPÉRATURE</srai></template></category>
+<category><pattern>D UN MOIS LA TEMPÉRATURE</pattern><template><srai>DONNE MOI LA TEMPÉRATURE</srai></template></category>
 
+<category><pattern>DONNE MOI LA MÉTÉO</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
+<category><pattern>MÉTÉO A *</pattern><template><srai>DONNE MOI LA MÉTÉO</srai></template></category>
+<category><pattern>MÉTÉO DU JOUR</pattern><template><srai>DONNE MOI LA MÉTÉO</srai></template></category>
+<category><pattern>MÉTÉO</pattern><template><srai>DONNE MOI LA MÉTÉO/srai></template></category>
+<category><pattern>PREVISION MÉTÉOROLOGIQUE</pattern><template><srai>DONNE MOI LA MÉTÉO</srai></template></category>
+<category><pattern>MÉTÉO</pattern><template><srai>DONNE MOI LA MÉTÉO</srai></template></category>
 </aiml>

@@ -13197,11 +13197,13 @@
 </category>
 
 <category>
-<pattern>MERCI *</pattern>
-<template>
-
-<think><set name="tmp"><star/></set></think>
-<srai>merci</srai><srai><get name="tmp"/></srai> </template>
+    <pattern>MERCI *</pattern>
+    <template>
+        <think>
+            <set name="tmp"><star/></set>
+        </think>
+        <srai>merci</srai><srai><get name="tmp"/></srai>
+    </template>
 </category>
 
 <category>
