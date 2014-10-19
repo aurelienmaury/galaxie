@@ -1,0 +1,40 @@
+[galaxie]
+
+
+[mail-servers]
+
+[file-sharing-servers]
+192.168.42.22 newKey=~/.ssh/id_rsa.coffre
+
+[ntp-servers]
+
+
+
+
+[desktops]
+# debian
+# si machine dans "desktop" alors c'est toujours une debian
+
+
+[pvr-server]
+
+[tvs]
+# openelec only
+
+
+[pabx]
+
+[phones]
+# si aussi dans groups tvs, alors c'est openelec à configurer en softphone
+
+[servers:children]
+ntp-servers
+file-sharing-servers
+pabx
+pvr-server
+
+[galaxie:children]
+servers
+desktops
+tvs
+phones

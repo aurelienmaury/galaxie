@@ -1,7 +1,6 @@
 ---
 - name: Prepares target hosts to Galaxie's playbooks
   hosts: galaxie
-  user: root
 
   vars_files:
     - "galaxie-vars.yml"
@@ -100,9 +99,9 @@
         state=restarted
 
     - name: waiting for ntp sync (up to 15 minutes, in general under 1 minute)
-      shell: ntpq --peers | tr -s " " | cut -d " " -f1,2 | grep -e "^\*" | grep -v "127\."
+      action: shell /usr/bin/ntpq --peers | /usr/bin/tr -s " " | /usr/bin/cut -d " " -f1,2 | /bin/grep -e "^\*" | /bin/grep -v "127\."
       register: ntpSync
-      until: ntpSync is defined and ntpSync != ""
+      until: ntpSync.stdout != ""
       retries: 90
       delay: 10
 
