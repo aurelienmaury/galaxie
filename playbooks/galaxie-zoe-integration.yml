@@ -89,20 +89,30 @@
         upgrade=yes
       when: ansible_distribution == 'Debian'
 
+    - name: ntp is configured
+      template:
+        src=templates/ntp.conf.j2
+        dest=/etc/ntp.conf
+
+    - name: restart ntp (always)
+      service:
+        name=ntp
+        state=restarted
+
+    - name: waiting for ntp sync (up to 15 minutes, in general under 1 minute)
+      shell: ntpq --peers | tr -s " " | cut -d " " -f1,2 | grep -e "^\*" | grep -v "127\."
+      register: ntpSync
+      until: ntpSync is defined and ntpSync != ""
+      retries: 90
+      delay: 10
+
     - name: next step
       debug: msg="Integrated in Zoe's family, change 'newKey' to 'ansible_ssh_private_key_file' in your inventory for server {{ inventory_hostname }}"
       when: newKey is defined
 
-# caler sur pool.ntp.org
-# relancer ntpd
 
 
-#- name: waiting for ntp sync (up to 15 minutes, in general under 1 minute)
-#  shell ntpq --peers | tr -s " " | cut -d " " -f1,2 | grep -e "^\*" | grep -v "127\."
-#  register: ntpSync
-#  until: ntpSync is defined and ntpSync != ""
-#  retries: 90
-#  delay: 10
+
 
 
 # regenerer les clés serveur
