@@ -1,0 +1,7 @@
+---
+
+# SSH is well configured
+- include: galaxie-sshd.yml
+
+# servers have all they need
+- include: galaxie-headless.yml

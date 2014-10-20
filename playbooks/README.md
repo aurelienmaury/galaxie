@@ -75,8 +75,6 @@ ansible-playbook -i host.inventory galaxie-zoe_access.yml --user=zoe --limit=192
 
 * galaxie swallow $TARGET_GROUP $HOST_NAME_OR_IP : prompts for sudoable user, adds host in the right group in host inventory, fills newKey value, launches galaxie-zoe_access.yml, renames newKey to ansible private key.
 
-
-
 integration - ntp - sshd
 
 # TODO mention dans le motd : accès non autorisé, pas autorisé

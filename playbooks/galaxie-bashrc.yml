@@ -2,7 +2,6 @@
   user: zoe
   sudo: true
 
-
 # activate bash_completion
 # valeur de PS1 vers ligne 39
 

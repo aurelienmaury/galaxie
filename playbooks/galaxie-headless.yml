@@ -1,12 +1,16 @@
-- hosts: galaxie
+---
+- hosts: servers
   user: zoe
-  sudo: true
+  sudo: yes
+
+  vars_files:
+    - "galaxie-vars.yml"
 
   tasks:
-    - name: Update apt
+    - name: update apt cache
       apt: update_cache=yes cache_valid_time=3600
 
-    - name: Desired packages are present
+    - name: desired packages are present
       apt:
         pkg="{{item}}"
         state=installed
@@ -26,7 +30,7 @@
         - screen
         - minicom
 
-    - name: Undesired packages are absent
+    - name: undesired packages are absent
       apt:
         pkg="{{item}}"
         state=absent

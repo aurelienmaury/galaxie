@@ -1,4 +1,4 @@
-- hosts: ntp
+- hosts: ntp-servers
   user: zoe
   sudo: true
 

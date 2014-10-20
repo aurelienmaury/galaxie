@@ -1,37 +1,58 @@
 [galaxie]
+# |
+# |- servers
+# |  |-- ntp-servers
+# |  |-- pvr-servers
+# |  |-- pabx-servers
+# |  |-- mail-servers
+# |  |-- file-servers
+# |
+# |- desktops
+# |- tvs
+# |- phones
 
 
-[mail-servers]
-
-[file-sharing-servers]
-192.168.42.22 ansible_ssh_private_key_file=~/.ssh/id_rsa.coffre
+# -------
+# SERVERS
+# -------
 
 [ntp-servers]
 
+[pvr-servers]
+
+[mail-servers]
+
+[file-servers]
+192.168.42.22 ansible_ssh_private_key_file=~/.ssh/id_rsa.coffre
+
+[pabx-servers]
 
 
+# -------
+# DEVICES
+# -------
 
 [desktops]
 # debian
 # si machine dans "desktop" alors c'est toujours une debian
 
-
-[pvr-server]
-
 [tvs]
 # openelec only
-
-
-[pabx]
 
 [phones]
 # si aussi dans groups tvs, alors c'est openelec à configurer en softphone
 
+
+# --------------
+# GROUPS LINKING
+# --------------
+
 [servers:children]
+pvr-servers
 ntp-servers
-file-sharing-servers
-pabx
-pvr-server
+mail-servers
+file-servers
+pabx-servers
 
 [galaxie:children]
 servers
