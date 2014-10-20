@@ -104,6 +104,33 @@
       retries: 90
       delay: 10
 
+# regenerer les clés serveur
+# http://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/
+
+    - name: CHECK - key generation trace is present
+      shell: if [ -f "/etc/ssh/.zoe_generated_keys" ]; then /bin/true; else /bin/false; fi
+      register: zoe_generated_keys
+      ignore_errors: true
+
+    - name: cleaning old ssh_keys
+      shell: /bin/rm -f /etc/ssh/ssh_host_*
+      when: zoe_generated_keys|failed
+
+    - name: cleaning old ssh_keys
+      shell: /usr/sbin/dpkg-reconfigure openssh-server
+      when: zoe_generated_keys|failed
+
+    - name: leaving trace of key generation
+      file:
+        path=/etc/ssh/.zoe_generated_keys
+        owner=root
+        group=root
+        state=touch
+      when: zoe_generated_keys|failed
+
+    - debug: msg="new server keys generated, update your ~/.ssh/known_hosts or you'll get a warning on next connection."
+      when: zoe_generated_keys|failed
+
     - name: next step
       debug: msg="Integrated in Zoe's family, change 'newKey' to 'ansible_ssh_private_key_file' in your inventory for server {{ inventory_hostname }}"
       when: newKey is defined
@@ -113,5 +140,3 @@
 
 
 
-# regenerer les clés serveur
-# http://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/
