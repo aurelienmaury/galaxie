@@ -3,7 +3,7 @@
   sudo: true
 
   tasks:
-    - name: Update apt
+    - name: update apt
       apt: update_cache=yes cache_valid_time=3600
 
 
@@ -75,4 +75,4 @@
         - gnumeric-plugins-extra
 
 
-# s'assurer de l'absence d'autre imple de JRE
+# s'assurer de l'absence d'autre implem de JRE

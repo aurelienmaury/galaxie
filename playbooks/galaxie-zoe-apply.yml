@@ -1,7 +1,8 @@
 ---
 
-# SSH is well configured
+# ALL
 - include: galaxie-sshd.yml
+- include: galaxie-motd.yml
 
 # servers have all they need
 - include: galaxie-headless.yml

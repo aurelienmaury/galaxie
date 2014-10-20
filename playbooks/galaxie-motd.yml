@@ -4,7 +4,7 @@
   sudo: true
 
   tasks:
-    - name: Message Of The Day is Galaxie
+    - name: message Of The Day is Galaxie
       template:
         src=templates/motd.j2
         dest=/etc/motd
@@ -12,7 +12,7 @@
         group=root
         mode=0644
 
-    - name: Issues and dynamic motd files are empty
+    - name: issues and dynamic motd files are empty
       copy:
         src=files/empty
         dest= "{{ item }}"
