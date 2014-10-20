@@ -1,7 +1,0 @@
----
-- hosts: uranus
-  user: root
-  sudo: no
-
-  roles:
-     - galaxie_dnscache

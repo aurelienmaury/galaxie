@@ -1,0 +1,126 @@
+---
+- hosts: dns-servers
+  user: zoe
+  sudo: yes
+
+  tasks:
+    - name: activate debian sid main contrib non-free repository
+      apt_repository:
+        repo='deb-src http://ftp.fr.debian.org/debian/ sid main contrib non-free'
+        state=present
+
+    - name: kill bind
+      apt:
+        pkg=bind9
+        state=absent
+
+    - name: check djbdns installed
+      shell: "dpkg -l | grep djbdns"
+      register: djb_installed
+      ignore_errors: yes
+
+    - name: packages for djbdns building
+      apt:
+        pkg="{{ item }}"
+        state=present
+      with_items:
+        - build-essential
+        - daemontools
+        - daemontools-run
+        - ucspi-tcp
+      when: djb_installed|failed
+
+    - name: source directory for djbdns building
+      file:
+        path="{{ dnscache.source_dir }}"
+        state=directory
+        owner=root
+        group=root
+        mode=0755
+      when: djb_installed|failed
+
+    - name: sourcing and compiling djbdns
+      shell: "cd {{ dnscache.source_dir }} && apt-get source dbndns --compile -y"
+      when: djb_installed|failed
+
+    - name: install djbdns package
+      shell: "dpkg -i {{ dnscache.source_dir }}/djbdns_1.05-8_*.deb"
+      when: djb_installed|failed
+
+    - name: dnscache users
+      user:
+        name={{ item }}
+        system=yes
+        createhome=no
+        state=present
+      with_items:
+        - dnscache
+        - dnslog
+
+    - name: dnscache run directory
+      file:
+        path="{{ dnscache.supervise_dir }}"
+        state=directory
+        owner=root
+        group=root
+        mode=0755
+
+    - name: check dnscache-conf output directory exists
+      shell: "test -d {{ dnscache.supervise_dir }}/{{ dnscache.service_name }}"
+      register: superviseExists
+      ignore_errors: yes
+
+    - name: dnscache-conf
+      when: superviseExists|failed
+      shell: "dnscache-conf {{ dnscache.service_name }} {{ dnscache.dnslog_user }} {{ dnscache.supervise_dir }}/{{ dnscache.service_name }} {{ dnscache.interface }}"
+
+    - name: point logger to correct service
+      lineinfile:
+        dest={{ dnscache.supervise_dir }}/{{ dnscache.service_name }}/log/run
+        regexp='^exec'
+        line='exec setuidgid {{ dnscache.dnslog_user }} {{ dnscache.multilog_user }} t {{ dnscache.multilog_dir }}/{{ dnscache.service_name }}'
+        backup=yes
+
+    - name: delete old logger launcher
+      file:
+        path="{{ dnscache.supervise_dir }}/{{ dnscache.service_name }}/log/main"
+        state=absent
+
+    - name: create multilog directory
+      file:
+        path="{{ dnscache.multilog_dir }}/{{ dnscache.service_name }}"
+        owner="{{ dnscache.dnslog_user }}"
+        group="{{ dnscache.dnslog_user }}"
+        state=directory
+        mode=2755
+
+    - name: seed dnsroots
+      copy:
+        src=files/etc_dnsroots.global
+        dest=/etc/dnsroots.global
+        backup=yes
+
+    - name: check if service registered
+      shell: "/usr/sbin/update-service --list | grep {{ dnscache.service_name }}"
+      register: serviceRegistered
+      ignore_errors: yes
+      notify:
+        - register service
+        - restart service
+
+    - name: enable local server name resolution
+      copy:
+        src=files/etc_resolv.conf
+        dest=/etc/resolv.conf
+        backup=yes
+
+  handlers:
+    - name: register service
+      shell: "/usr/sbin/update-service --add {{ dnscache.supervise_dir }}/{{ dnscache.service_name }}"
+      when: serviceRegistered|failed
+
+    - name: restart service
+      shell:
+        "/usr/sbin/update-service --remove {{ dnscache.supervise_dir }}/{{ dnscache.service_name }} &&
+        /usr/sbin/update-service --add {{ dnscache.supervise_dir }}/{{ dnscache.service_name }}"
+      when: serviceRegistered|success

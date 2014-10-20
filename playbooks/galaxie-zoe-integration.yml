@@ -79,6 +79,7 @@
         user="{{ galaxie.user }}"
         key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
         state=absent
+
     - name: User is sudoer
       lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
 
@@ -134,9 +135,3 @@
     - name: next step
       debug: msg="Integrated in Zoe's family, change 'newKey' to 'ansible_ssh_private_key_file' in your inventory for server {{ inventory_hostname }}"
       when: newKey is defined
-
-
-
-
-
-
