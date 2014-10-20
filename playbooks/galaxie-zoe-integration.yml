@@ -23,6 +23,28 @@
       delegate_to: localhost
       sudo: no
 
+    - name: check python-apt package present
+      shell: dpkg -s python-apt
+      ignore_errors: yes
+      register: pythonAptPresence
+      when: ansible_distribution == 'Debian'
+
+    - name: install python-apt (update apt before installation)
+      command: /usr/bin/apt-get update -y
+      when: ansible_distribution == 'Debian' and pythonAptPresence|failed
+
+    - name: install python-apt
+      command: /usr/bin/apt-get install python-apt -y
+      when: ansible_distribution == 'Debian' and pythonAptPresence|failed
+
+    - name: install sudo
+      apt:
+        pkg=sudo
+        state=present
+        update-cache=yes
+        cache_valid_time=3600
+      when: ansible_distribution == 'Debian'
+
     - name: Group is present
       group:
         name="{{ galaxie.user }}"
@@ -57,29 +79,6 @@
         user="{{ galaxie.user }}"
         key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
         state=absent
-
-    - name: check python-apt package present
-      shell: dpkg -s python-apt
-      ignore_errors: yes
-      register: pythonAptPresence
-      when: ansible_distribution == 'Debian'
-
-    - name: install python-apt (update apt before installation)
-      command: /usr/bin/apt-get update -y
-      when: ansible_distribution == 'Debian' and pythonAptPresence|failed
-
-    - name: install python-apt
-      command: /usr/bin/apt-get install python-apt -y
-      when: ansible_distribution == 'Debian' and pythonAptPresence|failed
-
-    - name: install sudo
-      apt:
-        pkg=sudo
-        state=present
-        update-cache=yes
-        cache_valid_time=3600
-      when: ansible_distribution == 'Debian'
-
     - name: User is sudoer
       lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
 
