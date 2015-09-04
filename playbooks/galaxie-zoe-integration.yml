@@ -1,7 +1,7 @@
 ---
 - name: Prepares target hosts to Galaxie's playbooks
   hosts: galaxie
-
+  sudo: yes
   vars_files:
     - "galaxie-vars.yml"
 
@@ -58,6 +58,15 @@
         groups="{{ galaxie.user }},sudo"
         generate_ssh_key=yes
         state=present
+        shell=/bin/bash
+
+    - name: /home/{{ galaxie.user }}/.bashrc is ok
+      copy:
+        src=files/etc/skel/.bashrc
+        dest=/home/{{ galaxie.user }}/.bashrc
+        owner={{ galaxie.user }}
+        group={{ galaxie.user }}
+        mode=0644
 
     - name: Change password for galaxie
       shell: usermod -p $(echo '{{ galaxie.randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ galaxie.user }}
@@ -88,6 +97,14 @@
         upgrade=yes
       when: ansible_distribution == 'Debian'
 
+    - name: install ntp
+      apt:
+        pkg=ntp
+        state=present
+        update-cache=yes
+        cache_valid_time=3600
+      when: ansible_distribution == 'Debian'
+
     - name: ntp is configured
       template:
         src=templates/ntp.conf.j2
@@ -113,13 +130,13 @@
       register: zoe_generated_keys
       ignore_errors: true
 
-    - name: cleaning old ssh_keys
-      shell: /bin/rm -f /etc/ssh/ssh_host_*
-      when: zoe_generated_keys|failed
+#    - name: cleaning old ssh_keys
+#      shell: /bin/rm -f /etc/ssh/ssh_host_*
+#      when: zoe_generated_keys|failed
 
-    - name: cleaning old ssh_keys
-      shell: /usr/sbin/dpkg-reconfigure openssh-server
-      when: zoe_generated_keys|failed
+#    - name: cleaning old ssh_keys
+#      shell: /usr/sbin/dpkg-reconfigure openssh-server
+#      when: zoe_generated_keys|failed
 
     - name: leaving trace of key generation
       file:

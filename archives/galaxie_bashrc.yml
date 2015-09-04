@@ -5,7 +5,7 @@
       template: src=templates/bash.bashrc dest=/etc/bash.bashrc owner=root group=root mode=0644
 
     - name: Distribute /etc/skel/.bashrc
-      template: src=templates/skel.bashrc dest=/etc/skel/.bashrc owner=root group=root mode=0644
+      template: src=templates/.bashrc dest=/etc/skel/.bashrc owner=root group=root mode=0644
 
     - name: Distribute /home/zoe/.bashrc
-      template: src=templates/skel.bashrc dest=/home/zoe/.bashrc owner=zoe group=zoe mode=0644
+      template: src=templates/.bashrc dest=/home/zoe/.bashrc owner=zoe group=zoe mode=0644

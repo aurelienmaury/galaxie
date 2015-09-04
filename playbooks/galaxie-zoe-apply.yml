@@ -1,8 +1,18 @@
 ---
 
 # ALL
+- include: galaxie-headless.yml
+- include: galaxie-ntp-base.yml
 - include: galaxie-sshd.yml
 - include: galaxie-motd.yml
+- include: galaxie-bashrc.yml
+- include: galaxie-dnscache.yml
+- include: galaxie-power-save.yml
+
+# Desktop have all they need
+- include: galaxie-desktops-base.yml
+- include: galaxie-mozilla-firefox.yml
+- include: galaxie-mozilla-thunderbird.yml
 
 # servers have all they need
-- include: galaxie-headless.yml
+- include: galaxie-ntp-server.yml

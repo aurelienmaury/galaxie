@@ -1,4 +1,7 @@
 [galaxie]
+jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+#10.8.2.14 ansible_ssh_private_key_file=~/.ssh/id_rsa.netlap01
+
 # |
 # |- servers
 # |  |-- ntp-servers
@@ -26,9 +29,10 @@
 [mail-servers]
 
 [file-servers]
-192.168.42.22 ansible_ssh_private_key_file=~/.ssh/id_rsa.coffre
 
 [pabx-servers]
+
+[dns-resolver]
 
 
 # -------
@@ -38,7 +42,8 @@
 [desktops]
 # debian
 # si machine dans "desktop" alors c'est toujours une debian
-
+jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+#10.8.2.14 ansible_ssh_private_key_file=~/.ssh/id_rsa.netlap01
 [tvs]
 # openelec only
 
@@ -59,6 +64,7 @@ pabx-servers
 dns-servers
 
 [galaxie:children]
+dns-resolver
 servers
 desktops
 tvs

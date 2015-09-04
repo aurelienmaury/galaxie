@@ -1,0 +1,55 @@
+- hosts: desktops
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  tasks:
+    - name: creat destination directory
+      file:
+        path={{ galaxie.firefox.dest }}
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+
+    - name: download Firefox
+      get_url: url={{ galaxie.firefox.repo_url }}/{{ galaxie.firefox.filename }} dest={{ galaxie.firefox.dest }}/{{ galaxie.firefox.filename }} mode=0440
+
+    - name: unarchive Firefox
+      unarchive: src={{ galaxie.firefox.dest }}/{{ galaxie.firefox.filename }} dest={{ galaxie.firefox.dest }} copy=no
+
+    - name: set permissions of firefox directory
+      file:
+        path={{ galaxie.firefox.dest }}/firefox
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+
+    - name: set permissions of firefox directory
+      file:
+        path={{ galaxie.firefox.dest }}/firefox
+        owner=root
+        group=root
+        recurse=yes
+
+    - name: delete preview /usr/bin/firefox
+      file:
+        path=/usr/bin/firefox
+        state=absent
+
+    - name: Create symbolic link
+      file: src={{ galaxie.firefox.dest }}/firefox/firefox dest=/usr/bin/firefox state=link
+
+    - name: creat /usr/share/applications/firefox.desktop is ok
+      template:
+        src=templates/firefox.desktop.j2
+        dest=/usr/share/applications/firefox.desktop
+        backup=no
+
+    - name: clean up
+      file:
+        path={{ galaxie.firefox.dest }}/{{ galaxie.firefox.filename }}
+        state=absent

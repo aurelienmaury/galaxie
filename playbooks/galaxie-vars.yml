@@ -2,12 +2,20 @@
 galaxie:
   user: zoe
   randomPasswordSeed: 'ZOE is Open and Extendable'
-  time:
+  ntp:
+#    referrals:
+#      - 'ntp-p1.obspm.fr'
+#      - 'ap.cagb.org'
+#      - 'ntp1.doowan.net'
+#      - 'ntp.crashdump.fr'
+#      - 'ntp.via.ecp.fr'
     referrals:
       - 'pool.ntp.org'
       - 'pool.ntp.org'
       - 'pool.ntp.org'
       - 'pool.ntp.org'
+    local:
+      - 'nabu.galaxie.ici'
 
   dnscache:
     service_name: dnscache
@@ -17,3 +25,20 @@ galaxie:
     interface: 127.0.0.1
     multilog_dir: /var/multilog
     multilog_user: multilog
+
+  localdomain: galaxie.ici
+  local_name_server: 192.168.1.1
+  local_reverse_zone: 168.192.in-addr.arpa
+
+  firefox:
+    repo_url: https://ftp.mozilla.org/pub/firefox/releases/40.0.3/linux-x86_64/fr
+    filename: firefox-40.0.3.tar.bz2
+    dest: /opt
+
+  thunderbird:
+    repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.2.0/linux-x86_64/fr
+    filename: thunderbird-38.2.0.tar.bz2
+    dest: /opt
+
+  scripts:
+    directory: /opt/galaxie/bin

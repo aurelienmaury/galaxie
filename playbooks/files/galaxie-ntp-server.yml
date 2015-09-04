@@ -1,4 +1,4 @@
-- hosts: galaxie
+- hosts: ntp-servers
   user: zoe
   sudo: true
 
@@ -19,7 +19,7 @@
 
     - name: ntp is configured
       template:
-        src=templates/ntp-base.conf.j2
+        src=templates/ntp-server.conf.j2
         dest=/etc/ntp.conf
       notify: restart ntp
 

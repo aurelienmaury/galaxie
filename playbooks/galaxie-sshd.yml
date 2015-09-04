@@ -2,7 +2,7 @@
 - hosts: galaxie
   user: zoe
   sudo: true
-
+#         - { key: "ListenAddress",   value: "{{ansible_default_ipv4.address}}" }
   tasks:
     - name: sshd is configured the galaxie way
       lineinfile:
@@ -13,7 +13,7 @@
         state=present
         backup=yes
       with_items:
-        - { key: "ListenAddress",   value: "{{ansible_default_ipv4.address}}" }
+        - { key: "ListenAddress",   value: "0.0.0.0" }
         - { key: "Protocol",        value: "2" }
         - { key: "DebianBanner",    value: "no" }
         - { key: "PrintLastLog",    value: "yes" }

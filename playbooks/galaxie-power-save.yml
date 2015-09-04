@@ -1,0 +1,66 @@
+- hosts: galaxie
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  tasks:
+    - name: activate debian jessie main contrib non-free repository
+      apt_repository:
+        repo="{{ item }}"
+        state=present
+      with_items:
+        - deb http://ftp.fr.debian.org/debian/ jessie main non-free contrib
+        - deb-src http://ftp.fr.debian.org/debian/ jessie main non-free contrib
+        - deb http://security.debian.org/ jessie/updates main non-free contrib
+        - deb-src http://security.debian.org/ jessie/updates main non-free contrib
+        - deb http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib
+        - deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib
+
+    - name: update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: desired packages are present
+      apt:
+        pkg="{{item}}"
+        state=installed
+      with_items:
+        - lm-sensors
+        - cpufrequtils
+        - powertop
+        - ethtool
+        - firmware-linux-nonfree
+        - screen
+
+    - name: scripts directory check
+      file:
+        path={{ galaxie.scripts.directory }}
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+
+    - name: copy power_save.sh to script directory
+      copy:
+        src=files/power_save.sh
+        dest="{{ galaxie.scripts.directory }}/power_save.sh"
+        owner=root
+        group=root
+        mode=0770
+
+    - name: creat cron task
+      template:
+        src=templates/galaxie_power_save.j2
+        dest=/etc/cron.d/galaxie_power_save
+        backup=no
+
+    - name: execute power_save.sh
+      shell: "{{ galaxie.scripts.directory }}/power_save.sh"
+
+    - name: execute /usr/sbin/sensors-detect --auto
+      shell: "/usr/sbin/sensors-detect --auto"
+
+    - name: execute /usr/sbin/powertop --auto-tune
+      shell: "/usr/bin/screen -dmS PowerTOP /usr/sbin/powertop --auto-tune"
+

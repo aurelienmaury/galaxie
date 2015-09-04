@@ -12,14 +12,26 @@
         group=root
         mode=0644
 
-    - name: issues and dynamic motd files are empty
+    - name: /etc/issues are empty
       copy:
         src=files/empty
-        dest= "{{ item }}"
+        dest=/etc/issue
         owner=root
         group=root
         mode=0644
-      with_items:
-        - /etc/issue
-        - /etc/issue.net
-        - /etc/motd.dynamic
+
+    - name: /etc/issue.net are empty
+      copy:
+        src=files/empty
+        dest=/etc/issue.net
+        owner=root
+        group=root
+        mode=0644
+
+    - name: /etc/motd.dynamic are empty
+      copy:
+        src=files/empty
+        dest=/etc/motd.dynamic
+        owner=root
+        group=root
+        mode=0644

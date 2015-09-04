@@ -1,0 +1,55 @@
+- hosts: desktops
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  tasks:
+    - name: creat destination directory
+      file:
+        path={{ galaxie.thunderbird.dest }}
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+
+    - name: download Thunderbird
+      get_url: url={{ galaxie.thunderbird.repo_url }}/{{ galaxie.thunderbird.filename }} dest={{ galaxie.thunderbird.dest }}/{{ galaxie.thunderbird.filename }} mode=0440
+
+    - name: unarchive Thunderbird
+      unarchive: src={{ galaxie.thunderbird.dest }}/{{ galaxie.thunderbird.filename }} dest={{ galaxie.thunderbird.dest }} copy=no
+
+    - name: set permissions of thunderbird directory
+      file:
+        path={{ galaxie.thunderbird.dest }}/thunderbird
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+
+    - name: set permissions of thunderbird directory
+      file:
+        path={{ galaxie.thunderbird.dest }}/thunderbird
+        owner=root
+        group=root
+        recurse=yes
+
+    - name: delete preview /usr/bin/thunderbird
+      file:
+        path=/usr/bin/thunderbird
+        state=absent
+
+    - name: Create symbolic link
+      file: src={{ galaxie.thunderbird.dest }}/thunderbird/thunderbird dest=/usr/bin/thunderbird state=link
+
+    - name: creat /usr/share/applications/thunderbird.desktop is ok
+      template:
+        src=templates/thunderbird.desktop.j2
+        dest=/usr/share/applications/thunderbird.desktop
+        backup=no
+
+    - name: clean up
+      file:
+        path={{ galaxie.thunderbird.dest }}/{{ galaxie.thunderbird.filename }}
+        state=absent

@@ -35,7 +35,7 @@ Doesn't matter if this file does not exist yet, it will be generated soon.
 * install an access for ZOE by running:
 
 ```
-ansible-playbook -i host.inventory galaxie-zoe_access.yml --user=$DEFAULT_USER_WITH_SUDO --limit=192.168.0.42 --ask-pass -c paramiko
+ansible-playbook -i ../host.inventory galaxie-zoe-integration.yml --user=$DEFAULT_USER_WITH_SUDO  --ask-pass -c paramiko --limit=192.168.0.42
 ```
 
 * you will be prompted for your password and the playbook will setup everything for ZOE access.

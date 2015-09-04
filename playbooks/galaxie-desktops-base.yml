@@ -2,55 +2,67 @@
   user: zoe
   sudo: true
 
+  vars_files:
+    - "galaxie-vars.yml"
+
   tasks:
+    - name: activate deb-multimedia jessie main non-free repository
+      apt_repository:
+        repo="{{ item }}"
+        state=present
+      with_items:
+        - deb http://www.deb-multimedia.org jessie main non-free
+
     - name: update apt
-      apt: update_cache=yes cache_valid_time=3600
+      apt: update_cache=yes
 
+    - name: Install deb-multimedia-keyring
+      apt:
+        pkg=deb-multimedia-keyring
+        state=installed
+        force=yes
 
-# TODO : activate branche apt non-free
+    - name: update apt
+      apt: update_cache=yes
 
     - name: Install desktop tools
       apt:
         pkg="{{item}}"
-        state= present
+        state=installed
       with_items:
+        - gdm3
+        - gnome-shell
+        - gnome-shell-extensions
+        - gnome-tweak-tool
+        - gnome-session
+        - alacarte
+        - dconf-tools
         - gimp
-        - iceweasel
-        - iceweasel-l10n-fr
-        - icedove
-        - icedove-l10n-fr
-        - iceowl-l10n-fr
-        - iceowl-extension
-        - icedtea-plugin
+        - icedtea-7-plugin
         - openjdk-7-jre
-        - ardour3
-        - jackd2
-        - jackd2-firewire
-        - calf-plugins
-        - pavucontrol
-        - audacity
         - libreoffice-l10n-fr
+        - libreoffice-help-fr
         - libreoffice-draw
         - libreoffice-calc
         - libreoffice-writer
-        - libreoffice-gtk
+        - libreoffice-gnome
+        - libreoffice-style-sifr
+        - hyphen-fr
+        - mythes-fr
+        - myspell-fr
         - gimp-texturize
         - gimp-dds
-        - evince-gtk
         - flashplugin-nonfree
-        - wicd-gtk
-        - xchat
-        - vim-gtk
-        - vlc
-        - vlc-plugin-pulse
-        - browser-plugin-vlc
-        - gmusicbrowser
-        - handbrake
+        - handbrake-gtk
         - handbrake-cli
         - blender
         - dia
         - mkvtoolnix-gui
         - qt4-qtconfig
+        - kodi
+        - kodi-pvr-tvheadend-hts
+        - stellarium
+        - inkscape
 
 # if aussi dans le groupe tvs :
 #        - xbmc
@@ -73,6 +85,11 @@
         - gnumeric-common
         - gnumeric-doc
         - gnumeric-plugins-extra
+        - imagemagick
+        - imagemagick-6.q16
 
 
 # s'assurer de l'absence d'autre implem de JRE
+
+
+

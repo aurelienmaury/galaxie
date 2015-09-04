@@ -1,5 +1,5 @@
 ---
-- hosts: servers
+- hosts: galaxie
   user: zoe
   sudo: yes
 
@@ -7,8 +7,20 @@
     - "galaxie-vars.yml"
 
   tasks:
+    - name: activate debian jessie main contrib non-free repository
+      apt_repository:
+        repo="{{ item }}"
+        state=present
+      with_items:
+        - deb http://ftp.fr.debian.org/debian/ jessie main non-free contrib
+        - deb-src http://ftp.fr.debian.org/debian/ jessie main non-free contrib
+        - deb http://security.debian.org/ jessie/updates main non-free contrib
+        - deb-src http://security.debian.org/ jessie/updates main non-free contrib
+        - deb http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib
+        - deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib
+
     - name: update apt cache
-      apt: update_cache=yes cache_valid_time=3600
+      apt: update_cache=yes
 
     - name: desired packages are present
       apt:
@@ -18,17 +30,18 @@
         - bash-completion
         - dnsutils
         - htop
-        - module-assistant
         - git
         - wget
         - vim
-        - emacs
         - mc
         - ntp
         - rsync
         - sshfs
         - screen
         - minicom
+        - task-spooler
+        - cron
+        - findutils
 
     - name: undesired packages are absent
       apt:
@@ -41,6 +54,10 @@
         - nfs-common
         - nfs-kernel-server
         - rpcbind
+        - vim-tiny
+        - emacs
+        - samba
+        - samba-common
 
 
 # TODO: configure NTP as client of ntp servers stated in host.inventory if not in group ntp
