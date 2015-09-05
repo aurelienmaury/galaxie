@@ -2,6 +2,7 @@
 - name: Prepares target hosts to Galaxie's playbooks
   hosts: galaxie
   sudo: yes
+
   vars_files:
     - "galaxie-vars.yml"
 
@@ -68,6 +69,14 @@
         group={{ galaxie.user }}
         mode=0644
 
+    - name: set permissions of /home/{{ galaxie.user }}/ directory
+      file:
+        path=/home/{{ galaxie.user }}
+        owner={{ galaxie.user }}
+        group={{ galaxie.user }}
+        state=directory
+        mode=0750
+
     - name: Change password for galaxie
       shell: usermod -p $(echo '{{ galaxie.randomPasswordSeed }}' | openssl passwd -1 -stdin) {{ galaxie.user }}
 
@@ -107,7 +116,7 @@
 
     - name: ntp is configured
       template:
-        src=templates/ntp.conf.j2
+        src=templates/ntp-base.conf.j2
         dest=/etc/ntp.conf
 
     - name: restart ntp (always)

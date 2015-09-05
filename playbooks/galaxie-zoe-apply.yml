@@ -1,6 +1,10 @@
 ---
+# servers have all they need
+- include: galaxie-ntp-server.yml
+- include: galaxie-apt-cacher-ng-server.yml
 
 # ALL
+- include: galaxie-apt-cacher-ng-base.yml
 - include: galaxie-headless.yml
 - include: galaxie-ntp-base.yml
 - include: galaxie-sshd.yml
@@ -14,5 +18,4 @@
 - include: galaxie-mozilla-firefox.yml
 - include: galaxie-mozilla-thunderbird.yml
 
-# servers have all they need
-- include: galaxie-ntp-server.yml
+

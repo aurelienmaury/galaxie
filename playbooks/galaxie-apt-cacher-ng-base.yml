@@ -1,0 +1,14 @@
+---
+- hosts: galaxie
+  user: zoe
+  sudo: yes
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  tasks:
+    - name: Write /etc/apt/apt.conf
+      template:
+        src=templates/apt-cacher-ng-base.conf.j2
+        dest=/etc/apt/apt.conf
+        backup=yes

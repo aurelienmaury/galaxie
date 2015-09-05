@@ -4,10 +4,7 @@
                 \    \_\  \/ __ \|  |__/ __ \_>    <|  \  ___/_
                  \________(_____ /____(_____ /__/\_ \__|\_____/
 
-Hostname  : {{ ansible_hostname }}
+Hostname  : {{ ansible_hostname }}.{{ galaxie.localdomain }}
 {% if ansible_eth0.ipv4.address | default() %}
 eth0 IPv4 : {{ ansible_eth0.ipv4.address }}
-{% endif %}
-{% if ansible_eth0.ipv6.address | default() %}
-eth0 IPv6 : {{ ansible_eth0.ipv6.address  }}
 {% endif %}

@@ -2,6 +2,17 @@
 galaxie:
   user: zoe
   randomPasswordSeed: 'ZOE is Open and Extendable'
+  prefix_dir: /var/lib/galaxie
+  build_dir: /var/lib/galaxie/build
+  cache_dir: /var/lib/galaxie/src
+  bin_dir: /var/lib/galaxie/bin
+  conf_dir: /var/lib/galaxie/etc
+  applications_dir: /opt
+
+  localdomain: galaxie.ici
+  local_name_server: 192.168.1.1
+  local_reverse_zone: 168.192.in-addr.arpa
+
   ntp:
 #    referrals:
 #      - 'ntp-p1.obspm.fr'
@@ -17,6 +28,13 @@ galaxie:
     local:
       - 'nabu.galaxie.ici'
 
+  apt_cacher_ng:
+    server: uranus.galaxie.ici
+    port: 9999
+    cache_dir: /mnt/pvr/Apt-Cacher-ng
+    user: apt-cacher-ng
+    group: apt-cacher-ng
+
   dnscache:
     service_name: dnscache
     supervise_dir: /var/lib/supervise
@@ -25,20 +43,20 @@ galaxie:
     interface: 127.0.0.1
     multilog_dir: /var/multilog
     multilog_user: multilog
+    dnsroots_global_file: /etc/dnsroots.global
 
-  localdomain: galaxie.ici
-  local_name_server: 192.168.1.1
-  local_reverse_zone: 168.192.in-addr.arpa
+
 
   firefox:
     repo_url: https://ftp.mozilla.org/pub/firefox/releases/40.0.3/linux-x86_64/fr
     filename: firefox-40.0.3.tar.bz2
-    dest: /opt
 
   thunderbird:
     repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.2.0/linux-x86_64/fr
     filename: thunderbird-38.2.0.tar.bz2
-    dest: /opt
 
   scripts:
     directory: /opt/galaxie/bin
+
+
+

@@ -2,7 +2,8 @@
 - hosts: galaxie
   user: zoe
   sudo: true
-
+  vars_files:
+    - "galaxie-vars.yml"
   tasks:
     - name: message Of The Day is Galaxie
       template:
@@ -35,3 +36,4 @@
         owner=root
         group=root
         mode=0644
+

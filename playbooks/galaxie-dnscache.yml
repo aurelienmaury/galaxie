@@ -98,10 +98,15 @@
         mode=2755
 
     - name: seed dnsroots
-      copy:
-        src=files/etc/dnsroots.global
-        dest=/etc/dnsroots.global
-        backup=yes
+      shell: "dnsip `dnsqr ns . | awk '/answer:/ { print $5; }' |sort`  > {{ galaxie.dnscache.dnsroots_global_file }}"
+
+    - name: stat dnsroots
+      stat: path={{ galaxie.dnscache.dnsroots_global_file }}
+      register: dnsroots
+
+    - name: update dnscache dnsroots list
+      command: cp {{ galaxie.dnscache.dnsroots_global_file }} {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/@
+      when: dnsroots.stat.exists
 
     - name: check if service registered
       shell: "/usr/sbin/update-service --list | grep {{ galaxie.dnscache.service_name }}"
