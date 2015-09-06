@@ -1,9 +1,9 @@
 ---
-# servers have all they need
+# Servers
 - include: galaxie-ntp-server.yml
 - include: galaxie-apt-cacher-ng-server.yml
 
-# ALL
+# Galaxie Hosts
 - include: galaxie-apt-cacher-ng-base.yml
 - include: galaxie-headless.yml
 - include: galaxie-ntp-base.yml
@@ -13,7 +13,7 @@
 - include: galaxie-dnscache.yml
 - include: galaxie-power-save.yml
 
-# Desktop have all they need
+# Desktops
 - include: galaxie-desktops-base.yml
 - include: galaxie-mozilla-firefox.yml
 - include: galaxie-mozilla-thunderbird.yml

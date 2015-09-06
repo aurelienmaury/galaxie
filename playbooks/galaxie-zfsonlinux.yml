@@ -1,83 +1,171 @@
-- hosts: galaxie_pvr
+- hosts: zfs-files-servers
+  user: zoe
   sudo: true
 
+  vars_files:
+    - "galaxie-vars.yml"
+
   vars:
-    build_dir: /usr/src/galaxie_zfsonlinux_build_
-    git_spl_src: https://github.com/zfsonlinux/spl.git
-    git_zfs_src: https://github.com/zfsonlinux/zfs.git
+    build_dir: "{{ galaxie.cache_dir }}/zfsonlinux"
 
   tasks:
-   - name: Update Apt
-     apt: update_cache=yes cache_valid_time=3600
 
-   - name: Install required software
-     action: apt pkg={{item}} state=installed
-     with_items:
-      - zlib1g-dev
-      - uuid-dev
-      - libblkid-dev
-      - libselinux-dev
-      - parted
-      - lsscsi
-      - wget
-      - build-essential
-      - gawk
-      - alien
-      - fakeroot
-      - linux-headers-amd64
-      - dh-autoreconf
+    - name: Update Apt
+      apt: update_cache=yes cache_valid_time=3600
 
-   - action: shell date '+%F'
-     register: mydate
- 
-   - name: Delete previous installation
-     file:
-      path={{ build_dir  }}{{ mydate.stdout }}
-      state=absent
+    - name: Install required software
+      action: apt pkg="{{item}}" state=installed
+      with_items:
+        - zlib1g-dev
+        - uuid-dev
+        - libblkid-dev
+        - libselinux1-dev
+        - parted
+        - lsscsi
+        - wget
+        - build-essential
+        - gawk
+        - alien
+        - fakeroot
+        - linux-headers-amd64
+        - dh-autoreconf
 
-   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
-     file:
-      dest={{ build_dir  }}{{ mydate.stdout }}
-      state=directory
+    - name: Check directory
+      file:
+        path="{{item}}"
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+      with_items:
+        - "{{ galaxie.debs_dir }}"
+        - "{{ build_dir  }}"
 
-   - name: Download Git master of SPL
-     git:
-      repo={{ git_spl_src  }}
-      dest={{ build_dir  }}{{ mydate.stdout }}/spl
+    - name: Download Git master of SPL
+      git:
+        repo={{ galaxie.zfsonlinux.git_spl_url  }}
+        dest={{ build_dir  }}/spl
+        update=yes
+      register: git_spl
 
-   - name: Building SPL (autogen) ...
-     shell:
-      chdir={{ build_dir  }}{{ mydate.stdout }}/spl ./autogen.sh
+    - name: Building SPL (autogen) ...
+      shell:
+        chdir={{ build_dir  }}/spl ./autogen.sh
+      when: git_spl.changed
 
-   - name: Building SPL (configure) ...
-     shell:
-      chdir={{ build_dir  }}{{ mydate.stdout }}/spl ./configure
+    - name: Building SPL (configure) ...
+      shell:
+        chdir={{ build_dir  }}/spl ./configure
+      when: git_spl.changed
 
-   - name: Building SPL (make deb-utils deb-kmod) ...
-     shell:
-      chdir={{ build_dir  }}{{ mydate.stdout }}/spl make deb-utils deb-kmod
+    - name: Delete {{ galaxie.debs_dir }}/spl
+      file:
+        path="{{ galaxie.debs_dir }}/spl"
+        state=absent
+      ignore_errors: yes
+      when: git_spl.changed
 
-   - name : Install SPL Packages
-     action: shell dpkg -i {{ build_dir  }}{{ mydate.stdout }}/spl/*.deb
+    - name: Building SPL (make deb-utils deb-kmod) ...
+      shell:
+        chdir={{ build_dir  }}/spl make deb-utils deb-kmod
+      when: git_spl.changed
+      register: build_spl
 
-   - name: Download Git master of ZFS
-     git:
-      repo={{ git_zfs_src  }}
-      dest={{ build_dir  }}{{ mydate.stdout }}/zfs
+    - name: Creat {{ galaxie.debs_dir }}/spl
+      file:
+        path="{{item}}"
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+      with_items:
+        - "{{ galaxie.debs_dir }}/spl"
+      when: build_spl.changed
 
-   - name: Building ZFS (autogen) ...
-     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/zfs ./autogen.sh
+    - name: mv {{ build_dir  }}/spl/*.deb {{ galaxie.debs_dir }}/spl/
+      shell: mv {{ build_dir  }}/spl/*.deb {{ galaxie.debs_dir }}/spl/
+      when: build_spl.changed
 
-   - name: Building ZFS (configure) ...
-     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/zfs ./configure
+    - name: rm {{ build_dir  }}/spl/*.rpm
+      shell: rm {{ build_dir  }}/spl/*.rpm
+      when: build_spl.changed
 
-   - name: Building ZFS (make deb-utils deb-kmod) ...
-     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/zfs make deb-utils deb-kmod
+    - name: mv {{ build_dir  }}/spl/*.tar.gz {{ galaxie.debs_dir }}/spl/
+      shell: mv {{ build_dir  }}/spl/*.tar.gz {{ galaxie.debs_dir }}/spl/
+      when: build_spl.changed
 
-   - name : Install ZFS Packages
-     action: shell dpkg -i {{ build_dir  }}{{ mydate.stdout }}/zfs/*.deb
-     notify: restart zfs
+    - name : Install SPL Packages
+      action: shell dpkg -i {{ galaxie.debs_dir }}/spl/*.deb
+      when: build_spl.changed
+
+    - name: Download Git master of ZFS
+      git:
+        repo={{ galaxie.zfsonlinux.git_zfs_url  }}
+        dest={{ build_dir  }}/zfs
+        update=yes
+      register: git_zfs
+
+    - name: Building ZFS (autogen) ...
+      shell: chdir={{ build_dir  }}/zfs ./autogen.sh
+      when: git_zfs.changed
+
+    - name: Building ZFS (configure) ...
+      shell: chdir={{ build_dir  }}/zfs ./configure
+      when: git_zfs.changed
+
+    - name: Delete {{ galaxie.debs_dir }}/zfs
+      file:
+        path="{{ galaxie.debs_dir }}/zfs"
+        state=absent
+      ignore_errors: yes
+      when: git_zfs.changed
+
+    - name: Building ZFS (make deb-utils deb-kmod) ...
+      shell: chdir={{ build_dir  }}/zfs make deb-utils deb-kmod
+      when: git_zfs.changed
+      register: build_zfs
+
+    - name: Creat {{ galaxie.debs_dir }}/zfs
+      file:
+        path="{{item}}"
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+      with_items:
+        - "{{ galaxie.debs_dir }}/zfs"
+      when: build_zfs.changed
+
+    - name: mv {{ build_dir  }}/zfs/*.deb {{ galaxie.debs_dir }}/zfs/
+      shell: mv {{ build_dir  }}/zfs/*.deb {{ galaxie.debs_dir }}/zfs/
+      when: build_zfs.changed
+
+    - name: mv {{ build_dir  }}/zfs/*.tar.gz {{ galaxie.debs_dir }}/zfs/
+      shell: mv {{ build_dir  }}/zfs/*.tar.gz {{ galaxie.debs_dir }}/zfs/
+      when: build_zfs.changed
+
+    - name: rm {{ build_dir  }}/zfs/*.rpm
+      shell: rm {{ build_dir  }}/zfs/*.rpm
+      when: build_zfs.changed
+
+    - name : Install ZFS Packages
+      action: shell dpkg -i {{ galaxie.debs_dir }}/zfs/*.deb
+      notify:
+        - restart zfs-import
+        - restart zfs-mount
+        - restart zfs-share
+        - restart zfs-zed
+      when: build_zfs.changed
 
   handlers:
-   - name: restart zfs
-     service: name=zfs state=restarted
+    - name: restart zfs-mount
+      service: name=zfs-mount state=restarted
+
+    - name: restart zfs-share
+      service: name=zfs-share state=restarted
+
+    - name: restart zfs-import
+      service: name=zfs-import state=restarted
+
+    - name: restart zfs-zed
+      service: name=zfs-zed state=restarted

@@ -5,6 +5,7 @@ galaxie:
   prefix_dir: /var/lib/galaxie
   build_dir: /var/lib/galaxie/build
   cache_dir: /var/lib/galaxie/src
+  debs_dir: /var/lib/galaxie/debs
   bin_dir: /var/lib/galaxie/bin
   conf_dir: /var/lib/galaxie/etc
   applications_dir: /opt
@@ -45,6 +46,11 @@ galaxie:
     multilog_user: multilog
     dnsroots_global_file: /etc/dnsroots.global
 
+  zfsonlinux:
+    # The Debian GNU/Linux ZoL
+    deb_zfsonlinux_url: http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb
+    git_spl_url: https://github.com/zfsonlinux/spl.git
+    git_zfs_url: https://github.com/zfsonlinux/zfs.git
 
 
   firefox:
