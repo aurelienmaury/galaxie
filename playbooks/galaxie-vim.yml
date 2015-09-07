@@ -28,7 +28,7 @@
     - name: Check syntax highlighting
       replace:
         dest=/etc/vim/vimrc
-        regexp='^\"syntax\s[a-zA-Z0-9_]+|syntax\s[a-zA-Z0-9_]+'
+        regexp='^\"syntax\s[a-zA-Z0-9_]+|^syntax\s[a-zA-Z0-9_]+'
         replace='syntax on'
     - name: Enable syntax highlighting
       lineinfile:
@@ -39,7 +39,7 @@
     - name: Check dark background
       replace:
         dest=/etc/vim/vimrc
-        regexp='^\"set background=[a-zA-Z0-9_]+|set background=[a-zA-Z0-9_]+'
+        regexp='^\"set background=[a-zA-Z0-9_]+|^set background=[a-zA-Z0-9_]+'
         replace='set background=dark'
     - name: Using set background=dark
       lineinfile:

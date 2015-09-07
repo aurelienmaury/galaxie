@@ -12,6 +12,7 @@
 - include: galaxie-bashrc.yml
 - include: galaxie-dnscache.yml
 - include: galaxie-power-save.yml
+- include: galaxie-vim.yml
 
 # Desktops
 - include: galaxie-desktops-base.yml
