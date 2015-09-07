@@ -32,7 +32,6 @@
         - htop
         - git
         - wget
-        - vim
         - mc
         - ntp
         - rsync
@@ -49,15 +48,10 @@
         state=absent
         purge=yes
       with_items:
-        - nano
         - ntpdate
         - nfs-common
         - nfs-kernel-server
         - rpcbind
-        - vim-tiny
         - emacs
         - samba
         - samba-common
-
-
-# TODO: configure NTP as client of ntp servers stated in host.inventory if not in group ntp

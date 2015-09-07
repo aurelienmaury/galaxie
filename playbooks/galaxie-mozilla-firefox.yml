@@ -22,7 +22,11 @@
       register: firefox_source_file_stat
 
     - name: Download {{ galaxie.firefox.repo_url }}/{{ galaxie.firefox.filename }}
-      get_url: url={{ galaxie.firefox.repo_url }}/{{ galaxie.firefox.filename }} dest={{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }} mode=0440
+      get_url:
+        url="{{ galaxie.firefox.repo_url }}/{{ galaxie.firefox.filename }}"
+        dest="{{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}"
+        mode=0440
+        validate_certs=no
       when: not firefox_source_file_stat.stat.exists
 
     - name: Delete previus version
@@ -31,7 +35,10 @@
         state=absent
 
     - name: Unarchive {{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
-      unarchive: src={{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }} dest={{ galaxie.applications_dir }} copy=no
+      unarchive:
+        src={{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
+        dest={{ galaxie.applications_dir }}
+        copy=no
 
     - name: Set permissions of {{ galaxie.applications_dir }}/firefox
       file:

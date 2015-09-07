@@ -19,11 +19,15 @@
         - "{{ galaxie.applications_dir }}"
 
     - name: Get Stats {{ galaxie.cache_dir }}/{{ galaxie.thunderbird.filename }}
-      stat: path={{ galaxie.cache_dir }}/{{ galaxie.thunderbird.filename }}
+      stat: path="{{ galaxie.cache_dir }}/{{ galaxie.thunderbird.filename }}"
       register: thunderbird_source_file_stat
 
     - name: Download {{ galaxie.thunderbird.repo_url }}/{{ galaxie.thunderbird.filename }}
-      get_url: url={{ galaxie.thunderbird.repo_url }}/{{ galaxie.thunderbird.filename }} dest={{ galaxie.cache_dir }}/{{ galaxie.thunderbird.filename }} mode=0440
+      get_url:
+        url="{{ galaxie.thunderbird.repo_url }}/{{ galaxie.thunderbird.filename }}"
+        dest="{{ galaxie.cache_dir }}/{{ galaxie.thunderbird.filename }}"
+        mode=0440
+        validate_certs=no
       when: not thunderbird_source_file_stat.stat.exists
 
     - name: Delete previus version

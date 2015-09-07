@@ -12,6 +12,7 @@
         insertafter="{{ item.key }} "
         state=present
         backup=yes
+        validate="/usr/sbin/sshd -T -f %s"
       with_items:
         - { key: "ListenAddress",   value: "0.0.0.0" }
         - { key: "Protocol",        value: "2" }
