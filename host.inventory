@@ -42,6 +42,12 @@ uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
 [zfs-files-servers]
 jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 
+[tftp-servers]
+neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+
+[emby-servers]
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
+
 # -------
 # DEVICES
 # -------
@@ -72,6 +78,8 @@ pabx-servers
 dns-servers
 apt-cacher-ng-server
 zfs-files-servers
+tftp-servers
+emby-servers
 
 [galaxie:children]
 dns-resolver
