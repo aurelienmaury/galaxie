@@ -46,7 +46,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[0;32m\]\[\033[0m\033[0;32m\]\u\[\033[0;36m\] @ \[\033[0;36m\]\h  \w\[\033[0;32m\]\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\] ▶\[\033[0m\] '  
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[0;32m\]\[\033[0m\033[0;32m\]\u\[\033[0;36m\] @ \[\033[0;36m\]\h  \w\[\033[0;32m\]\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\] ▶\[\033[0m\] '
     ;;
 *)
     ;;
@@ -105,4 +105,22 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+#Check if grc is available then load fews alias
+which grc &>/dev/null && {
+    alias grc='grc --colour=auto'
+    alias ping='grc ping'
+    alias last='grc last'
+    alias netstat='grc netstat'
+    alias traceroute='grc traceroute'
+    alias make='grc make'
+    alias gcc='grc gcc'
+    alias configure='grc ./configure'
+    alias configure='grc configure'
+    alias netstat='grc netstat'
+    alias ping='grc ping'
+    alias cat="grc cat"
+    alias tail="grc tail"
+    alias head="grc head"
+}
 

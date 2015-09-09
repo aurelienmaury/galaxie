@@ -41,6 +41,7 @@
         - task-spooler
         - cron
         - findutils
+        - grc
 
     - name: undesired packages are absent
       apt:
