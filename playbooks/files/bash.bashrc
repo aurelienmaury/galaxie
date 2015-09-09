@@ -93,34 +93,39 @@ fi
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+
+    which grc &>/dev/null && {
+        alias grc='grc --colour=auto'
+        alias cat='grc cat'
+        alias head='grc head'
+        alias tail='grc tail'
+        alias configure='grc ./configure'
+        alias ping='grc ping'
+        alias traceroute='grc traceroute'
+        alias gcc='grc gcc'
+        alias make='grc make'
+        alias netstat='grc netstat'
+        alias diff='grc diff'
+        alias wdiff='grc wdiff'
+        alias last='grc last'
+        alias cvs='grc cvs'
+        alias mount='grc mount'
+        alias mtr='grc mtr'
+        alias ps='grc ps'
+        alias dig='grc dig'
+        alias ifconfig='grc /sbin/ifconfig'
+        #alias ls='grc ls'
+    }
 fi
 
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-
-#Check if grc is available then load fews alias
-which grc &>/dev/null && {
-    alias grc='grc --colour=auto'
-    alias ping='grc ping'
-    alias last='grc last'
-    alias netstat='grc netstat'
-    alias traceroute='grc traceroute'
-    alias make='grc make'
-    alias gcc='grc gcc'
-    alias configure='grc ./configure'
-    alias configure='grc configure'
-    alias netstat='grc netstat'
-    alias ping='grc ping'
-    alias cat="grc cat"
-    alias tail="grc tail"
-    alias head="grc head"
-}
 
