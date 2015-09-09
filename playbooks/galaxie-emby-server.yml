@@ -5,13 +5,13 @@
   # That playbook respect the debian section of the emby installation page
   # http://emby.media/downloads/linux-server/
   tasks:
-    - name: Add emby.media debian 7 key
+    - name: Add emby.media Debian 7 key
       apt_key:
         url=http://download.opensuse.org/repositories/home:emby/Debian_7.0/Release.key
         state=present
       when: ansible_distribution == "Debian" and ansible_distribution_major_version == "7"
 
-    - name: Add emby.media debian 8 key
+    - name: Add emby.media Debian 8 key
       apt_key:
         url=http://download.opensuse.org/repositories/home:emby/Debian_8.0/Release.key
         state=present
