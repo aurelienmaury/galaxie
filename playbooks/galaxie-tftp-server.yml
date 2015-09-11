@@ -1,0 +1,27 @@
+- hosts: tftp-servers
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  tasks:
+
+    - name: Update Apt
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install tftpd-hpa
+      action: apt pkg="{{item}}" state=installed
+      with_items:
+        - tftpd-hpa
+        - debian-installer-8-netboot-armel
+
+
+    - name: Remove vim-tiny and nano
+      apt:
+        pkg="{{item}}"
+        state=absent
+        purge=yes
+      with_items:
+        - atftpd
+        - tftpd
