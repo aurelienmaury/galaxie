@@ -3,6 +3,9 @@ jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
 neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune
 
+[zoe-voices]
+jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+
 # |
 # |- servers
 # |  |-- ntp-servers

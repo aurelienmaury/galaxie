@@ -1,0 +1,297 @@
+- hosts: zoe-voices
+  user: zoe
+  sudo: yes
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  vars:
+
+     project_dir: "{{ galaxie.prefix_dir }}/zoe_voice"
+     source_dir: "{{ galaxie.cache_dir }}"
+     pocketsphinx_pkg_config_path: "/usr/share/pocketsphinx/model"
+
+     acoustic_model_url: http://skylink.dl.sourceforge.net/project/cmusphinx/Acoustic%20and%20Language%20Models/French/cmusphinx-fr-5.2.tar.gz
+     acoustic_model_file: cmusphinx-fr-5.2.tar.gz
+
+     trigram_language_model_url: http://heanet.dl.sourceforge.net/project/cmusphinx/Acoustic%20and%20Language%20Models/French%20Language%20Model/french3g62K.lm.dmp
+     trigram_language_model_file: french3g62K.lm.dmp
+
+     pronunciation_dictionary_url: http://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/French%20Language%20Model/frenchWords62K.dic/download
+     pronunciation_dictionary_file: frenchWords62K.dic
+
+  tasks:
+    - name: Check directory
+      file:
+        path="{{item}}"
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+      with_items:
+        - "{{ project_dir }}"
+        - "{{ source_dir  }}"
+
+    - name: Update Apt
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install required software
+      action: apt pkg={{item}} state=installed
+      with_items:
+       - alsa-base
+       - pocketsphinx
+       - libpocketsphinx1
+       - python-pyaudio
+       #- python-aiml
+       - python-pocketsphinx
+       - gstreamer0.10-pulseaudio
+       - gstreamer0.10-pocketsphinx
+       - libao4
+       - libasound2-plugins
+       - libgconfmm-2.6-1c2
+       - libglademm-2.4-1c2a
+       - libpulse-mainloop-glib0
+       - libpulse0
+       - libsox-fmt-pulse
+       - paman
+       - paprefs
+       - pavucontrol
+       - pavumeter
+       - pulseaudio
+       - pulseaudio-esound-compat
+       - pulseaudio-module-bluetooth
+       - pulseaudio-module-gconf
+       - pulseaudio-module-jack
+       - pulseaudio-module-lirc
+       - pulseaudio-module-x11
+       - pulseaudio-module-zeroconf
+       - pulseaudio-utils
+       #- oss-compat
+       - speech-dispatcher
+       - espeak
+       - mbrola
+       - mbrola-fr1
+       - mbrola-fr4
+
+    - name: Remove unrequired software
+      action: apt pkg={{item}} state=absent
+      with_items:
+        - pulseaudio-module-lirc-dbg
+        - pulseaudio-dbg
+        - libpulse0-dbg
+        - libpulse-dev
+        - pulseaudio-module-zeroconf-dbg
+        - libpulse-mainloop-glib0-dbg
+        - pulseaudio-esound-compat-dbg
+
+### accoustic model ###
+
+    - name: Check {{ source_dir }}/{{ acoustic_model_file }}
+      stat: path={{ source_dir }}/{{ acoustic_model_file }}
+      register: acoustic_model_file_stat
+
+    - name: Download {{ acoustic_model_file }} French model sources
+      get_url: url={{ acoustic_model_url }} dest={{ source_dir }}/{{ acoustic_model_file }}
+      register: acoustic_model_file_download
+      when: not acoustic_model_file_stat.stat.exists
+
+    - name: Untar {{ source_dir }}/{{ acoustic_model_file }} to {{ source_dir }}/
+      unarchive: src={{ source_dir }}/{{ acoustic_model_file }} dest={{ source_dir }} copy=no
+      when: acoustic_model_file_download.changed
+
+    - name: Creat {{ pocketsphinx_pkg_config_path }}/hmm/fr_FR
+      action: file
+        dest={{ pocketsphinx_pkg_config_path }}/hmm/fr_FR
+        state=directory
+      when: acoustic_model_file_download.changed
+
+    - name: Move {{ source_dir }}/cmusphinx-fr-5.2 to {{ pocketsphinx_pkg_config_path }}/hmm/fr_FR/cmusphinx
+      command: mv {{ source_dir }}/cmusphinx-fr-5.2 {{ pocketsphinx_pkg_config_path }}/hmm/fr_FR/cmusphinx
+      when: acoustic_model_file_download.changed
+
+### trigram language ###
+
+    - name: Check {{ source_dir }}/{{ trigram_language_model_file }}
+      stat: path={{ source_dir }}/{{ trigram_language_model_file }}
+      register: trigram_language_model_file_stat
+
+    - name: Download french3g62K.lm.dmp French model sources
+      get_url: url={{ trigram_language_model_url }} dest={{ source_dir }}/{{ trigram_language_model_file }}
+      register: trigram_language_model_download
+      when: not trigram_language_model_file_stat.stat.exists
+
+    - name: Creat {{ pocketsphinx_pkg_config_path }}/lm/fr_FR
+      action: file dest={{ pocketsphinx_pkg_config_path }}/lm/fr_FR  state=directory
+      when: trigram_language_model_download.changed
+
+    - name: Copy {{ source_dir }}/french3g62K.lm.dmp to {{ pocketsphinx_pkg_config_path }}/lm/fr_FR/
+      command: cp {{ source_dir }}/french3g62K.lm.dmp {{ pocketsphinx_pkg_config_path }}/lm/fr_FR/
+      when: trigram_language_model_download.changed
+
+    # pronunciation dictionary (lexicon) ###
+    - name: Check {{ source_dir }}/{{ pronunciation_dictionary_file }}
+      stat: path={{ source_dir }}/{{ pronunciation_dictionary_file }}
+      register: pronunciation_dictionary_file_stat
+
+    - name: Download pronunciation dictionary
+      get_url: url={{ pronunciation_dictionary_url }} dest={{ source_dir }}/{{ pronunciation_dictionary_file }}
+      register: pronunciation_dictionary_download
+      when: not pronunciation_dictionary_file_stat.stat.exists
+
+    - name: Creates directory {{ pocketsphinx_pkg_config_path }}/lm/fr_FR
+      action: file dest={{ pocketsphinx_pkg_config_path }}/lm/fr_FR  state=directory
+      when: pronunciation_dictionary_download.changed
+
+    - name: Copy {{ source_dir }}/frenchWords62K.dic {{ pocketsphinx_pkg_config_path }}/lm/fr_FR/
+      command: cp {{ source_dir }}/frenchWords62K.dic {{ pocketsphinx_pkg_config_path }}/lm/fr_FR/
+      when: pronunciation_dictionary_download.changed
+
+    # Configure pulseaudio ###
+
+####  Setting up ALSA ###
+#    - name: Set /etc/asound.conf file
+#      template:
+#        src=templates/asound.conf
+#        dest=/etc/asound.conf
+#        owner=root
+#        group=root
+#        mode=0644
+
+    ## Set up the PulseAudio daemon for network connections  ##
+    - name: Set up the PulseAudio daemon for network connections
+      lineinfile:
+        dest=/etc/pulse/system.pa
+        regexp="^load-module module-native-protocol-tcp auth-ip-acl="
+        line="load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;192.168.0.0/16 auth-anonymous=1"
+        state=present
+
+    - name: Set up the Zeroconf module for PulseAudio daemon
+      lineinfile:
+        dest=/etc/pulse/system.pa
+        line="load-module module-zeroconf-publish"
+        state=present
+
+    # Change default sound driver from alsa to pulseaudio  ##
+    - name: stats /etc/libao.conf.ORIG
+      stat: path=/etc/libao.conf.ORIG
+      register: libao_conf_ORIG
+
+    - name: cp -fvp /etc/libao.conf /etc/libao.conf.ORIG
+      command: cp -fvp /etc/libao.conf /etc/libao.conf.ORIG
+      when: not libao_conf_ORIG.stat.exists
+
+    - name: Change default sound driver from alsa to pulseaudio
+      lineinfile:
+        dest=/etc/libao.conf
+        regexp="^default_driver="
+        line="default_driver=pulse"
+        state=present
+
+    # Hight Aviability
+#    - name: Set "high-priority = yes" on /etc/pulse/daemon.conf file
+#      lineinfile:
+#        dest=/etc/pulse/daemon.conf
+#        regexp="^; high-priority ="
+#        line="high-priority = yes"
+#        state=presen/etc/libao.conft
+#
+#    - name: Set "nice-level = 5"  on /etc/pulse/daemon.conf file
+#      lineinfile:
+#        dest=/etc/pulse/daemon.conf
+#        regexp="^; nice-level ="
+#        line="nice-level = 5"
+#        state=present
+#
+#    - name: Set "exit-idle-time = -1"  on /etc/pulse/daemon.conf file
+#      lineinfile:
+#        dest=/etc/pulse/daemon.conf
+#        regexp="^; exit-idle-time ="
+#        line="exit-idle-time = -1"
+#        state=present
+
+
+    - name: Check /etc/pulse/daemon.conf - resample-method = src-sinc-medium-quality
+      replace:
+        dest=/etc/pulse/daemon.conf
+        regexp='^; resample-method = .*?\n'
+        replace='resample-method = src-sinc-medium-quality'
+    - name: Set   /etc/pulse/daemon.conf - resample-method = src-sinc-medium-quality
+      lineinfile:
+        dest=/etc/pulse/daemon.conf
+        line="resample-method = src-sinc-medium-quality"
+        state=present
+
+
+    - name: Check /etc/pulse/daemon.conf - default-sample-format = s16le
+      replace:
+        dest=/etc/pulse/daemon.conf
+        regexp='^; default-sample-format = [a-zA-Z0-9_]+'
+        replace='default-sample-format = s16le'
+    - name: Set   /etc/pulse/daemon.conf - default-sample-format = s16le
+      lineinfile:
+        dest=/etc/pulse/daemon.conf
+        line='default-sample-format = s16le'
+        state=present
+
+    - name: Check /etc/pulse/daemon.conf - default-sample-rate = 48000
+      replace:
+        dest=/etc/pulse/daemon.conf
+        regexp='^; default-sample-rate = [0-9]+'
+        replace='default-sample-rate = 48000'
+    - name: Set   /etc/pulse/daemon.conf - default-sample-rate = 48000
+      lineinfile:
+        dest=/etc/pulse/daemon.conf
+        line='default-sample-rate = 48000'
+        state=present
+
+    - name: Check /etc/pulse/daemon.conf - default-sample-channels = 2
+      replace:
+        dest=/etc/pulse/daemon.conf
+        regexp='^; default-sample-channels = [0-9]+'
+        replace='default-sample-channels = 2'
+    - name: Set   /etc/pulse/daemon.conf - default-sample-channels = 2
+      lineinfile:
+        dest=/etc/pulse/daemon.conf
+        line='default-sample-channels = 2'
+        state=present
+
+
+### speech-dispatcher ###
+#    - name: stats /etc/speech-dispatcher/speechd.conf.ORIG
+#      stat: path=/etc/speech-dispatcher/speechd.conf.ORIG
+#      register: speechd_conf_ORIG
+#
+#    - name: cp -fvp /etc/speech-dispatcher/speechd.conf /etc/speech-dispatcher/speechd.conf.ORIG
+#      command: cp -fvp /etc/speech-dispatcher/speechd.conf /etc/speech-dispatcher/speechd.conf.ORIG
+#      when: not speechd_conf_ORIG.stat.exists
+#
+##    - name: Set DefaultVoiceType  "FEMALE1"
+#      lineinfile:
+#        dest=/etc/speech-dispatcher/speechd.conf
+#        regexp='^DefaultVoiceType'
+#        line='DefaultVoiceType  "FEMALE1"'
+#        insertafter='^# DefaultVoiceType  "MALE1"'
+#        state=present
+#
+#    - name: Set DefaultLanguage  "fr"
+#      lineinfile:
+#        dest=/etc/speech-dispatcher/speechd.conf
+#        regexp='^DefaultLanguage'
+#        line='DefaultLanguage  "fr"'
+#        insertafter='^# DefaultLanguage "en"'
+#        state=present
+#
+#    - name: Set AddModule "espeak-generic" "sd_generic" "espeak-generic.conf"
+#      lineinfile:
+#        dest=/etc/speech-dispatcher/speechd.conf
+#        regexp='^AddModule "espeak-generic" "sd_generic" "espeak-generic.conf"'
+#        line='AddModule "espeak-generic" "sd_generic" "espeak-generic.conf"'
+#        insertafter='#AddModule "pico"        "sd_pico"     "pico.conf"'
+#        state=present
+#
+#    - name: DefaultModule espeak-generic
+#      lineinfile:
+#        dest=/etc/speech-dispatcher/speechd.conf
+#        regexp='^DefaultModule'
+#        line='DefaultModule espeak-generic'
+#        state=present

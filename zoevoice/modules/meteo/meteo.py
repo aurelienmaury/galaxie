@@ -12,21 +12,21 @@ version = '1.0'
 verbose = False
 
 """Variables to configure"""
-api_lang='fr'
-api_url='http://api.openweathermap.org/data/2.5/'
-api_q='guitrancourt,fr'
-api_lat='49.01'
-api_lon='1.78'
-api_lang='fr'
-api_mode='json'
-api_id='3012656'
+api_lang = 'fr'
+api_url = 'http://api.openweathermap.org/data/2.5/'
+api_q = 'guitrancourt,fr'
+api_lat = '49.01'
+api_lon = '1.78'
+api_lang = 'fr'
+api_mode = 'json'
+api_id = '3012656'
+
 
 def print_dump(data):
-    
     print '--------------------------------------'
     """http://openweathermap.org/weather-data#current"""
-    
-    """City identification""" 
+
+    """City identification"""
     api_id = int(data['id'])
     print 'City identification  = ' + str(api_id)
 
@@ -50,7 +50,7 @@ def print_dump(data):
 
     """System parameter, do not use it"""
     api_sys_message = float(data['sys_message'])
-    print 'System parameter, do not use it = ' + str(api_sys_message) 
+    print 'System parameter, do not use it = ' + str(api_sys_message)
 
     """Country (GB, JP etc.)"""
     if 'sys_country' in data:
@@ -91,22 +91,22 @@ def print_dump(data):
     (on the sea level, if there is no sea_level or grnd_level data), hPa"""
     if 'main_pressure' in data:
         api_main_pressure = int(data['main_pressure'])
-        print 'Atmospheric pressure, hPa = ' + str(api_main_pressure)  
+        print 'Atmospheric pressure, hPa = ' + str(api_main_pressure)
 
     """Atmospheric pressure on the sea level, hP"""
     if 'main_sea_level' in data:
         api_main_sea_level = int(data['main_sea_level'])
-        print 'Atmospheric pressure on the sea level, hPa = ' + str(api_sea_level) 
+        print 'Atmospheric pressure on the sea level, hPa = ' + str(api_sea_level)
 
     """Atmospheric pressure on the ground level, hPa"""
     if 'main_grnd_level' in data:
-        api_main_grnd_level  = int(data['main_grnd_level'])
-        print 'Atmospheric pressure on the ground level, hPa  = ' + str(api_main_grnd_level) 
+        api_main_grnd_level = int(data['main_grnd_level'])
+        print 'Atmospheric pressure on the ground level, hPa  = ' + str(api_main_grnd_level)
 
     """Wind speed, mps"""
     if 'wind_speed' in data:
-        api_wind_speed  = float(data['wind_speed'])
-        print 'Wind speed, mps   = ' + str(api_wind_speed) 
+        api_wind_speed = float(data['wind_speed'])
+        print 'Wind speed, mps   = ' + str(api_wind_speed)
 
     """Wind direction, degrees (meteorological) """
     if 'wind_deg' in data:
@@ -115,82 +115,86 @@ def print_dump(data):
 
     """Wind gust, mps"""
     if 'wind_gust' in data:
-        api_wind_gust  = float(data['wind_gust'])
-        print 'Wind gust, mps = ' + str(api_wind_gust) 
+        api_wind_gust = float(data['wind_gust'])
+        print 'Wind gust, mps = ' + str(api_wind_gust)
 
     """Wind gust, mps"""
     if 'wind_gust' in data:
-        api_wind_gust  = float(data['wind_gust'])
-        print 'Wind gust, mps = ' + str(api_wind_gust) 
+        api_wind_gust = float(data['wind_gust'])
+        print 'Wind gust, mps = ' + str(api_wind_gust)
 
     """Cloudiness, %"""
     if 'clouds_all' in data:
-        api_clouds_all  = float(data['clouds_all'])
-        print 'Cloudiness, % = ' + str(api_clouds_all) 
+        api_clouds_all = float(data['clouds_all'])
+        print 'Cloudiness, % = ' + str(api_clouds_all)
 
     """weather (more info Weather condition codes):"""
     """http://openweathermap.org/weather-conditions"""
     """Weather condition id"""
     if 'weather_0_id' in data:
-        api_weather_0_id  = int(data['weather_0_id'])
-        print 'Weather condition id  = ' + str(api_weather_0_id )
+        api_weather_0_id = int(data['weather_0_id'])
+        print 'Weather condition id  = ' + str(api_weather_0_id)
 
     if 'weather_0_main' in data:
-        api_weather_0_main  = data['weather_0_main']
+        api_weather_0_main = data['weather_0_main']
         api_weather_0_main.encode('utf-8')
         print 'Group of weather parameters (Rain, Snow, Extreme etc.)   = ' + api_weather_0_main
 
     if 'weather_0_description' in data:
-        api_weather_0_description  = data['weather_0_description']
+        api_weather_0_description = data['weather_0_description']
         api_weather_0_description.encode('utf-8')
         print 'Weather Description  = ' + api_weather_0_description
 
     if 'weather_0_icon' in data:
-        api_weather_0_icon  = data['weather_0_icon']
+        api_weather_0_icon = data['weather_0_icon']
         api_weather_0_icon.encode('utf-8')
         print 'Weather icon id  = ' + api_weather_0_icon
 
     if 'weather_1_id' in data:
-        api_weather_1_id  = int(data['weather_1_id'])
-        print 'Weather condition id  = ' + str(api_weather_1_id )
+        api_weather_1_id = int(data['weather_1_id'])
+        print 'Weather condition id  = ' + str(api_weather_1_id)
 
     if 'weather_1_main' in data:
-        api_weather_1_main  = data['weather_1_main']
+        api_weather_1_main = data['weather_1_main']
         api_weather_1_main.encode('utf-8')
         print 'Group of weather parameters (Rain, Snow, Extreme etc.)   = ' + api_weather_1_main
 
     if 'weather_1_description' in data:
-        api_weather_1_description  = data['weather_1_description']
+        api_weather_1_description = data['weather_1_description']
         api_weather_1_description.encode('utf-8')
         print 'Weather Description  = ' + api_weather_1_description
 
     if 'weather_1_icon' in data:
-        api_weather_1_icon  = data['weather_1_icon']
+        api_weather_1_icon = data['weather_1_icon']
         api_weather_1_icon.encode('utf-8')
         print 'Weather icon id  = ' + api_weather_1_icon
+
 
 def print_human_dump(data):
     """City name"""
     if 'name' in data:
         api_name = data['name']
-        api_name.encode('utf-8')
+        #api_name.encode('utf-8')
         print api_name + ',',
 
-    """Country (GB, JP etc.)"""
-    if 'sys_country' in data:
-        api_sys_country = data['sys_country']
-        api_sys_country.encode('utf-8')
-        print api_sys_country
+    # """Country (GB, JP etc.)"""
+    # if 'sys_country' in data:
+    #     api_sys_country = data['sys_country']
+    #     #api_sys_country.encode('utf-8')
+    #     print api_sys_country
 
     """Temperature, Kelvin (subtract 273.15 to convert to Celsius) """
     if 'main_temp' in data:
         api_main_temp = float(data['main_temp'])
-        print str(convert_f2c(api_main_temp)) + '° Celcius',
+        api_main_temp = convert_f2c(api_main_temp)
+        api_main_temp = api_main_temp.replace('.',',')
+        print str(api_main_temp) + '° Celcius, ',
 
     if 'weather_0_description' in data:
-        api_weather_0_description  = data['weather_0_description']
-        api_weather_0_description.encode('utf-8')
+        api_weather_0_description = data['weather_0_description']
+        #api_weather_0_description.encode('utf-8')
         print api_weather_0_description + ' '
+
 
 def get_current_weather_data_by_city_name():
     options = 'weather?q=%s&lang=%s&mode=%s' % (api_q, api_lang, api_mode)
@@ -199,15 +203,17 @@ def get_current_weather_data_by_city_name():
     data = request.read()
     data = json.loads(data)
     # DEBUG Infos   
-    #print(json.dumps(flatten_dict(data), indent=4, sort_keys=True))
+    # print(json.dumps(flatten_dict(data), indent=4, sort_keys=True))
     data = flatten_dict(data)
     print_human_dump(data)
     return data
-    
+
+
 def give_temperature(data):
     api_main_temp = float(data['main_temp'])
     api_main_temp = convert_f2c(api_main_temp)
     print str(api_main_temp) + '°'
+
 
 def flatten_dict(d, parent_key=''):
     """Recursively flatten a dict"""
@@ -224,10 +230,12 @@ def flatten_dict(d, parent_key=''):
             items.append((new_key, v))
     return dict(items)
 
+
 def convert_f2c(S):
     fahrenheit = float(S)
     celsius = "%.1f" % (fahrenheit - 273.15)
     return celsius
+
 
 def to_weather_condition_description(weather_id):
     if weather_id == 200:
@@ -236,34 +244,36 @@ def to_weather_condition_description(weather_id):
         return str("overcast clouds ")
     else:
         return str(weather_id)
+
+
 def to_wind_description(speed):
-    if speed >= 0.000 and speed <= 0.299:
+    if 0.000 <= speed <= 0.299:
         return str("Calme")
-    elif speed >= 0.300 and speed <= 1.599:
+    elif 0.300 <= speed <= 1.599:
         return str("Très légère brise")
-    elif speed >= 1.600  and speed <= 3.399:
+    elif 1.600 <= speed <= 3.399:
         return str("Légère brise")
-    elif speed >= 3.400 and speed <= 5.499:
+    elif 3.400 <= speed <= 5.499:
         return str("Petite brise")
-    elif speed >= 5.500 and speed <= 7.999:
+    elif 5.500 <= speed <= 7.999:
         return str("Jolie brise")
-    elif speed >= 8.000 and speed <= 10.799:
+    elif 8.000 <= speed <= 10.799:
         return str("Bonne brise")
-    elif speed >= 10.800 and speed <= 13.899:
+    elif 10.800 <= speed <= 13.899:
         return str("Vent frais")
-    elif speed >= 13.900 and speed <= 17.199:
+    elif 13.900 <= speed <= 17.199:
         return str("Grand frais")
-    elif speed >= 17.200 and speed <= 20.799:
+    elif 17.200 <= speed <= 20.799:
         return str("Coup de vent")
-    elif speed >= 20.800 and speed <= 24.499:
+    elif 20.800 <= speed <= 24.499:
         return str("Fort coup de vent")
-    elif speed >= 24.500 and speed <= 28.499:
+    elif 24.500 <= speed <= 28.499:
         return str("Tempête")
-    elif speed >= 28.500 and speed <= 32.699:
+    elif 28.500 <= speed <= 32.699:
         return str("Violente tempête")
     elif speed >= 32.700:
         return str("Ouragan")
 
-    
+
 if __name__ == "__main__":
     get_current_weather_data_by_city_name()

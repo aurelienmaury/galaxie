@@ -1,5 +1,11 @@
-<?xml version="1.0"    encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <aiml version="1.0">
+
+<!-- Module   : date.aiml   -   version :   0.1   -   MàJ : 4/10/2014  -->
+<!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
+<!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+<!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
 
 <!-- J'ecoute-->
 <category>
@@ -16,38 +22,6 @@
     <pattern>TU ES LÀ</pattern>
     <template><srai>NESTOR</srai></template>
 </category>
-
-
-
-<category>
-  <pattern>QUEL EST TON NOM</pattern>
-  <template>Je m'appel Zoé</template>
-</category>
-
-<category>
-  <pattern>* EST TON NOM</pattern>
-  <template>
-    <srai>QUEL EST TON NOM</srai>
-  </template>
-</category>
-
-<category>
-  <pattern>QUEL * TON NOM</pattern>
-  <template>
-    <srai>QUEL EST TON NOM</srai>
-  </template>
-</category>
-
-<category>
-  <pattern>COMMENT * APPEL</pattern>
-  <template>
-    <srai>QUEL EST TON NOM</srai>
-  </template>
-</category>
-
-
-
-
 
 <!-- Bonjour -->
 <category>
@@ -73,21 +47,27 @@
     <pattern>ALLO</pattern>
     <template><srai>HELLO</srai></template>
 </category>
-
-
 <category>
-  <pattern>COMMENT ÇA VA</pattern>
+    <pattern>ALL*</pattern>
+    <template><srai>HELLO</srai></template>
+</category>
+
+<!-- Mets a jour les machines -->
+<category>
+    <pattern>MERCI</pattern>
     <template>
         <random>
-            <li>Bien</li>
-            <li>Genial je decouvre le monde aujourd'hui</li>
+            <li>De rien ...</li>
+            <li>Mais de rien</li>
+            <li>Facile</li>
+            <li>...</li>
+            <li>...</li>
+            <li>...</li>
+            <li>...</li>
+            <li>...</li>
+            <li>...</li>
         </random>
-  </template>
+    </template>
 </category>
-<category>
-  <pattern>COMMENT VAS TU/pattern>
-  <template><srai>COMMENT ÇA VA</srai></template>
-</category>
-
-<!-- Quem -->
 </aiml>
+

@@ -15,12 +15,17 @@
 <category><pattern>* MOI LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 <category><pattern>DEUX MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 <category><pattern>D UN MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>UN MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+
+<category><pattern>LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 
 <!-- Demande d l'heure -->
 <category><pattern>QUELLE HEURE EST IL</pattern><template>Il est <system>../modules/date/date.py --clock</system>.</template></category>
 <category><pattern>QUEL HEURE EST IL</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>QUEL EST L HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>QUELLE EST L HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUELLE EST LEUR</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>IL EST QUELLE HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>IL EST QUEL HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>DONNE MOI L HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
@@ -50,6 +55,10 @@
 
 <category><pattern>QUEL EST LE JOUR</pattern><template><system>../modules/date/date.py --day</system>.</template></category>
 <category><pattern>DONNE MOI LE JOUR</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
+<category><pattern>DEUX MOIS LE JOUR</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
+
+<category><pattern>ON EST QUELQUES JOURS</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
+
 <category><pattern>QUEL JOUR SOMMES NOUS</pattern><template>Nous sommes un <srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>ON EST QUOI AUJOURD HUI</pattern><template>Aujourd'hui on est <srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>AUJOURD HUI ON EST QUOI</pattern><template>On est <srai>QUEL EST LE JOUR</srai> Aujourd'hui.</template></category>
@@ -58,6 +67,7 @@
 
 <!-- Demande le mois -->
 <category><pattern>ON EST QUEL MOIS</pattern><template><system>../modules/date/date.py --month</system></template></category>
+<category><pattern>QUEL EST LE MOIS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
 <category><pattern>ON EST QUEL MOI</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
 <category><pattern>MAIS QUEL MOIS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
 <category><pattern>MAIS QUELLE MOI</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
