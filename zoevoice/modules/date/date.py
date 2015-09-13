@@ -201,7 +201,6 @@ if day:
 if daynum:
     print_daynum()
 
-
 if month:
     print_month()
 

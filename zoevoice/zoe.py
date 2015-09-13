@@ -16,14 +16,16 @@ import marshal
 import os.path
 import time
 import tempfile
+import pocketsphinx as ps
 import subprocess
 
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
+
 # VARIABLES for Noise Gate Regarding
 threshold = 3000  # audio levels not normalised.
-CHUNK_SIZE = 1024
-SILENT_CHUNKS = 0.3 * 44100 / 1024  # about 3sec
+chunk_size = 1024
+silent_chunks = 0.3 * 44100 / 1024  # about 3sec
 # FORMAT = pyaudio.paInt16
 format = pyaudio.paALSA
 frame_max_value = 2 ** 15 - 1
@@ -31,7 +33,7 @@ normalize_minus_one_db = 10 ** (-3 / 20)
 rate = 16000
 channels = 1
 trim_append = rate / 10
-DEBUG = 1
+debug = 1
 
 # Temporary file
 wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
@@ -40,7 +42,7 @@ wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
 k = aiml.Kernel()
 zoe_brain = "zoe.br"
 zoe_session = "zoe.ses"
-zoe_session_name = "Nestor"
+zoe_session_name = "Zoe"
 modules_dir = os.getcwd() + '/modules'
 brains_dir = os.getcwd() + '/brains'
 
@@ -74,14 +76,14 @@ pocket_sphinx_hm_directory = pocket_sphinx_share_path_output + '/hmm/' + lang + 
 pocket_sphinx_lmd = pocket_sphinx_share_path_output + '/lm/' + lang + '/' + lmd_file_name
 pocket_sphinx_dictd = pocket_sphinx_share_path_output + '/lm/' + lang + '/' + dict_file_name
 
-dict_directory = model_dir + '/lm/' + lang + '/' + dict_file_name
+dictionary_file = model_dir + '/lm/' + lang + '/' + dict_file_name
 
 # VARIALE for Voice reconize
 # Load local model_dir before pocketsphinx one
 if os.path.isdir(local_hm_directory):
-    hm_directory = local_hm_directory
+    acoustic_model_directory = local_hm_directory
 elif os.path.isdir(pocket_sphinx_hm_directory):
-    hm_directory = pocket_sphinx_hm_directory
+    acoustic_model_directory = pocket_sphinx_hm_directory
 else:
     print 'Pocketsphinx is require for Zoevoice'
     print 'Intall it properlly before use it program'
@@ -89,9 +91,9 @@ else:
 
 # Load local lm.dump before pocketsphinx one
 if os.path.isfile(local_lmd):
-    lmd = local_lmd
+    language_model_file = local_lmd
 elif os.path.isfile(pocket_sphinx_lmd):
-    lmd = pocket_sphinx_lmd
+    language_model_file = pocket_sphinx_lmd
 else:
     print 'A model lm.dmp is require for Zoevoice'
     print 'Put it on :' + local_lmd
@@ -99,9 +101,9 @@ else:
 
 # Load local .dic before pocketsphinx one
 if os.path.isfile(local_dictd):
-    dict_directory = local_dictd
+    dictionary_file = local_dictd
 elif os.path.isfile(pocket_sphinx_dictd):
-    dict_directory = pocket_sphinx_dictd
+    dictionary_file = pocket_sphinx_dictd
 else:
     print 'A model .dic is require for Zoevoice'
     print 'Put it on :' + local_dictd
@@ -186,28 +188,28 @@ def record():
         rate=rate,
         input=True,
         output=True,
-        frames_per_buffer=CHUNK_SIZE
+        frames_per_buffer=chunk_size
     )
-    silent_chunks = 0
+    silent_chunks_counter = 0
     audio_started = False
     data_all = array('h')
     while True:
         # little endian, signed short
-        data_chunk = array('h', stream.read(CHUNK_SIZE))
+        data_chunk = array('h', stream.read(chunk_size))
         if byteorder == 'big':
             data_chunk.byteswap()
         data_all.extend(data_chunk)
         silent = is_silent(data_chunk)
         if audio_started:
             if silent:
-                silent_chunks += 1
-                if silent_chunks > SILENT_CHUNKS:
+                silent_chunks_counter += 1
+                if silent_chunks_counter > silent_chunks:
                     break
             else:
-                silent_chunks = 0
+                silent_chunks_counter = 0
         elif not silent:
             audio_started = True
-            prompt(2)
+            set_prompt_type(2)
     sample_width = p.get_sample_size(format)
     stream.stop_stream()
     stream.close()
@@ -228,26 +230,30 @@ def record_to_file(path):
     wave_file.setframerate(rate)
     wave_file.writeframes(data)
     wave_file.close()
+
+    # Few test abut Effect before other post processing
     # filter_noise(wavfile)
     # os.system(wavegain_cmd % path)
     #os.system(bassband_cmd % (path, path))
     #os.rename(path + '.tmp.wav', path)
 
 
-def decodeSpeech(hmmd, lmdir, dictp, wavfile):
-    prompt(3)
-    import pocketsphinx as ps
-    import sphinxbase
-    speechRec = ps.Decoder(hmm=hmmd, lm=lmdir, dict=dictp)
-    wavFile = file(wavfile, 'rb')
-    wavFile.seek(44)
-    speechRec.decode_raw(wavFile)
+def decode_speech(acoustic_model_directory, language_model_file, dictionary_file, wavfile):
+    set_prompt_type(3)
+    speechRec = ps.Decoder(
+        hmm=acoustic_model_directory,
+        lm=language_model_file,
+        dict=dictionary_file
+    )
+    wav_file_to_decode = file(wavfile, 'rb')
+    wav_file_to_decode.seek(44)
+    speechRec.decode_raw(wav_file_to_decode)
     result = speechRec.get_hyp()
-    prompt(0)
+    set_prompt_type(0)
     return result[0]
 
 
-def prompt(state):
+def set_prompt_type(state):
     print "\b" * 20,
     if state == 1:
         print bcolors.normal + "\b[" + bcolors.endc,
@@ -266,19 +272,24 @@ def prompt(state):
 
 def tts(text):
     if not text == "":
-        print bcolors.normal + "\bNestor:> " + bcolors.yellow + text + bcolors.endc
+        print "{0}\bZoé   :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc)
         os.system(espeack_cmd % text)
 
 
 def stt():
     record_to_file(wavfile)
-    recognised = decodeSpeech(hm_directory, lmd, dict_directory, wavfile)
-    if not recognised == '':
-        # recognised.decode('iso-8859-1').encode('utf8')
-        # recognised.decode('utf8').encode('iso-8859-1')
-        print bcolors.normal + "\bHuman :> " + bcolors.yellow + recognised + bcolors.endc
+    recognizing = decode_speech(
+        acoustic_model_directory,
+        language_model_file,
+        dictionary_file,
+        wavfile
+    )
+    if not recognizing == '':
+        # recognizing.decode('iso-8859-1').encode('utf8')
+        # recognizing.decode('utf8').encode('iso-8859-1')
+        print bcolors.normal + "\bHuman :> " + bcolors.yellow + recognizing + bcolors.endc
     os.remove(wavfile)
-    return recognised
+    return recognizing
 
 
 def load_module(module_name):
@@ -307,6 +318,7 @@ def load_brain():
         load_module('zoe')
         load_module('date')
         load_module('meteo')
+        load_module('desktop')
         load_module('alice')
         os.chdir(brains_dir)
         k.setPredicate("master", zoe_session_name)
@@ -337,8 +349,10 @@ def main():
     load_session()
     reload_modules_text = [
         "mis à jour des modules",
+        "mis à jour les modules",
         "mise jour des modules",
         "mise à jour des modules",
+        "mise à jour les modules",
         "mais un jour les modules",
         "mais un jour des modules",
         "mais le jour les modules",
@@ -353,6 +367,8 @@ def main():
         "on recharge les modules",
         "recherche module",
         "recherche les modules",
+        "bien_sûr les modules",
+        "mais sur les modes",
         "modules reload"
     ]
 
@@ -368,27 +384,41 @@ def main():
         "mais le jour des machines"
     ]
 
+    exit_text = [
+        "ferme",
+        "tu devrais fermée",
+        "tu devrais fermé",
+        "il devrait fermer",
+        "elle devrait fermer",
+        "devrait fermer",
+        "quasi quitte",
+        "quitte",
+        "tu devrais quitter",
+        "il devrait quitter",
+        "elle devrait quitter",
+        "qui est"
+    ]
     while True:
-        prompt(1)
+        set_prompt_type(1)
         recognised = stt()
         tts(k.respond(recognised, zoe_session_name))
 
-        if recognised == "lance un navigateur" or recognised == "lance un médiateur":
-            os.system("firefox");
-            tts("C'est fait")
-        elif recognised in reload_modules_text:
+        # if recognised == "lance un navigateur" or recognised == "lance un médiateur":
+        #     os.system("firefox");
+        #     tts("C'est fait")
+        if recognised in reload_modules_text:
             reload_modules()
             tts("C'est fait")
         elif recognised == "je vais me coucher":
             tts("OK, veux tu que je ferme tout ?")
-            prompt(1)
+            set_prompt_type(1)
             recognised = stt()
             if recognised == "oui":
                 tts("OK, je fais ça")
                 save_session()
                 os.system("sudo /sbin/shutdown -h 0");
                 os.system(sys.exit(0));
-        elif recognised == "ferme" or recognised == "quitte":
+        elif recognised in exit_text:
             tts("Au revoir")
             save_session()
             os.system(sys.exit(0));
