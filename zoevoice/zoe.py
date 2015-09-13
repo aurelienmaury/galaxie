@@ -319,6 +319,7 @@ def load_brain():
         load_module('date')
         load_module('meteo')
         load_module('desktop')
+        load_module('ansible')
         load_module('alice')
         os.chdir(brains_dir)
         k.setPredicate("master", zoe_session_name)
@@ -403,9 +404,6 @@ def main():
         recognised = stt()
         tts(k.respond(recognised, zoe_session_name))
 
-        # if recognised == "lance un navigateur" or recognised == "lance un médiateur":
-        #     os.system("firefox");
-        #     tts("C'est fait")
         if recognised in reload_modules_text:
             reload_modules()
             tts("C'est fait")
@@ -422,9 +420,9 @@ def main():
             tts("Au revoir")
             save_session()
             os.system(sys.exit(0));
-        elif recognised in upgrade_text:
-            os.system(galaxie_update_hosts_cmd)
-            tts("Je lance ça")
+        # elif recognised in upgrade_text:
+        #     os.system(galaxie_update_hosts_cmd)
+        #     tts("Je lance ça")
 
 if __name__ == '__main__':
     main()

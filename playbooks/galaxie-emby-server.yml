@@ -1,4 +1,4 @@
-- hosts: emby-servers
+- hosts: media-servers
   user: zoe
   sudo: yes
 

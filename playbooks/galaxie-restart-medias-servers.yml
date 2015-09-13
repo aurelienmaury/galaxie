@@ -1,0 +1,14 @@
+- hosts: medias-servers
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name : Stop Emby Server
+      service:
+        name=emby-server
+        state=stopped
+
+    - name : Start Emby Server
+      service:
+        name=emby-server
+        state=started

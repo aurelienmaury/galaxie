@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Module   : ansible.aiml   -   version :   0.1   -   MàJ : 4/10/2014  -->
+<!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
+<!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+
+<category>
+    <pattern>RESTART MEDIAS SERVERS</pattern>
+    <template><system>../modules/ansible/ansible.py --restart-medias-servers</system></template>
+</category>
+<category><pattern>REDÉMARRAGE * SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE * SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE * SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE * SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCE * SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCE * SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCE SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCE SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCER * SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCER * SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCER SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCER SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCENT * SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCENT * SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCENT SERVEUR DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+<category><pattern>RELANCENT SERVEURS DE MÉDIAS</pattern><template><srai>RESTART MEDIAS SERVERS</srai></template></category>
+
+<category>
+    <pattern>RESTART PBX SERVERS</pattern>
+    <template><system>../modules/ansible/ansible.py --restart-pbx-servers</system></template>
+</category>
+<category><pattern>REDÉMARRAGE * TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE * TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE * TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE * TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE * TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE * TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER * TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER * TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT * TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT * TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT TÉLÉPHONE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT TÉLÉPHONES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+
+<category><pattern>REDÉMARRAGE * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRAGE SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>REDÉMARRE SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCE SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCER SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>RELANCENT SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+
+
+<category>
+    <pattern>UPGRADE HOSTS</pattern>
+    <template><system>../modules/ansible/ansible.py --upgrade-all-hosts</system></template>
+</category>
+<category><pattern>* JOUR * MACHINES</pattern><template><srai>UPGRADE HOSTS</srai></template></category>
+<category><pattern>* JOUR * MACHINE</pattern><template><srai>UPGRADE HOSTS</srai></template></category>
+</aiml>

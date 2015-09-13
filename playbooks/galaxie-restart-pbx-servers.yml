@@ -1,0 +1,14 @@
+- hosts: pabx-servers
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name : Stop Asterisk
+      service:
+        name=asterisk
+        state=stopped
+
+    - name : Start Asterisk
+      service:
+        name=asterisk
+        state=started
