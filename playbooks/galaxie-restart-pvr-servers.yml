@@ -1,0 +1,25 @@
+- hosts: pvr-servers
+  user: zoe
+  sudo: true
+
+  tasks:
+    - name : Stop TVHeadEnd
+      service:
+        name=tvheadend
+        state=stopped
+
+    - name: Restart HDHomeRun 1
+      command: hdhomerun_config 11117BBD set /sys/restart self
+
+    - name: Restart HDHomeRun 2
+      command: hdhomerun_config 12212EE6 set /sys/restart self
+
+    - name: Waiting 10 secondes
+      pause:
+        prompt="Wainting ..."
+        seconds=10
+
+    - name : Start TVHeadEnd
+      service:
+        name=tvheadend
+        state=started

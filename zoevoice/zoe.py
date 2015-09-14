@@ -43,8 +43,15 @@ k = aiml.Kernel()
 zoe_brain = "zoe.br"
 zoe_session = "zoe.ses"
 zoe_session_name = "Zoe"
-modules_dir = os.getcwd() + '/modules'
-brains_dir = os.getcwd() + '/brains'
+
+modules_dir = os.path.realpath(
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "modules")
+)
+
+brains_dir = os.path.realpath(
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "brains")
+)
+
 
 # Permit to select the right directory for model
 lang = 'fr_FR'

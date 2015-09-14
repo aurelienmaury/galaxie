@@ -62,6 +62,8 @@
 <category><pattern>REDÉMARRAGE SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>REDÉMARRE * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>REDÉMARRE * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>* REDÉMARRE * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+<category><pattern>* REDÉMARRE * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>REDÉMARRE SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>REDÉMARRE SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>RELANCE * SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
@@ -76,6 +78,12 @@
 <category><pattern>RELANCENT * SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>RELANCENT SYSTÈME TÉLÉPHONIQUE</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
 <category><pattern>RELANCENT SYSTÈMES TÉLÉPHONIQUES</pattern><template><srai>RESTART PBX SERVERS</srai></template></category>
+
+<category>
+    <pattern>RESTART PVR SERVERS</pattern>
+    <template><system>../modules/ansible/ansible.py --restart-pvr-servers</system></template>
+</category>
+<category><pattern>RELANCE * TÉLÉVISION</pattern><template><srai>RESTART PVR SERVERS</srai></template></category>
 
 
 <category>

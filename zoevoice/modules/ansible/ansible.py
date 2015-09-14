@@ -182,7 +182,7 @@ for opt, arg in options:
 
 if restart_pbx_servers:
     start_ansible_under_terminal(terminal_path, ansible_command_line)
-elif restart_pbx_servers:
+elif restart_pvr_servers:
     start_ansible_under_terminal(terminal_path, ansible_command_line)
 elif restart_medias_servers:
     start_ansible_under_terminal(terminal_path, ansible_command_line)
