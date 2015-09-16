@@ -6,18 +6,15 @@ from struct import pack
 from sys import byteorder
 import copy
 import pyaudio
-
 import wave
-
 import sys
-
 import aiml
 import marshal
 import os.path
 import time
 import tempfile
-import pocketsphinx as ps
-import subprocess
+import pocketsphinx
+import signal
 
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
@@ -42,7 +39,7 @@ wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
 k = aiml.Kernel()
 zoe_brain = "zoe.br"
 zoe_session = "zoe.ses"
-zoe_session_name = "Zoe"
+zoe_session_name = "Alice"
 
 modules_dir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "modules")
@@ -57,7 +54,10 @@ brains_dir = os.path.realpath(
 lang = 'fr_FR'
 
 # Zoevoice models dierctory, permit to difuse Zoevoie with necessary file for work out of the box
-model_dir = os.getcwd() + '/model'
+model_dir = os.path.realpath(
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "model")
+)
+
 
 # Pocketsphinx directory where models are installed by default
 # pocketsphinx_share_path = subprocess.Popen("pkg-config --variable=modeldir pocketsphinx", stdout=subprocess.PIPE, shell=True)
@@ -69,7 +69,7 @@ if lang == 'fr_FR':
     hmdir_name = 'cmusphinx'
     lmd_file_name = 'french3g62K.lm.dmp'
     dict_file_name = 'frenchWords62K.dic'
-elif lang == en_UK:
+elif lang == 'en_UK':
     # Not implemented
     hmdir_name = 'lium_french_f0'
     lmd_file_name = 'french3g62K.lm.dmp'
@@ -81,7 +81,7 @@ local_lmd = model_dir + '/lm/' + lang + '/' + lmd_file_name
 local_dictd = model_dir + '/lm/' + lang + '/' + dict_file_name
 pocket_sphinx_hm_directory = pocket_sphinx_share_path_output + '/hmm/' + lang + '/' + hmdir_name
 pocket_sphinx_lmd = pocket_sphinx_share_path_output + '/lm/' + lang + '/' + lmd_file_name
-pocket_sphinx_dictd = pocket_sphinx_share_path_output + '/lm/' + lang + '/' + dict_file_name
+pocket_sphinx_dictd = model_dir + '/lm/' + lang + '/' + dict_file_name
 
 dictionary_file = model_dir + '/lm/' + lang + '/' + dict_file_name
 
@@ -120,15 +120,15 @@ else:
 # Espeack command line
 # espeack_cmd = "espeak -x -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
 # espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
-#espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au| paplay"
-#espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 1.0 -f 1.2 -t 1.4 -l 30000 /usr/share/mbrola/fr4/fr4 - -.au|aplay"
-#espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -f 1.5 /usr/share/mbrola/fr4/fr4 - -| aplay -r16000 -fS16 "
-#espeack_cmd = "echo  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch 200 tremolo 500 echo 0.9 0.8 33 0.9"
+# espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au| paplay"
+# espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 1.0 -f 1.2 -t 1.4 -l 30000 /usr/share/mbrola/fr4/fr4 - -.au|aplay"
+# espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -f 1.5 /usr/share/mbrola/fr4/fr4 - -| aplay -r16000 -fS16 "
+# espeack_cmd = "echo  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch 200 tremolo 500 echo 0.9 0.8 33 0.9"
 espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho --stdout \"%s\" | " \
               "mbrola -t 1.2 -f 1.4 -e /usr/share/mbrola/fr4/fr4 - -.au | " \
-              "play -t au - bass +1 pitch -300 echo 0.8 0.8 66 0.3"
+              "play -t au - bass +1 pitch -300 echo 0.8 0.4 99 0.3"
 
-#espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch -200 echo 0.9 0.8 33 0.9"
+# espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch -200 echo 0.9 0.8 33 0.9"
 # wavegain_cmd = "wavegain -y -d 3 \"%s\""
 bassband_cmd = "sox \"%s\" \"%s\".tmp.wav sinc 100-8000"
 galaxie_update_hosts_cmd = "gnome-terminal.wrapper -hold -e ansible-playbook -i " + \
@@ -241,21 +241,21 @@ def record_to_file(path):
     # Few test abut Effect before other post processing
     # filter_noise(wavfile)
     # os.system(wavegain_cmd % path)
-    #os.system(bassband_cmd % (path, path))
-    #os.rename(path + '.tmp.wav', path)
+    # os.system(bassband_cmd % (path, path))
+    # os.rename(path + '.tmp.wav', path)
 
 
 def decode_speech(acoustic_model_directory, language_model_file, dictionary_file, wavfile):
     set_prompt_type(3)
-    speechRec = ps.Decoder(
+    speech_rec = pocketsphinx.Decoder(
         hmm=acoustic_model_directory,
         lm=language_model_file,
         dict=dictionary_file
     )
     wav_file_to_decode = file(wavfile, 'rb')
     wav_file_to_decode.seek(44)
-    speechRec.decode_raw(wav_file_to_decode)
-    result = speechRec.get_hyp()
+    speech_rec.decode_raw(wav_file_to_decode)
+    result = speech_rec.get_hyp()
     set_prompt_type(0)
     return result[0]
 
@@ -279,7 +279,7 @@ def set_prompt_type(state):
 
 def tts(text):
     if not text == "":
-        print "{0}\bZoé   :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc)
+        print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc, zoe_session_name)
         os.system(espeack_cmd % text)
 
 
@@ -301,7 +301,7 @@ def stt():
 
 def load_module(module_name):
     path = modules_dir + '/' + module_name + '/' + lang
-    #print path
+    # print path
     os.chdir(path)
     list_files = os.listdir("./")
     for item in list_files:
@@ -327,7 +327,7 @@ def load_brain():
         load_module('meteo')
         load_module('desktop')
         load_module('ansible')
-        load_module('alice')
+        # load_module('alice')
         os.chdir(brains_dir)
         k.setPredicate("master", zoe_session_name)
         k.saveBrain(zoe_brain)  # save new brain
@@ -408,7 +408,9 @@ def main():
     ]
     while True:
         set_prompt_type(1)
+
         recognised = stt()
+
         tts(k.respond(recognised, zoe_session_name))
 
         if recognised in reload_modules_text:
@@ -427,9 +429,10 @@ def main():
             tts("Au revoir")
             save_session()
             os.system(sys.exit(0));
-        # elif recognised in upgrade_text:
-        #     os.system(galaxie_update_hosts_cmd)
-        #     tts("Je lance ça")
+            # elif recognised in upgrade_text:
+            #     os.system(galaxie_update_hosts_cmd)
+            #     tts("Je lance ça")
+
 
 if __name__ == '__main__':
     main()

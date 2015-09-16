@@ -34,6 +34,18 @@ Doesn't matter if this file does not exist yet, it will be generated soon.
 * we assume that you already have a root account (or a sudo-all account on elvira).
 * install an access for ZOE by running:
 
+Notes: Unfortunally actually the installation methode is not finish, we plan for a dedicted application, but yet , you have to do it manually.
+Fllow they step:
+1) Install a Debian system
+2) Install with root user "sudo" command line with "apt-get install sudo" inside a terminal
+```
+apt-get install sudo
+```
+3) With you favorite editor add that line on /etc/sudoers 
+```
+YOU_SUPER_USER_YOU_WANT_USE_FOR_INSTALL_ZOE ALL=(ALL) NOPASSWD: ALL
+```
+4) Now start our integration playbook.
 ```
 ansible-playbook -i ../host.inventory galaxie-zoe-integration.yml --user=$DEFAULT_USER_WITH_SUDO  --ask-pass --limit=192.168.0.42
 ansible-playbook -i ../host.inventory galaxie-zoe-integration.yml --user=$DEFAULT_USER_WITH_SUDO  --ask-pass -c paramiko --limit=192.168.0.42
