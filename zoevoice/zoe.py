@@ -8,13 +8,11 @@ import copy
 import pyaudio
 import wave
 import sys
-import aiml
-import marshal
 import os.path
 import time
 import tempfile
 import pocketsphinx
-import signal
+from body.brain import Brain
 
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
@@ -35,12 +33,6 @@ debug = 1
 # Temporary file
 wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
 
-# ALICE BRAIN INT
-k = aiml.Kernel()
-zoe_brain = "zoe.br"
-zoe_session = "zoe.ses"
-zoe_session_name = "Alice"
-
 modules_dir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "modules")
 )
@@ -49,6 +41,8 @@ brains_dir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "brains")
 )
 
+brain = Brain(modules_dir, brains_dir)
+brain_kernel = brain.kernel
 
 # Permit to select the right directory for model
 lang = 'fr_FR'
@@ -131,8 +125,6 @@ espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho --stdout \"%s\" | " \
 # espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch -200 echo 0.9 0.8 33 0.9"
 # wavegain_cmd = "wavegain -y -d 3 \"%s\""
 bassband_cmd = "sox \"%s\" \"%s\".tmp.wav sinc 100-8000"
-galaxie_update_hosts_cmd = "gnome-terminal.wrapper -hold -e ansible-playbook -i " + \
-                           host_inventory_path + " " + playbook_directory + "/galaxie-upgrade.yml"
 
 # Variable it contain the text ecognised by the voice to text
 global recognised
@@ -279,7 +271,7 @@ def set_prompt_type(state):
 
 def tts(text):
     if not text == "":
-        print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc, zoe_session_name)
+        print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc, brain.session_name)
         os.system(espeack_cmd % text)
 
 
@@ -299,62 +291,9 @@ def stt():
     return recognizing
 
 
-def load_module(module_name):
-    path = modules_dir + '/' + module_name + '/' + lang
-    # print path
-    os.chdir(path)
-    list_files = os.listdir("./")
-    for item in list_files:
-        if item.endswith('.aiml'):
-            k.learn(os.path.join(path, item))
-
-
-def reload_modules():
-    os.chdir(brains_dir)
-    os.remove(zoe_brain)
-    load_brain()
-    save_session()
-
-
-def load_brain():
-    """ read dictionary and create brain in file zoe.brp"""
-    os.chdir(brains_dir)
-    if os.path.isfile(zoe_brain):
-        k.bootstrap(brainFile=zoe_brain)
-    else:
-        load_module('zoe')
-        load_module('date')
-        load_module('meteo')
-        load_module('desktop')
-        load_module('ansible')
-        # load_module('alice')
-        os.chdir(brains_dir)
-        k.setPredicate("master", zoe_session_name)
-        k.saveBrain(zoe_brain)  # save new brain
-    # name of bot
-    k.setBotPredicate('name', zoe_session_name)
-
-
-def load_session():
-    os.chdir(brains_dir)
-    if os.path.isfile(zoe_session):
-        sessionFile = file(zoe_session, "rb")
-        session = marshal.load(sessionFile)
-        for pred, value in session.items():
-            k.setPredicate(pred, value, zoe_session_name)
-
-
-def save_session():
-    os.chdir(brains_dir)
-    session = k.getSessionData(zoe_session_name)
-    sessionFile = file(zoe_session, "wb")
-    marshal.dump(session, sessionFile)
-    sessionFile.close()
-
-
 def main():
-    load_brain()
-    load_session()
+    brain.load_brain()
+    brain.load_session()
     reload_modules_text = [
         "mis à jour des modules",
         "mis à jour les modules",
@@ -380,18 +319,6 @@ def main():
         "modules reload"
     ]
 
-    upgrade_text = [
-        "mis à jour les machines",
-        "mise à jour les machines",
-        "mis à jour des machines",
-        "mise à jour des machines",
-        "mais un jour les machines",
-        "mais un jour des machines",
-        "mais le jour les machines",
-        "mais à ce jour les machines",
-        "mais le jour des machines"
-    ]
-
     exit_text = [
         "ferme",
         "tu devrais fermée",
@@ -411,10 +338,10 @@ def main():
 
         recognised = stt()
 
-        tts(k.respond(recognised, zoe_session_name))
+        tts(brain_kernel.respond(recognised, brain.session_name))
 
         if recognised in reload_modules_text:
-            reload_modules()
+            brain.reload_modules()
             tts("C'est fait")
         elif recognised == "je vais me coucher":
             tts("OK, veux tu que je ferme tout ?")
@@ -422,12 +349,12 @@ def main():
             recognised = stt()
             if recognised == "oui":
                 tts("OK, je fais ça")
-                save_session()
+                brain.save_session()
                 os.system("sudo /sbin/shutdown -h 0");
                 os.system(sys.exit(0));
         elif recognised in exit_text:
             tts("Au revoir")
-            save_session()
+            brain.save_session()
             os.system(sys.exit(0));
             # elif recognised in upgrade_text:
             #     os.system(galaxie_update_hosts_cmd)

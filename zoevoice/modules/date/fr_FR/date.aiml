@@ -46,12 +46,14 @@
 
 
 <!-- Demande du jour de la semaine -->
-<category><pattern>QUEL EST LE JOUR INTERROGATION</pattern><template><system>../modules/date/date.py --day</system>.</template></category>
+<category><pattern>QUEL EST LE JOUR INTERROGATION</pattern><template><system>../modules/date/date.py --day</system></template></category>
 <category><pattern>QUEL JOUR SOMMES NOUS INTERROGATION</pattern><template>Nous sommes un <srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>ON EST QUOI AUJOURD HUI INTERROGATION</pattern><template>Aujourd'hui on est <srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>AUJOURD HUI ON EST QUOI INTERROGATION</pattern><template>On est <srai>QUEL EST LE JOUR</srai> aujourd'hui.</template></category>
 <category><pattern>QUEL JOUR EST ON INTERROGATION</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>QUEL JOUR ON EST INTERROGATION</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>ON EST QUOI INTERROGATION</pattern><template>Un <srai>QUEL EST LE JOUR</srai></template></category>
+<category><pattern>ON EST QUOI</pattern><template>Un <srai>QUEL EST LE JOUR</srai></template></category>
 
 <category><pattern>QUEL EST LE JOUR</pattern><template><system>../modules/date/date.py --day</system>.</template></category>
 <category><pattern>DONNE MOI LE JOUR</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
