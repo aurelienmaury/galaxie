@@ -8,12 +8,6 @@ class Voice(object):
 
     def __init__(self):
         # Espeack command line
-        # self.espeack_cmd = "espeak -x -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
-        # self.espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
-        # self.espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au| paplay"
-        # self.espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 1.0 -f 1.2 -t 1.4 -l 30000 /usr/share/mbrola/fr4/fr4 - -.au|aplay"
-        # self.espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -f 1.5 /usr/share/mbrola/fr4/fr4 - -| aplay -r16000 -fS16 "
-        # self.espeack_cmd = "echo  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch 200 tremolo 500 echo 0.9 0.8 33 0.9"
         self.espeack_cmd = ''
         self.espeack_cmd += self.check_espeack()
         self.espeack_cmd += ' '
