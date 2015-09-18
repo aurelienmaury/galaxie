@@ -1,4 +1,4 @@
-__author__ = 'tuxa'
+__author__ = 'tuxa@rtnp.org'
 
 import os
 import aiml

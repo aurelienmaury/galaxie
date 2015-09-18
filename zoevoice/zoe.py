@@ -1,5 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
+__author__ = 'tuxa@rtnp.org'
 
 from array import array
 from struct import pack
@@ -13,6 +14,7 @@ import time
 import tempfile
 import pocketsphinx
 from body.brain import Brain
+from body.voice import Voice
 
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
@@ -41,9 +43,11 @@ brains_dir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "brains")
 )
 
+# Init Brain and kernel for the first time
 brain = Brain(modules_dir, brains_dir)
-brain_kernel = brain.kernel
 
+# Init Voice for the first time
+voice = Voice()
 # Permit to select the right directory for model
 lang = 'fr_FR'
 
@@ -111,19 +115,6 @@ else:
     os.system(sys.exit(0))
 
 
-# Espeack command line
-# espeack_cmd = "espeak -x -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -C \"n n2\" -v 0.5 -f 3.0 -t 2.0 -l 16000 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
-# espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au | paplay"
-# espeack_cmd = "espeak -s 130 -p 35 -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 0.5 -f 3.0 -t 2.0 /usr/share/mbrola/fr4/fr4 - -.au| paplay"
-# espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -v 1.0 -f 1.2 -t 1.4 -l 30000 /usr/share/mbrola/fr4/fr4 - -.au|aplay"
-# espeack_cmd = "espeak -v mb/mb-fr4 \"%s\" --pho | mbrola -e -f 1.5 /usr/share/mbrola/fr4/fr4 - -| aplay -r16000 -fS16 "
-# espeack_cmd = "echo  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch 200 tremolo 500 echo 0.9 0.8 33 0.9"
-espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho --stdout \"%s\" | " \
-              "mbrola -t 1.2 -f 1.4 -e /usr/share/mbrola/fr4/fr4 - -.au | " \
-              "play -t au - bass +1 pitch -300 echo 0.8 0.4 99 0.3"
-
-# espeack_cmd = "espeak -v mb/mb-fr4 -q -s150  --pho  \"%s\" | mbrola  -t 1.2 -f 1.3  -e /usr/share/mbrola/fr4/fr4 - -.au | play -t au - pitch -200 echo 0.9 0.8 33 0.9"
-# wavegain_cmd = "wavegain -y -d 3 \"%s\""
 bassband_cmd = "sox \"%s\" \"%s\".tmp.wav sinc 100-8000"
 
 # Variable it contain the text ecognised by the voice to text
@@ -272,7 +263,7 @@ def set_prompt_type(state):
 def tts(text):
     if not text == "":
         print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc, brain.session_name)
-        os.system(espeack_cmd % text)
+        voice.text_to_speech(text)
 
 
 def stt():
@@ -338,7 +329,7 @@ def main():
 
         recognised = stt()
 
-        tts(brain_kernel.respond(recognised, brain.session_name))
+        tts(brain.kernel.respond(recognised, brain.session_name))
 
         if recognised in reload_modules_text:
             brain.reload_modules()
