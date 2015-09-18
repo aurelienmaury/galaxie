@@ -15,34 +15,34 @@ import sys
 
 
 class bcolors:
-    ok_green = '\033[92m'
+    green = '\033[92m'
     yellow = '\033[93m'
     normal = '\033[36m'
     red = '\033[31m'
-    endc = '\033[0m'
+    end = '\033[0m'
 
     def disable(self):
-        self.ok_green = ''
+        self.green = ''
         self.yellow = ''
         self.normal = ''
         self.red = ''
-        self.endc = ''
+        self.end = ''
 
 
 def set_prompt_type(state):
     print "\b" * 20,
     if state == 1:
-        print bcolors.normal + "\b[" + bcolors.endc,
-        print bcolors.ok_green + "\bPrêt   " + bcolors.endc,
-        print bcolors.normal + "\b >" + bcolors.endc,
+        print bcolors.normal + "\b[" + bcolors.end,
+        print bcolors.green + "\bPrêt   " + bcolors.end,
+        print bcolors.normal + "\b >" + bcolors.end,
     if state == 2:
-        print bcolors.normal + "\b[" + bcolors.endc,
-        print bcolors.yellow + "\bEcoute " + bcolors.endc,
-        print bcolors.normal + "\b >" + bcolors.endc,
+        print bcolors.normal + "\b[" + bcolors.end,
+        print bcolors.yellow + "\bEcoute " + bcolors.end,
+        print bcolors.normal + "\b >" + bcolors.end,
     if state == 3:
-        print bcolors.normal + "\b[" + bcolors.endc,
-        print bcolors.red + "\bAnalyse" + bcolors.endc,
-        print bcolors.normal + "\b >" + bcolors.endc,
+        print bcolors.normal + "\b[" + bcolors.end,
+        print bcolors.red + "\bAnalyse" + bcolors.end,
+        print bcolors.normal + "\b >" + bcolors.end,
     sys.stdout.flush()
 
 

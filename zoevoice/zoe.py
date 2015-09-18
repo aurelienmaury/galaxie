@@ -29,47 +29,44 @@ voice = Voice()
 # Init Ears for the first time
 ears = Ears()
 
-
-
-# Variable it contain the text ecognised by the voice to text
-global recognised
-
+# Variable it contain the text recognised by the voice to text
+recognised = ''
 
 class bcolors:
-    ok_green = '\033[92m'
+    green = '\033[92m'
     yellow = '\033[93m'
     normal = '\033[36m'
     red = '\033[31m'
-    endc = '\033[0m'
+    end = '\033[0m'
 
     def disable(self):
-        self.ok_green = ''
+        self.green = ''
         self.yellow = ''
         self.normal = ''
         self.red = ''
-        self.endc = ''
+        self.end = ''
 
 
 def set_prompt_type(state):
     print "\b" * 20,
     if state == 1:
-        print bcolors.normal + "\b[" + bcolors.endc,
-        print bcolors.ok_green + "\bPrêt   " + bcolors.endc,
-        print bcolors.normal + "\b >" + bcolors.endc,
+        print bcolors.normal + "\b[" + bcolors.end,
+        print bcolors.green + "\bPrêt   " + bcolors.end,
+        print bcolors.normal + "\b >" + bcolors.end,
     if state == 2:
-        print bcolors.normal + "\b[" + bcolors.endc,
-        print bcolors.yellow + "\bEcoute " + bcolors.endc,
-        print bcolors.normal + "\b >" + bcolors.endc,
+        print bcolors.normal + "\b[" + bcolors.end,
+        print bcolors.yellow + "\bEcoute " + bcolors.end,
+        print bcolors.normal + "\b >" + bcolors.end,
     if state == 3:
-        print bcolors.normal + "\b[" + bcolors.endc,
-        print bcolors.red + "\bAnalyse" + bcolors.endc,
-        print bcolors.normal + "\b >" + bcolors.endc,
+        print bcolors.normal + "\b[" + bcolors.end,
+        print bcolors.red + "\bAnalyse" + bcolors.end,
+        print bcolors.normal + "\b >" + bcolors.end,
     sys.stdout.flush()
 
 
 def tts(text):
     if not text == "":
-        print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.endc, brain.session_name)
+        print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.end, brain.session_name)
         voice.text_to_speech(text)
 
 
@@ -82,9 +79,7 @@ def stt():
         ears.wavfile
     )
     if not recognizing == '':
-        # recognizing.decode('iso-8859-1').encode('utf8')
-        # recognizing.decode('utf8').encode('iso-8859-1')
-        print bcolors.normal + "\bHuman :> " + bcolors.yellow + recognizing + bcolors.endc
+        print bcolors.normal + "\bHuman :> " + bcolors.yellow + recognizing + bcolors.end
     os.remove(ears.wavfile)
     return recognizing
 
@@ -131,6 +126,7 @@ def main():
         "elle devrait quitter",
         "qui est"
     ]
+
     while True:
         set_prompt_type(1)
 
@@ -140,23 +136,20 @@ def main():
 
         if recognised in reload_modules_text:
             brain.reload_modules()
-            tts("C'est fait")
-        elif recognised == "je vais me coucher":
-            tts("OK, veux tu que je ferme tout ?")
+            tts('C\'est fait')
+        elif recognised == 'je vais me coucher':
+            tts('OK, veux tu que je ferme tout ?')
             set_prompt_type(1)
             recognised = stt()
-            if recognised == "oui":
-                tts("OK, je fais ça")
+            if recognised == 'oui':
+                tts('OK, je fais ça')
                 brain.save_session()
-                os.system("sudo /sbin/shutdown -h 0");
-                os.system(sys.exit(0));
+                os.system('sudo /sbin/shutdown -h 0')
+                os.system(sys.exit(0))
         elif recognised in exit_text:
-            tts("Au revoir")
+            tts('Au revoir')
             brain.save_session()
-            os.system(sys.exit(0));
-            # elif recognised in upgrade_text:
-            #     os.system(galaxie_update_hosts_cmd)
-            #     tts("Je lance ça")
+            os.system(sys.exit(0))
 
 
 if __name__ == '__main__':
