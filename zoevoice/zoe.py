@@ -131,8 +131,10 @@ def main():
         set_prompt_type(1)
 
         recognised = stt()
-
-        tts(brain.kernel.respond(recognised, brain.session_name))
+        #cmd = 'ssh uranus \'sudo asterisk -x \"sccp message devices \\\"%s\\\"\"\''
+        if not recognised == '':
+            #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
+            tts(brain.kernel.respond(recognised, brain.session_name))
 
         if recognised in reload_modules_text:
             brain.reload_modules()

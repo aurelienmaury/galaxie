@@ -68,7 +68,7 @@
 <category><pattern>* QUELQUES BLAGUES</pattern><template><srai>raconte moi une blague</srai></template></category>
 <category><pattern>C ETAIT DROLE</pattern><template><srai>lol</srai></template></category>
 <category><pattern>C ÉTAIT DRÔLE</pattern><template><srai>lol</srai></template></category>
-<category><pattern>CETTE DRÔLE</pattern><template><srai>lol</srai></template></category
+<category><pattern>CETTE DRÔLE</pattern><template><srai>lol</srai></template></category>
 <category><pattern>C ÉTAIT UN SARCASME</pattern><template>Oh je vois. <srai>lol</srai></template></category>
 <category><pattern>C ÉTAIT UNE PLAISANTERIE</pattern><template>Oh je comprends. <srai>lol</srai></template></category>
 <category><pattern>COMMENT FAIS TU RIT</pattern><template>Comme cela <srai>lol</srai></template></category>
