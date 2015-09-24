@@ -7,6 +7,9 @@ import os.path
 from body.brain import Brain
 from body.voice import Voice
 from body.ears import Ears
+from body.eyes import Eyes
+import cv2
+import threading
 
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
@@ -28,6 +31,9 @@ voice = Voice()
 
 # Init Ears for the first time
 ears = Ears()
+
+# Init Eyes for the first time
+eyes = Eyes()
 
 # Variable it contain the text recognised by the voice to text
 recognised = ''
@@ -126,11 +132,12 @@ def main():
         "elle devrait quitter",
         "qui est"
     ]
-
+    threading.Thread(target=eyes.look).start()
     while True:
         set_prompt_type(1)
 
         recognised = stt()
+        #recognised = ''
         #cmd = 'ssh uranus \'sudo asterisk -x \"sccp message devices \\\"%s\\\"\"\''
         if not recognised == '':
             #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
@@ -151,7 +158,10 @@ def main():
         elif recognised in exit_text:
             tts('Au revoir')
             brain.save_session()
+            eyes.video_capture.release()
+            cv2.destroyAllWindows()
             os.system(sys.exit(0))
+
 
 
 if __name__ == '__main__':
