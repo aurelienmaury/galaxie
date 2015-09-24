@@ -17,6 +17,7 @@
     - cron
     - findutils
     - grc
+    - glances
 
 - name: undesired packages are absent
   apt: pkg="{{item}}" state=absent purge=yes
