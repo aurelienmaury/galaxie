@@ -1,0 +1,7 @@
+---
+
+- name: write /etc/apt/apt.conf
+  template:
+    src=apt-cacher-ng-base.conf.j2
+    dest=/etc/apt/apt.conf
+    backup=yes

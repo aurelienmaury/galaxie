@@ -1,0 +1,16 @@
+---
+
+- name: message of the day is galaxie
+  template:
+    src=motd.j2
+    dest=/etc/motd
+    owner=root
+    group=root
+    mode=0644
+
+- name: /etc/issue.net are empty
+  copy: src=files/empty dest="{{ item }}" owner=root group=root mode=0644
+  with_items:
+    - /etc/issue
+    - /etc/issue.net
+    - /etc/motd.dynamic
