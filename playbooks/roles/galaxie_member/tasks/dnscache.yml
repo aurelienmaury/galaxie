@@ -1,0 +1,123 @@
+---
+
+- name: activate source debian sid main contrib non-free repository
+  apt_repository:
+    repo='deb-src http://ftp.fr.debian.org/debian/ sid main contrib non-free'
+    state=present
+
+- name: kill bind
+  apt:
+    pkg=bind9
+    state=absent
+
+- name: check djbdns installed
+  shell: "dpkg -l | grep djbdns"
+  register: djb_installed
+  ignore_errors: yes
+
+- name: packages for djbdns building
+  apt:
+    pkg="{{ item }}"
+    state=present
+  with_items:
+    - build-essential
+    - daemontools
+    - daemontools-run
+    - ucspi-tcp
+  when: djb_installed|failed
+
+- name: source directory for djbdns building
+  file:
+    path="{{ galaxie.dnscache.source_dir }}"
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  when: djb_installed|failed
+
+- name: sourcing and compiling djbdns
+  shell: "cd {{ galaxie.dnscache.source_dir }} && apt-get source dbndns --compile -y"
+  when: djb_installed|failed
+
+- name: install djbdns package
+  shell: "dpkg -i {{ galaxie.dnscache.source_dir }}/djbdns_1.05-8_*.deb"
+  when: djb_installed|failed
+
+- name: dnscache users
+  user:
+    name={{ item }}
+    system=yes
+    createhome=no
+    state=present
+  with_items:
+    - dnscache
+    - dnslog
+
+- name: dnscache run directory
+  file:
+    path="{{ galaxie.dnscache.supervise_dir }}"
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: check dnscache-conf output directory exists
+  shell: "test -d {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}"
+  register: superviseExists
+  ignore_errors: yes
+
+- name: dnscache-conf
+  when: superviseExists|failed
+  shell: "dnscache-conf {{ galaxie.dnscache.service_name }} {{ galaxie.dnscache.dnslog_user }} {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }} {{ galaxie.dnscache.interface }}"
+
+- name: point logger to correct service
+  lineinfile:
+    dest={{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/log/run
+    regexp='^exec'
+    line='exec setuidgid {{ galaxie.dnscache.dnslog_user }} {{ galaxie.dnscache.multilog_user }} t {{ galaxie.dnscache.multilog_dir }}/{{ galaxie.dnscache.service_name }}'
+    backup=yes
+
+- name: delete old logger launcher
+  file:
+    path="{{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/log/main"
+    state=absent
+
+- name: create multilog directory
+  file:
+    path="{{ galaxie.dnscache.multilog_dir }}/{{ galaxie.dnscache.service_name }}"
+    owner="{{ galaxie.dnscache.dnslog_user }}"
+    group="{{ galaxie.dnscache.dnslog_user }}"
+    state=directory
+    mode=2755
+
+- name: seed dnsroots
+  shell: "dnsip `dnsqr ns . | awk '/answer:/ { print $5; }' |sort`  > {{ galaxie.dnscache.dnsroots_global_file }}"
+
+- name: stat dnsroots
+  stat: path={{ galaxie.dnscache.dnsroots_global_file }}
+  register: dnsroots
+
+- name: update dnscache dnsroots list
+  command: cp {{ galaxie.dnscache.dnsroots_global_file }} {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/@
+  when: dnsroots.stat.exists
+
+- name: check if service registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie.dnscache.service_name }}"
+  register: serviceRegistered
+  ignore_errors: yes
+  notify:
+    - register service
+    - restart service
+
+- name: enable local server name resolution
+  template:
+    src=templates/etc_resolv.j2
+    dest=/etc/resolv.conf
+    backup=yes
+
+
+- name: define localdomain
+  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.localdomain }}"
+
+- name: define local reverse dns zone
+  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}"
