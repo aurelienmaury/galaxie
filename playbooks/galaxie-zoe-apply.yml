@@ -5,15 +5,7 @@
 - include: galaxie-emby-server.yml
 
 # Galaxie Hosts
-- include: galaxie-apt-cacher-ng-base.yml
-- include: galaxie-headless.yml
-- include: galaxie-ntp-base.yml
-- include: galaxie-sshd.yml
-- include: galaxie-motd.yml
-- include: galaxie-bashrc.yml
-- include: galaxie-dnscache.yml
-- include: galaxie-power-save.yml
-- include: galaxie-vim.yml
+- include: galaxie-member.yml
 
 # Desktops
 - include: galaxie-desktops-base.yml

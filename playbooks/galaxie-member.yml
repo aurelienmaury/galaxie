@@ -6,4 +6,4 @@
     - "galaxie-vars.yml"
 
   roles:
-    - galaxie-member
+    - galaxie_member
