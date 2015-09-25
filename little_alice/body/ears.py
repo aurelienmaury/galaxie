@@ -1,5 +1,10 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'tuxa@rtnp.org'
+
+# It script it publish under GNU GENERAL PUBLIC LICENSE
+# http://www.gnu.org/licenses/gpl-3.0.en.html
+# Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
+__author__ = 'Tuux'
 
 from array import array
 from struct import pack
@@ -91,12 +96,12 @@ class Ears(object):
             os.system(sys.exit(0))
 
     def is_silent(self, data_chunk):
-        """Returns 'True' if below the 'silent' threshold"""
+        """ Returns 'True' if below the 'silent' threshold """
         # print max(data_chunk)
         return max(data_chunk) < self.threshold
 
     def normalize(self, data_all):
-        """Amplify the volume out to max -1dB"""
+        """ Amplify the volume out to max -1dB """
         # MAXIMUM = 16384
         normalize_factor = (float(self.normalize_minus_one_db * self.frame_max_value)
                             / max(abs(i) for i in data_all))

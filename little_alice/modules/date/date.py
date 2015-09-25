@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+# It script it publish under GNU GENERAL PUBLIC LICENSE
+# http://www.gnu.org/licenses/gpl-3.0.en.html
+# Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
+__author__ = 'Tuux'
+
 #<!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
 
 import getopt
 import sys
 import time
 import locale
-locale.setlocale(locale.LC_ALL,'')
+
+locale.setlocale(locale.LC_ALL, '')
 
 version = '1.0'
 verbose = False
