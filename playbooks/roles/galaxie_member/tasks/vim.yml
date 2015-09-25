@@ -1,0 +1,73 @@
+---
+
+- name: vim is installed
+  action: apt pkg="{{item}}" state=present
+  with_items:
+    - vim
+    - vim-common
+
+- name: Remove vim-tiny and nano
+  apt: pkg="{{item}}" state=absent purge=yes
+  with_items:
+    - vim-tiny
+    - nano
+
+- name: Check syntax highlighting
+  replace:
+    dest=/etc/vim/vimrc
+    regexp='^\"syntax\s[a-zA-Z0-9_]+|^syntax\s[a-zA-Z0-9_]+'
+    replace='syntax on'
+
+- name: Enable syntax highlighting
+  lineinfile:
+    dest=/etc/vim/vimrc
+    line="syntax on"
+    state=present
+
+- name: Check dark background
+  replace:
+    dest=/etc/vim/vimrc
+    regexp='^\"set background=[a-zA-Z0-9_]+|^set background=[a-zA-Z0-9_]+'
+    replace='set background=dark'
+
+- name: Using set background=dark
+  lineinfile:
+    dest=/etc/vim/vimrc
+    line="set background=dark"
+    state=present
+
+- name: Check tabstop
+  replace:
+    dest=/etc/vim/vimrc
+    regexp='^\"set tabstop=[0-9]+|^set tabstop=[0-9]+'
+    replace='set tabstop=4'
+
+- name: Using tabstop=4
+  lineinfile:
+    dest=/etc/vim/vimrc
+    line="set tabstop=4"
+    state=present
+
+- name: Check shiftwidth
+  replace:
+    dest=/etc/vim/vimrc
+    regexp='^\"set shiftwidth=[0-9]+|^set shiftwidth=[0-9]+'
+    replace='set shiftwidth=4'
+
+- name: Using shiftwidth=4
+  lineinfile:
+    dest=/etc/vim/vimrc
+    line="set shiftwidth=4"
+    state=present
+
+- name: Check expandtab
+  replace:
+    dest=/etc/vim/vimrc
+    regexp='^\"set expandtab|^set expandtab'
+    replace='set expandtab'
+
+- name: Using shiftwidth=4
+  lineinfile:
+    dest=/etc/vim/vimrc
+    line="set expandtab"
+    state=present

@@ -20,3 +20,4 @@
 - include: bashrc.yml
 - include: motd.yml
 - include: powersave.yml
+- include: vim.yml
