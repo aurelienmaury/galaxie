@@ -9,7 +9,8 @@ from body.voice import Voice
 from body.ears import Ears
 from body.eyes import Eyes
 import cv2
-import threading
+import time
+from multiprocessing import Process, Queue, TimeoutError
 
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
@@ -91,6 +92,7 @@ def stt():
 
 
 def main():
+
     brain.load_brain()
     brain.load_session()
     reload_modules_text = [
@@ -132,37 +134,54 @@ def main():
         "elle devrait quitter",
         "qui est"
     ]
-    threading.Thread(target=eyes.look).start()
-    while True:
-        set_prompt_type(1)
 
-        recognised = stt()
-        #recognised = ''
-        #cmd = 'ssh uranus \'sudo asterisk -x \"sccp message devices \\\"%s\\\"\"\''
-        if not recognised == '':
-            #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
-            tts(brain.kernel.respond(recognised, brain.session_name))
+    # Queue
+    queue_eyes = Queue()
+    queue_ears = Queue()
+    queue_mounth = Queue()
 
-        if recognised in reload_modules_text:
-            brain.reload_modules()
-            tts('C\'est fait')
-        elif recognised == 'je vais me coucher':
-            tts('OK, veux tu que je ferme tout ?')
+    # Worker's
+    little_alice_eyes = Process(target=eyes.look, args=(queue_eyes,))
+    little_alice_ears = Process(target=stt, args=(queue_ears,))
+    little_alice_mounth = Process(target=tts, args=(queue_mounth,))
+
+    little_alice_eyes.start()
+    try:
+        while True:
             set_prompt_type(1)
+
             recognised = stt()
-            if recognised == 'oui':
-                tts('OK, je fais ça')
+            #recognised = ''
+            #cmd = 'ssh uranus \'sudo asterisk -x \"sccp message devices \\\"%s\\\"\"\''
+            if not recognised == '':
+                #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
+                tts(brain.kernel.respond(recognised, brain.session_name))
+
+            if recognised in reload_modules_text:
+                brain.reload_modules()
+                tts('C\'est fait')
+            elif recognised == 'je vais me coucher':
+                tts('OK, veux tu que je ferme tout ?')
+                set_prompt_type(1)
+                recognised = stt()
+                if recognised == 'oui':
+                    tts('OK, je fais ça')
+                    brain.save_session()
+                    os.system('sudo /sbin/shutdown -h 0')
+                    os.system(sys.exit(0))
+            elif recognised in exit_text:
+                tts('Au revoir')
                 brain.save_session()
-                os.system('sudo /sbin/shutdown -h 0')
+                eyes.video_capture.release()
+                cv2.destroyAllWindows()
                 os.system(sys.exit(0))
-        elif recognised in exit_text:
-            tts('Au revoir')
-            brain.save_session()
-            eyes.video_capture.release()
-            cv2.destroyAllWindows()
-            os.system(sys.exit(0))
-
-
-
+    except KeyboardInterrupt:
+        pass
+    finally:
+        obj = little_alice_eyes.get()
+        obj.video_capture.release()
+        little_alice_eyes.join()
+        cv2.destroyAllWindows()
+        os.system(sys.exit(0))
 if __name__ == '__main__':
     main()

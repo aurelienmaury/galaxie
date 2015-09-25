@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Module   : date.aiml   -   version :   0.1   -   MàJ : 4/10/2014  -->
+<!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
+<!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+<!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
+
+<!-- Demande la date -->
+<!-- 
+<category><pattern>QUELLE EST LA DATE</pattern><template><date locale="fr_FR.utf8" timezone="-1" format="%c"/>...</template></category>
+-->
+<category><pattern>QUELLE EST LA DATE</pattern><template><system>../modules/date/date.py --date</system></template></category>
+<category><pattern>* MOI LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>DEUX MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>D UN MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>UN MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+
+<category><pattern>LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+
+<!-- Demande d l'heure -->
+<category><pattern>QUELLE HEURE EST IL</pattern><template>Il est <system>../modules/date/date.py --clock</system>.</template></category>
+<category><pattern>QUEL HEURE EST IL</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUEL EST L HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUELLE EST L HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUELLE EST LEUR</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>IL EST QUELLE HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>IL EST QUEL HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DONNE MOI L HEURE</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DONNE MOI LEUR</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DEUX MOIS LEURS</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DEUX MOIS LEUR</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+
+<category><pattern>QUELLE HEURE EST IL INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUEL HEURE EST IL INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUEL EST L HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>QUELLE EST L HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>IL EST QUELLE HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>IL EST QUEL HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DONNE MOI L HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DONNE MOI LEUR INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DEUX MOIS LEURS INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DEUX MOIS LEUR INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+
+
+<!-- Demande du jour de la semaine -->
+<category><pattern>QUEL EST LE JOUR INTERROGATION</pattern><template><system>../modules/date/date.py --day</system></template></category>
+<category><pattern>QUEL JOUR SOMMES NOUS INTERROGATION</pattern><template>Nous sommes un <srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>ON EST QUOI AUJOURD HUI INTERROGATION</pattern><template>Aujourd'hui on est <srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>AUJOURD HUI ON EST QUOI INTERROGATION</pattern><template>On est <srai>QUEL EST LE JOUR</srai> aujourd'hui.</template></category>
+<category><pattern>QUEL JOUR EST ON INTERROGATION</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>QUEL JOUR ON EST INTERROGATION</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>ON EST QUOI INTERROGATION</pattern><template>Un <srai>QUEL EST LE JOUR</srai></template></category>
+<category><pattern>ON EST QUOI</pattern><template>Un <srai>QUEL EST LE JOUR</srai></template></category>
+
+<category><pattern>QUEL EST LE JOUR</pattern><template><system>../modules/date/date.py --day</system>.</template></category>
+<category><pattern>DONNE MOI LE JOUR</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
+<category><pattern>DEUX MOIS LE JOUR</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
+
+<category><pattern>ON EST QUELQUES JOURS</pattern><template><srai>QUEL EST LE JOUR</srai></template></category>
+
+<category><pattern>QUEL JOUR SOMMES NOUS</pattern><template>Nous sommes un <srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>ON EST QUOI AUJOURD HUI</pattern><template>Aujourd'hui on est <srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>AUJOURD HUI ON EST QUOI</pattern><template>On est <srai>QUEL EST LE JOUR</srai> Aujourd'hui.</template></category>
+<category><pattern>QUEL JOUR EST ON</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
+<category><pattern>QUEL JOUR ON EST</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
+
+<!-- Demande le mois -->
+<category><pattern>ON EST QUEL MOIS</pattern><template><system>../modules/date/date.py --month</system></template></category>
+<category><pattern>QUEL EST LE MOIS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>ON EST QUEL MOI</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>MAIS QUEL MOIS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>MAIS QUELLE MOI</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<category><pattern>DONNE MOI LE MOIS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<category><pattern>QUEL MOI SOMMES NOUS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUELLE MOINS SOMMES NOUS</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<category><pattern>QUEL MOIS NOUS SOMMES</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUEL MOI NOUS SOMMES</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUELLE MOI NOUS SOMMES</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUELQUES MOIS NOUS SOMMES</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<category><pattern>ON EST QUEL MOIS INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>ON EST QUEL MOI INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>MAIS QUEL MOIS INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>MAIS QUELLE MOI INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<category><pattern>QUEL MOIS SOMMES NOUS INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUEL MOI SOMMES NOUS INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<category><pattern>QUEL MOIS NOUS SOMMES INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUEL MOI NOUS SOMMES INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUELLE MOI NOUS SOMMES INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+<category><pattern>QUELQUES MOIS NOUS SOMMES INTERROGATION</pattern><template><srai>ON EST QUEL MOIS</srai></template></category>
+
+<!-- Demande du jour de la semaine - Lundi-->
+
+<!-- Demande du jour de la semaine - Mardi-->
+
+<!-- Demande du jour de la semaine - Mercredi-->
+
+<!-- Demande du jour de la semaine - Jeudi-->
+
+<!-- Demande du jour de la semaine - Vendredi-->
+
+<!-- Demande du jour de la semaine - Samedi-->
+
+<!-- Demande du jour de la semaine - Dimanche-->
+
+<!-- Demande du jour en numero -->
+<category><pattern>ON EST LE COMBIEN</pattern><template>Le <system>../modules/date/date.py --daynum</system></template>.</category>
+<category><pattern>ON EST LE COMBIEN AUJOURD HUI</pattern><template>On est le <system>../modules/date/date.py --daynum</system>.</template></category>
+
+<category><pattern>ON EST LE COMBIEN INTERROGATION</pattern><template>Le <system>../modules/date/date.py --day</system>.</template></category>
+<category><pattern>ON EST LE COMBIEN AUJOURD HUI INTERROGATION</pattern><template>On est le <system>../modules/date/date.py --day</system>.</template></category>
+
+<!-- Demande l'année en numero -->
+<category><pattern>QUELLE EST L ANNÉE</pattern><template><system>../modules/date/date.py --year</system></template></category>
+<category><pattern>DONNE MOI L ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>DEUX MOIS L ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ON EST EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>NOUS SOMMES EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>EN QUELLE ANNÉE ON EST</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>EN QUELLE ANNÉE EST ON</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>EN QUELLE ANNÉE SOMMES NOUS</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>EN QUELLE ANNÉE NOUS SOMMES</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ET ON EST EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ET NOUS SOMMES EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ET EN QUELLE ANNÉE ON EST</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ET EN QUELLE ANNÉE EST ON</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ET EN QUELLE ANNÉE SOMMES NOUS</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category><pattern>ET EN QUELLE ANNÉE NOUS SOMMES</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+
+<!-- Blague de ou viennent les dates -->
+<category><pattern>DE OU VIENNENT LES DATES</pattern><template>d'un calendrier ? ...</template></category>
+<category><pattern>DE * VIENNENT LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>* VIENNENT LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>* VIENNENT DATE</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DEVIENNENT DATE</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DE VIENNE LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DEUX * VIENNENT LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DE VOUS VIENNE LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DEUX OUVRIERS LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DEUX OU VIA LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DE BOUT VIA LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+<category><pattern>DE BOUT VIA LES DATES</pattern><template><srai>DE OU VIENNENT LES DATES</srai></template></category>
+
+<category><pattern>* MINUTES</pattern><template>c'est long. </template></category>
+<category><pattern>* MINUTE</pattern><template>ok ! </template></category>
+<category><pattern>* HEURES</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>* HEURE</pattern><template><srai>QUELLE HEURE EST ILL</srai></template></category>
+
+</aiml>
