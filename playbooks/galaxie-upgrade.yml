@@ -1,5 +1,5 @@
 - hosts: galaxie
-  user: little_alice
+  user: zoe
   sudo: true
 
   tasks:

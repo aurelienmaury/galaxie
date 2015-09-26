@@ -1,5 +1,5 @@
 - hosts: pabx-servers
-  user: little_alice
+  user: zoe
   sudo: true
 
   tasks:

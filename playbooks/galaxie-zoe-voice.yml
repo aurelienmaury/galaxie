@@ -1,5 +1,5 @@
 - hosts: little_alice-voices
-  user: little_alice
+  user: zoe
   sudo: yes
 
   vars_files:

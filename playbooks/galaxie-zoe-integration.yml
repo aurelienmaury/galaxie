@@ -99,7 +99,7 @@
         state=absent
 
     - name: User is sudoer
-      lineinfile: "dest=/etc/sudoers state='present' regexp='^little_alice' line='little_alice ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
+      lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
 
     - name: system upgrade
       apt:

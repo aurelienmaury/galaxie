@@ -1,5 +1,5 @@
 - hosts: media-servers
-  user: little_alice
+  user: zoe
   sudo: yes
 
   # That playbook respect the debian section of the emby installation page
