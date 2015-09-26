@@ -173,23 +173,23 @@ def month_num_to_text_fr(e):
     elif e == '20':
         e = 'vinght'
     elif e == '21':
-        e = 'vinght et un'
+        e = 'vingt et un'
     elif e == '22':
-        e = 'vinght deux'
+        e = 'vingt deux'
     elif e == '23':
-        e = 'vinght trois'
+        e = 'vingt trois'
     elif e == '24':
-        e = 'vinght quatre'
+        e = 'vingt quatre'
     elif e == '25':
-        e = 'vinght cinq'
+        e = 'vingt cinq'
     elif e == '26':
-        e = 'vinght six'
+        e = 'vingt six'
     elif e == '27':
-        e = 'vinght spet'
+        e = 'vingt spet'
     elif e == '28':
-        e = 'vinght huit'
+        e = 'vingt huit'
     elif e == '29':
-        e = 'vinght neuf'
+        e = 'vingt neuf'
     elif e == '30':
         e = 'trente'
     elif e == '31':

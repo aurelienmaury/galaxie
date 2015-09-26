@@ -147,17 +147,15 @@ def main():
 
     # Worker's
     little_alice_eyes = Process(target=eyes.run, args=(queue_eyes,))
-    little_alice_ears = Process(target=stt, args=(queue_ears,))
+    little_alice_ears_decode_speech = Process(target=ears, args=(queue_ears,))
     little_alice_mounth = Process(target=tts, args=(queue_mounth,))
 
     little_alice_eyes.start()
     try:
         while True:
             set_prompt_type(1)
-
             recognised = stt()
-            #recognised = ''
-            #cmd = 'ssh uranus \'sudo asterisk -x \"sccp message devices \\\"%s\\\"\"\''
+
             if not recognised == '':
                 #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
                 tts(brain.kernel.respond(recognised, brain.session_name))

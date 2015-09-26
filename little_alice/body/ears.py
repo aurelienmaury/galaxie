@@ -17,7 +17,7 @@ import tempfile
 import pocketsphinx
 import os
 import sys
-
+from multiprocessing import TimeoutError
 
 class bcolors:
     green = '\033[92m'
@@ -178,14 +178,20 @@ class Ears(object):
 
     def decode_speech(self, acoustic_model_directory, language_model_file, dictionary_file, wavfile):
         set_prompt_type(3)
-        speech_rec = pocketsphinx.Decoder(
-            hmm=acoustic_model_directory,
-            lm=language_model_file,
-            dict=dictionary_file
-        )
-        wav_file_to_decode = file(wavfile, 'rb')
-        wav_file_to_decode.seek(44)
-        speech_rec.decode_raw(wav_file_to_decode)
-        result = speech_rec.get_hyp()
-        set_prompt_type(0)
-        return result[0]
+        try:
+            speech_rec = pocketsphinx.Decoder(
+                hmm=acoustic_model_directory,
+                lm=language_model_file,
+                dict=dictionary_file
+            )
+            wav_file_to_decode = file(wavfile, 'rb')
+            wav_file_to_decode.seek(44)
+            speech_rec.decode_raw(wav_file_to_decode)
+            result = speech_rec.get_hyp()
+            set_prompt_type(0)
+            return result[0]
+
+        except TimeoutError:
+            return ''
+        except KeyboardInterrupt:
+            sys.exit(0)
