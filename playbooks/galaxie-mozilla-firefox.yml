@@ -1,5 +1,5 @@
 - hosts: desktops
-  user: zoe
+  user: little_alice
   sudo: true
 
   vars_files:

@@ -11,13 +11,16 @@ import sys
 
 from multiprocessing import TimeoutError
 
+
 class Eyes(object):
     def __init__(self):
         self.faceCascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml')
         self.eyesCascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_eye.xml')
-        self.video_capture = cv2.VideoCapture(1)
+        self.video_capture = cv2.VideoCapture(0)
+#        self.video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 1024)
+#        self.video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 768)
 
-    def look(self, queue):
+    def run(self, queue):
         while True:
             try:
                 ret, frame = self.video_capture.read()
@@ -40,11 +43,21 @@ class Eyes(object):
                         cv2.rectangle(eyes, (ex, ey), (ex+ew, ey+eh), (255, 0, 0), 2)
 
                 # Display the resulting frame
-                cv2.imshow('Video', frame)
+                cv2.imshow('Alice Eyes', frame)
                 cv2.waitKey(1)
+
+
 
             except KeyboardInterrupt:
                 sys.exit(0)
 
             except TimeoutError:
                 cv2.destroyAllWindows()
+
+            except:
+                self.video_capture.release()
+                cv2.destroyAllWindows()
+
+    def terminate(self):
+        self.video_capture.release()
+        cv2.destroyAllWindows()

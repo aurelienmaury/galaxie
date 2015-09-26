@@ -39,12 +39,12 @@ class Brain(object):
         self.save_session()
 
     def load_brain(self):
-        """ read dictionary and create brain in file zoe.brp"""
+        """ read dictionary and create brain in file little_alice.brp"""
         os.chdir(self.brains_dir)
         if os.path.isfile(self.brain_file):
             self.kernel.bootstrap(brainFile=self.brain_file)
         else:
-            self.load_module('zoe')
+            self.load_module('little_alice')
             self.load_module('date')
             self.load_module('meteo')
             self.load_module('desktop')

@@ -1,6 +1,6 @@
 ---
 - hosts: apt-cacher-ng-server
-  user: zoe
+  user: little_alice
   sudo: yes
 
   vars_files:

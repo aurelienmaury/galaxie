@@ -139,13 +139,14 @@ def main():
         "qui est"
     ]
 
+
     # Queue
     queue_eyes = Queue()
     queue_ears = Queue()
     queue_mounth = Queue()
 
     # Worker's
-    little_alice_eyes = Process(target=eyes.look, args=(queue_eyes,))
+    little_alice_eyes = Process(target=eyes.run, args=(queue_eyes,))
     little_alice_ears = Process(target=stt, args=(queue_ears,))
     little_alice_mounth = Process(target=tts, args=(queue_mounth,))
 
@@ -176,16 +177,13 @@ def main():
             elif recognised in exit_text:
                 tts('Au revoir')
                 brain.save_session()
-                eyes.video_capture.release()
-                cv2.destroyAllWindows()
                 os.system(sys.exit(0))
+
     except KeyboardInterrupt:
         pass
     finally:
-        obj = little_alice_eyes.get()
-        obj.video_capture.release()
+        little_alice_eyes.terminate()
         little_alice_eyes.join()
-        cv2.destroyAllWindows()
         os.system(sys.exit(0))
 if __name__ == '__main__':
     main()

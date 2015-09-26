@@ -1,5 +1,5 @@
 - hosts: medias-servers
-  user: zoe
+  user: little_alice
   sudo: true
 
   tasks:

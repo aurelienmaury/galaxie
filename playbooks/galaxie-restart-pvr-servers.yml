@@ -1,5 +1,5 @@
 - hosts: pvr-servers
-  user: zoe
+  user: little_alice
   sudo: true
 
   tasks:
