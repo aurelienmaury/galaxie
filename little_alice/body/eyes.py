@@ -37,14 +37,21 @@ class Eyes(object):
         self.line_width = 1
 
         self.color = 'red'
+        self.valid_color_list = [
+            'grey',
+            'red',
+            'green',
+            'yellow',
+            'blue',
+            'purple',
+            'cyan'
+        ]
 
     def run(self, queue):
 
         while True:
+
             try:
-                # color = queue.get(0.1) or self.color
-                # if color is not self.color:
-                #     self.color = color
 
                 ret, frame = self.video_capture.read()
 

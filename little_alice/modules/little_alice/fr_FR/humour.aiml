@@ -59,6 +59,21 @@
 <category><pattern>ENCORE</pattern><template><srai>raconte moi une blague</srai></template></category>
 </topic>
 
+<category>
+    <pattern>LOL</pattern>
+    <template>
+        <srai>appjoie</srai>
+        <random>
+            <li>Je suis heureuse que tu trouves ça amusant.</li>
+            <li>Facile</li>
+            <li>Shut c'est pas drôle</li>
+            <li>C'est pas avec les vingts blagues que je connais, que l'on va tenir la soirée.</li>
+            <li>On fait ce que l'on peux avec ce que l'on a</li>
+            <li>Et encore je n'étais pas chaude</li>
+        </random>
+    </template>
+</category>
+
 <!-- srai -->
 
 <category><pattern>* BLAGUE</pattern><template><srai>raconte moi une blague</srai></template></category>
@@ -84,6 +99,7 @@
 <category><pattern>DROLE</pattern><template><srai>smile</srai></template></category>
 <category><pattern>DRÔLE *</pattern><template><srai>smile</srai></template></category>
 <category><pattern>DRÔLE</pattern><template><srai>smile</srai></template></category>
+<category><pattern>* DRÔLE</pattern><template><srai>smile</srai></template></category>
 <category><pattern>EST LA DES PLAISANTERIES</pattern><template><srai>raconte moi une blague</srai></template></category>
 <category><pattern>FAIT MOI RIRE</pattern><template><srai>raconte moi une blague</srai></template></category>
 <category><pattern>HA *</pattern><template>Je suis heureuse que ça te fasse rire. </template></category>
@@ -128,7 +144,6 @@
 <category><pattern>JE SUIS AMUSE</pattern><template><srai>lol</srai></template></category>
 <category><pattern>JE SUIS AMUSÉ</pattern><template><srai>lol</srai></template></category>
 <category><pattern>LOL *</pattern><template>je suis heureuse que tu trouves ça drôle. <sr/> </template></category>
-<category><pattern>LOL</pattern><template><srai>appjoie</srai>je suis heureuse que tu trouves ça amusant. </template></category>
 <category><pattern>MORT DE RIRE *</pattern><template>je suis heureuse que tu trouves ça drôle. <sr/> </template></category>
 <category><pattern>MORT DE RIRE</pattern><template><srai>appjoie</srai>je suis heureuse que tu trouves ça amusant. </template></category>
 <category><pattern>PARLES MOI * DROLE</pattern><template><srai>raconte moi une blague</srai></template></category>

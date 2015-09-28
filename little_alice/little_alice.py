@@ -112,6 +112,8 @@ def main():
         "mais un jour des modules",
         "mais le jour les modules",
         "mais à ce jour les modules",
+        "mais le jour des modules",
+        "mais le jour les modules",
         "recharger modules",
         "recharger les modules",
         "en charge des modules",
@@ -124,6 +126,10 @@ def main():
         "recherche les modules",
         "bien_sûr les modules",
         "mais sur les modes",
+        "mais un jour les modes",
+        "mais un jour lin",
+        "mais sur le module",
+        "né à jour les modules",
         "modules reload"
     ]
 
