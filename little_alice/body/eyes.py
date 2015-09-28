@@ -14,6 +14,23 @@ import time
 
 from multiprocessing import TimeoutError
 
+# Tango Palette Color
+TANGO_PALETTE_GREY = (83, 87, 85)
+TANGO_PALETTE_RED = (41, 41, 239)
+TANGO_PALETTE_GREEN = (52, 226, 138)
+TANGO_PALETTE_YELLOW = (79, 233, 252)
+TANGO_PALETTE_BLUE = (207, 159, 114)
+TANGO_PALETTE_PURPLE = (168, 127, 173)
+TANGO_PALETTE_CYAN_9 = (252, 252, 58)
+TANGO_PALETTE_CYAN_8 = (226, 226, 52)
+TANGO_PALETTE_CYAN_7 = (201, 201, 46)
+TANGO_PALETTE_CYAN_6 = (176, 176, 40)
+TANGO_PALETTE_CYAN_5 = (150, 150, 35)
+TANGO_PALETTE_CYAN_4 = (125, 125, 29)
+TANGO_PALETTE_CYAN_3 = (99, 99, 23)
+TANGO_PALETTE_CYAN_2 = (79, 79, 17)
+TANGO_PALETTE_CYAN_1 = (48, 48, 11)
+TANGO_PALETTE_CYAN_0 = (23, 23, 5)
 
 class Eyes(object):
     def __init__(self):
@@ -50,24 +67,6 @@ class Eyes(object):
                     flags=cv2.cv.CV_HAAR_SCALE_IMAGE
                 )
 
-                # Tango Palette Color
-                grey = (83, 87, 85)
-                red = (41, 41, 239)
-                green = (52, 226, 138)
-                yellow = (79, 233, 252)
-                blue = (207, 159, 114)
-                purpule = (168, 127, 173)
-                cyan_9 = (252, 252, 58)
-                cyan_8 = (226, 226, 52)
-                cyan_7 = (201, 201, 46)
-                cyan_6 = (176, 176, 40)
-                cyan_5 = (150, 150, 35)
-                cyan_4 = (125, 125, 29)
-                cyan_3 = (99, 99, 23)
-                cyan_2 = (79, 79, 17)
-                cyan_1 = (48, 48, 11)
-                cyan_0 = (23, 23, 5)
-
                 for (x, y, w, h) in faces:
                     # Draw X Lines
                     cv2.putText(
@@ -76,7 +75,7 @@ class Eyes(object):
                         (x + (w/2) + 1, 15),
                         cv2.FONT_HERSHEY_SIMPLEX,
                         0.5,
-                        cyan_9,
+                        TANGO_PALETTE_CYAN_9,
                         1,
                         cv2.CV_AA
                     )
@@ -84,7 +83,7 @@ class Eyes(object):
                         frame,
                         (x + (w/2), 0),
                         (x + (w/2), y),
-                        cyan_5,
+                        TANGO_PALETTE_CYAN_5,
                         self.line_width,
                         cv2.CV_AA
                     )
@@ -92,7 +91,7 @@ class Eyes(object):
                         frame,
                         (x + (w/2), y+h),
                         (x + (w/2), x+self.frame_height),
-                        cyan_5,
+                        TANGO_PALETTE_CYAN_5,
                         self.line_width,
                         cv2.CV_AA
                     )
@@ -104,7 +103,7 @@ class Eyes(object):
                         (int(2), int(y + (h/2) - 2)),
                         cv2.FONT_HERSHEY_SIMPLEX,
                         0.5,
-                        cyan_9,
+                        TANGO_PALETTE_CYAN_9,
                         1,
                         cv2.CV_AA
                     )
@@ -112,7 +111,7 @@ class Eyes(object):
                         frame,
                         (0, y + (h/2)),
                         (x, y + (h/2)),
-                        cyan_5,
+                        TANGO_PALETTE_CYAN_5,
                         self.line_width,
                         cv2.CV_AA
                     )
@@ -120,7 +119,7 @@ class Eyes(object):
                         frame,
                         (x+w, y + (h/2)),
                         (y+self.frame_width, y + (w/2)),
-                        cyan_5,
+                        TANGO_PALETTE_CYAN_5,
                         self.line_width,
                         cv2.CV_AA
                     )
@@ -130,7 +129,7 @@ class Eyes(object):
                         frame,
                         (x, y),
                         (x+w, y+h),
-                        cyan_8,
+                        TANGO_PALETTE_CYAN_8,
                         self.line_width,
                         cv2.CV_AA
                     )
@@ -146,7 +145,7 @@ class Eyes(object):
                             frame,
                             (ex, ey),
                             (ex+ew, ey+eh),
-                            cyan_6,
+                            TANGO_PALETTE_CYAN_6,
                             1,
                             cv2.CV_AA
                         )
@@ -159,7 +158,7 @@ class Eyes(object):
                     (int(1), int(self.frame_height - 4)),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     1,
-                    cyan_7,
+                    TANGO_PALETTE_CYAN_7,
                     2,
                     cv2.CV_AA
                 )
