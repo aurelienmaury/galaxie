@@ -100,6 +100,9 @@ def main():
     brain.load_brain()
     brain.load_session()
     reload_modules_text = [
+        "né le jour les modules",
+        "les jours les modules",
+        "les jour les modules",
         "mis à jour des modules",
         "mis à jour les modules",
         "mise jour des modules",
@@ -163,6 +166,12 @@ def main():
             if recognised in reload_modules_text:
                 brain.reload_modules()
                 tts('C\'est fait')
+            elif recognised == 'rouge':
+                queue_eyes.put('red')
+            elif recognised == 'blue':
+                queue_eyes.put('blue')
+            elif recognised == 'cyan':
+                queue_eyes.put('cyan')
             elif recognised == 'je vais me coucher':
                 tts('OK, veux tu que je ferme tout ?')
                 set_prompt_type(1)

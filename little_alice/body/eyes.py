@@ -13,7 +13,7 @@ import cv2
 
 locale.setlocale(locale.LC_TIME, '')
 import time
-from multiprocessing import TimeoutError
+from multiprocessing import Process, Queue, TimeoutError
 from .utils.lines import make_face_line
 from .utils.color import get_bgr_color
 
@@ -42,6 +42,10 @@ class Eyes(object):
 
         while True:
             try:
+                # color = queue.get(0.1) or self.color
+                # if color is not self.color:
+                #     self.color = color
+
                 ret, frame = self.video_capture.read()
 
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

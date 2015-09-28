@@ -95,6 +95,8 @@
 <category><pattern>COMMENT VAS TU</pattern><template><think><set name="cava">ok</set></think><random><li>je vais très bien. Merci <get name="name"/>. </li><li>je fonctionne avec des paramètres normaux. </li><li>Tout va extrêmement bien. </li><li>je vais bien merci. </li><li>Tout va sans à-coup. </li><li>je suis bien, merci. </li><li>ça va,  </li><li>c'est cool,  </li><li>ça va plutôt pas mal <get name="name"/>, merci,  </li><li>Ca va bien, merci,  </li></random></template></category>
 <category><pattern>COMMENT ÇA VA INTERROGATION</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT ÇA VA</pattern><template><srai>comment vas tu</srai></template></category>
+<category><pattern>COMMENT VEUX TU</pattern><template><srai>comment vas tu</srai></template></category>
+<category><pattern>COMMENT PEUX TU</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COUCOU</pattern><template><srai>bonjour</srai></template></category>
 <category><pattern>CHAO</pattern><template><srai>au revoir</srai></template></category>
 <category><pattern>CHAO *</pattern><template><srai>au revoir</srai></template></category>

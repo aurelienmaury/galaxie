@@ -51,7 +51,6 @@
 </category>
 
 <topic name="HUMOUR">
-
 <category><pattern>UNE AUTRE</pattern><template><srai>raconte moi une blague</srai></template></category>
 <category><pattern>UN AUTRE</pattern><template><srai>raconte moi une blague</srai></template></category>
 <category><pattern>ENCORE UNE AUTRE</pattern><template><srai>raconte moi une blague</srai></template></category>
