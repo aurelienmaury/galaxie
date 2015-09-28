@@ -6,7 +6,6 @@
 # Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
 __author__ = 'Tuux'
 
-
 import cv2
 import sys
 import locale
