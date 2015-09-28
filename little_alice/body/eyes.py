@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# It script it publish under GNU GENERAL PUBLIC LICENSE
+# It script it published under GNU GENERAL PUBLIC LICENSE
 # http://www.gnu.org/licenses/gpl-3.0.en.html
 # Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
 __author__ = 'Tuux'
@@ -45,9 +45,6 @@ class Eyes(object):
                 ret, frame = self.video_capture.read()
 
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-
-
 
                 # Draw a rectangle around the eyes
                 eyes = self.eyesCascade.detectMultiScale(
