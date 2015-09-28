@@ -17,6 +17,7 @@ from multiprocessing import TimeoutError
 from .utils.lines import make_face_line
 from .utils.color import get_bgr_color
 
+
 class Eyes(object):
     def __init__(self):
         self.faceCascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml')
