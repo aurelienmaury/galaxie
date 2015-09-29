@@ -42,7 +42,8 @@
 <category><pattern>TU PEUX M APPELER *</pattern><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>APPELLE MOI *</pattern><template><srai>je m'appelle <star/></srai></template></category>
 <category><pattern>JE M APPELLE *</pattern><template> <set name="name"><formal><star/></formal></set> , heureuse de te rencontrer! <srai>cherchergenre</srai></template></category>
-
+<category><pattern>JE SUIS *</pattern><template><srai>je m'appelle <star/></srai></template></category>
+<category><pattern>NON MOI JE SUIS *</pattern><template><srai>je m'appelle <star/></srai></template></category>
 <category><pattern>* MOI C EST *</pattern><template><srai>mon nom est <star index="2"/></srai></template></category>
 <category><pattern>* MOI C  *</pattern><template><srai>mon nom est <star index="2"/></srai></template></category>
 <category><pattern>* JE ME NOMME *</pattern><template><srai>mon nom est <star index="2"/></srai></template></category>
@@ -73,8 +74,8 @@
 <category><pattern>JE SUIS *</pattern><that>COMMENT PUIS JE T APPELER</that><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>JE SUIS *</pattern><that>QUEL EST TON VRAI NOM</that><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>MOI C EST *</pattern><that>QUEL EST TON NOM</that><template><srai>mon nom est <star/></srai></template></category>
-<category><pattern>MOI C EST *</pattern><that>COMMENT PUIS JE T APPELER</that><template><srai>mon nom est <star/></srai></template></category>
-<category><pattern>MOI C EST *</pattern><that>QUEL EST TON VRAI NOM</that><template><srai>mon nom est <star/></srai></template></category>
+<!-- merdouille-->
+<category><pattern>NON MOI CET *</pattern><that>QUEL EST TON NOM</that><template><srai>mon nom est <star/></srai></template></category>
 
 <category><pattern>*</pattern><that>* QUEL EST TON NOM</that><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>*</pattern><that>* COMMENT PUIS JE T APPELER</that><template><srai>mon nom est <star/></srai></template></category>
@@ -88,6 +89,9 @@
 <category><pattern>*</pattern><that>* COMMENT T APPELLES TU</that><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>JE SUIS *</pattern><that>* COMMENT T APPELLES TU</that><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>MOI C EST *</pattern><that>* COMMENT T APPELLES TU</that><template><srai>mon nom est <star/></srai></template></category>
+<category><pattern>NON MOI C EST *</pattern><that>* COMMENT T APPELLES TU</that><template><srai>mon nom est <star/></srai></template></category>
+
+<category><pattern>NON MOI C EST *</pattern><that>* COMMENT T APPELLES TU</that><template><srai>mon nom est <star/></srai></template></category>
 
 <category><pattern>*</pattern><that>QUEL EST TON NOM *</that><template><srai>mon nom est <star/></srai></template></category>
 <category><pattern>*</pattern><that>COMMENT PUIS JE T APPELER *</that><template><srai>mon nom est <star/></srai></template></category>

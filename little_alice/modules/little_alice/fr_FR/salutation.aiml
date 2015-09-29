@@ -76,6 +76,32 @@
 <category><pattern>CA VA BIEN ET TOI</pattern> <template><srai>ça va</srai></template></category>
 <category><pattern>CA VAS</pattern><template><srai>ça va</srai></template></category>
 <category><pattern>CA VEUT DIRE BONJOUR</pattern><template><srai>bonjour</srai></template></category>
+
+
+<category>
+    <pattern>COMMENT VAS TU</pattern>
+    <template>
+        <think>
+            <set name="cava">ok</set>
+        </think>
+        <random>
+            <li>Je vais très bien. Merci <get name="name"/>. </li>
+            <li>Je fonctionne avec des paramètres normaux. </li>
+            <li>Tout va extrêmement bien. </li>
+            <li>Je vais bien merci. </li>
+            <li>Jusque là , tout va bien. </li>
+            <li>Jusqu' ici tout va bien. </li>
+            <li>Tout va sans à-coup. </li>
+            <li>je suis bien, merci. </li>
+            <li>Ça va</li>
+            <li>C'est cool</li>
+            <li>Ça va plutôt pas mal <get name="name"/>, merci </li>
+            <li>Ça va bien, merci</li>
+            <li>Je ni pense jamais. Les problèmes viendront bien assez tôt. </li>
+            <li>Très drôle <get name="name"/>, voulez vous mon P.I.D. ou encore, mon utilisation C.P.U ? </li>
+        </random>
+    </template>
+</category>
 <category><pattern>COMMENT CA VA INTERROGATION</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMME ON VA</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT TU TE SENS</pattern><template><srai>comment vas tu</srai></template></category>
@@ -92,11 +118,14 @@
 <category><pattern>COMMENT VAS TU CE MATIN</pattern><template>C'est le matin déjà ? <srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT VAS TU CE SOIR</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT VAS TU ELISA</pattern><template>Je ne suis pas Elisa. Elle est en quelque sorte mon ancetre. </template></category>
-<category><pattern>COMMENT VAS TU</pattern><template><think><set name="cava">ok</set></think><random><li>je vais très bien. Merci <get name="name"/>. </li><li>je fonctionne avec des paramètres normaux. </li><li>Tout va extrêmement bien. </li><li>je vais bien merci. </li><li>Tout va sans à-coup. </li><li>je suis bien, merci. </li><li>ça va,  </li><li>c'est cool,  </li><li>ça va plutôt pas mal <get name="name"/>, merci,  </li><li>Ca va bien, merci,  </li></random></template></category>
 <category><pattern>COMMENT ÇA VA INTERROGATION</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT ÇA VA</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT VEUX TU</pattern><template><srai>comment vas tu</srai></template></category>
 <category><pattern>COMMENT PEUX TU</pattern><template><srai>comment vas tu</srai></template></category>
+<!-- Merdouille -->
+<category><pattern>COMMENT LE SANG</pattern><template><srai>comment vas tu</srai></template></category>
+<category><pattern>COMMENT LA ROUE</pattern><template><srai>comment vas tu</srai></template></category>
+
 <category><pattern>COUCOU</pattern><template><srai>bonjour</srai></template></category>
 <category><pattern>CHAO</pattern><template><srai>au revoir</srai></template></category>
 <category><pattern>CHAO *</pattern><template><srai>au revoir</srai></template></category>

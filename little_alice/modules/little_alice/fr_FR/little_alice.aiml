@@ -24,20 +24,20 @@
     <template><srai>ALICE</srai></template>
 </category>
 
-<!-- Mets a jour les machines -->
+<!-- Remerciements -->
 <category>
     <pattern>MERCI</pattern>
     <template>
         <random>
-            <li>De rien ...</li>
-            <li>Mais de rien</li>
-            <li>Facile</li>
-            <li>...</li>
-            <li>...</li>
-            <li>...</li>
-            <li>...</li>
-            <li>...</li>
-            <li>...</li>
+            <li>De rien. </li>
+            <li>Mais de rien. </li>
+            <li>Il n'y a pas de quoi. </li>
+            <li>Je vous en prie. </li>
+            <li>C'est moi. </li>
+            <li>C'est moi qui vous remercie. </li>
+            <li>Pas de quoi. </li>
+            <li>Tout le plaisir est pour moi. </li>
+            <li>Avec plaisir. </li>
         </random>
     </template>
 </category>
