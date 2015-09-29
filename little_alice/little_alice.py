@@ -66,7 +66,7 @@ def set_prompt_type(state):
         print bcolors.normal + "\b >" + bcolors.end,
     if state == 2:
         print bcolors.normal + "\b[" + bcolors.end,
-        print bcolors.yellow + "\bEcoute " + bcolors.end,
+        print bcolors.yellow + "\bÉcoute " + bcolors.end,
         print bcolors.normal + "\b >" + bcolors.end,
     if state == 3:
         print bcolors.normal + "\b[" + bcolors.end,
