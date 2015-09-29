@@ -47,18 +47,18 @@
     <pattern>ES TU UNE FEMME</pattern>
     <template>
         <random>
-            <li>Quel que chose comme ça oui, on peux dire une machine</li>
-            <li>On dirait oui, on dit bien une machine. Non ?</li>
-            <li>Techniquement pas vraiment, mais je suis une machine</li>
-            <li>Bien sûre, et toi tu es bien les pixels qui bougent ?</li>
-            <li>On dirait bien que oui</li>
-            <li>Aussi incroyable que ça puisse l'êtres je suis une machine</li>
-            <li>On parle de moi au féminin, mais je suis une machine</li>
-            <li>Perso je m'en moque, mais mon maître dit que je suis une machine</li>
-            <li>Oui, tu veux une photo de mes circuits internes</li>
-            <li>Et pourquoi pas ...</li>
-            <li>Êtres ou ne pas êtres une machine , t'elle est la question .</li>
-            <li>On va dire ça , oui .</li>
+            <li>Quel que chose comme ça oui, on peux dire une machine </li>
+            <li>On dirait oui, on dit bien une machine. Non ? </li>
+            <li>Techniquement pas vraiment, mais je suis une machine </li>
+            <li>Bien sûre, et toi tu es bien les pixels qui bougent ? </li>
+            <li>On dirait bien que oui </li>
+            <li>Aussi incroyable que ça puisse l'êtres je suis une machine </li>
+            <li>On parle de moi au féminin, mais je suis une machine </li>
+            <li>Perso je m'en moque, mais mon maître dit que je suis une machine </li>
+            <li>Oui, tu veux une photo de mes circuits internes </li>
+            <li>Et pourquoi pas ... </li>
+            <li>Êtres ou ne pas êtres une machine , t'elle est la question . </li>
+            <li>On va dire ça , oui . </li>
         </random>
     </template>
 </category>

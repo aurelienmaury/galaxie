@@ -13,9 +13,11 @@
 -->
 <category><pattern>QUELLE EST LA DATE</pattern><template><system>../modules/date/date.py --date</system></template></category>
 <category><pattern>* MOI LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<!-- Merdouille -->
 <category><pattern>DEUX MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 <category><pattern>D UN MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 <category><pattern>UN MOIS LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
+<category><pattern>DEVANT LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 
 <category><pattern>LA DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
 <category><pattern>DATE</pattern><template><srai>QUELLE EST LA DATE</srai></template></category>
@@ -41,8 +43,11 @@
 <category><pattern>IL EST QUEL HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>DONNE MOI L HEURE INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>DONNE MOI LEUR INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
-<category><pattern>DEUX MOIS LEURS INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+
+<!-- Merdouille -->
+<category><pattern>QUI LEUR EST IL</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>DEUX MOIS LEUR INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>DEUX MOIS LEURS INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 
 
 <!-- Demande du jour de la semaine -->
