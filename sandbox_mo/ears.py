@@ -178,36 +178,26 @@ class Ears(object):
         wave_file.close()
 
     def decode_speech(self, acoustic_model_directory, language_model_file, dictionary_file, wavfile):
-        set_prompt_type(3)
-        try:
-            # FIXME
 
+        self.record_to_file(self.wavfile)
+
+        set_prompt_type(3)
+
+        try:
             status = ''
             stdout = ''
             stderr = ''
 
             try:
-                status, stdout, stderr = proc.run(["sleep", "10"], timeout=3)
+                status, stdout, stderr = proc.run(["./pocketsphinx-decoder.py", acoustic_model_directory, language_model_file, dictionary_file, wavfile], timeout=8)
             except proc.Timeout:
-                print "failed "+status+" "+stdout+" "+stderr
+                print "TIMED OUT: "+status+" "+stdout+" "+stderr
 
-            speech_rec = pocketsphinx.Decoder(
-                hmm=acoustic_model_directory,
-                lm=language_model_file,
-                dict=dictionary_file
-            )
-            wav_file_to_decode = file(wavfile, 'rb')
-            wav_file_to_decode.seek(44)
-            speech_rec.decode_raw(wav_file_to_decode)
+            os.remove(self.wavfile)
 
-            result = speech_rec.get_hyp()
-
-            set_prompt_type(0)
-            return result[0]
-
-            #return "BOUCHON"
-
+            return stdout
         except TimeoutError:
+            os.remove(self.wavfile)
             return ''
         except KeyboardInterrupt:
             sys.exit(0)

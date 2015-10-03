@@ -17,16 +17,15 @@ sock.bind("ipc:///tmp/little_alice_ears")
 ears = Ears()
 
 while True:
-    ears.record_to_file(ears.wavfile)
 
-    print "beforce decode:"
+    print "ZERO LOOP:"
     recognizing = ears.decode_speech(
         ears.acoustic_model_directory,
         ears.language_model_file,
         ears.dictionary_file,
         ears.wavfile
     )
-    print "RECONIZING:"+recognizing
-    sock.send("ears:" + time.ctime() + ":" + recognizing)
 
-    os.remove(ears.wavfile)
+    print "RECONIZED:"+recognizing
+
+    sock.send("ears:" + time.ctime() + ":" + recognizing)
