@@ -8,7 +8,7 @@ class Timeout(Exception):
     pass
 
 def run(command, timeout=10):
-    proc = subprocess.Popen("./timeout.sh "+timeout+" "+command, bufsize=0, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(command, bufsize=0, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     poll_seconds = .250
     deadline = time.time()+timeout
     while time.time() < deadline and proc.poll() == None:

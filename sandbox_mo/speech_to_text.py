@@ -24,6 +24,6 @@ while True:
         ears.wavfile
     )
 
-    message = "ears:" + time.ctime() + ":" + recognizing
-    sock.send(message)
+    sock.send("ears:" + time.ctime() + ":" + recognizing)
+
     os.remove(ears.wavfile)
