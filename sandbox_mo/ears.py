@@ -54,7 +54,8 @@ def set_prompt_type(state):
 
 class Ears(object):
 
-    def __init__(self):
+    def __init__(self, bus):
+        self.bus = bus
         # VARIABLES for Noise Gate Regarding
         self.threshold = 3000  # audio levels not normalised.
         self.chunk_size = 1024
@@ -156,7 +157,8 @@ class Ears(object):
                     silent_chunks_counter = 0
             elif not silent:
                 audio_started = True
-                set_prompt_type(2)
+                self.bus.send(">ears>PROMPT TYPE 2")
+
         sample_width = p.get_sample_size(self.format)
         stream.stop_stream()
         stream.close()
@@ -181,7 +183,7 @@ class Ears(object):
 
         self.record_to_file(self.wavfile)
 
-        set_prompt_type(3)
+        self.bus.send(">ears>PROMPT TYPE 3")
 
         try:
             status = ''
@@ -189,7 +191,16 @@ class Ears(object):
             stderr = ''
 
             try:
-                status, stdout, stderr = proc.run(["./pocketsphinx-decoder.py", acoustic_model_directory, language_model_file, dictionary_file, wavfile], timeout=8)
+                last_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pocketsphinx-decoder.py")
+
+                stdout, stderr, status = proc.run(" ".join([
+                    last_path,
+                    acoustic_model_directory,
+                    language_model_file,
+                    dictionary_file,
+                    wavfile,
+                    "2>","/dev/null"
+                ]), timeout=8)
             except proc.Timeout:
                 print "TIMED OUT: "+status+" "+stdout+" "+stderr
 

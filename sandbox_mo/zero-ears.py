@@ -12,13 +12,14 @@ context = zmq.Context()
 
 # Define the socket using the "Context"
 sock = context.socket(zmq.PUB)
-sock.bind("ipc:///tmp/little_alice_ears")
+sock.bind("ipc:///tmp/zero_ears_bus")
 
-ears = Ears()
+ears = Ears(sock)
 
 while True:
+    print "zero-ears up"
+    sock.send(">ears>prompt>type=1")
 
-    print "ZERO LOOP:"
     recognizing = ears.decode_speech(
         ears.acoustic_model_directory,
         ears.language_model_file,
@@ -26,6 +27,7 @@ while True:
         ears.wavfile
     )
 
-    print "RECONIZED:"+recognizing
-
-    sock.send("ears:" + time.ctime() + ":" + recognizing)
+    if recognizing:
+        print "zero-ears perceive "+recognizing
+        message = ">ears>perceive>" + recognizing
+        sock.send(message)

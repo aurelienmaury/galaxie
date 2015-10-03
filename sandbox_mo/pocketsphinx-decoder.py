@@ -20,4 +20,6 @@ wav_file_to_decode = file(wavfile, 'rb')
 wav_file_to_decode.seek(44)
 speech_rec.decode_raw(wav_file_to_decode)
 
-print speech_rec.get_hyp()
+result = speech_rec.get_hyp()
+
+print result[0]
