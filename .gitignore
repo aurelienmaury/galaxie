@@ -8,3 +8,4 @@ little_alice/brains/brain.br
 .DS_Store
 *~
 .anjuta
+*.pyc
