@@ -75,14 +75,16 @@ def set_prompt_type(state):
     sys.stdout.flush()
 
 
-def tts(text):
+def text_to_speech(text):
     if not text == "":
         print "{0}\b{4} :> {1}{2}{3}".format(bcolors.normal, bcolors.yellow, text, bcolors.end, brain.session_name)
         voice.text_to_speech(text)
 
 
-def stt():
+def speech_to_text():
+
     ears.record_to_file(ears.wavfile)
+
     recognizing = ears.decode_speech(
         ears.acoustic_model_directory,
         ears.language_model_file,
@@ -157,21 +159,21 @@ def main():
     # Worker's
     little_alice_eyes = Process(target=eyes.run, args=(queue_eyes,))
     little_alice_ears_decode_speech = Process(target=ears, args=(queue_ears,))
-    little_alice_mounth = Process(target=tts, args=(queue_mounth,))
+    little_alice_mounth = Process(target=text_to_speech, args=(queue_mounth,))
 
     little_alice_eyes.start()
     try:
         while True:
             set_prompt_type(1)
-            recognised = stt()
+            recognised = speech_to_text()
 
             if not recognised == '':
                 #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
-                tts(brain.kernel.respond(recognised, brain.session_name))
+                text_to_speech(brain.kernel.respond(recognised, brain.session_name))
 
             if recognised in reload_modules_text:
                 brain.reload_modules()
-                tts('C\'est fait')
+                text_to_speech('C\'est fait')
             # elif recognised == 'rouge':
             #     queue_eyes.put('red')
             # elif recognised == 'blue':
@@ -179,16 +181,16 @@ def main():
             # elif recognised == 'cyan':
             #     queue_eyes.put('cyan')
             elif recognised == 'je vais me coucher':
-                tts('OK, veux tu que je ferme tout ?')
+                text_to_speech('OK, veux tu que je ferme tout ?')
                 set_prompt_type(1)
-                recognised = stt()
+                recognised = speech_to_text()
                 if recognised == 'oui':
-                    tts('OK, je fais ça')
+                    text_to_speech('OK, je fais ça')
                     brain.save_session()
                     os.system('sudo /sbin/shutdown -h 0')
                     os.system(sys.exit(0))
             elif recognised in exit_text:
-                tts('Au revoir')
+                text_to_speech('Au revoir')
                 brain.save_session()
                 os.system(sys.exit(0))
 
