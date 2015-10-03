@@ -9,264 +9,264 @@
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
 <category>
-    <pattern>C EST UN PAY</pattern>
+    <pattern>C EST UN PAYS</pattern>
     <template>
         <think>
             <set name="pays">ok</set>
         </think>
         <random>
-            <li>C'est un pay</li>
+            <li>C'est un pays</li>
         </random>
     </template>
 </category>
 
-<category><pattern>AFGHANISTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>AFRIQUED</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ALBANIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ALGÉRIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ALLEMAGNE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ANDORRE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ANGOLA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ANGUILLA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ANTARCTIQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ANTIGUA-ET-BARBUDA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ANTILLES NÉERLANDAISES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ARABIEOUDITE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ARGENTINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ARMÉNIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ARUBA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>AUSTRALIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>AUTRICHE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>AZERBAÏDJAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BAHAMAS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BAHREÏN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BANGLADESH</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BARBADE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BELGIQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BELIZE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BERMUDES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BHOUTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BOLIVIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BOSNIE-HERZÉGOVINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BOTSWANA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BRUNÉIRUSSALAM</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BRÉSIL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BULGARIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BURKINASO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BURUNDI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BÉLARUS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>BÉNIN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CAMBODGE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CAMEROUN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CANADA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CAP-VERT</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CHILI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CHINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CHYPRE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>COLOMBIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>COMORES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CONGO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CORÉERD</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CORÉED</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>COSTACA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CROATIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CUBA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>CÔTE D’IVOIRE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>DANEMARK</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>DJIBOUTI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>DOMINIQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ELLVADOR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ESPAGNE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ESTONIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>FIDJI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>FINLANDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>FRANCE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GABON</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GAMBIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GHANA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GIBRALTAR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GRENADE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GROENLAND</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GRÈCE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUADELOUPE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUAM</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUATEMALA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUERNESEY</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUINÉE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUINÉE ÉQUATORIALE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUINÉE-BISSAU</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUYANA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GUYANEANÇAISE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GÉORGIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>GÉORGIEDS ÎLESNDWICHD</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>HAÏTI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>HONDURAS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>HONGRIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>INDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>INDONÉSIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>IRAK</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>IRAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>IRLANDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ISLANDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ISRAËL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ITALIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>JAMAÏQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>JAPON</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>JERSEY</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>JORDANIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>KAZAKHSTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>KENYA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>KIRGHIZISTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>KIRIBATI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>KOWEÏT</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LAOS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LESOTHO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LETTONIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LIBAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LIBYE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LIBÉRIA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LIECHTENSTEIN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LITUANIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>LUXEMBOURG</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MACÉDOINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MADAGASCAR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MALAISIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MALAWI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MALDIVES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MALI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MALTE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MAROC</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MARTINIQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MAURICE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MAURITANIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MAYOTTE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MEXIQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MOLDAVIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MONACO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MONGOLIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MONTSERRAT</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MONTÉNÉGRO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MOZAMBIQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>MYANMAR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NAMIBIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NAURU</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NICARAGUA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NIGER</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NIGÉRIA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NIUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NORVÈGE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NOUVELLE-CALÉDONIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NOUVELLE-ZÉLANDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>NÉPAL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>OMAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>OUGANDA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>OUZBÉKISTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PAKISTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PALAOS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PANAMA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PAPOUASIE-NOUVELLE-GUINÉE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PARAGUAY</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PAYS-BAS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PHILIPPINES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PITCAIRN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>POLOGNE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>POLYNÉSIEANÇAISE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PORTOCO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PORTUGAL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>PÉROU</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>QATAR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>R.A.S.INOISENGNG</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>R.A.S.INOISECAO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ROUMANIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ROYAUME-UNI</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RUSSIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RWANDA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RÉPUBLIQUE NTR AFRICAINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RÉPUBLIQUE MINICAINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RÉPUBLIQUE DÉMOCRATIQUE NGO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RÉPUBLIQUE THÈQUE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RÉUNION</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAHARA CIDENTAL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINT-BARTHÉLÉMY</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINT-KITTS-ET-NEVIS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINT-MARIN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINT-MARTIN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINT-PIERRE-ET-MIQUELON</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINT-VINCENT-ET-LESENADINES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINTE-HÉLÈNE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAINTE-LUCIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAMOA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAMOAÉRICAINES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SAOMÉ-ET-PRINCIPE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SERBIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SERBIE-ET-MONTÉNÉGRO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SEYCHELLES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SIERRAONE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SINGAPOUR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SLOVAQUIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SLOVÉNIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SOMALIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SOUDAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SRINKA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SUISSE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SURINAME</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SUÈDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SVALBARD ÎLENYEN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SWAZILAND</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SYRIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>SÉNÉGAL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TADJIKISTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TANZANIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TAÏWAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TCHAD</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TERRE OSSTRALES ANÇAISES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TERRITOIREITANNIQUE L'OCÉANDIEN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TERRITOIRE LESTINIEN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>THAÏLANDE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TIMORIENTAL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TOGO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TOKELAU</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TONGA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TRINITÉ-ET-TOBAGO</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TUNISIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TURKMÉNISTAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TURQUIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>TUVALU</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>UKRAINE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>URUGUAY</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>VANUATU</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>VENEZUELA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>VIÊTM</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>WALLIS-ET-FUTUNA</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>YÉMEN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ZAMBIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ZIMBABWE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>RÉGIONDÉTERMINÉE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉGYPTE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉMIRATSABESIS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉQUATEUR</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉRYTHRÉE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉTATTÉTICAN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉTATS FÉDÉRÉSCRONÉSIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉTATS-UNIS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÉTHIOPIE</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLEUVET</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLERISTMAS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLERFOLK</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLEN</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESÏMANS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESCOS -ELING</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESOK</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLES FÉROÉ</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESARDCDONALD</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESLOUINES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESRIANNESRD</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESRSHALL</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESNEURES ÉLOIGNÉESS ÉTATS-UNIS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESLOMON</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESRKSÏQUES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESERGESITANNIQUES</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLESERGESS ÉTATS-UNIS</pattern><template><srai>c est un pay</srai></template></category>
-<category><pattern>ÎLES ÅLAND</pattern><template><srai>c est un pay</srai></template></category>
+<category><pattern>AFGHANISTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>AFRIQUED</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ALBANIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ALGÉRIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ALLEMAGNE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ANDORRE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ANGOLA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ANGUILLA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ANTARCTIQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ANTIGUA-ET-BARBUDA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ANTILLES NÉERLANDAISES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ARABIEOUDITE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ARGENTINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ARMÉNIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ARUBA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>AUSTRALIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>AUTRICHE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>AZERBAÏDJAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BAHAMAS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BAHREÏN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BANGLADESH</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BARBADE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BELGIQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BELIZE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BERMUDES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BHOUTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BOLIVIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BOSNIE-HERZÉGOVINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BOTSWANA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BRUNÉIRUSSALAM</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BRÉSIL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BULGARIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BURKINASO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BURUNDI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BÉLARUS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>BÉNIN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CAMBODGE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CAMEROUN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CANADA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CAP-VERT</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CHILI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CHINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CHYPRE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>COLOMBIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>COMORES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CONGO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CORÉERD</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CORÉED</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>COSTACA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CROATIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CUBA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>CÔTE D’IVOIRE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>DANEMARK</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>DJIBOUTI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>DOMINIQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ELLVADOR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ESPAGNE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ESTONIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>FIDJI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>FINLANDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>FRANCE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GABON</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GAMBIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GHANA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GIBRALTAR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GRENADE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GROENLAND</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GRÈCE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUADELOUPE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUAM</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUATEMALA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUERNESEY</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUINÉE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUINÉE ÉQUATORIALE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUINÉE-BISSAU</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUYANA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GUYANEANÇAISE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GÉORGIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>GÉORGIEDS ÎLESNDWICHD</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>HAÏTI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>HONDURAS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>HONGRIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>INDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>INDONÉSIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>IRAK</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>IRAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>IRLANDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ISLANDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ISRAËL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ITALIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>JAMAÏQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>JAPON</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>JERSEY</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>JORDANIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>KAZAKHSTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>KENYA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>KIRGHIZISTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>KIRIBATI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>KOWEÏT</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LAOS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LESOTHO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LETTONIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LIBAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LIBYE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LIBÉRIA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LIECHTENSTEIN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LITUANIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>LUXEMBOURG</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MACÉDOINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MADAGASCAR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MALAISIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MALAWI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MALDIVES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MALI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MALTE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MAROC</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MARTINIQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MAURICE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MAURITANIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MAYOTTE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MEXIQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MOLDAVIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MONACO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MONGOLIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MONTSERRAT</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MONTÉNÉGRO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MOZAMBIQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>MYANMAR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NAMIBIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NAURU</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NICARAGUA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NIGER</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NIGÉRIA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NIUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NORVÈGE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NOUVELLE-CALÉDONIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NOUVELLE-ZÉLANDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>NÉPAL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>OMAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>OUGANDA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>OUZBÉKISTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PAKISTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PALAOS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PANAMA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PAPOUASIE-NOUVELLE-GUINÉE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PARAGUAY</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PAYS-BAS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PHILIPPINES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PITCAIRN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>POLOGNE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>POLYNÉSIEANÇAISE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PORTOCO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PORTUGAL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>PÉROU</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>QATAR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>R.A.S.INOISENGNG</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>R.A.S.INOISECAO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ROUMANIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ROYAUME-UNI</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RUSSIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RWANDA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RÉPUBLIQUE NTR AFRICAINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RÉPUBLIQUE MINICAINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RÉPUBLIQUE DÉMOCRATIQUE NGO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RÉPUBLIQUE THÈQUE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RÉUNION</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAHARA CIDENTAL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINT-BARTHÉLÉMY</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINT-KITTS-ET-NEVIS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINT-MARIN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINT-MARTIN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINT-PIERRE-ET-MIQUELON</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINT-VINCENT-ET-LESENADINES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINTE-HÉLÈNE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAINTE-LUCIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAMOA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAMOAÉRICAINES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SAOMÉ-ET-PRINCIPE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SERBIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SERBIE-ET-MONTÉNÉGRO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SEYCHELLES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SIERRAONE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SINGAPOUR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SLOVAQUIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SLOVÉNIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SOMALIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SOUDAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SRINKA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SUISSE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SURINAME</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SUÈDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SVALBARD ÎLENYEN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SWAZILAND</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SYRIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>SÉNÉGAL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TADJIKISTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TANZANIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TAÏWAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TCHAD</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TERRE OSSTRALES ANÇAISES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TERRITOIREITANNIQUE L'OCÉANDIEN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TERRITOIRE LESTINIEN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>THAÏLANDE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TIMORIENTAL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TOGO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TOKELAU</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TONGA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TRINITÉ-ET-TOBAGO</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TUNISIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TURKMÉNISTAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TURQUIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>TUVALU</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>UKRAINE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>URUGUAY</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>VANUATU</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>VENEZUELA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>VIÊTM</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>WALLIS-ET-FUTUNA</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>YÉMEN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ZAMBIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ZIMBABWE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>RÉGIONDÉTERMINÉE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉGYPTE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉMIRATSABESIS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉQUATEUR</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉRYTHRÉE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉTATTÉTICAN</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉTATS FÉDÉRÉSCRONÉSIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉTATS-UNIS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÉTHIOPIE</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLE UVET</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLE RISTMAS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLE RFOLK</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLE N</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES CAÏMANS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLESCOS -ELING</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLESOK</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES FÉROÉ</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES ARDCDONALD</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES LOUINES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES RIANNESRD</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES RSHALL</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES NEURES ÉLOIGNÉESS ÉTATS-UNIS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES SALOMON</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES KARSTÏQUES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLE SERGE TANNIQUES</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLESERGESS ÉTATS-UNIS</pattern><template><srai>c est un pays</srai></template></category>
+<category><pattern>ÎLES ÅLAND</pattern><template><srai>c est un pays</srai></template></category>
 
 </aiml>

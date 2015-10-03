@@ -25,7 +25,7 @@ class Eyes(object):
 
         #        self.video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 1024)
         #        self.video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 768)
-        self.camera_source = 0
+        self.camera_source = 1
         self.video_capture = cv2.VideoCapture(self.camera_source)
         # self.video_capture.set(3,1080)
         # self.video_capture.set(4,1024)
@@ -36,7 +36,7 @@ class Eyes(object):
         self.frame_height = int(self.video_capture.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))
         self.line_width = 1
 
-        self.color = 'red'
+        self.color = 'green'
         self.valid_color_list = [
             'grey',
             'red',
