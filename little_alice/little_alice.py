@@ -172,12 +172,12 @@ def main():
             if recognised in reload_modules_text:
                 brain.reload_modules()
                 tts('C\'est fait')
-            elif recognised == 'rouge':
-                queue_eyes.put('red')
-            elif recognised == 'blue':
-                queue_eyes.put('blue')
-            elif recognised == 'cyan':
-                queue_eyes.put('cyan')
+            # elif recognised == 'rouge':
+            #     queue_eyes.put('red')
+            # elif recognised == 'blue':
+            #     queue_eyes.put('blue')
+            # elif recognised == 'cyan':
+            #     queue_eyes.put('cyan')
             elif recognised == 'je vais me coucher':
                 tts('OK, veux tu que je ferme tout ?')
                 set_prompt_type(1)
