@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 __author__ = 'amaury'
 
 import zmq
@@ -17,13 +19,14 @@ ears = Ears()
 while True:
     ears.record_to_file(ears.wavfile)
 
+    print "beforce decode:"
     recognizing = ears.decode_speech(
         ears.acoustic_model_directory,
         ears.language_model_file,
         ears.dictionary_file,
         ears.wavfile
     )
-
+    print "RECONIZING:"+recognizing
     sock.send("ears:" + time.ctime() + ":" + recognizing)
 
     os.remove(ears.wavfile)

@@ -182,24 +182,30 @@ class Ears(object):
         try:
             # FIXME
 
+            status = ''
+            stdout = ''
+            stderr = ''
+
             try:
-                status, stdout, stderr = proc.run("sleep 10", timeout=3)
+                status, stdout, stderr = proc.run(["sleep", "10"], timeout=3)
             except proc.Timeout:
                 print "failed "+status+" "+stdout+" "+stderr
 
-            #speech_rec = pocketsphinx.Decoder(
-            #    hmm=acoustic_model_directory,
-            #    lm=language_model_file,
-            #    dict=dictionary_file
-            #)
-            #wav_file_to_decode = file(wavfile, 'rb')
-            #wav_file_to_decode.seek(44)
-            #speech_rec.decode_raw(wav_file_to_decode)
-            #result = speech_rec.get_hyp()
-            #set_prompt_type(0)
-            #return result[0]
+            speech_rec = pocketsphinx.Decoder(
+                hmm=acoustic_model_directory,
+                lm=language_model_file,
+                dict=dictionary_file
+            )
+            wav_file_to_decode = file(wavfile, 'rb')
+            wav_file_to_decode.seek(44)
+            speech_rec.decode_raw(wav_file_to_decode)
 
-            return "BOUCHON"
+            result = speech_rec.get_hyp()
+
+            set_prompt_type(0)
+            return result[0]
+
+            #return "BOUCHON"
 
         except TimeoutError:
             return ''
