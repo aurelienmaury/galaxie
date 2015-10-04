@@ -4,7 +4,7 @@ __author__ = 'amaury'
 
 import zmq
 import os
-#from brain import Brain
+from brain import Brain
 
 context = zmq.Context()
 
@@ -28,10 +28,10 @@ brains_dir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "../little_alice/brains")
 )
 
-#brain = Brain(modules_dir, brains_dir)
+brain = Brain(modules_dir, brains_dir)
 
-#brain.load_brain()
-#brain.load_session()
+brain.load_brain()
+brain.load_session()
 
 try:
     while True:
@@ -41,8 +41,7 @@ try:
 
         clean_message = message.replace(ear_perceive_channel, "", 1)
 
-        #brain_response = brain.kernel.respond(clean_message, brain.session_name)
-        brain_response = "Bonjour from brain"
+        brain_response = brain.kernel.respond(clean_message, brain.session_name)
         if brain_response:
             print "sending: "+brain_say_channel+brain_response
             publish_sock.send(brain_say_channel+brain_response)
@@ -50,5 +49,5 @@ try:
         print "zero-brain did his job"
 except KeyboardInterrupt:
     pass
-#finally:
-#    brain.save_session()
+finally:
+    brain.save_session()
