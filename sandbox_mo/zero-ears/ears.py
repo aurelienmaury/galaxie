@@ -9,16 +9,17 @@ __author__ = 'Tuux'
 from array import array
 from struct import pack
 from sys import byteorder
-import proc
 import copy
-import pyaudio
 import wave
 import time
 import tempfile
-import pocketsphinx
 import os
 import sys
 from multiprocessing import TimeoutError
+
+from ears import proc
+import pyaudio
+
 
 class bcolors:
     green = '\033[92m'
@@ -33,24 +34,6 @@ class bcolors:
         self.normal = ''
         self.red = ''
         self.end = ''
-
-
-def set_prompt_type(state):
-    print "\b" * 20,
-    if state == 1:
-        print bcolors.normal + "\b[" + bcolors.end,
-        print bcolors.green + "\bPrêt   " + bcolors.end,
-        print bcolors.normal + "\b >" + bcolors.end,
-    if state == 2:
-        print bcolors.normal + "\b[" + bcolors.end,
-        print bcolors.yellow + "\bEcoute " + bcolors.end,
-        print bcolors.normal + "\b >" + bcolors.end,
-    if state == 3:
-        print bcolors.normal + "\b[" + bcolors.end,
-        print bcolors.red + "\bAnalyse" + bcolors.end,
-        print bcolors.normal + "\b >" + bcolors.end,
-    sys.stdout.flush()
-
 
 class Ears(object):
 
@@ -157,14 +140,15 @@ class Ears(object):
                     silent_chunks_counter = 0
             elif not silent:
                 audio_started = True
+                # FIXME: replace with meaningful event
                 self.bus.send(">ears>PROMPT TYPE 2")
 
         sample_width = p.get_sample_size(self.format)
         stream.stop_stream()
         stream.close()
         p.terminate()
-        data_all = self.trim(
-            data_all)  # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
+        # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
+        data_all = self.trim(data_all)
         data_all = self.normalize(data_all)
         return sample_width, data_all
 
@@ -183,6 +167,7 @@ class Ears(object):
 
         self.record_to_file(self.wavfile)
 
+        # FIXME: replace with meaningful event
         self.bus.send(">ears>PROMPT TYPE 3")
 
         try:
