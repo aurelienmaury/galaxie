@@ -17,7 +17,7 @@ import os
 import sys
 from multiprocessing import TimeoutError
 
-from ears import proc
+import proc
 import pyaudio
 
 
