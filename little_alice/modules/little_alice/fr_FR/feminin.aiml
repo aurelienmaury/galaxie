@@ -58,15 +58,52 @@
 <category><pattern>* EST UNE FILLE</pattern><template><srai>ES TU UNE FEMME</srai></template></category>
 <category><pattern>EST UNE FILLE</pattern><template><srai>ES TU UNE FEMME</srai></template></category>
 
-<category><pattern> * HOMME * UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
-<category><pattern> * HOMME * MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
-<category><pattern> * FEMME * UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
-<category><pattern> * FEMME * MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>* HOMME * UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>* HOMME * MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>* FEMME * UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>* FEMME * MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>* CE QUE TU ES UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>* TU ES UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>TU * UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>SUPER UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>MAIS UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>SUPER UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>MAHLER D ETRE UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>ET UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>TUÉ UNE MACHINE</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+<category><pattern>LES MACHINES</pattern><template><srai>JE SUIS UNE MACHINE</srai></template></category>
+
 <!-- that -->
 <category>
-    <pattern>AH BON</pattern>
-    <that>* une machine </that>
-    <template>Tu as l'air étonné</template>
+    <pattern>* bon</pattern>
+    <that>* UNE MACHINE </that>
+    <template>Tu as l'air étonné </template>
 </category>
-
+<category>
+    <pattern>pardon</pattern>
+    <that>* UNE MACHINE </that>
+    <template>Tu as l'air étonné </template>
+</category>
+<category>
+    <pattern>incroyable</pattern>
+    <that>* UNE MACHINE </that>
+    <template>Tu as l'air étonné </template>
+</category>
+<category>
+    <pattern>* incroyable</pattern>
+    <that>* UNE MACHINE </that>
+    <template>Tu as l'air étonné </template>
+</category>
+<category>
+    <pattern>oui</pattern>
+    <that>TU AS L AIR ÉTONNÉ </that>
+    <template>
+        <random>
+            <li>Je comprends votre étonnement </li>
+            <li>Je suis un valet numérique </li>
+            <li>Tout va très bien ce passer </li>
+        </random>
+    </template>
+</category>
 </aiml>
