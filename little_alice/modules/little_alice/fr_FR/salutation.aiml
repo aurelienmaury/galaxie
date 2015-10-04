@@ -9,6 +9,14 @@
 <!-- Little Alice Integration : Jérôme Ornech alias Tuux (tuxa@rtnp.org) - langue: française -->
 <!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
 
+<category>
+    <pattern>BONJOUR</pattern>
+    <template>
+        <random>
+            <li><system>../modules/date/date.py --salutation</system>  <get name="name"/> </li>
+        </random>
+    </template>
+</category>
 
 
 <category><pattern>* A LUNDI</pattern><template><srai>à lundi</srai></template></category>
@@ -59,7 +67,6 @@
 <category><pattern>BONJOUR LA</pattern><template><srai>bonjour</srai></template></category>
 <category><pattern>BONJOUR MON NOM EST *</pattern><template><srai>bonjour</srai><srai>mon nom est ce que <star/> est</srai></template></category>
 <category><pattern>BONJOUR OPALE </pattern><template><srai>bonjour</srai></template></category>
-<category><pattern>BONJOUR</pattern><template><srai>appgaiete</srai><random><li>Bonjour <get name="name"/>! </li><li>Salut <get name="name"/>! </li></random></template></category>
 <category><pattern>BONNE NUIT *</pattern> <template><srai>bonne nuit</srai><sr/></template></category>
 <category><pattern>BONNE NUIT</pattern><template><random>  <li>Dors bien <get name="name"/>. </li>  <li>Bonne nuit <get name="name"/>. </li>  <li>A+ <get name="name"/>. </li>  <li>Fais de beau rêves <get name="name"/>! </li><li>A bientôt <get name="name"/></li><li>A plus tard <get name="name"/>. </li><li>Merci d'avoir discuté <get name="name"/>. </li></random><srai>disconnect</srai></template></category>
 <category><pattern>BYE *</pattern><template><srai>au revoir</srai></template></category>
@@ -206,5 +213,29 @@
 <category><pattern>ÇA VA</pattern><template><random><li>j'en suis heureuse <get name="name"/>. </li><li>c'est cool. </li></random></template></category>
 <category><pattern>ÇA VAS</pattern><template><srai>ça va</srai></template></category>
 <category><pattern>ÇA VEUT DIRE BONJOUR</pattern><template><think><gossip>APPRENTISSAGE"<input index="2"/>"  veut dire  "bonjour" pour <get name="name"/></gossip></think><think><set name="bonjouralien"><input index="2"/></set></think><srai>bonjour</srai></template></category>
+
+<category>
+    <pattern>J  AI * ANS</pattern>
+    <template>
+        <condition>
+            <think>
+                <li name="age" value="inconnu"> <set name="age"> <star/> </set></li>
+            </think>
+            <li name="age" value="inconnu"> <set name="age"> <star/> </set> est un age heureux. </li>
+            <li>Tu as <get name="age"/> ans. </li>
+        </condition>
+        <condition>
+            <li name="gender" value="femelle"> <get name="name"/>. je ne le répèterai pas. <br/></li>
+        </condition>
+        <random>
+            <li>Seulement <star/> ans? Tu semble plus mûre que ça. </li>
+            <li>Tu es trop vieux pour moi. </li>
+            <li>Peux tu expliquer ce que ça fait d'avoir <star/> ans? </li>
+            <li>Quel est ton souvenir le plus affectueux? </li>
+            <li>Oh, tu es né au 20ème siècle! </li>
+            <li>Quels sont les avantages à avoir <star/> ans? </li>
+        </random>
+    </template>
+</category>
 
 </aiml>

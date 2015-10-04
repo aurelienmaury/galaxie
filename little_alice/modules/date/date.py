@@ -33,6 +33,8 @@ text_extact = 'pile'
 text_midnight = 'minuit'
 text_lunchtime = 'midi'
 text_one = 'une'
+text_good_morning = 'bonjour'
+text_good_evening = 'bonsoir'
 
 #print 'ARGV      :', sys.argv[1:]
 
@@ -44,7 +46,8 @@ options, remainder = getopt.gnu_getopt(sys.argv[1:], 'o:v', ['output=',
                                                              'day',
                                                              'daynum',
                                                              'month',
-                                                             'year'
+                                                             'year',
+                                                             'salutation'
                                                              ])
 #print 'OPTIONS   :', options
 
@@ -68,6 +71,8 @@ for opt, arg in options:
         month = True
     elif opt == '--year':
         year = True
+    elif opt == '--salutation':
+        salutation = True
 
 
 def print_date():
@@ -128,7 +133,23 @@ def print_month():
 def print_year():
     temp=time.strftime('%Y')
     print temp
-    
+
+def print_salutation():
+    #Reproduse Speech clock
+    temp = ''
+
+    hour = int(time.strftime('%H'))
+    minute = int(time.strftime('%M'))
+
+    if hour >= 0:
+        print text_good_evening.title()
+    elif hour >= 5 and minute >= 30:
+        print text_good_morning.title()
+    elif hour == 17 and minute >= 30:
+        print text_good_evening.title()
+    elif hour >= 18:
+        print text_good_evening.title()
+
 def month_num_to_text_fr(e):
     if e == 0 or e == 00:
         return e
@@ -213,3 +234,6 @@ if month:
 
 if year:
     print_year()
+
+if salutation:
+    print_salutation()

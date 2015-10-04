@@ -13,9 +13,9 @@
     <pattern>ALICE</pattern>
     <template>
         <random>
-            <li>Oui</li>
-            <li>Je t'écoute</li>
-            <li>J'écoute</li>
+            <li> Oui </li>
+            <li> Je t'écoute </li>
+            <li> J'écoute </li>
         </random>
     </template>
 </category>
