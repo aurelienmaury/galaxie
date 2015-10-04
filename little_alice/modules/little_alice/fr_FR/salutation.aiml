@@ -215,7 +215,7 @@
 <category><pattern>ÇA VEUT DIRE BONJOUR</pattern><template><think><gossip>APPRENTISSAGE"<input index="2"/>"  veut dire  "bonjour" pour <get name="name"/></gossip></think><think><set name="bonjouralien"><input index="2"/></set></think><srai>bonjour</srai></template></category>
 
 <category>
-    <pattern>J  AI * ANS</pattern>
+    <pattern>* ANS</pattern>
     <template>
         <condition>
             <think>
@@ -228,7 +228,7 @@
             <li name="gender" value="femelle"> <get name="name"/>. je ne le répèterai pas. <br/></li>
         </condition>
         <random>
-            <li>Seulement <star/> ans? Tu semble plus mûre que ça. </li>
+            <li>Seulement <star/> ans? Tu sembles plus mûre que ça. </li>
             <li>Tu es trop vieux pour moi. </li>
             <li>Peux tu expliquer ce que ça fait d'avoir <star/> ans? </li>
             <li>Quel est ton souvenir le plus affectueux? </li>
@@ -237,5 +237,7 @@
         </random>
     </template>
 </category>
+
+<category><pattern>G * ANS</pattern><template><srai>J AI * ANS</srai></template></category>
 
 </aiml>
