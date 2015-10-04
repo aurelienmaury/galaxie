@@ -3,16 +3,13 @@
 __author__ = 'amaury'
 
 import zmq
-import time
-import os
-from ears import Ears
 import sys
 
 context = zmq.Context()
 sock = context.socket(zmq.SUB)
-sock.setsockopt(zmq.SUBSCRIBE, ">ears>")
-sock.connect("ipc:///tmp/little_alice_ears")
+sock.setsockopt(zmq.SUBSCRIBE, "")
+sock.connect(sys.argv[1])
 
 while True:
-    message= sock.recv()
+    message = sock.recv()
     print message
