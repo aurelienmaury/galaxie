@@ -8,41 +8,26 @@ __author__ = 'Tuux'
 
 from array import array
 from struct import pack
-from sys import byteorder
+
 import copy
 import wave
 import time
 import tempfile
 import os
 import sys
-from multiprocessing import TimeoutError
-
-import proc
 import pyaudio
+import proc
 
-
-class bcolors:
-    green = '\033[92m'
-    yellow = '\033[93m'
-    normal = '\033[36m'
-    red = '\033[31m'
-    end = '\033[0m'
-
-    def disable(self):
-        self.green = ''
-        self.yellow = ''
-        self.normal = ''
-        self.red = ''
-        self.end = ''
+# Noise gate
+NOISE_THRESHOLD = 3000
+READ_CHUNK_SIZE = 1024
+SILENT_CHUNKS = 0.3 * 44100 / 1024
 
 class Ears(object):
 
     def __init__(self, bus):
         self.bus = bus
-        # VARIABLES for Noise Gate Regarding
-        self.threshold = 3000  # audio levels not normalised.
-        self.chunk_size = 1024
-        self.silent_chunks = 0.3 * 44100 / 1024  # about 3sec
+
         # self.format = pyaudio.paInt16
         self.format = pyaudio.paALSA
         self.frame_max_value = 2 ** 15 - 1
@@ -54,11 +39,13 @@ class Ears(object):
         self.wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
         self.lang = 'fr_FR'
         self.pocket_sphinx_share_path_output = "/usr/share/pocketsphinx/model"
+
         # Multilanguage support is not implemented just French yet
         if self.lang == 'fr_FR':
             self.hmdir_name = 'cmusphinx'
             self.lmd_file_name = 'french3g62K.lm.dmp'
             self.dict_file_name = 'frenchWords62K.dic'
+
         self.acoustic_model_directory = self.pocket_sphinx_share_path_output + '/hmm/' + self.lang + '/' + self.hmdir_name
         self.language_model_file = self.pocket_sphinx_share_path_output + '/lm/' + self.lang + '/' + self.lmd_file_name
         self.dictionary_file = self.pocket_sphinx_share_path_output + '/lm/' + self.lang + '/' + self.dict_file_name
@@ -80,10 +67,8 @@ class Ears(object):
             print 'Put it on :' + self.dictionary_file
             os.system(sys.exit(0))
 
-    def is_silent(self, data_chunk):
-        """ Returns 'True' if below the 'silent' threshold """
-        # print max(data_chunk)
-        return max(data_chunk) < self.threshold
+    def is_silence(self, data_chunk):
+        return max(data_chunk) < NOISE_THRESHOLD
 
     def normalize(self, data_all):
         """ Amplify the volume out to max -1dB """
@@ -100,11 +85,11 @@ class Ears(object):
         _from = 0
         _to = len(data_all) - 1
         for i, b in enumerate(data_all):
-            if abs(b) > self.threshold:
+            if abs(b) > NOISE_THRESHOLD:
                 _from = max(0, i - self.trim_append)
                 break
         for i, b in enumerate(reversed(data_all)):
-            if abs(b) > self.threshold:
+            if abs(b) > NOISE_THRESHOLD:
                 _to = min(len(data_all) - 1, len(data_all) - 1 - i + self.trim_append)
                 break
         return copy.deepcopy(data_all[_from:(_to + 1)])
@@ -112,29 +97,33 @@ class Ears(object):
     def record(self):
         """Record a word or words from the microphone and
         return the data as an array of signed shorts."""
-        p = pyaudio.PyAudio()
-        stream = p.open(
+
+        py_audio = pyaudio.PyAudio()
+
+        stream = py_audio.open(
             format=self.format,
             channels=self.channels,
             rate=self.rate,
             input=True,
             output=True,
-            frames_per_buffer=self.chunk_size
+            frames_per_buffer=READ_CHUNK_SIZE
         )
+
         silent_chunks_counter = 0
         audio_started = False
         data_all = array('h')
+
         while True:
             # little endian, signed short
-            data_chunk = array('h', stream.read(self.chunk_size))
-            if byteorder == 'big':
+            data_chunk = array('h', stream.read(READ_CHUNK_SIZE))
+            if sys.byteorder == 'big':
                 data_chunk.byteswap()
             data_all.extend(data_chunk)
-            silent = self.is_silent(data_chunk)
+            silent = self.is_silence(data_chunk)
             if audio_started:
                 if silent:
                     silent_chunks_counter += 1
-                    if silent_chunks_counter > self.silent_chunks:
+                    if silent_chunks_counter > SILENT_CHUNKS:
                         break
                 else:
                     silent_chunks_counter = 0
@@ -143,10 +132,10 @@ class Ears(object):
                 # FIXME: replace with meaningful event
                 self.bus.send(">ears>PROMPT TYPE 2")
 
-        sample_width = p.get_sample_size(self.format)
+        sample_width = py_audio.get_sample_size(self.format)
         stream.stop_stream()
         stream.close()
-        p.terminate()
+        py_audio.terminate()
         # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
         data_all = self.trim(data_all)
         data_all = self.normalize(data_all)
@@ -192,8 +181,6 @@ class Ears(object):
             os.remove(self.wavfile)
 
             return stdout
-        except TimeoutError:
-            os.remove(self.wavfile)
-            return ''
+
         except KeyboardInterrupt:
             sys.exit(0)
