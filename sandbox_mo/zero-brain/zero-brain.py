@@ -22,11 +22,11 @@ publish_sock = context.socket(zmq.PUB)
 publish_sock.bind("ipc:///tmp/zero_brain_bus")
 
 modules_dir = os.path.realpath(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../little_alice/modules")
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../little_alice/modules")
 )
 
 brains_dir = os.path.realpath(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../little_alice/brains")
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../little_alice/brains")
 )
 
 brain = Brain(modules_dir, brains_dir)
@@ -36,18 +36,17 @@ brain.load_session()
 
 try:
     while True:
-        print "zero-brain subscribed to nervous system"
+        print "zero-brain loop"
+
         message = sock.recv()
-        print "receive "+message
+        print "zero-brain:heard:"+message
 
         clean_message = message.replace(ear_perceive_channel, "", 1)
 
         brain_response = brain.kernel.respond(clean_message, brain.session_name)
         if brain_response:
-            print "sending: "+brain_say_channel+brain_response
+            print "zero-brain:say:"+brain_say_channel+brain_response
             publish_sock.send(brain_say_channel+brain_response)
-
-        print "zero-brain did his job"
 except KeyboardInterrupt:
     pass
 finally:

@@ -6,6 +6,7 @@ import zmq
 import os
 import sys
 
+# FIXME: add --use-mbrola command line
 brain_say_channel = ">brain>say>"
 context = zmq.Context()
 sock = context.socket(zmq.SUB)
@@ -54,8 +55,8 @@ def soxplay_path():
 
 text_to_speech_command_line = espeack_path() + ' -v mb/mb-fr4 -q -s150  --pho --stdout \"%s\"'
 text_to_speech_command_line += ' | '
-text_to_speech_command_line += mbrola_path() + ' -t 1.2 -f 1.4 -e /usr/share/mbrola/fr4/fr4 - -.au'
-text_to_speech_command_line += ' | '
+#text_to_speech_command_line += mbrola_path() + ' -t 1.2 -f 1.4 -e /usr/share/mbrola/fr4/fr4 - -.au'
+#text_to_speech_command_line += ' | '
 text_to_speech_command_line += soxplay_path() + ' -t au - bass +1 pitch -300 echo 0.8 0.4 99 0.3'
 
 while True:

@@ -9,3 +9,6 @@ little_alice/brains/brain.br
 *~
 .anjuta
 *.pyc
+*.dic
+*.lm.dmp
+*.tar.gz

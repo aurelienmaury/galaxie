@@ -38,7 +38,8 @@ class Ears(object):
         # Temporary file
         self.wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
         self.lang = 'fr_FR'
-        self.pocket_sphinx_share_path_output = "/usr/share/pocketsphinx/model"
+#        self.pocket_sphinx_share_path_output = "/usr/share/pocketsphinx/model"
+        self.pocket_sphinx_share_path_output = "/usr/local/Cellar/cmu-pocketsphinx/0.8/share/pocketsphinx/model"
 
         # Multilanguage support is not implemented just French yet
         if self.lang == 'fr_FR':
@@ -50,22 +51,22 @@ class Ears(object):
         self.language_model_file = self.pocket_sphinx_share_path_output + '/lm/' + self.lang + '/' + self.lmd_file_name
         self.dictionary_file = self.pocket_sphinx_share_path_output + '/lm/' + self.lang + '/' + self.dict_file_name
 
-        if not os.path.isdir(self.acoustic_model_directory):
-            print 'Pocketsphinx is require for Ears'
-            print 'Intall it properlly before use it program'
-            os.system(sys.exit(0))
-
-        # Load local lm.dump before pocketsphinx one
-        if not os.path.isfile(self.language_model_file):
-            print 'A language model file lm.dmp is require for Ears'
-            print 'Put it on :' + self.language_model_file
-            os.system(sys.exit(0))
-
-        # Load local .dic before pocketsphinx one
-        if not os.path.isfile(self.dictionary_file):
-            print 'A dictionary .dic is require for Ears'
-            print 'Put it on :' + self.dictionary_file
-            os.system(sys.exit(0))
+        # if not os.path.isdir(self.acoustic_model_directory):
+        #     print 'Pocketsphinx is require for Ears'
+        #     print 'Intall it properlly before use it program'
+        #     os.system(sys.exit(0))
+        #
+        # # Load local lm.dump before pocketsphinx one
+        # if not os.path.isfile(self.language_model_file):
+        #     print 'A language model file lm.dmp is require for Ears'
+        #     print 'Put it on :' + self.language_model_file
+        #     os.system(sys.exit(0))
+        #
+        # # Load local .dic before pocketsphinx one
+        # if not os.path.isfile(self.dictionary_file):
+        #     print 'A dictionary .dic is require for Ears'
+        #     print 'Put it on :' + self.dictionary_file
+        #     os.system(sys.exit(0))
 
     def is_silence(self, data_chunk):
         return max(data_chunk) < NOISE_THRESHOLD
@@ -165,20 +166,22 @@ class Ears(object):
             stderr = ''
 
             try:
-                last_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pocketsphinx-decoder.py")
+                last_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pocketsphinx-head-decoder.py")
 
-                stdout, stderr, status = proc.run(" ".join([
-                    last_path,
-                    acoustic_model_directory,
-                    language_model_file,
-                    dictionary_file,
-                    wavfile,
-                    "2>","/dev/null"
-                ]), timeout=8)
+                # stdout, stderr, status = proc.run(" ".join([
+                #     last_path,
+                #     acoustic_model_directory,
+                #     language_model_file,
+                #     dictionary_file,
+                #     wavfile,
+                #     "2>","/dev/null"
+                # ]), timeout=8)
+                stdout, stderr, status = proc.run(last_path+" /usr/local/Cellar/cmu-pocketsphinx/HEAD/share/pocketsphinx/model "+wavfile+" 2>/dev/null", timeout=8)
             except proc.Timeout:
                 print "TIMED OUT: "+status+" "+stdout+" "+stderr
 
-            os.remove(self.wavfile)
+            print "self.wavfile : "+self.wavfile
+            #os.remove(self.wavfile)
 
             return stdout
 

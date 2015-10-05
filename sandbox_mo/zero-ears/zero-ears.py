@@ -30,7 +30,7 @@ publish_zmq_socket.bind(publish_zmq_channel)
 ears = Ears(publish_zmq_socket)
 
 while True:
-    print "zero-ears up"
+    print "zero-ears loop"
 
     # FIXME: change for meaningful event
     publish_zmq_socket.send(">ears>prompt>type=1")
@@ -40,9 +40,9 @@ while True:
         ears.language_model_file,
         ears.dictionary_file,
         ears.wavfile
-    )
+    ).strip()
 
     if recognizing:
-        print "zero-ears perceive "+recognizing
+        print "zero-ears:perceive:"+recognizing
         message = ">ears>perceive>" + recognizing
         publish_zmq_socket.send(message)
