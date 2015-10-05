@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = 'amaury'
+
+import zmq
+import os
+import sys
+
+# FIXME: add --use-mbrola command line
+brain_say_channel = ">brain>say>"
+context = zmq.Context()
+sock = context.socket(zmq.SUB)
+sock.setsockopt(zmq.SUBSCRIBE, brain_say_channel)
+sock.connect("ipc:///tmp/zero_brain_bus")
+
+def get_app_path(program):
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+    return None
+
+def espeack_path():
+    if not get_app_path('espeak'):
+        print "Error: Espeack is require, for enable voice"
+        print "Error: Please install \"espeak\" or verify it is aviable on your $PATH env var"
+        sys.exit(1)
+    else:
+        return get_app_path('espeak')
+
+def soxplay_path():
+    if not get_app_path('play'):
+        print "Error: Sox tool is require, for enable voice"
+        print "Error: Please install \"Sox Player\" or verify it is aviable on your $PATH env var"
+        sys.exit(1)
+    else:
+        return get_app_path('play')
+
+text_to_speech_command_line = espeack_path() + ' -v fr-fr -s 150 --stdout \"%s\"'
+text_to_speech_command_line += ' | '
+text_to_speech_command_line += soxplay_path() + ' --no-show-progress -t wav - bass +1 pitch -300 echo 0.8 0.4 99 0.3'
+
+while True:
+    print "zero-voice-osx:ready"
+
+    message = sock.recv()
+
+    clean_message = message.replace(brain_say_channel, "", 1)
+
+    if clean_message:
+        os.system(text_to_speech_command_line % clean_message)
