@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'amaury'
 
-import zmq
 import os
+
+import zmq
 from brain import Brain
 
 context = zmq.Context()
