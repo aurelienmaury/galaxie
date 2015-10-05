@@ -22,11 +22,11 @@ publish_sock = context.socket(zmq.PUB)
 publish_sock.bind("ipc:///tmp/zero_brain_bus")
 
 modules_dir = os.path.realpath(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../little_alice/modules")
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../little_alice/modules")
 )
 
 brains_dir = os.path.realpath(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../little_alice/brains")
+    os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../little_alice/brains")
 )
 
 brain = Brain(modules_dir, brains_dir)
