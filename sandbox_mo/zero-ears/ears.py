@@ -180,8 +180,8 @@ class Ears(object):
             except proc.Timeout:
                 print "TIMED OUT: "+status+" "+stdout+" "+stderr
 
-            #print "self.wavfile : "+self.wavfile
-            os.remove(self.wavfile)
+            print "self.wavfile : "+self.wavfile
+            #os.remove(self.wavfile)
 
             return stdout
 
