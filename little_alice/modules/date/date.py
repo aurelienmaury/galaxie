@@ -6,7 +6,7 @@
 # Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
 __author__ = 'Tuux'
 
-#<!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
+# <!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
 
 import getopt
 import sys
@@ -25,7 +25,7 @@ daynum = False
 month = False
 year = False
 
-#Multilansupport
+# Multilansupport
 text_hour = 'heure'
 text_minute = 'minute'
 text_and = 'et'
@@ -36,9 +36,9 @@ text_one = 'une'
 text_good_morning = 'bonjour'
 text_good_evening = 'bonsoir'
 
-#print 'ARGV      :', sys.argv[1:]
+# print 'ARGV      :', sys.argv[1:]
 
-options, remainder = getopt.gnu_getopt(sys.argv[1:], 'o:v', ['output=', 
+options, remainder = getopt.gnu_getopt(sys.argv[1:], 'o:v', ['output=',
                                                              'verbose',
                                                              'version=',
                                                              'date',
@@ -49,7 +49,7 @@ options, remainder = getopt.gnu_getopt(sys.argv[1:], 'o:v', ['output=',
                                                              'year',
                                                              'salutation'
                                                              ])
-#print 'OPTIONS   :', options
+# print 'OPTIONS   :', options
 
 
 for opt, arg in options:
@@ -76,37 +76,42 @@ for opt, arg in options:
 
 
 def print_date():
-    #Day of the week - Exemple: samedi
-    A=str(time.strftime('%A'))
-    #Day number of the month - Exemple: 4 or 31 
-    e=str(time.strftime('%e'))
-    #Month name as plain text - Exemple: janvier
-    B=str(time.strftime('%B'))
-    #Year number
-    Y=str(time.strftime('%Y'))
+    day_of_the_week = str(time.strftime('%A'))
+    day_number_of_the_month = str(time.strftime('%e'))
+    month_name_as_plain_text = str(time.strftime('%B'))
+    year_number = str(time.strftime('%Y'))
 
-    #Note: month_num_to_text_fr(e) -> Tranlate a number to full language tipe - Exemple: 1 will b tranlate as "premier"
-    print A + ' ' + month_num_to_text_fr(e) + ' ' + B + ' ' + Y
+    # Note: month_num_to_text_fr(e) -> Tranlate a number to full language tipe - Exemple: 1 will b tranlate as "premier"
+    text_to_return = ''
+    text_to_return += day_of_the_week.title()
+    text_to_return += ' '
+    text_to_return += month_num_to_text_fr(day_number_of_the_month).title()
+    text_to_return += ' '
+    text_to_return += month_name_as_plain_text.title()
+    text_to_return += ' '
+    text_to_return += year_number
+
+    print text_to_return
 
 
 def print_clock():
-    #Reproduse Speech clock
+    # Reproduse Speech clock
     temp = ''
 
-    H=int(time.strftime('%H'))
-    M=int(time.strftime('%M'))
-   
+    H = int(time.strftime('%H'))
+    M = int(time.strftime('%M'))
+
     if H == 0:
         temp = temp + text_midnight + ' '
     if H == 1:
-        temp = temp + text_one + ' ' +  text_hour + ' '
+        temp = temp + text_one + ' ' + text_hour + ' '
     if H == 12:
         temp = temp + text_lunchtime + ' '
     if H > 1 and not H == 12:
-        temp = temp + str(H) + ' ' +  text_hour + 's' + ' '
+        temp = temp + str(H) + ' ' + text_hour + 's' + ' '
 
     # Add "and"
-    if not M  == 0:
+    if not M == 0:
         temp = temp + text_and + ' '
 
     if M == 0:
@@ -118,37 +123,44 @@ def print_clock():
 
     print temp
 
+
 def print_day():
-    temp=time.strftime('%A')
+    temp = time.strftime('%A')
     print temp
+
 
 def print_daynum():
-    temp=time.strftime('%e %B')
+    temp = time.strftime('%e %B')
     print temp
+
 
 def print_month():
-    temp=time.strftime('%B')
+    temp = time.strftime('%B')
     print temp
+
 
 def print_year():
-    temp=time.strftime('%Y')
+    temp = time.strftime('%Y')
     print temp
 
-def print_salutation():
-    #Reproduse Speech clock
-    temp = ''
 
+def print_salutation():
     hour = int(time.strftime('%H'))
     minute = int(time.strftime('%M'))
 
-    if hour >= 0:
+    if 0 <= hour <= 5:
+        if hour == 5 and minute >= 30:
+            print text_good_morning.title()
+        else:
+            print text_good_evening.title()
+    elif 6 <= hour <= 17:
+        if hour == 17 and minute >= 30:
+            print text_good_evening.title()
+        else:
+            print text_good_morning.title()
+    elif 18 <= hour <= 23:
         print text_good_evening.title()
-    elif hour >= 5 and minute >= 30:
-        print text_good_morning.title()
-    elif hour == 17 and minute >= 30:
-        print text_good_evening.title()
-    elif hour >= 18:
-        print text_good_evening.title()
+
 
 def month_num_to_text_fr(e):
     if e == 0 or e == 00:
@@ -216,6 +228,7 @@ def month_num_to_text_fr(e):
     elif e == '31':
         e = 'trente et un'
     return e
+
 
 if date:
     print_date()
