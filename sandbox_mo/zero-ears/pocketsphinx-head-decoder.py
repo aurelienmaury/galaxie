@@ -13,9 +13,12 @@ MODELDIR = sys.argv[1]
 
 # Create a decoder with certain model
 config = Decoder.default_config()
-config.set_string('-hmm', path.join(MODELDIR, 'fr-fr/fr-fr'))
-config.set_string('-lm', path.join(MODELDIR, 'fr-fr/fr-fr.lm.dmp'))
-config.set_string('-dict', path.join(MODELDIR, 'fr-fr/cmudict-fr-fr.dict'))
+# config.set_string('-hmm', path.join(MODELDIR, 'fr-fr/fr-fr'))
+# config.set_string('-lm', path.join(MODELDIR, 'fr-fr/fr-fr.lm.dmp'))
+# config.set_string('-dict', path.join(MODELDIR, 'fr-fr/cmudict-fr-fr.dict'))
+config.set_string('-hmm', path.join(MODELDIR, 'fr-fr-adapt'))
+config.set_string('-lm', path.join(MODELDIR, 'fr-fr.lm.dmp'))
+config.set_string('-dict', path.join(MODELDIR, 'fr-fr.dic'))
 decoder = Decoder(config)
 
 wavfile = sys.argv[2]

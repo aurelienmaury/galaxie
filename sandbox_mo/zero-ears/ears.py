@@ -21,20 +21,22 @@ import proc
 # Noise gate
 NOISE_THRESHOLD = 3000
 READ_CHUNK_SIZE = 1024
-SILENT_CHUNKS = 0.3 * 44100 / 1024
+
+SAMPLE_RATE = 16000
+# END_OF_SPEECH_SILENCE_DURATION = 3 * SAMPLE_RATE / READ_CHUNK_SIZE
+END_OF_SPEECH_SILENCE_DURATION = 0.3 * 44100 / READ_CHUNK_SIZE
+MAX_FRAME = 2 ** 15 - 1
+NORMALIZE_MINUS_ONE_DB = 10 ** (-3 / 20)
+
+NB_CHANNELS = 1
+FORMAT = pyaudio.paALSA
 
 class Ears(object):
 
     def __init__(self, bus):
         self.bus = bus
 
-        # self.format = pyaudio.paInt16
-        self.format = pyaudio.paALSA
-        self.frame_max_value = 2 ** 15 - 1
-        self.normalize_minus_one_db = 10 ** (-3 / 20)
-        self.rate = 16000
-        self.channels = 1
-        self.trim_append = self.rate / 10
+        self.trim_append = SAMPLE_RATE / 10
         # Temporary file
         self.wavfile = tempfile.gettempdir() + '/zoe_voice_' + str(int(time.time())) + '.wav'
         self.lang = 'fr_FR'
@@ -51,30 +53,13 @@ class Ears(object):
         self.language_model_file = self.pocket_sphinx_share_path_output + '/lm/' + self.lang + '/' + self.lmd_file_name
         self.dictionary_file = self.pocket_sphinx_share_path_output + '/lm/' + self.lang + '/' + self.dict_file_name
 
-        # if not os.path.isdir(self.acoustic_model_directory):
-        #     print 'Pocketsphinx is require for Ears'
-        #     print 'Intall it properlly before use it program'
-        #     os.system(sys.exit(0))
-        #
-        # # Load local lm.dump before pocketsphinx one
-        # if not os.path.isfile(self.language_model_file):
-        #     print 'A language model file lm.dmp is require for Ears'
-        #     print 'Put it on :' + self.language_model_file
-        #     os.system(sys.exit(0))
-        #
-        # # Load local .dic before pocketsphinx one
-        # if not os.path.isfile(self.dictionary_file):
-        #     print 'A dictionary .dic is require for Ears'
-        #     print 'Put it on :' + self.dictionary_file
-        #     os.system(sys.exit(0))
-
     def is_silence(self, data_chunk):
         return max(data_chunk) < NOISE_THRESHOLD
 
     def normalize(self, data_all):
         """ Amplify the volume out to max -1dB """
         # MAXIMUM = 16384
-        normalize_factor = (float(self.normalize_minus_one_db * self.frame_max_value)
+        normalize_factor = (float(NORMALIZE_MINUS_ONE_DB * MAX_FRAME)
                             / max(abs(i) for i in data_all))
 
         r = array('h')
@@ -102,9 +87,9 @@ class Ears(object):
         py_audio = pyaudio.PyAudio()
 
         stream = py_audio.open(
-            format=self.format,
-            channels=self.channels,
-            rate=self.rate,
+            format=FORMAT,
+            channels=NB_CHANNELS,
+            rate=SAMPLE_RATE,
             input=True,
             output=True,
             frames_per_buffer=READ_CHUNK_SIZE
@@ -119,21 +104,24 @@ class Ears(object):
             data_chunk = array('h', stream.read(READ_CHUNK_SIZE))
             if sys.byteorder == 'big':
                 data_chunk.byteswap()
-            data_all.extend(data_chunk)
-            silent = self.is_silence(data_chunk)
+
+            captured_silence = self.is_silence(data_chunk)
+            if not captured_silence:
+                data_all.extend(data_chunk)
+
             if audio_started:
-                if silent:
+                if captured_silence:
                     silent_chunks_counter += 1
-                    if silent_chunks_counter > SILENT_CHUNKS:
+                    if silent_chunks_counter > END_OF_SPEECH_SILENCE_DURATION:
                         break
                 else:
                     silent_chunks_counter = 0
-            elif not silent:
+            elif not captured_silence:
                 audio_started = True
                 # FIXME: replace with meaningful event
                 self.bus.send(">ears>PROMPT TYPE 2")
 
-        sample_width = py_audio.get_sample_size(self.format)
+        sample_width = py_audio.get_sample_size(FORMAT)
         stream.stop_stream()
         stream.close()
         py_audio.terminate()
@@ -147,9 +135,9 @@ class Ears(object):
         sample_width, data = self.record()
         data = pack('<' + ('h' * len(data)), *data)
         wave_file = wave.open(path, 'wb')
-        wave_file.setnchannels(self.channels)
+        wave_file.setnchannels(NB_CHANNELS)
         wave_file.setsampwidth(sample_width)
-        wave_file.setframerate(self.rate)
+        wave_file.setframerate(SAMPLE_RATE)
         wave_file.writeframes(data)
         wave_file.close()
 
@@ -167,23 +155,14 @@ class Ears(object):
 
             try:
                 last_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "pocketsphinx-head-decoder.py")
-
-                # stdout, stderr, status = proc.run(" ".join([
-                #     last_path,
-                #     acoustic_model_directory,
-                #     language_model_file,
-                #     dictionary_file,
-                #     wavfile,
-                #     "2>","/dev/null"
-                # ]), timeout=8)
-                stdout, stderr, status = proc.run(last_path+" /usr/local/Cellar/cmu-pocketsphinx/HEAD/share/pocketsphinx/model "+wavfile+" 2>/dev/null", timeout=8)
+                stdout, stderr, status = proc.run(last_path+" "+os.path.dirname(os.path.realpath(__file__))+"/../../audition-mo/ "+wavfile+" 2>/dev/null", timeout=60)
             except proc.Timeout:
                 print "TIMED OUT: "+status+" "+stdout+" "+stderr
 
-            #print "self.wavfile : "+self.wavfile
-            os.remove(self.wavfile)
+            print "WAV: "+self.wavfile
+            #os.remove(self.wavfile)
 
-            return stdout
+            return stdout.strip()
 
         except KeyboardInterrupt:
             sys.exit(0)
