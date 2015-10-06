@@ -4,6 +4,7 @@
 # It script it publish under GNU GENERAL PUBLIC LICENSE
 # http://www.gnu.org/licenses/gpl-3.0.en.html
 # Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
+
 __author__ = 'Tuux'
 
 from array import array
@@ -18,6 +19,7 @@ import pocketsphinx
 import os
 import sys
 from multiprocessing import TimeoutError
+
 
 class bcolors:
     green = '\033[92m'
@@ -160,9 +162,10 @@ class Ears(object):
         stream.stop_stream()
         stream.close()
         p.terminate()
-        data_all = self.trim(
-            data_all)  # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
+        # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
+        data_all = self.trim(data_all)
         data_all = self.normalize(data_all)
+
         return sample_width, data_all
 
     def record_to_file(self, path):
