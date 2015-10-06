@@ -6,7 +6,7 @@
 # Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org> all rights reserved
 __author__ = 'Tuux'
 
-# No supported by Windows
+
 import getopt
 import random
 import sys
@@ -54,6 +54,8 @@ for opt, arg in options:
         version = arg
     elif opt == '--check-internet-connection':
         check_internet_connection = True
+
+# No supported by Windows
 
 
 def print_check_internet_connection():
