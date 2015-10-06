@@ -96,52 +96,48 @@ def print_date():
 
 def print_clock():
     # Reproduse Speech clock
-    temp = ''
+    text_to_return = ''
 
-    H = int(time.strftime('%H'))
-    M = int(time.strftime('%M'))
+    hour = int(time.strftime('%H'))
+    minute = int(time.strftime('%M'))
 
-    if H == 0:
-        temp = temp + text_midnight + ' '
-    if H == 1:
-        temp = temp + text_one + ' ' + text_hour + ' '
-    if H == 12:
-        temp = temp + text_lunchtime + ' '
-    if H > 1 and not H == 12:
-        temp = temp + str(H) + ' ' + text_hour + 's' + ' '
+    if hour == 0:
+        text_to_return = text_to_return + text_midnight + ' '
+    if hour == 1:
+        text_to_return = text_to_return + text_one + ' ' + text_hour + ' '
+    if hour == 12:
+        text_to_return = text_to_return + text_lunchtime + ' '
+    if hour > 1 and not hour == 12:
+        text_to_return = text_to_return + str(hour) + ' ' + text_hour + 's' + ' '
 
     # Add "and"
-    if not M == 0:
-        temp = temp + text_and + ' '
+    if not minute == 0:
+        text_to_return = text_to_return + text_and + ' '
 
-    if M == 0:
-        temp = temp + text_extact + ' '
-    if M == 1:
-        temp = temp + text_one + ' ' + text_minute + ' '
-    if M > 1:
-        temp = temp + str(M) + ' ' + text_minute + 's' + ''
+    if minute == 0:
+        text_to_return = text_to_return + text_extact + ' '
+    if minute == 1:
+        text_to_return = text_to_return + text_one + ' ' + text_minute + ' '
+    if minute > 1:
+        text_to_return = text_to_return + str(minute) + ' ' + text_minute + 's' + ''
 
-    print temp
+    print text_to_return
 
 
 def print_day():
-    temp = time.strftime('%A')
-    print temp
+    print time.strftime('%A')
 
 
-def print_daynum():
-    temp = time.strftime('%e %B')
-    print temp
+def print_day_num():
+    print time.strftime('%e %B')
 
 
 def print_month():
-    temp = time.strftime('%B')
-    print temp
+    print time.strftime('%B')
 
 
 def print_year():
-    temp = time.strftime('%Y')
-    print temp
+    print time.strftime('%Y')
 
 
 def print_salutation():
@@ -240,7 +236,7 @@ if day:
     print_day()
 
 if daynum:
-    print_daynum()
+    print_day_num()
 
 if month:
     print_month()
