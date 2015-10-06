@@ -26,7 +26,7 @@ month = False
 year = False
 salutation = False
 
-# Multilansupport
+# Translation in hard for French
 text_hour = 'heure'
 text_minute = 'minute'
 text_and = 'et'
