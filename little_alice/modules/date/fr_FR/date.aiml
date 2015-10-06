@@ -77,7 +77,7 @@
 <category><pattern>AUJOURD HUI ON EST QUOI</pattern><template>On est un <srai>QUEL EST LE JOUR</srai> aujourd'hui. </template></category>
 <category><pattern>QUEL JOUR EST ON</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>QUEL JOUR ON EST</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
-<-- Merdouille -->
+<!-- Merdouille -->
 <category><pattern>ON EST LE JOUR</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>ON EST UN JOUR</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
 <category><pattern>DE QUELQUES JOURS</pattern><template><srai>QUEL EST LE JOUR</srai>.</template></category>
@@ -141,21 +141,36 @@
 <category><pattern>ON EST LE COMBIEN AUJOURD HUI INTERROGATION</pattern><template>On est le <system>../modules/date/date.py --day</system>.</template></category>
 
 <!-- Demande l'année en numero -->
-<category><pattern>QUELLE EST L ANNÉE</pattern><template><system>../modules/date/date.py --year</system></template></category>
-<category><pattern>DONNE MOI L ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>DEUX MOIS L ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ON EST EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>NOUS SOMMES EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>EN QUELLE ANNÉE ON EST</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>EN QUELLE ANNÉE EST ON</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>EN QUELLE ANNÉE SOMMES NOUS</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>EN QUELLE ANNÉE NOUS SOMMES</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ET ON EST EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ET NOUS SOMMES EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ET EN QUELLE ANNÉE ON EST</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ET EN QUELLE ANNÉE EST ON</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ET EN QUELLE ANNÉE SOMMES NOUS</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
-<category><pattern>ET EN QUELLE ANNÉE NOUS SOMMES</pattern><template><srai>QUELLE EST L ANNÉE</srai>.</template></category>
+<category>
+    <pattern>QUELLE EST L ANNÉE</pattern>
+    <template>
+        <system>../modules/date/date.py --year</system>
+    </template>
+</category>
+<!-- Srai -->
+<category><pattern>DONNE MOI L ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ON EST EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>NOUS SOMMES EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>EN QUELLE ANNÉE ON EST</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>EN QUELLE ANNÉE EST ON</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>EN QUELLE ANNÉE SOMMES NOUS</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>EN QUELLE ANNÉE NOUS SOMMES</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ET ON EST EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ET NOUS SOMMES EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ET EN QUELLE ANNÉE ON EST</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ET EN QUELLE ANNÉE EST ON</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ET EN QUELLE ANNÉE SOMMES NOUS</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ET EN QUELLE ANNÉE NOUS SOMMES</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<!-- Merdouille -->
+<category><pattern>DEUX MOIS L ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>* QUELQUES ANNÉES</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>* QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>ON EN QUELLE ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>NOUS SOMMES ENTRAÎNÉS</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>* NOUS SOMMES ENTRAÎNÉS</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>NOUS SOMMES * ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>* NOUS SOMMES * ANNÉE</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
+<category><pattern>EN QUELLE ANNÉE *</pattern><template><srai>QUELLE EST L ANNÉE</srai> </template></category>
 
 <!-- Blague de ou viennent les dates -->
 <category><pattern>DE OU VIENNENT LES DATES</pattern><template>d'un calendrier ? ...</template></category>

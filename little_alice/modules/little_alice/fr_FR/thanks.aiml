@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Module   : date.aiml   -   version :   0.1   -   MàJ : 4/10/2014  -->
+<!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
+<!-- Little Alice Integration : Jérôme Ornech alias Tuux (tuxa@rtnp.org) - langue: française -->
+<!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+
+<!-- Thanks -->
+<category>
+    <pattern>MERCI</pattern>
+    <template>
+        <random>
+            <li>De rien. </li>
+            <li>Mais de rien. </li>
+            <li>Il n'y a pas de quoi. </li>
+            <li>Je vous en prie. </li>
+            <li>C'est moi. </li>
+            <li>C'est moi qui vous remercie. </li>
+            <li>Pas de quoi. </li>
+            <li>Tout le plaisir est pour moi. </li>
+            <li>Avec plaisir. </li>
+        </random>
+    </template>
+</category>
+
+<category><pattern>MERCI *</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* MERCI</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* MERCI *</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* REMERCIE</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* REMERCIE *</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* REMERCIEMENTS</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* REMERCIEMENTS *</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* REMERCIANT</pattern><template><srai>MERCI</srai></template></category>
+<category><pattern>* REMERCIANT *</pattern><template><srai>MERCI</srai></template></category>
+</aiml>
