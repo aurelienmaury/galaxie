@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Module   : date.aiml   -   version :   0.1   -   MàJ : 4/10/2014  -->
+<!-- Auteur : Tuux(tuxa@galaxie.eu.org) -->
+<!-- Little Alice Integration : Jérôme Ornech alias Tuux (tuxa@rtnp.org) - langue: française -->
+<!-- It file is open source code released under the terms of the GNU General Public License as published by the Free Software Foundation -->
+<!-- Complies with AIML 1.0 Tag Set Specification as adopted by the ALICE A.I. Foundation. -->
+<!-- http://fr.wikiversity.org/wiki/Vocabulaire_fran%C3%A7ais/Dire_l%27heure -->
+
+
+<!-- Connecté à Internet-->
+<category>
+    <pattern>INTERNET CONNECTION</pattern>
+    <template><system>../modules/ping/ping.py --check-internet-connection</system></template>
+</category>
+<!-- Srai-->
+<category><pattern>* CONNECTÉ À INTERNET</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* CONNECTÉ À INTERNET *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* CONNECTÉS À INTERNET</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* CONNECTÉS À INTERNET *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* CONNECTER À INTERNET</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* CONNECTER À INTERNET *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>ON EST CONNECTÉ</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* ON EST CONNECTÉ</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* ON EST CONNECTÉ *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>C</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<!-- Merdouille-->
+<category><pattern>ILS SONT DÉCONNECTÉS INTERNE</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>SPORT DÉCONNECTÉ INTERNE</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>DÉCONNECTÉ INTERNE</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+</aiml>

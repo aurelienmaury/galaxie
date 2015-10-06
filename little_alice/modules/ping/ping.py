@@ -21,18 +21,18 @@ check_internet_connection = False
 internet_is_down = [
     "La connection internet est morte ",
     "Nous sommes coupé du monde extérieur ",
-    "Il n'y a pas de connectivitée à Internet",
+    "Il n y a pas de connectivitée à Internet",
     "Il me semble que la connection est morte",
     "La ligne est tombée"
 ]
 
 internet_is_up = [
-    "La connection à Internet est bonne",
-    "Tout est bon",
-    "Les paramètres sont normaux",
-    "Je suis à même de joindre le monde extérieur",
-    "Un bonne nouvelle , la connection à Internet est bonne ",
-    "Wikipédia a répondu à mes solicitations ",
+    'Oui, La connection à Internet est opérationelle. ',
+    "Oui, Tout à l'air de fonctionner normalment. ",
+    "Oui, Les paramètres sont normaux. ",
+    "Oui, Je suis à même de joindre le monde extérieur. ",
+    "Oui, J'ai la connectivitée au monde extérieur",
+    "Oui, Wikipédia a répondu à mes solicitations. "
 ]
 
 
@@ -42,7 +42,7 @@ options, remainder = getopt.gnu_getopt(
     {'output=',
      'verbose',
      'version=',
-     'check_internet_connection'}
+     'check-internet-connection'}
 )
 
 for opt, arg in options:
@@ -52,7 +52,7 @@ for opt, arg in options:
         verbose = True
     elif opt == '--version':
         version = arg
-    elif opt == '--check_internet_connection':
+    elif opt == '--check-internet-connection':
         check_internet_connection = True
 
 

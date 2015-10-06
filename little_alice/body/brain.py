@@ -49,6 +49,7 @@ class Brain(object):
             self.load_module('meteo')
             self.load_module('desktop')
             self.load_module('ansible')
+            self.load_module('ping')
             #self.load_module('alice')
             os.chdir(self.brains_dir)
             self.kernel.setPredicate("master", self.session_name)
