@@ -37,8 +37,6 @@ text_one = 'une'
 text_good_morning = 'bonjour'
 text_good_evening = 'bonsoir'
 
-# print 'ARGV      :', sys.argv[1:]
-
 options, remainder = getopt.gnu_getopt(
     sys.argv[1:],
     'o:v',
@@ -53,8 +51,6 @@ options, remainder = getopt.gnu_getopt(
      'year',
      'salutation'}
 )
-# print 'OPTIONS   :', options
-
 
 for opt, arg in options:
     if opt in ('-o', '--output'):
