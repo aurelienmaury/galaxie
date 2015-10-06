@@ -17,6 +17,18 @@
         </random>
     </template>
 </category>
+<category>
+    <pattern>BONJOUR MON NOM EST *</pattern>
+    <template>
+        <srai>mon nom est <star/></srai><srai>bonjour</srai>
+    </template>
+</category>
+<category>
+    <pattern>BONJOUR MON NOM ET *</pattern>
+    <template>
+        <srai>mon nom est <star/></srai><srai>bonjour</srai>
+    </template>
+</category>
 
 
 <category><pattern>* A LUNDI</pattern><template><srai>à lundi</srai></template></category>
@@ -65,7 +77,6 @@
 <category><pattern>BONJOU</pattern><template><srai>bonjour</srai></template></category>
 <category><pattern>BONJOUR *</pattern><template><srai>bonjour</srai><sr/></template></category>
 <category><pattern>BONJOUR LA</pattern><template><srai>bonjour</srai></template></category>
-<category><pattern>BONJOUR MON NOM EST *</pattern><template><srai>bonjour</srai><srai>mon nom est ce que <star/> est</srai></template></category>
 <category><pattern>BONJOUR OPALE </pattern><template><srai>bonjour</srai></template></category>
 <category><pattern>BONNE NUIT *</pattern> <template><srai>bonne nuit</srai><sr/></template></category>
 <category><pattern>BONNE NUIT</pattern><template><random>  <li>Dors bien <get name="name"/>. </li>  <li>Bonne nuit <get name="name"/>. </li>  <li>A+ <get name="name"/>. </li>  <li>Fais de beau rêves <get name="name"/>! </li><li>A bientôt <get name="name"/></li><li>A plus tard <get name="name"/>. </li><li>Merci d'avoir discuté <get name="name"/>. </li></random><srai>disconnect</srai></template></category>

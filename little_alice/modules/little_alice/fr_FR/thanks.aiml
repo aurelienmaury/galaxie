@@ -34,4 +34,5 @@
 <category><pattern>* REMERCIEMENTS *</pattern><template><srai>MERCI</srai></template></category>
 <category><pattern>* REMERCIANT</pattern><template><srai>MERCI</srai></template></category>
 <category><pattern>* REMERCIANT *</pattern><template><srai>MERCI</srai></template></category>
+
 </aiml>
