@@ -54,8 +54,8 @@ galaxie:
 
 
   firefox:
-    repo_url: https://ftp.mozilla.org/pub/firefox/releases/40.0.3/linux-x86_64/fr
-    filename: firefox-40.0.3.tar.bz2
+    repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr
+    filename: firefox-41.0.1.tar.bz2
 
   thunderbird:
     repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.2.0/linux-x86_64/fr
