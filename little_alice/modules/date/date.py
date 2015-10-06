@@ -39,17 +39,20 @@ text_good_evening = 'bonsoir'
 
 # print 'ARGV      :', sys.argv[1:]
 
-options, remainder = getopt.gnu_getopt(sys.argv[1:], 'o:v', ['output=',
-                                                             'verbose',
-                                                             'version=',
-                                                             'date',
-                                                             'clock',
-                                                             'day',
-                                                             'daynum',
-                                                             'month',
-                                                             'year',
-                                                             'salutation'
-                                                             ])
+options, remainder = getopt.gnu_getopt(
+    sys.argv[1:],
+    'o:v',
+    {'output=',
+     'verbose',
+     'version=',
+     'date',
+     'clock',
+     'day',
+     'daynum',
+     'month',
+     'year',
+     'salutation'}
+)
 # print 'OPTIONS   :', options
 
 
@@ -82,7 +85,7 @@ def print_date():
     month_name_as_plain_text = str(time.strftime('%B'))
     year_number = str(time.strftime('%Y'))
 
-    # Note: month_num_to_text_fr(e) -> Tranlate a number to full language tipe - Exemple: 1 will b tranlate as "premier"
+    # Note: month_num_to_text_fr(e) - Translate a number to full language tipe - Exemple: 1 will b tranlate as "premier"
     text_to_return = ''
     text_to_return += day_of_the_week.title()
     text_to_return += ' '
@@ -96,7 +99,7 @@ def print_date():
 
 
 def print_clock():
-    # Reproduse Speech clock
+    # Reproduce Speech clock
     text_to_return = ''
 
     hour = int(time.strftime('%H'))
