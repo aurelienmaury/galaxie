@@ -21,15 +21,16 @@ output_filename = 'default.out'
 date = False
 clock = False
 day = False
-daynum = False
+day_num = False
 month = False
 year = False
+salutation = False
 
 # Multilansupport
 text_hour = 'heure'
 text_minute = 'minute'
 text_and = 'et'
-text_extact = 'pile'
+text_exact = 'pile'
 text_midnight = 'minuit'
 text_lunchtime = 'midi'
 text_one = 'une'
@@ -66,7 +67,7 @@ for opt, arg in options:
     elif opt == '--day':
         day = True
     elif opt == '--daynum':
-        daynum = True
+        day_num = True
     elif opt == '--month':
         month = True
     elif opt == '--year':
@@ -115,7 +116,7 @@ def print_clock():
         text_to_return = text_to_return + text_and + ' '
 
     if minute == 0:
-        text_to_return = text_to_return + text_extact + ' '
+        text_to_return = text_to_return + text_exact + ' '
     if minute == 1:
         text_to_return = text_to_return + text_one + ' ' + text_minute + ' '
     if minute > 1:
@@ -235,7 +236,7 @@ if clock:
 if day:
     print_day()
 
-if daynum:
+if day_num:
     print_day_num()
 
 if month:
