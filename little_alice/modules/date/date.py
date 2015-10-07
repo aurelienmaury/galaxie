@@ -102,13 +102,22 @@ def print_clock():
     minute = int(time.strftime('%M'))
 
     if hour == 0:
-        text_to_return = text_to_return + text_midnight + ' '
+        text_to_return += text_midnight
+        text_to_return += ' '
     if hour == 1:
-        text_to_return = text_to_return + text_one + ' ' + text_hour + ' '
+        text_to_return += str(hour_num_to_text_fr(hour))
+        text_to_return += ' '
+        text_to_return += text_hour
+        text_to_return += ' '
     if hour == 12:
-        text_to_return = text_to_return + text_lunchtime + ' '
+        text_to_return += text_lunchtime
+        text_to_return += ' '
     if hour > 1 and not hour == 12:
-        text_to_return = text_to_return + str(hour) + ' ' + text_hour + 's' + ' '
+        text_to_return += str(hour_num_to_text_fr(hour))
+        text_to_return += ' '
+        text_to_return += text_hour
+        text_to_return += 's'
+        text_to_return += ' '
 
     # Add "and"
     if not minute == 0:
@@ -233,6 +242,59 @@ def month_num_to_text_fr(e):
         e = 'trente et un'
     return e
 
+
+def hour_num_to_text_fr(hour):
+    text_to_return = ''
+    hour = str(hour)
+    if hour == 0 or hour == 00:
+        return hour
+    elif hour == '1' or hour == '01' or hour == ' 1':
+        text_to_return = 'une'
+    elif hour == '2' or hour == '02' or hour == ' 2':
+        text_to_return = 'deux'
+    elif hour == '3' or hour == '03' or hour == ' 3':
+        text_to_return = 'trois'
+    elif hour == '4' or hour == '04' or hour == ' 4':
+        text_to_return = 'quatre'
+    elif hour == '5' or hour == '05' or hour == ' 5':
+        text_to_return = 'cinq'
+    elif hour == '6' or hour == '06' or hour == ' 6':
+        text_to_return = 'six'
+    elif hour == '7' or hour == '07' or hour == ' 7':
+        text_to_return = 'sept'
+    elif hour == '8' or hour == '08' or hour == ' 8':
+        text_to_return = 'huit'
+    elif hour == '9' or hour == '09' or hour == ' 9':
+        text_to_return = 'neuf'
+    elif hour == '10':
+        text_to_return = 'dix'
+    elif hour == '11':
+        text_to_return = 'onze'
+    elif hour == '12':
+        text_to_return = 'douze'
+    elif hour == '13':
+        text_to_return = 'treize'
+    elif hour == '14':
+        text_to_return = 'quatorze'
+    elif hour == '15':
+        text_to_return = 'quinze'
+    elif hour == '16':
+        text_to_return = 'seize'
+    elif hour == '17':
+        text_to_return = 'dix sept'
+    elif hour == '18':
+        text_to_return = 'dix huit'
+    elif hour == '19':
+        text_to_return = 'dix neuf'
+    elif hour == '20':
+        text_to_return = 'vinght'
+    elif hour == '21':
+        text_to_return = 'vingt et une'
+    elif hour == '22':
+        text_to_return = 'vingt deux'
+    elif hour == '23':
+        text_to_return = 'vingt trois'
+    return text_to_return
 
 def minute_num_to_text_fr(minute):
     text_to_return = ''
