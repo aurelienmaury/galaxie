@@ -296,6 +296,7 @@ def hour_num_to_text_fr(hour):
         text_to_return = 'vingt trois'
     return text_to_return
 
+
 def minute_num_to_text_fr(minute):
     text_to_return = ''
     minute = str(minute)
