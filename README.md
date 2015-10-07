@@ -7,7 +7,7 @@ Galaxie is Open and Extendable
 * sox (brew, ..)
 * mbrola voices (http://tcts.fpms.ac.be/synthesis/mbrola.html)
 
-## Idée Générale de L'Intéligence:
+## Idée Générale de Zoé / Little Alice:
 
 C'est un Majordome numérique, il n'est pas intéligent mais il fait les choses intéligement.
 
