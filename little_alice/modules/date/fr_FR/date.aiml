@@ -48,7 +48,8 @@
 <category><pattern>QUI LEUR EST IL</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>DEUX MOIS LEUR INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 <category><pattern>DEUX MOIS LEURS INTERROGATION</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
-
+<category><pattern>ILS ÉTAIENT LÀ</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
+<category><pattern>IL Y TIENDRA</pattern><template><srai>QUELLE HEURE EST IL</srai></template></category>
 
 <!-- Demande du jour de la semaine -->
 <category>

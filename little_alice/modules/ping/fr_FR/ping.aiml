@@ -21,6 +21,10 @@
 <category><pattern>* CONNECTÉS À INTERNET *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
 <category><pattern>* CONNECTER À INTERNET</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
 <category><pattern>* CONNECTER À INTERNET *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* LA CONNEXION INTERNET</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* LA CONNEXION INTERNET *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* LA CONNEXION</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
+<category><pattern>* LA CONNEXION *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
 <category><pattern>ON EST CONNECTÉ</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
 <category><pattern>* ON EST CONNECTÉ</pattern><template><srai>INTERNET CONNECTION</srai></template></category>
 <category><pattern>* ON EST CONNECTÉ *</pattern><template><srai>INTERNET CONNECTION</srai></template></category>

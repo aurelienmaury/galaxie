@@ -27,12 +27,13 @@ internet_is_down = [
 ]
 
 internet_is_up = [
-    'Oui, La connection à Internet est opérationelle. ',
-    "Oui, Tout à l'air de fonctionner normalment. ",
-    "Oui, Les paramètres sont normaux. ",
-    "Oui, Je suis à même de joindre le monde extérieur. ",
-    "Oui, J'ai la connectivitée au monde extérieur",
-    "Oui, Wikipédia a répondu à mes solicitations. "
+    'La connection à Internet est opérationelle. ',
+    "Tout à l'air de fonctionner normalment. ",
+    "Les paramètres sont normaux. ",
+    "Nous sommes à même de joindre le monde extérieur. ",
+    "Nous avons connectivitée vers le monde extérieur",
+    "Rien à signalé",
+    "Wikipédia a répondu à mes solicitations. "
 ]
 
 

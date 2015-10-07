@@ -112,15 +112,23 @@ def print_clock():
 
     # Add "and"
     if not minute == 0:
-        text_to_return = text_to_return + text_and + ' '
+        text_to_return += text_and
+        text_to_return += ' '
 
     if minute == 0:
-        text_to_return = text_to_return + text_exact + ' '
+        text_to_return += text_exact
+        text_to_return += ' '
     if minute == 1:
-        text_to_return = text_to_return + text_one + ' ' + text_minute + ' '
+        text_to_return = str(minute_num_to_text_fr(minute))
+        text_to_return += ' '
+        text_to_return += text_minute
+        text_to_return += ' '
     if minute > 1:
-        text_to_return = text_to_return + str(minute) + ' ' + text_minute + 's' + ''
-
+        text_to_return += minute_num_to_text_fr(minute)
+        text_to_return += ' '
+        text_to_return += text_minute
+        text_to_return += 's'
+        text_to_return += ' '
     print text_to_return
 
 
@@ -224,6 +232,132 @@ def month_num_to_text_fr(e):
     elif e == '31':
         e = 'trente et un'
     return e
+
+
+def minute_num_to_text_fr(minute):
+    text_to_return = ''
+    minute = str(minute)
+    if minute == 0 or minute == 00:
+        text_to_return = 'zéro'
+    elif minute == '1' or minute == '01' or minute == ' 1':
+        text_to_return = 'une'
+    elif minute == '2' or minute == '02' or minute == ' 2':
+        text_to_return = 'deux'
+    elif minute == '3' or minute == '03' or minute == ' 3':
+        text_to_return = 'trois'
+    elif minute == '4' or minute == '04' or minute == ' 4':
+        text_to_return = 'quatre'
+    elif minute == '5' or minute == '05' or minute == ' 5':
+        text_to_return = 'cinq'
+    elif minute == '6' or minute == '06' or minute == ' 6':
+        text_to_return = 'six'
+    elif minute == '7' or minute == '07' or minute == ' 7':
+        text_to_return = 'sept'
+    elif minute == '8' or minute == '08' or minute == ' 8':
+        text_to_return = 'huit'
+    elif minute == '9' or minute == '09' or minute == ' 9':
+        text_to_return = 'neuf'
+    elif minute == '10':
+        text_to_return = 'dix'
+    elif minute == '11':
+        text_to_return = 'onze'
+    elif minute == '12':
+        text_to_return = 'douze'
+    elif minute == '13':
+        text_to_return = 'treize'
+    elif minute == '14':
+        text_to_return = 'quatorze'
+    elif minute == '15':
+        text_to_return = 'quinze'
+    elif minute == '16':
+        text_to_return = 'seize'
+    elif minute == '17':
+        text_to_return = 'dix sept'
+    elif minute == '18':
+        text_to_return = 'dix huit'
+    elif minute == '19':
+        text_to_return = 'dix neuf'
+    elif minute == '20':
+        text_to_return = 'vinght'
+    elif minute == '21':
+        text_to_return = 'vingt et une'
+    elif minute == '22':
+        text_to_return = 'vingt deux'
+    elif minute == '23':
+        text_to_return = 'vingt trois'
+    elif minute == '24':
+        text_to_return = 'vingt quatre'
+    elif minute == '25':
+        text_to_return = 'vingt cinq'
+    elif minute == '26':
+        text_to_return = 'vingt six'
+    elif minute == '27':
+        text_to_return = 'vingt spet'
+    elif minute == '28':
+        text_to_return = 'vingt huit'
+    elif minute == '29':
+        text_to_return = 'vingt neuf'
+    elif minute == '30':
+        text_to_return = 'trente'
+    elif minute == '31':
+        text_to_return = 'trente et une'
+    elif minute == '32':
+        text_to_return = 'trente deux'
+    elif minute == '33':
+        text_to_return = 'trente trois'
+    elif minute == '34':
+        text_to_return = 'trente quatre'
+    elif minute == '35':
+        text_to_return = 'trente cinq'
+    elif minute == '36':
+        text_to_return = 'trente six'
+    elif minute == '37':
+        text_to_return = 'trente spet'
+    elif minute == '38':
+        text_to_return = 'trente huit'
+    elif minute == '39':
+        text_to_return = 'trente neuf'
+    elif minute == '40':
+        text_to_return = 'quarante'
+    elif minute == '41':
+        text_to_return = 'quarante et une'
+    elif minute == '42':
+        text_to_return = 'quarante deux'
+    elif minute == '43':
+        text_to_return = 'quarante trois'
+    elif minute == '44':
+        text_to_return = 'quarante quatre'
+    elif minute == '45':
+        text_to_return = 'quarante cinq'
+    elif minute == '46':
+        text_to_return = 'quarante six'
+    elif minute == '47':
+        text_to_return = 'quarante spet'
+    elif minute == '48':
+        text_to_return = 'quarante huit'
+    elif minute == '49':
+        text_to_return = 'quarante neuf'
+    elif minute == '50':
+        text_to_return = 'cinquante'
+    elif minute == '51':
+        text_to_return = 'cinquante et une'
+    elif minute == '52':
+        text_to_return = 'cinquante deux'
+    elif minute == '53':
+        text_to_return = 'cinquante trois'
+    elif minute == '54':
+        text_to_return = 'cinquante quatre'
+    elif minute == '55':
+        text_to_return = 'cinquante cinq'
+    elif minute == '56':
+        text_to_return = 'cinquante six'
+    elif minute == '57':
+        text_to_return = 'cinquante spet'
+    elif minute == '58':
+        text_to_return = 'cinquante huit'
+    elif minute == '59':
+        text_to_return = 'cinquante neuf'
+    return text_to_return
 
 
 if date:
