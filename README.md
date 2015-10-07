@@ -13,7 +13,12 @@ brew cmu-pocketsphinx
 * mbrola voices (http://tcts.fpms.ac.be/synthesis/mbrola.html)
 
 
-sphinx_fe -argfile fr-fr/feat.params -samprate 16000 -c bonjour.fileids -di . -do . -ei wav -eo mfc -mswav yes
+copy de backup:
+
+sphinx_fe -argfile
+    fr-fr/feat.params
+    -samprate 16000
+    -c bonjour.fileids -di . -do . -ei wav -eo mfc -mswav yes
 
 pocketsphinx_mdef_convert -text fr-fr/mdef fr-fr/mdef.txt
 
@@ -37,3 +42,5 @@ map_adapt \
    /usr/local/lib/python2.7/site-packages
 
    sox msg0000.wav --bits 16 --encoding signed-integer --endian little msg0001.raw
+
+

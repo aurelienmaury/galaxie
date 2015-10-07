@@ -4,24 +4,23 @@
 __author__ = 'amaury'
 
 import sys
-from os import path
 
 from pocketsphinx.pocketsphinx import *
 from sphinxbase.sphinxbase import *
 
-MODELDIR = sys.argv[1]
+
 
 # Create a decoder with certain model
 config = Decoder.default_config()
 # config.set_string('-hmm', path.join(MODELDIR, 'fr-fr/fr-fr'))
 # config.set_string('-lm', path.join(MODELDIR, 'fr-fr/fr-fr.lm.dmp'))
 # config.set_string('-dict', path.join(MODELDIR, 'fr-fr/cmudict-fr-fr.dict'))
-config.set_string('-hmm', path.join(MODELDIR, 'fr-fr-adapt'))
-config.set_string('-lm', path.join(MODELDIR, 'fr-fr.lm.dmp'))
-config.set_string('-dict', path.join(MODELDIR, 'fr-fr.dic'))
+config.set_string('-hmm', sys.argv[1])
+config.set_string('-lm', sys.argv[2])
+config.set_string('-dict', sys.argv[3])
 decoder = Decoder(config)
 
-wavfile = sys.argv[2]
+wavfile = sys.argv[4]
 
 decoder.start_utt()
 stream = open(wavfile, 'rb')

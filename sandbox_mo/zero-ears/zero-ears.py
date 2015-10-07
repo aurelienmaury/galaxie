@@ -16,7 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with zero-ears.  If not, see <http://www.gnu.org/licenses/>.
 # Author: Jérôme ORNECH alias "Tuux" <tuxa@rtnp.org>
+# Author: Aurélien MAURY alias "Mo" <mo@rtnp.org>
 
+import argparse
 import zmq
 import copy
 import wave
@@ -32,12 +34,12 @@ from struct import pack
 global bus
 
 SELF_PATH = os.path.dirname(os.path.realpath(__file__))
-NOISE_THRESHOLD = 3000
+NOISE_THRESHOLD = 2000
 READ_CHUNK_SIZE = 1024
 
 SAMPLE_RATE = 16000
 # END_OF_SPEECH_SILENCE_DURATION = 3 * SAMPLE_RATE / READ_CHUNK_SIZE
-END_OF_SPEECH_SILENCE_DURATION = 0.3 * 44100 / READ_CHUNK_SIZE
+END_OF_SPEECH_SILENCE_DURATION = 0.5 * 44100 / READ_CHUNK_SIZE
 MAX_FRAME = 2 ** 15 - 1
 NORMALIZE_MINUS_ONE_DB = 10 ** (-3 / 20)
 
@@ -46,44 +48,85 @@ FORMAT = pyaudio.paALSA
 
 TRIM_APPEND = SAMPLE_RATE / 10
 
+ZMQ_PUB_CHANNEL = "ipc:///tmp/zero_ears_bus"
+
+
+def training_loop(args, loop_count):
+    print "zero-ears loop:training"
+
+    current_record_file = '/tmp/training_' + str(loop_count) + '.wav'
+
+    decode_speech(
+        os.path.join(args.acoustic_model_directory, args.acoustic_model_name),
+        os.path.join(args.acoustic_model_directory, args.acoustic_model_name + ".lm.dmp"),
+        os.path.join(args.acoustic_model_directory, args.acoustic_model_name + ".dic"),
+        current_record_file
+    )
+
+
+def listen_loop(args):
+    print "zero-ears loop:listen"
+    bus.send(">ears>state>init")
+
+    recognizing = decode_speech_tmp(
+        os.path.join(args.acoustic_model_directory, args.acoustic_model_name),
+        os.path.join(args.acoustic_model_directory, args.acoustic_model_name + ".lm.dmp"),
+        os.path.join(args.acoustic_model_directory, args.acoustic_model_name + ".dic")
+    )
+
+    if recognizing:
+        print "zero-ears:perceive:" + recognizing
+        bus.send(">ears>perceive>" + recognizing)
+
 
 def main():
-    zmq_ctx = zmq.Context()
+    try:
+        zmq_ctx = zmq.Context()
 
-    publish_zmq_channel = "ipc:///tmp/zero_ears_bus"
+        args = parse_cli()
+        global bus
+        bus = zmq_ctx.socket(zmq.PUB)
+        bus.bind(ZMQ_PUB_CHANNEL)
 
-    global bus
-    bus = zmq_ctx.socket(zmq.PUB)
-    bus.bind(publish_zmq_channel)
-
-    while True:
-        print "zero-ears loop"
-        bus.send(">ears>state>init")
-
-        recognizing = decode_speech(
-            os.path.join(sys.argv[1], sys.argv[2]),
-            os.path.join(sys.argv[1], sys.argv[2]+".lm.dmp"),
-            os.path.join(sys.argv[1], sys.argv[2]+".dic")
-        )
-
-        if recognizing:
-            print "zero-ears:perceive:" + recognizing
-            bus.send(">ears>perceive>" + recognizing)
+        loop_count = 0
+        while True:
+            if args.training:
+                training_loop(args, loop_count)
+            else:
+                listen_loop(args)
+            loop_count += 1
+    except KeyboardInterrupt:
+        pass
 
 
-def is_silence(data_chunk):
-    return max(data_chunk) < NOISE_THRESHOLD
+def parse_cli():
+    parser = argparse.ArgumentParser(description='zero-ears')
+
+    parser.add_argument('-m',
+                        dest="acoustic_model_directory", metavar='PATH', type=str,
+                        help='acoustic model directory', required=True)
+
+    parser.add_argument('-n',
+                        dest="acoustic_model_name", metavar="NAME", type=str,
+                        help='acoustic model name', required=True)
+
+    parser.add_argument('--training', action='store_true', default=False, help='sets training mode on')
+
+    return parser.parse_args()
 
 
-def normalize(data_all):
+def get_normalize_factor(raw_audio_data):
+    return float(NORMALIZE_MINUS_ONE_DB * MAX_FRAME) / max(abs(i) for i in raw_audio_data)
+
+
+def normalize(raw_audio_data):
     """ Amplify the volume out to max -1dB """
-    # MAXIMUM = 16384
-    normalize_factor = (float(NORMALIZE_MINUS_ONE_DB * MAX_FRAME)
-                        / max(abs(i) for i in data_all))
+    norm_factor = get_normalize_factor(raw_audio_data)
 
     r = array('h')
-    for i in data_all:
-        r.append(int(i * normalize_factor))
+    for i in raw_audio_data:
+        r.append(int(i * norm_factor))
+
     return r
 
 
@@ -98,13 +141,11 @@ def trim(data_all):
         if abs(b) > NOISE_THRESHOLD:
             _to = min(len(data_all) - 1, len(data_all) - 1 - i + TRIM_APPEND)
             break
+
     return copy.deepcopy(data_all[_from:(_to + 1)])
 
 
 def record():
-    """Record a word or words from the microphone and
-    return the data as an array of signed shorts."""
-
     py_audio = pyaudio.PyAudio()
 
     stream = py_audio.open(
@@ -123,30 +164,31 @@ def record():
     while True:
         # little endian, signed short
         data_chunk = array('h', stream.read(READ_CHUNK_SIZE))
+
         if sys.byteorder == 'big':
             data_chunk.byteswap()
 
-        captured_silence = is_silence(data_chunk)
-        if not captured_silence:
+        chunk_is_noisy = max(data_chunk) >= NOISE_THRESHOLD
+
+        if audio_started or chunk_is_noisy:
             data_all.extend(data_chunk)
+            if not audio_started:
+                audio_started = True
+                bus.send(">ears>state>recording")
 
         if audio_started:
-            if captured_silence:
+            if chunk_is_noisy:
+                silent_chunks_counter = 0
+            else:
                 silent_chunks_counter += 1
                 if silent_chunks_counter > END_OF_SPEECH_SILENCE_DURATION:
                     break
-            else:
-                silent_chunks_counter = 0
-        elif not captured_silence:
-            audio_started = True
-            # FIXME: replace with meaningful event
-            bus.send(">ears>state>recording")
 
     sample_width = py_audio.get_sample_size(FORMAT)
     stream.stop_stream()
     stream.close()
     py_audio.terminate()
-    # we trim before normalize as threshhold applies to un-normalized wave (as well as is_silent() function)
+
     data_all = trim(data_all)
     data_all = normalize(data_all)
 
@@ -165,31 +207,36 @@ def record_to_file(path):
     wave_file.close()
 
 
-def decode_speech(acoustic_model_directory, language_model_file, dictionary_file):
-    current_record_file = tempfile.gettempdir() + '/zero-ears_' + str(int(time.time()))
-    current_record_file_wav = current_record_file + '.wav'
-    current_record_file_raw = current_record_file + '.raw'
+def decode_speech_tmp(acoustic_model_directory, language_model_file, dictionary_file):
+    current_record_file = tempfile.gettempdir() + '/zero-ears_' + str(int(time.time())) + '.wav'
+    return decode_speech(acoustic_model_directory, language_model_file, dictionary_file, current_record_file)
 
+
+def decode_speech(acoustic_model_directory, language_model_file, dictionary_file, record_file):
     bus.send(">ears>state>listening")
-    record_to_file(current_record_file)
+    record_to_file(record_file)
 
     status = ''
     stdout = ''
     stderr = ''
 
     try:
-        wav_to_raw_cmd = " ".join(["sox", acoustic_model_directory, current_record_file_wav, current_record_file_raw])
-        proc.run(wav_to_raw_cmd, timeout = 60)
-
         decoder_path = os.path.join(SELF_PATH, "pocketsphinx-head-decoder.py")
-        sphinx_decode_cmd = " ".join([decoder_path, acoustic_model_directory, current_record_file_raw, " 2>/dev/null"])
+
+        sphinx_decode_cmd = " ".join([
+            decoder_path,
+            acoustic_model_directory,
+            language_model_file,
+            dictionary_file,
+            record_file,
+            " 2>/dev/null"
+        ])
         stdout, stderr, status = proc.run(sphinx_decode_cmd, timeout=10)
     except proc.Timeout:
         print "TIMED OUT: " + status + " " + stdout + " " + stderr
 
-    print "AUDIO WAV: " + current_record_file_wav
-    print "AUDIO RAW: " + current_record_file_raw
-    # os.remove(current_record_file)
+    print "AUDIO WAV: " + record_file
+    # os.remove(current_record_file_wav)
 
     return stdout.strip()
 
