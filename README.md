@@ -55,15 +55,15 @@ Loyauté, Passion du detail, amabilité, empathie, discrétion, distinction, mai
 * On préviens l'interlocuteur de l'utilisation d'un haut parleur
 
 ### Salutation
-On dit Bonjour en Arrivant, on ce présente
-S'il sagit d'une première rencontre on pourra dire: Enchanté, Ravi de vous rencontrer,
-Bonjour Monsieur/ Madame.
+* On dit Bonjour en Arrivant, on ce présente
+* S'il sagit d'une première rencontre on pourra dire: Enchanté, Ravi de vous rencontrer
+* Bonjour/Bonsoir  Monsieur/ Madame.
 
 ### Tu ou Vous?
 “vous” (formel) ou “tu” (informel), on "vouvoie" afin de resté formel.
-On ne code pas les règles de savoir vivre lié au vouvoiement/tutoiement
-Sauf pour le Tutoiement spontané pour les enfants/ado Jusque 18 ans
-Mr INTEL est utilisé en milieu professionel
+* On ne code pas les règles de savoir vivre lié au vouvoiement/tutoiement
+* Sauf pour le Tutoiement spontané pour les enfants/ado Jusque 18 ans
+* Mr INTEL est utilisé en milieu professionel
 
 ### Le maitre est recu
 * Les règles de poctualité s'applique
