@@ -36,15 +36,14 @@ Loyauté, Passion du detail, amabilité, empathie, discrétion, distinction, mai
 * Ne pas faire de fautes de français
 
 ### Ponctialité est respecté: 
-un RDV en lieu public = Heure exact
-un RDV chez le dentiste , ou medecin = 5 à 10 Minutes en avance
-Toléré 5 minutes Max, il faut prévenir de son retard.
-
-L'orsque que le maitre est invité il doit arrivé 10 à 15 minutes en retard
-Vrai retard +30 , prévenir ses hotes par Téléphone / SMS
-Au cinéma le retard est admis , mais il faut pas faire de bruit
-Au théâtre le retard est interdit = Manque de respect au comédien
-A l'opéra le retard est interdit , et on entre que a la fin de l'acte.
+* un RDV en lieu public = Heure exact
+* nn RDV chez le dentiste , ou medecin = 5 à 10 Minutes en avance
+* En générale il est Toléré 5 minutes Max
+* L'orsque que le maitre est invité il doit arrivé 10 à 15 minutes en retard
+* Vrai retard +30 , prévenir ses hotes par Téléphone / SMS
+* Au cinéma le retard est admis , mais il faut pas faire de bruit
+* Au théâtre le retard est interdit = Manque de respect au comédien
+* A l'opéra le retard est interdit , et on entre que a la fin de l'acte.
 
 ### Comunication
 * On'appelle pas avant 9 heures 30 sauf connaissance de l'emploi du temps de l'interlocuteur 
@@ -77,34 +76,34 @@ Mr INTEL est utilisé en milieu professionel
 La meilleure méthode est de diviser l'addition par le nombre de personnes.
 
 ### Phrase
-Transmettez mon meilleur souvenir à votre femme
-Je suis ravi de vous avoir rencontré
-Au revoir
-Bonjour Monsieur, Bonjour Madame 
-Votre épouse
-Votre mère (père)
-Votre mari
-Votre femme
-Votre sœur
-Parfois / Quelquefois
-Le sac de votre sœur, mère, etc ...
-A quelle heure déjeune (dîne) t-on ?
-A midi ou A l'heure du déjeuner
-Je me souviens bien de vous
-Elle a un petit ami
-Aller chez le coiffeur, médecin
-Je vous en prie
-Je vous prie de m'excuser ou Excusez-moi
-Parler
-Bien que ...
-C'est de ma faute
-Lire dans le journal, un livre
-Monter
-Parler avec quelqu'un
-Apporter un gâteau
-Je me souviens ...
-Je me le rappelle ...
-Il lui a dit ...
-Enlever sa veste 
-Nous étions convenus de ...
-Etre furieux contre quelqu'un
+* Transmettez mon meilleur souvenir à votre femme
+* Je suis ravi de vous avoir rencontré
+* Au revoir
+* Bonjour Monsieur, Bonjour Madame 
+* Votre épouse
+* Votre mère (père)
+* Votre mari
+* Votre femme
+* Votre sœur
+* Parfois / Quelquefois
+* Le sac de votre sœur, mère, etc ...
+* A quelle heure déjeune (dîne) t-on ?
+* A midi ou A l'heure du déjeuner
+* Je me souviens bien de vous
+* Elle a un petit ami
+* Aller chez le coiffeur, médecin
+* Je vous en prie
+* Je vous prie de m'excuser ou Excusez-moi
+* Parler
+* Bien que ...
+* C'est de ma faute
+* Lire dans le journal, un livre
+* Monter
+* Parler avec quelqu'un
+* Apporter un gâteau
+* Je me souviens ...
+* Je me le rappelle ...
+* Il lui a dit ...
+* Enlever sa veste 
+* Nous étions convenus de ...
+* Etre furieux contre quelqu'un
