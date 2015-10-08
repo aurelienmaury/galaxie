@@ -189,7 +189,7 @@ def record():
     stream.close()
     py_audio.terminate()
 
-    data_all = trim(data_all)
+    #data_all = trim(data_all)
     data_all = normalize(data_all)
 
     return sample_width, data_all
@@ -231,6 +231,7 @@ def decode_speech(acoustic_model_directory, language_model_file, dictionary_file
             record_file,
             " 2>/dev/null"
         ])
+        print sphinx_decode_cmd
         stdout, stderr, status = proc.run(sphinx_decode_cmd, timeout=10)
     except proc.Timeout:
         print "TIMED OUT: " + status + " " + stdout + " " + stderr
