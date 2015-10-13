@@ -52,6 +52,8 @@ galaxie:
     git_spl_url: https://github.com/zfsonlinux/spl.git
     git_zfs_url: https://github.com/zfsonlinux/zfs.git
 
+  tvheadend:
+    git_url: https://github.com/tvheadend/tvheadend.git
 
   firefox:
     repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr

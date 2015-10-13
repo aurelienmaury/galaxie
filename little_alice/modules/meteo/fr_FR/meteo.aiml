@@ -10,5 +10,5 @@
 
 <category><pattern>MÉTÉO</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
 <category><pattern>* MÉTÉO</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
-
+<category><pattern>* MÉTÉO *</pattern><template><system>../modules/meteo/meteo.py</system></template></category>
 </aiml>

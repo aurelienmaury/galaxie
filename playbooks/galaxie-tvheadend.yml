@@ -1,0 +1,109 @@
+- hosts: pvr-servers
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  vars:
+    build_dir: "{{ galaxie.cache_dir }}/tvheadend_build"
+    git_src: "{{ galaxie.tvheadend.git_url }}"
+
+  tasks:
+    - name: Update Apt
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install required software
+      action: apt pkg="{{item}}" state=installed
+      with_items:
+        - debhelper
+        - pkg-config
+        - libavahi-client-dev
+        - libssl-dev
+        - zlib1g-dev
+        - wget
+        - bzip2
+        - libcurl4-gnutls-dev
+        - git-core
+        - liburiparser-dev
+        - libavahi-client3
+        - zlib1g
+        - liburiparser1
+        - xmltv-util
+
+    - name: Check directory
+      file:
+        path="{{item}}"
+        owner=root
+        group=root
+        state=directory
+        mode=0755
+      with_items:
+        - "{{ galaxie.debs_dir }}"
+        - "{{ build_dir  }}"
+
+    - name: Download Git master of SPL
+      git:
+        repo={{ galaxie.zfsonlinux.git_spl_url  }}
+        dest={{ build_dir  }}/spl
+        update=yes
+      register: git_spl
+
+   - action: shell date '+%F'
+     register: mydate
+ 
+   - name: Delete previous installation
+     file: path={{ build_dir  }}{{ mydate.stdout }} state=absent
+
+   - name: Creates directory {{ build_dir  }}{{ mydate.stdout }}
+     action: file dest={{ build_dir  }}{{ mydate.stdout }}  state=directory
+
+   - name: Download Git master of TVHeadend
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }} git clone {{ git_src  }}
+   
+   - name: Building ...
+     shell: chdir={{ build_dir  }}{{ mydate.stdout }}/tvheadend ./Autobuild.sh
+
+   - action: shell ls {{ build_dir  }}{{ mydate.stdout }}/tvheadend_*.deb
+     register: package_path
+
+   - name: Create hts group
+     group: name=hts state=present gid=4201
+
+   - name: Create hts user
+     user: name=hts
+         createhome=yes 
+         state=present
+         generate_ssh_key=yes
+         uid=4201
+         group=hts
+         groups=cdrom,floppy,audio,dip,video
+     register: newuser
+
+   - name: Generate random password for hts user only on creation
+     shell: usermod -p `/usr/bin/openssl rand -base64 32` hts
+     when: newuser.changed
+
+   - name: Transfert a previous Tvheadend .hts directory backup
+     copy: src=/home/tuxa/hts.tar.gz dest=/home/hts/hts.tar.gz owner=hts group=hts mode=0644
+
+   - name: Extract that hts.tar.gs file
+     shell: chdir=/home/hts tar -xzf hts.tar.gz
+
+   - name: Restore permissions
+     file: path=/home/hts/.hts owner=hts group=hts recurse=yes
+     notify: restart tvheadend
+
+   - name: Push 59-dvbhdhomerun-utils.rules udev rules file
+     template: src=templates/tvheadend_59-dvbhdhomerun-utils.rules dest=/etc/udev/rules.d/59-dvbhdhomerun-utils.rules owner=root group=root mode=0644
+     notify: restart udev
+
+   - name: Install Package
+     apt: deb={{ package_path.stdout }}
+
+  handlers:
+   - name: restart tvheadend
+     service: name=tvheadend state=restarted
+
+   - name: restart udev
+     service: name=udev state=restarted
