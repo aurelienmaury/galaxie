@@ -13,7 +13,7 @@
 - name: update apt cache
   apt: update_cache=yes
 
-- include: apt-cacher.yml
+#- include: apt-cacher.yml
 - include: headless.yml
 - include: ntp-client.yml
 - include: sshd.yml

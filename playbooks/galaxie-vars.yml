@@ -1,6 +1,6 @@
 ---
 galaxie:
-  user: little_alice
+  user: zoe
   randomPasswordSeed: 'ZOE is Open and Extendable'
   prefix_dir: /var/lib/galaxie
   build_dir: /var/lib/galaxie/build

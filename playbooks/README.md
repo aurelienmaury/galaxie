@@ -47,7 +47,7 @@ YOU_SUPER_USER_YOU_WANT_USE_FOR_INSTALL_ZOE ALL=(ALL) NOPASSWD: ALL
 ```
 4) Now start our integration playbook.
 ```
-ansible-playbook -i ../host.inventory galaxie-zoe-integration.yml --user=$DEFAULT_USER_WITH_SUDO  --ask-pass --limit=192.168.0.42
+ansible-playbook -i ../host.inventory galaxie-zoe-integration.yml --user=$DEFAULT_USER_WITH_SUDO  --ask-pass  192.168.0.42
 ansible-playbook -i ../host.inventory galaxie-zoe-integration.yml --user=$DEFAULT_USER_WITH_SUDO  --ask-pass -c paramiko --limit=192.168.0.42
 ```
 

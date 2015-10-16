@@ -116,8 +116,8 @@
     backup=yes
 
 
-- name: define localdomain
-  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.localdomain }}"
+#- name: define localdomain
+#  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.localdomain }}"
 
-- name: define local reverse dns zone
-  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}"
+#- name: define local reverse dns zone
+#  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}"

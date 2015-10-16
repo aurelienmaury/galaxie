@@ -3,6 +3,7 @@ jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
 neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune
 mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
+gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp
 
 [zoe-voices]
 jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
@@ -32,8 +33,9 @@ jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 [pvr-servers]
 uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
 
-[medias-servers]
+[media-servers]
 uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
+gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp
 
 [mail-servers]
 
@@ -84,7 +86,7 @@ dns-servers
 apt-cacher-ng-server
 zfs-files-servers
 tftp-servers
-medias-servers
+media-servers
 
 [galaxie:children]
 dns-resolver
