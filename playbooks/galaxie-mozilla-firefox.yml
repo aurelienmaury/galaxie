@@ -21,9 +21,9 @@
       stat: path={{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
       register: firefox_source_file_stat
 
-    - name: Download {{ galaxie.firefox.repo_url }}/{{ galaxie.firefox.filename }}
+    - name: Download {{ galaxie.firefox.dowloader_url }}
       get_url:
-        url="{{ galaxie.firefox.repo_url }}/{{ galaxie.firefox.filename }}"
+        url="{{ galaxie.firefox.dowloader_url }}"
         dest="{{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}"
         mode=0440
         validate_certs=no

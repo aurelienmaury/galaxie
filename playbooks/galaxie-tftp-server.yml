@@ -14,10 +14,8 @@
       action: apt pkg="{{item}}" state=installed
       with_items:
         - tftpd-hpa
-        - debian-installer-8-netboot-armel
 
-
-    - name: Remove vim-tiny and nano
+    - name: Remove previus TFTP services version
       apt:
         pkg="{{item}}"
         state=absent

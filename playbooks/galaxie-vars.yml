@@ -56,8 +56,9 @@ galaxie:
     git_url: https://github.com/tvheadend/tvheadend.git
 
   firefox:
+    dowloader_url: https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=fr
     repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr
-    filename: firefox-41.0.1.tar.bz2
+    filename: firefox-lastest.tar.bz2
 
   thunderbird:
     repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.2.0/linux-x86_64/fr
