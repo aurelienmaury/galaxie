@@ -1,0 +1,125 @@
+- hosts: desktops
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  tasks:
+    - name: update apt
+      apt: update_cache=yes
+
+    - name: Install jhbuild build tools
+      apt:
+        pkg="{{item}}"
+        state=installed
+      with_items:
+        - libsqlite3-dev
+        - libgphoto2-dev
+        - libproxy-dev
+        - libsystemd-daemon-dev
+        - libtag1-dev
+        - libpwquality-dev
+        - libpng12-dev
+        - libxrandr-dev
+        - libwavpack-dev
+        - libxrender-dev
+        - libsndfile1-dev
+        - libavahi-gobject-dev
+        - libxtst-dev
+        - libxcb-xkb-dev
+        - libanthy-dev
+        - xutils-dev
+        - libfontconfig1-dev
+        - libsystemd-journal-dev
+        - libcairo2-dev
+        - libfreetype6-dev
+        - libexempi-dev
+        - libsystemd-login-dev
+        - libtasn1-6-dev
+        - libxft-dev
+        - libepoxy-dev
+        - plymouth-dev
+        - libudev-dev
+        - libexif-dev
+        - libdbus-1-dev
+        - libdbus-glib-1-dev
+        - libgbm-dev
+        - libnss3-dev
+        - libv4l-dev
+        - libicu-dev
+        - libwebkitgtk-3.0-dev
+        - libxcursor-dev
+        - libvpx-dev
+        - libndp-dev
+        - libnl-3-dev
+        - libxml2-dev
+        - libnl-route-3-dev
+        - libxkbfile-dev
+        - libgnutls28-dev
+        - liboauth-dev
+        - libenchant-dev
+        - libasound2-dev
+        - libstartup-notification0-dev
+        - libgles2-mesa-dev
+        - libmtdev-dev
+        - libxklavier-dev
+        - libarchive-dev
+        - libdvdread-dev
+        - libegl1-mesa-dev
+        - libgudev-1.0-dev
+        - libnl-genl-3-dev
+        - libxt-dev
+        - libp11-kit-dev
+        - libevdev-dev
+        - libpolkit-agent-1-dev
+        - libjson-c-dev
+        - libpolkit-gobject-1-dev
+        - libxslt1-dev
+        - libpoppler-glib-dev
+        - libsystemd-dev
+        - libflac-dev
+        - python3-cairo-dev
+        - liblcms2-dev
+        - libatasmart-dev
+        - libgmime-2.6-dev
+        - python3-dev
+        - libcanberra-gtk-dev
+        - libcanberra-gtk3-dev
+        - libdmapsharing-3.0-dev
+        - libpinyin4-dev
+        - libhangul-dev
+        - libmusicbrainz5-dev
+        - libmozjs-24-dev
+        - libsbc-dev
+        - libxi-dev
+        - libsm-dev
+        - libsmbclient-dev
+        - libxcomposite-dev
+        - libspeex-dev
+        - libbluetooth-dev
+        - libical-dev
+        - libnice-dev
+        - libwebkit2gtk-4.0-dev
+        - libacl1-dev
+        - libdb5.3-dev
+        - libgcrypt20-dev
+        - libiw-dev
+        - libjpeg62-turbo-dev
+        - doxygen
+        - libcap-dev
+        - libyaml-dev
+        - libwebp-dev
+        - gperf
+        - libmpfr-dev
+        - libcups2-dev
+        - libhyphen-dev
+        - ppp-dev
+        - heimdal-dev
+        - libxinerama-dev
+        - ragel
+        - raptor-utils
+        - libpam0g-dev
+        - libreadline-gplv2-dev
+        - libtiff5-dev
+        - python-rdflib
