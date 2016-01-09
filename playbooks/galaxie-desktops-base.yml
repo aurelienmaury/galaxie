@@ -12,6 +12,7 @@
         state=present
       with_items:
         - deb http://www.deb-multimedia.org jessie main non-free
+      register: deb_multimedia_activated
 
     - name: update apt
       apt: update_cache=yes
@@ -38,6 +39,10 @@
         - alacarte
         - dconf-tools
         - gimp
+        - gimp-dds
+        - gimp-data-extras
+        - gimp-texturize
+        - gimp-data
         - icedtea-7-plugin
         - openjdk-7-jre
         - libreoffice-l10n-fr
@@ -87,6 +92,11 @@
         - gnumeric-plugins-extra
         - imagemagick
         - imagemagick-6.q16
+        - libreoffice-style-crystal
+        - libreoffice-style-galaxy
+        - libreoffice-style-hicontrast
+        - libreoffice-style-oxygen
+        - libreoffice-style-tango
 
 
 # s'assurer de l'absence d'autre implem de JRE
