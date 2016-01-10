@@ -95,7 +95,7 @@
      notify: restart tvheadend
 
    - name: Push 59-dvbhdhomerun-utils.rules udev rules file
-     template: src=templates/tvheadend_59-dvbhdhomerun-utils.rules dest=/etc/udev/rules.d/59-dvbhdhomerun-utils.rules owner=root group=root mode=0644
+     template: src=files/tvheadend_59-dvbhdhomerun-utils.rules dest=/etc/udev/rules.d/59-dvbhdhomerun-utils.rules owner=root group=root mode=0644
      notify: restart udev
 
    - name: Install Package
