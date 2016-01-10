@@ -1,7 +1,0 @@
-# /etc/cron.d/galaxie_power_save: crontab entries for the galaxie_power_save management
-
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:{{ galaxie.scripts.directory }}
-
-# Start auto-tune at reboot inside a screen session end exit the session
-@reboot root screen -dmS PowerTOP powertop --auto-tune
