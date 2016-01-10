@@ -1,0 +1,9 @@
+- hosts: mysql-servers
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  roles:
+    - galaxie_mysql

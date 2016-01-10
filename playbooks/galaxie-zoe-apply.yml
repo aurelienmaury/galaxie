@@ -4,6 +4,7 @@
 - include: galaxie-apt-cacher-ng-server.yml
 - include: galaxie-emby-server.yml
 - include: galaxie-apache.yml
+- include: galaxie-mysql.yml
 
 # Galaxie Hosts
 - include: galaxie-member.yml
