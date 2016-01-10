@@ -9,21 +9,21 @@
     - "deb-src http://security.debian.org/ jessie/updates main non-free contrib"
     - "deb http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
     - "deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
-  register: aptrepo
 
 - name: update apt cache
-  apt: update_cache=yes cache_valid_time=3600
+  apt:
+    update_cache=yes
+    cache_valid_time=3600
 
-#- include: apt-cacher.yml
+- name: Install Apache
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - apache2
+  notify:
+    - restart apache
 
-- include: headless.yml
-- include: ntp-client.yml
-- include: sshd.yml
-- include: motd.yml
-- include: bashrc.yml
-#- include: dnscache.yml
-
-#- include: powersave.yml
-
-- include: vim.yml
-- include: locales.yml
+- name: Add "{{ galaxie.user }}" user in www-data group
+  user:
+    name: "{{ galaxie.user }}"
+    groups: "www-data"
+    append: yes

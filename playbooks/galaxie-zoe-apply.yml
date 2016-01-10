@@ -3,6 +3,7 @@
 - include: galaxie-ntp-server.yml
 - include: galaxie-apt-cacher-ng-server.yml
 - include: galaxie-emby-server.yml
+- include: galaxie-apache.yml
 
 # Galaxie Hosts
 - include: galaxie-member.yml

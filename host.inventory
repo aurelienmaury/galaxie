@@ -55,6 +55,9 @@ jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 [tftp-servers]
 neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 
+[web-servers]
+mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
+
 # -------
 # DEVICES
 # -------
@@ -87,6 +90,7 @@ apt-cacher-ng-server
 zfs-files-servers
 tftp-servers
 media-servers
+web-servers
 
 [galaxie:children]
 dns-resolver

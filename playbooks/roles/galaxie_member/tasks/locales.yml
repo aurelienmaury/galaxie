@@ -5,6 +5,7 @@
     dest=/etc/locale.gen
     regexp='^\# {{ galaxie.language.locale}}|^{{ galaxie.language.locale}}'
     replace='{{ galaxie.language.locale}}'
+  register: local
 
 - name: Add en_US.UTF-8 UTF-8 to /etc/locale.gen
   replace:
@@ -14,6 +15,7 @@
 
 - name: Update and Set locale
   command: /usr/sbin/update-locale LANG={{ galaxie.language.lang}} LANGUAGE={{ galaxie.language.language}}
+  when: local.changed
 
 - name: Set timezone area {{ galaxie.language.tzdata.areas }}
   debconf:
