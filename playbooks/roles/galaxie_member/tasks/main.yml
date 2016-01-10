@@ -14,11 +14,15 @@
   apt: update_cache=yes
 
 #- include: apt-cacher.yml
+
 - include: headless.yml
 - include: ntp-client.yml
 - include: sshd.yml
 - include: motd.yml
 - include: bashrc.yml
-- include: dnscache.yml
-- include: powersave.yml
+#- include: dnscache.yml
+
+#- include: powersave.yml
+
 - include: vim.yml
+- include: locales.yml

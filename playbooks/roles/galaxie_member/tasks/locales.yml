@@ -1,0 +1,50 @@
+---
+
+- name: Add {{ galaxie.language.locale}} to /etc/locale.gen
+  replace:
+    dest=/etc/locale.gen
+    regexp='^\# {{ galaxie.language.locale}}|^{{ galaxie.language.locale}}'
+    replace='{{ galaxie.language.locale}}'
+
+- name: Add en_US.UTF-8 UTF-8 to /etc/locale.gen
+  replace:
+    dest=/etc/locale.gen
+    regexp='^\# en_US.UTF-8 UTF-8|^en_US.UTF-8 UTF-8'
+    replace='en_US.UTF-8 UTF-8'
+
+- name: Update and Set locale
+  command: /usr/sbin/update-locale LANG={{ galaxie.language.lang}} LANGUAGE={{ galaxie.language.language}}
+
+- name: Set timezone area {{ galaxie.language.tzdata.areas }}
+  debconf:
+    name=tzdata
+    question='tzdata/Areas'
+    value='{{ galaxie.language.tzdata.areas }}'
+    vtype='select'
+  when: ansible_os_family == "Debian"
+  notify:
+    - update timezone
+
+- name: Set timezone
+  debconf:
+    name=tzdata
+    question='tzdata/Zones/{{ galaxie.language.tzdata.areas }}'
+    value='{{ galaxie.language.tzdata.zones }}'
+    vtype='select'
+  when: ansible_os_family == "Debian"
+  notify:
+    - update timezone
+
+- name: Set /etc/timezone file
+  template:
+    src=timezone.j2
+    dest=/etc/timezone
+  notify:
+    - update timezone
+
+- name: desired manpages are present
+  apt: pkg="{{item}}" state=present
+  with_items:
+    - manpages-fr
+    - manpages-fr-extra
+  when: galaxie.language.language == "fr"

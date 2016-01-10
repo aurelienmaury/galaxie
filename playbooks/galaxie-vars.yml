@@ -14,6 +14,14 @@ galaxie:
   local_name_server: 192.168.1.1
   local_reverse_zone: 168.192.in-addr.arpa
 
+  language:
+    # See /usr/share/i18n/SUPPORTED
+    locale: 'fr_FR.UTF-8 UTF-8'
+    lang: 'fr_FR.UTF-8'
+    language: 'fr'
+    tzdata:
+      areas: 'Europe'
+      zones: 'Paris'
   ntp:
 #    referrals:
 #      - 'ntp-p1.obspm.fr'

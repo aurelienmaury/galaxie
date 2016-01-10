@@ -18,3 +18,6 @@
     "/usr/sbin/update-service --remove {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }} &&
     /usr/sbin/update-service --add {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}"
   when: serviceRegistered|success
+
+- name: update timezone
+  shell: dpkg-reconfigure --frontend noninteractive tzdata
