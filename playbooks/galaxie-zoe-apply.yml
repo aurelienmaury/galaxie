@@ -5,6 +5,7 @@
 - include: galaxie-emby-server.yml
 - include: galaxie-apache-server.yml
 - include: galaxie-mysql-server.yml
+- include: galaxie-php.yml
 
 # Galaxie Hosts
 - include: galaxie-member.yml

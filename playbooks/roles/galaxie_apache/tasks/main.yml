@@ -19,6 +19,7 @@
   apt: pkg={{ item }} state=latest
   with_items:
     - apache2
+    - apache2-utils
   notify:
     - restart apache
 

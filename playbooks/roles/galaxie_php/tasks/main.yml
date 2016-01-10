@@ -1,0 +1,222 @@
+---
+
+- name: activate debian jessie main contrib non-free repository
+  apt_repository: repo="{{ item }}" state=present
+  with_items:
+    - "deb http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
+    - "deb-src http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
+    - "deb http://security.debian.org/ jessie/updates main non-free contrib"
+    - "deb-src http://security.debian.org/ jessie/updates main non-free contrib"
+    - "deb http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
+    - "deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
+
+- name: update apt cache
+  apt:
+    update_cache=yes
+    cache_valid_time=3600
+
+- name: check php5 installation
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5-cli
+    - php5-mysql
+    - libapache2-mod-php5
+    - php5
+    - php5-common
+    - php5-curl
+    - php5-dev
+    - php5-gd
+    - php5-intl
+    - php-pear
+    - php5-imagick
+    - php5-imap
+    - php5-json
+    - php5-mcrypt
+    - php5-memcache
+    - php5-mysql
+    - php5-pspell
+    - php5-recode
+    - php5-snmp
+    - php5-tidy
+    - php5-xmlrpc
+    - php5-xsl
+    - php-xml-rss
+    - php5-sqlite
+  notify:
+    - restart apache
+
+- name: php5 | check max_execution_time
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; max_execution_time = [0-9]+|^max_execution_time = [0-9]+'
+    replace='max_execution_time = 30'
+  notify:
+    - restart apache
+
+- name: php5 | using max_execution_time = 30
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='max_execution_time = 30'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check max_input_time
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; max_input_time = [0-9]+|^max_input_time = [0-9]+'
+    replace='max_input_time = 60'
+  notify:
+    - restart apache
+
+- name: php5 | using max_input_time = 60
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='max_input_time = 60'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check memory_limit
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; memory_limit = [a-zA-Z0-9_]+|^memory_limit = [a-zA-Z0-9_]+'
+    replace='memory_limit = 128M'
+  notify:
+    - restart apache
+
+- name: php5 | using memory_limit = 128M
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='memory_limit = 128M'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check upload_max_filesize
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; upload_max_filesize = [a-zA-Z0-9_]+|^upload_max_filesize = [a-zA-Z0-9_]+'
+    replace='upload_max_filesize = 10M'
+  notify:
+    - restart apache
+
+- name: php5 | using upload_max_filesize = 10M
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='upload_max_filesize = 10M'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check register_globals
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; register_globals = [a-zA-Z0-9_]+|^register_globals = [a-zA-Z0-9_]+'
+    replace='register_globals = Off'
+  notify:
+    - restart apache
+
+- name: php5 | using register_globals = Off
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='register_globals = Off'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check expose_php
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; expose_php = [a-zA-Z0-9_]+|^expose_php = [a-zA-Z0-9_]+'
+    replace='expose_php = Off'
+  notify:
+    - restart apache
+
+- name: php5 | using expose_php = Off
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='expose_php = Off'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check mbstring.language
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; mbstring.language =[^\n]*\n+|^mbstring.language =[^\n]*\n|^\;mbstring.language =[^\n]*\n'
+    replace='mbstring.language = UTF-8\n'
+  notify:
+    - restart apache
+
+- name: php5 | using mbstring.language = UTF-8
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='mbstring.language = UTF-8'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check mbstring.internal_encoding
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; mbstring.internal_encoding =[^\n]*\n|^mbstring.internal_encoding =[^\n]*\n|^\;mbstring.internal_encoding =[^\n]*\n'
+    replace='mbstring.internal_encoding = UTF-8\n'
+  notify:
+    - restart apache
+
+- name: php5 | using mbstring.internal_encoding = UTF-8
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='mbstring.internal_encoding = UTF-8'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check mbstring.http_input
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; mbstring.http_input =[^\n]*\n|^mbstring.http_input =[^\n]*\n|^\;mbstring.http_input =[^\n]*\n'
+    replace='mbstring.http_input = UTF-8\n'
+  notify:
+    - restart apache
+
+- name: php5 | using mbstring.http_input = UTF-8
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='mbstring.http_input = UTF-8'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check mbstring.http_output
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; mbstring.http_output =[^\n]*\n|^mbstring.http_output =[^\n]*\n|^\;mbstring.http_output =[^\n]*\n'
+    replace='mbstring.http_output = UTF-8\n'
+  notify:
+    - restart apache
+
+- name: php5 | using mbstring.http_output = UTF-8
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='mbstring.http_output = UTF-8'
+    state=present
+  notify:
+    - restart apache
+
+- name: php5 | check mbstring.detect_order
+  replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^\; mbstring.detect_order =[^\n]*\n|^mbstring.detect_order =[^\n]*\n|^\;mbstring.detect_order =[^\n]*\n'
+    replace='mbstring.detect_order = auto\n'
+  notify:
+    - restart apache
+
+- name: php5 | using mbstring.detect_order = auto
+  lineinfile:
+    dest=/etc/php5/apache2/php.ini
+    line='mbstring.detect_order = auto'
+    state=present
+  notify:
+    - restart apache
