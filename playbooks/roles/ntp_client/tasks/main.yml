@@ -1,4 +1,5 @@
 ---
+- debug: var={{ internal }}
 
 - name: ntpdate is absent
   apt:
@@ -11,12 +12,14 @@
     pkg=ntp
     state=present
 
-- name: configure ntp for use {{ galaxie.ntp.local }}
+- name: ntp time source {{ galaxie.ntp.local }}
   template: src=ntp-client-internal.conf.j2 dest=/etc/ntp.conf
   notify: restart ntp
+  #when: internal is undefined
   when: "'yes' in internal"
 
-- name: ntp is configured for use ntp.pool.org
+- name: ntp time source {{ galaxie.ntp.pool }}
   template: src=ntp-client-external.conf.j2 dest=/etc/ntp.conf
   notify: restart ntp
+  #when: internal is undefined
   when: "'no' in internal"

@@ -6,12 +6,12 @@ mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
 gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp internal=no
 
 [zoe-voices]
-jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+jupiter
 
 [ntp-clients]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
-neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune internal=yes
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
+uranus
+neptune
+mercure
 
 # |
 # |- servers
@@ -35,36 +35,37 @@ mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
 
 [ntp-servers]
 
+
 [pvr-servers]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
+uranus
 
 [media-servers]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
-gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp internal=no
+uranus
+gatcorp
 
 [mail-servers]
 
 [file-servers]
 
 [pabx-servers]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
+uranus
 
 [dns-resolver]
 
 [apt-cacher-ng-server]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
+uranus
 
 [zfs-files-servers]
-jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
+jupiter
 
 [tftp-servers]
-neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
+neptune
 
 [web-servers]
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
+mercure
 
 [mysql-servers]
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
+mercure
 
 # -------
 # DEVICES
@@ -73,8 +74,8 @@ mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
 [desktops]
 # debian
 # si machine dans "desktop" alors c'est toujours une debian
-jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
-neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune internal=yes
+jupiter
+neptune
 
 [tvs]
 # openelec only

@@ -30,10 +30,10 @@ galaxie:
       - 'ntp.crashdump.fr'
       - 'ntp.via.ecp.fr'
     pool:
-      - 'pool.ntp.org'
-      - 'pool.ntp.org'
-      - 'pool.ntp.org'
-      - 'pool.ntp.org'
+      - '0.pool.ntp.org'
+      - '1.pool.ntp.org'
+      - '2.pool.ntp.org'
+      - '3.pool.ntp.org'
     local:
       - 'nabu.galaxie.ici'
 

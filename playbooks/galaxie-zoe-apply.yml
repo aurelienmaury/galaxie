@@ -8,7 +8,8 @@
 #- include: galaxie-php.yml
 
 # Galaxie Hosts
-- include: galaxie-member.yml
+- include: galaxie-ntp-client.yml
+#- include: galaxie-member.yml
 
 # Desktops
 - include: galaxie-desktops-base.yml

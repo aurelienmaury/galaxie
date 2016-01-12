@@ -11,12 +11,16 @@
     pkg=ntp
     state=present
 
-- name: configure ntp for use {{ galaxie.ntp.referrals }}
-  template: src=ntp-server-internal.conf.j2 dest=/etc/ntp.conf
+- name: ntp time source {{ galaxie.ntp.referrals }}
+  template:
+    src=ntp-server-internal.conf.j2
+    dest=/etc/ntp.conf
   notify: restart ntp
   when: "'yes' in internal"
 
-- name: ntp is configured for use {{ galaxie.ntp.pool }}
-  template: src=ntp-server-external.conf.j2 dest=/etc/ntp.conf
+- name: ntp time source {{ galaxie.ntp.pool }}
+  template:
+    src=ntp-server-external.conf.j2
+    dest=/etc/ntp.conf
   notify: restart ntp
   when: "'no' in internal"
