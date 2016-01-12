@@ -8,6 +8,11 @@ gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp internal=no
 [zoe-voices]
 jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 
+[ntp-clients]
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
+neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune internal=yes
+mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
+
 # |
 # |- servers
 # |  |-- ntp-servers

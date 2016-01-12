@@ -1,4 +1,4 @@
-- hosts: ntp-servers
+- hosts: ntp-clients
   user: zoe
   sudo: true
 
@@ -6,4 +6,4 @@
     - "galaxie-vars.yml"
 
   roles:
-    - ntp_server
+    - ntp_client
