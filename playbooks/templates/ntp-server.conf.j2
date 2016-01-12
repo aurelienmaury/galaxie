@@ -4,13 +4,13 @@ server {{ ref_server }} iburst
 {% endfor %}
 
 ## Contrôle des accès
-# Par défaut, on ne répond �|  rien ...
+# Par défaut, on ne répond ?|  rien ...
 #restrict default ignore
 #restrict default notrap noquery nopeer
 
 # ... exception faite des serveurs externes sur lesquels on va se synchroniser ...
 # (rien ne circule sauf la correction du temps : dans l'ordre, on n'autorise
-# pas la création de hooks pour des journaux �|  distance, on ne peut pas consulter
+# pas la création de hooks pour des journaux ?|  distance, on ne peut pas consulter
 # ou modifier la configuration du serveur, les serveurs ne peuvent pas tenter
 # d'établir une connexion en tant que peer)
 discard average 3 minimum 2
@@ -26,6 +26,6 @@ restrict 127.0.0.1
 
 # On stocke le décalage de l'horloge système. Cela permet de maintenir, un peu,
 # l'heure en cas de coupures du net. Ne pas placer ce fichier dans un répertoire
-# temporaire : cela évite aussi �|  ntpd d'avoir �|  refaire les calculs permettant
+# temporaire : cela évite aussi ?|  ntpd d'avoir ?|  refaire les calculs permettant
 # de déterminer la dérive de l'horloge après chaque redémarrage.
 driftfile  /var/lib/ntp/ntp.drift

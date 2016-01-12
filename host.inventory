@@ -1,9 +1,9 @@
 [galaxie]
-jupiter:1790 ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
-neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
-gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp
+jupiter:1790 ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
+neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune internal=yes
+mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
+gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp internal=no
 
 [zoe-voices]
 jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
@@ -31,35 +31,35 @@ jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 [ntp-servers]
 
 [pvr-servers]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
 
 [media-servers]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
-gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
+gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp internal=no
 
 [mail-servers]
 
 [file-servers]
 
 [pabx-servers]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
 
 [dns-resolver]
 
 [apt-cacher-ng-server]
-uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
+uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
 
 [zfs-files-servers]
-jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
 
 [tftp-servers]
-neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
+neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
 
 [web-servers]
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
+mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
 
 [mysql-servers]
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
+mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
 
 # -------
 # DEVICES
@@ -68,8 +68,8 @@ mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
 [desktops]
 # debian
 # si machine dans "desktop" alors c'est toujours une debian
-jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
-neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune
+jupiter ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
+neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune internal=yes
 
 [tvs]
 # openelec only

@@ -23,13 +23,13 @@ galaxie:
       areas: 'Europe'
       zones: 'Paris'
   ntp:
-#    referrals:
-#      - 'ntp-p1.obspm.fr'
-#      - 'ap.cagb.org'
-#      - 'ntp1.doowan.net'
-#      - 'ntp.crashdump.fr'
-#      - 'ntp.via.ecp.fr'
     referrals:
+      - 'ntp-p1.obspm.fr'
+      - 'ap.cagb.org'
+      - 'ntp1.doowan.net'
+      - 'ntp.crashdump.fr'
+      - 'ntp.via.ecp.fr'
+    pool:
       - 'pool.ntp.org'
       - 'pool.ntp.org'
       - 'pool.ntp.org'

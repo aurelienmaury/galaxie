@@ -6,8 +6,12 @@
 - name: ntp is present
   apt: pkg=ntp state=present
 
-- name: ntp is configured
-  template: src=ntp-client.conf.j2 dest=/etc/ntp.conf
+- name: configure ntp for use {{ galaxie.ntp.local }}
+  template: src=ntp-client-internal.conf.j2 dest=/etc/ntp.conf
   notify: restart ntp
+  when: "'yes' in internal"
 
-
+- name: ntp is configured for use ntp.pool.org
+  template: src=ntp-client-external.conf.j2 dest=/etc/ntp.conf
+  notify: restart ntp
+  when: "'no' in internal"
