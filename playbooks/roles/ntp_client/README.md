@@ -1,7 +1,7 @@
-Role Name
-=========
+ntp_client
+==========
 
-A brief description of the role goes here.
+This role configure ntp client for Internal or External host.
 
 Requirements
 ------------
@@ -30,9 +30,9 @@ Including an example of how to use your role (for instance, with variables passe
 License
 -------
 
-BSD
+GPL 2
 
 Author Information
 ------------------
+Tuux
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

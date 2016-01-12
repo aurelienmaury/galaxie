@@ -16,7 +16,6 @@
 #- include: apt-cacher.yml
 
 - include: headless.yml
-- include: ntp-client.yml
 - include: sshd.yml
 - include: motd.yml
 - include: bashrc.yml

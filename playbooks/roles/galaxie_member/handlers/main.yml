@@ -1,17 +1,11 @@
 ---
 
-- name: restart ntp
-  service: name=ntp state=restarted
-
-
 - name: restart sshd
   service: name=ssh state=restarted
-
 
 - name: register service
   shell: "/usr/sbin/update-service --add {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}"
   when: serviceRegistered|failed
-
 
 - name: restart service
   shell:
