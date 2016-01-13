@@ -24,3 +24,15 @@
     dest=/etc/ntp.conf
   notify: restart ntp
   when: "'no' in internal"
+
+- name: remove file /etc/dhcp/dhclient-exit-hooks.d/ntp
+  file:
+    path=/etc/dhcp/dhclient-exit-hooks.d/ntp
+    state=absent
+  notify: restart ntp
+
+- name: remove file /var/lib/ntp/ntp.conf.dhcp
+  file:
+    path=/var/lib/ntp/ntp.conf.dhcp
+    state=absent
+  notify: restart ntp

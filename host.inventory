@@ -2,7 +2,7 @@
 jupiter:1790 ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter internal=yes
 uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus internal=yes
 neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune internal=yes
-mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=yes
+mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure internal=no
 gatcorp ansible_ssh_private_key_file=~/.ssh/id_rsa.gatcorp internal=no
 
 [zoe-voices]
