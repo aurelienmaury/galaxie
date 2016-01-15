@@ -15,7 +15,7 @@
 - name: ntp time source {{ galaxie.ntp.local }}
   template: src=ntp-client-internal.conf.j2 dest=/etc/ntp.conf
   notify: restart ntp
-  #when: internal is undefined
+  #when: internal is defined
   when: "'yes' in internal"
 
 - name: ntp time source {{ galaxie.ntp.pool }}
