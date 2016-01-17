@@ -103,7 +103,6 @@
   notify:
     - restart service
 
-
 - name: Write {{ galaxie.local_name_server }} in {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}
   template:
     src=local-domain-server.j2

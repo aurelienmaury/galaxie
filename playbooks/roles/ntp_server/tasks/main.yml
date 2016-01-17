@@ -16,14 +16,14 @@
     src=ntp-server-internal.conf.j2
     dest=/etc/ntp.conf
   notify: restart ntp
-  when: "'yes' in internal"
+  when: inventory_hostname in groups["internal-machines"]
 
 - name: ntp time source {{ galaxie.ntp.pool }}
   template:
     src=ntp-server-external.conf.j2
     dest=/etc/ntp.conf
   notify: restart ntp
-  when: "'no' in internal"
+  when: inventory_hostname in groups["external-machines"]
 
 - name: remove file /etc/dhcp/dhclient-exit-hooks.d/ntp
   file:
