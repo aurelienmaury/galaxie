@@ -12,6 +12,8 @@
 
 - name: check djbdns installed
   shell: "dpkg -l | grep djbdns"
+  failed_when: "djb_installed.rc == 2"
+  changed_when: "djb_installed.rc == 1"
   register: djb_installed
   ignore_errors: yes
 
@@ -63,6 +65,8 @@
 
 - name: check dnscache-conf output directory exists
   shell: "test -d {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}"
+  failed_when: "superviseExists.rc == 2"
+  changed_when: "superviseExists.rc == 1"
   register: superviseExists
   ignore_errors: yes
 
@@ -90,34 +94,37 @@
     state=directory
     mode=2755
 
-- name: seed dnsroots
-  shell: "dnsip `dnsqr ns . | awk '/answer:/ { print $5; }' |sort`  > {{ galaxie.dnscache.dnsroots_global_file }}"
+- name: Write {{ galaxie.local_name_server }} in {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.localdomain }}
+  template:
+    src=local-domain-server.j2
+    dest={{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.localdomain }}
+    backup=no
+  when: inventory_hostname in groups["internal-machines"]
+  notify:
+    - restart service
 
-- name: stat dnsroots
-  stat: path={{ galaxie.dnscache.dnsroots_global_file }}
-  register: dnsroots
 
-- name: update dnscache dnsroots list
-  command: cp {{ galaxie.dnscache.dnsroots_global_file }} {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/@
-  when: dnsroots.stat.exists
+- name: Write {{ galaxie.local_name_server }} in {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}
+  template:
+    src=local-domain-server.j2
+    dest={{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}
+    backup=no
+  when: inventory_hostname in groups["internal-machines"]
+  notify:
+    - restart service
 
 - name: check if service registered
   shell: "/usr/sbin/update-service --list | grep {{ galaxie.dnscache.service_name }}"
+  failed_when: "serviceRegistered.rc == 2"
+  changed_when: "serviceRegistered.rc == 1"
   register: serviceRegistered
   ignore_errors: yes
   notify:
     - register service
     - restart service
 
-- name: enable local server name resolution
-  template:
-    src=templates/etc_resolv.j2
-    dest=/etc/resolv.conf
-    backup=yes
-
-
-#- name: define localdomain
-#  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.localdomain }}"
-
-#- name: define local reverse dns zone
-#  shell: "echo '{{ galaxie.local_name_server }}' > {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/{{ galaxie.local_reverse_zone }}"
+#- name: enable local server name resolution
+#  template:
+#    src=templates/etc_resolv.j2
+#    dest=/etc/resolv.conf
+#    backup=yes
