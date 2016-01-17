@@ -1,6 +1,4 @@
 ---
-- debug: var={{ internal }}
-
 - name: ntpdate is absent
   apt:
     pkg=ntpdate
@@ -15,14 +13,12 @@
 - name: ntp time source {{ galaxie.ntp.local }}
   template: src=ntp-client-internal.conf.j2 dest=/etc/ntp.conf
   notify: restart ntp
-  #when: internal is defined
-  when: "'yes' in internal"
+  when: "'internal-machines' in {{ group_names }}"
 
 - name: ntp time source {{ galaxie.ntp.pool }}
   template: src=ntp-client-external.conf.j2 dest=/etc/ntp.conf
   notify: restart ntp
-  #when: internal is undefined
-  when: "'no' in internal"
+  when: "'external-machines' in {{ group_names }}"
 
 - name: remove file /etc/dhcp/dhclient-exit-hooks.d/ntp
   file:

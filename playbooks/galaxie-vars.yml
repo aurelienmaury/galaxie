@@ -38,7 +38,10 @@ galaxie:
       - 'nabu.galaxie.ici'
 
   apt_cacher_ng:
-    server: uranus.galaxie.ici
+    server:
+      internal: uranus.galaxie.ici
+      external: mycompagny.com
+      self: localhost
     port: 9999
     cache_dir: /mnt/pvr/Apt-Cacher-ng
     user: apt-cacher-ng

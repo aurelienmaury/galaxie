@@ -1,0 +1,9 @@
+- hosts: apt-cacher-ng-client
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  roles:
+    - apt-cacher-ng-client
