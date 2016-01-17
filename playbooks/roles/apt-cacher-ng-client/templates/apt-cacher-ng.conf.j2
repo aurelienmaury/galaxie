@@ -1,0 +1,10 @@
+{% if inventory_hostname in groups["internal-machines"] %}
+Acquire::http {
+        Proxy "http://{{ galaxie.apt_cacher_ng.server.internal }}:{{ galaxie.apt_cacher_ng.port }}";
+        };
+{% endif %}
+{% if inventory_hostname in groups["external-machines"] %}
+Acquire::http {
+        Proxy "http://{{ galaxie.apt_cacher_ng.server.external }}:{{ galaxie.apt_cacher_ng.port }}";
+        };
+{% endif %}

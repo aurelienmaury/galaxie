@@ -1,18 +1,13 @@
 ---
 - name: write /etc/apt/apt.conf
   template:
-    src=apt-cacher-ng-internal.conf.j2
+    src=apt-cacher-ng.conf.j2
     dest=/etc/apt/apt.conf
     backup=yes
-  when: "'internal-machines' in {{ group_names }}"
-
-- name: write /etc/apt/apt.conf
-  template:
-    src=apt-cacher-ng-external.conf.j2
-    dest=/etc/apt/apt.conf
-    backup=yes
-  when: "'external-machines' in {{ group_names }}"
+  #when: "'internal-machines' in {{ group_names }}"
+  register: apt_config
 
 - name: update apt cache
   apt:
     update_cache=yes
+  when: apt_config.changed

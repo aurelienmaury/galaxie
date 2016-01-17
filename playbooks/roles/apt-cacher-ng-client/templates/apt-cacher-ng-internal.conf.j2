@@ -1,5 +1,0 @@
-{% if 'internal-machines' in {{ group_names }} %}
-Acquire::http {
-        Proxy "http://{{ galaxie.apt_cacher_ng.server.internal }}:{{ galaxie.apt_cacher_ng.port }}";
-        };
-{% endif %}
