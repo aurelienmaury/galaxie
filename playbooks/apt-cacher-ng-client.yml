@@ -1,3 +1,4 @@
+---
 - hosts: apt-cacher-ng-client
   user: zoe
   sudo: true

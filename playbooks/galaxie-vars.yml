@@ -41,7 +41,7 @@ galaxie:
     server:
       internal: uranus.galaxie.ici
       external: mycompagny.com
-      self: localhost
+      self: 127.0.1.1
     port: 9999
     cache_dir: /mnt/pvr/Apt-Cacher-ng
     user: apt-cacher-ng

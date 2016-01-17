@@ -1,16 +1,10 @@
 ---
 - hosts: apt-cacher-ng-server
   user: zoe
-  sudo: yes
+  sudo: true
 
   vars_files:
     - "galaxie-vars.yml"
 
-  tasks:
-
-  handlers:
-    - name: restart apt-cacher-ng
-      service:
-        name=apt-cacher-ng
-        state=restarted
-
+  roles:
+    - apt-cacher-ng-server
