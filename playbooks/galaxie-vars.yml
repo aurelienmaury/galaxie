@@ -56,6 +56,7 @@ galaxie:
     multilog_dir: /var/multilog
     multilog_user: multilog
     dnsroots_global_file: /etc/dnsroots.global
+    host_for_test: github.com
 
   zfsonlinux:
     # The Debian GNU/Linux ZoL

@@ -1,6 +1,7 @@
 ---
 # Servers
 - include: dnscache-server.yml
+- include: dnscache-server-update.yml
 - include: ntp-server.yml
 - include: apt-cacher-ng-server.yml
 - include: galaxie-emby-server.yml
