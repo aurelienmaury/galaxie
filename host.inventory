@@ -17,6 +17,19 @@ gatcorp
 [zoe-voices]
 jupiter
 
+### DNSCACHE ###
+[dnscache-server]
+jupiter
+uranus
+neptune
+mercure
+
+[dnscache-client]
+jupiter
+uranus
+neptune
+mercure
+
 ### NTP ###
 [ntp-clients]
 jupiter

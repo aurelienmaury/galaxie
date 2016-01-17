@@ -1,0 +1,33 @@
+---
+- name: Create temp file {{ galaxie.dnscache.dnsroots_global_file }}.XXXXXXXXX
+  command: mktemp {{ galaxie.dnscache.dnsroots_global_file }}.XXXXXXXXX
+  register: tmp_file
+
+- name: Seed dnsroots
+  shell: "dnsip `dnsqr ns . | awk '/answer:/ { print $5; }' |sort`  > {{ tmp_file.stdout }}"
+
+- name: Stat of {{ galaxie.dnscache.dnsroots_global_file }}
+  stat:
+    path="{{ galaxie.dnscache.dnsroots_global_file }}"
+    #get_md5=yes
+  register: dnsroots_global_file
+
+- name: "Stat of {{ tmp_file.stdout }}"
+  stat:
+    path="{{ tmp_file.stdout }}"
+    #get_md5=yes
+  register: dnsroots_global_tmp_file
+
+- name: Update {{ galaxie.dnscache.dnsroots_global_file }}
+  command: cp {{ tmp_file.stdout }} {{ galaxie.dnscache.dnsroots_global_file }}
+  when: "'{{dnsroots_global_file.stat.checksum}}' != '{{dnsroots_global_tmp_file.stat.checksum}}'"
+
+- name: Update dnscache dnsroots list
+  command: cp {{ galaxie.dnscache.dnsroots_global_file }} {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/@
+  when: "'{{dnsroots_global_file.stat.checksum}}' != '{{dnsroots_global_tmp_file.stat.checksum}}'"
+  notify:
+    - restart service
+
+- name: Delete {{ tmp_file.stdout }}
+  file: path={{ tmp_file.stdout }} state=absent
+  always_run: true

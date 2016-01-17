@@ -1,0 +1,10 @@
+---
+- hosts: dnscache-client
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  roles:
+    - dnscache-client
