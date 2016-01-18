@@ -84,8 +84,8 @@
      shell: usermod -p `/usr/bin/openssl rand -base64 32` hts
      when: newuser.changed
 
-   - name: Transfert a previous Tvheadend .hts directory backup
-     copy: src=/home/tuxa/hts.tar.gz dest=/home/hts/hts.tar.gz owner=hts group=hts mode=0644
+#   - name: Transfert a previous Tvheadend .hts directory backup
+#     copy: src=/home/lulu/hts.tar.gz dest=/home/hts/hts.tar.gz owner=hts group=hts mode=0644
 
    - name: Extract that hts.tar.gs file
      shell: chdir=/home/hts tar -xzf hts.tar.gz

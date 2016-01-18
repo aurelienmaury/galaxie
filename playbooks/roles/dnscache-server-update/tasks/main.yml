@@ -9,12 +9,6 @@
   changed_when: False
   register: ResolverCheck
 
-- name: test if we can resolv "{{ galaxie.dnscache.host_for_test }}" via {{ galaxie.dnscache.interface }}
-  shell: "host {{ galaxie.dnscache.host_for_test }} {{ galaxie.dnscache.interface }}"
-  changed_when: False
-  register: ResolverCheck
-  ignore_errors: yes
-
 - name: Seed dnsroots
   shell: "dnsip `dnsqr ns . | awk '/answer:/ { print $5; }' |sort`  > {{ tmp_file.stdout }}"
   changed_when: False
