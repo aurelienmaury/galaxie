@@ -17,13 +17,11 @@
 - name: Stat of {{ galaxie.dnscache.dnsroots_global_file }}
   stat:
     path="{{ galaxie.dnscache.dnsroots_global_file }}"
-    #get_md5=yes
   register: dnsroots_global_file
 
 - name: "Stat of {{ tmp_file.stdout }}"
   stat:
     path="{{ tmp_file.stdout }}"
-    #get_md5=yes
   register: dnsroots_global_tmp_file
 
 - name: Update {{ galaxie.dnscache.dnsroots_global_file }}
