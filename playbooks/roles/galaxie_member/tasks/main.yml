@@ -1,18 +1,5 @@
 ---
 
-- name: activate debian jessie main contrib non-free repository
-  apt_repository: repo="{{ item }}" state=present
-  with_items:
-    - "deb http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
-    - "deb-src http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
-    - "deb http://security.debian.org/ jessie/updates main non-free contrib"
-    - "deb-src http://security.debian.org/ jessie/updates main non-free contrib"
-    - "deb http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
-    - "deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
-
-- name: update apt cache
-  apt: update_cache=yes cache_valid_time=3600
-
 - include: locales.yml
 - include: headless.yml
 - include: motd.yml

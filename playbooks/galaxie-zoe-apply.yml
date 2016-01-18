@@ -4,6 +4,7 @@
 ###############
 - include: openssh-server.yml
 - include: openssh-client.yml
+- include: apt-get-client.yml
 ###############
 ### Servers ###
 ###############
@@ -28,7 +29,7 @@
 - include: dnscache-client.yml
 - include: ntp-client.yml
 - include: apt-cacher-ng-client.yml
-#- include: galaxie-member.yml
+- include: galaxie-member.yml
 
 # Desktops
 #- include: desktops-base.yml
