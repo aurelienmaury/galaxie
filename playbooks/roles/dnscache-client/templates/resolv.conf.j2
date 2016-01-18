@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+{% if inventory_hostname in groups["internal-machines"] %}
+domain {{ galaxie.localdomain }}
+{% endif %}
+{% if ResolverCheck.rc == 0 %}
+nameserver {{ galaxie.dnscache.interface }}
+{% endif %}
+{% if ResolverCheck.rc != 0 %}
+# OpenNIC IPv4 nameservers (US)
+nameserver 107.170.95.180
+nameserver 75.127.14.107
+{% endif %}

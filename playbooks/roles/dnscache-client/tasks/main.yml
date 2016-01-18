@@ -1,0 +1,19 @@
+---
+
+- name: test if we can resolv "{{ galaxie.dnscache.host_for_test }}" via {{ galaxie.dnscache.interface }}
+  shell: "host {{ galaxie.dnscache.host_for_test }} {{ galaxie.dnscache.interface }}"
+  changed_when: False
+  register: ResolverCheck
+
+- name: Enable local server name resolution via DNSCache
+  template:
+    src=resolv.conf.j2
+    dest=/etc/resolv.conf
+    backup=yes
+  when: "ResolverCheck.rc == 0"
+
+- name: Remove resolvconf
+  apt:
+    name: resolvconf
+    state: absent
+  when: "ResolverCheck.rc == 0"
