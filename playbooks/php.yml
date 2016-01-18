@@ -6,4 +6,4 @@
     - "galaxie-vars.yml"
 
   roles:
-    - galaxie_apache
+    - php

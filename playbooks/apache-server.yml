@@ -1,4 +1,4 @@
-- hosts: mysql-servers
+- hosts: web-servers
   user: zoe
   sudo: true
 
@@ -6,4 +6,4 @@
     - "galaxie-vars.yml"
 
   roles:
-    - galaxie_mysql
+    - apache-server
