@@ -1,6 +1,6 @@
 ---
 
-- name: sshd is configured the galaxie way
+- name: sshd is configured the good way
   lineinfile:
     dest=/etc/ssh/sshd_config
     regexp="^{{ item.key }} "
@@ -34,7 +34,7 @@
     - { key: "GSSAPIAuthentication",    value: "no" }
     - { key: "ChallengeResponseAuthentication", value: "no" }
   notify:
-    - restart sshd
+    - restart sshd service
 
 - name: ssh is configured the galaxie way
   lineinfile:
@@ -46,7 +46,7 @@
   with_items:
     - { key: "CompressionLevel", value: "9" }
   notify:
-    - restart sshd
+    - restart sshd service
 
 - name: disable check local mail after login
   lineinfile:

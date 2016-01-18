@@ -17,6 +17,21 @@ gatcorp
 [zoe-voices]
 jupiter
 
+### OPENSSH ###
+[openssh-server]
+jupiter
+uranus
+neptune
+mercure
+gatcorp
+
+[openssh-client]
+jupiter
+uranus
+neptune
+mercure
+gatcorp
+
 ### DNSCACHE ###
 [dnscache-server]
 jupiter

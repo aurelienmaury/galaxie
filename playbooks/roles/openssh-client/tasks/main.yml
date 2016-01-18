@@ -1,0 +1,23 @@
+---
+
+- name: set CompressionLevel 9
+  lineinfile:
+    dest="/etc/ssh/ssh_config"
+    regexp="^ *CompressionLevel.*|^# *CompressionLevel.*"
+    line="    CompressionLevel 9"
+  notify: restart ssh service
+
+- name: set Protocole 2
+  lineinfile:
+    dest="/etc/ssh/ssh_config"
+    regexp="^ *Protocol.*|^# *Protocol.*"
+    line="    Protocol 2"
+  notify: restart ssh service
+
+- name: fixe bug CVE-2016-0777
+  lineinfile:
+    dest="/etc/ssh/ssh_config"
+    regexp="^ *UseRoaming.*"
+    line="    UseRoaming no"
+    insertafter="^Host \*"
+  notify: restart ssh service

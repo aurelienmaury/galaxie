@@ -13,14 +13,9 @@
 - name: update apt cache
   apt: update_cache=yes cache_valid_time=3600
 
-
+- include: locales.yml
 - include: headless.yml
-- include: sshd.yml
 - include: motd.yml
 - include: bashrc.yml
-#- include: dnscache.yml
-
-#- include: powersave.yml
-
 - include: vim.yml
-- include: locales.yml
+#- include: powersave.yml
