@@ -17,6 +17,11 @@
         - "{{ galaxie.cache_dir }}"
         - "{{ galaxie.applications_dir }}"
 
+    - name: Delete {{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
+      file:
+        path={{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
+        state=absent
+
     - name: Get Stats {{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
       stat: path={{ galaxie.cache_dir }}/{{ galaxie.firefox.filename }}
       register: firefox_source_file_stat
@@ -29,7 +34,7 @@
         validate_certs=no
       when: not firefox_source_file_stat.stat.exists
 
-    - name: Delete previus version
+    - name: Delete {{ galaxie.applications_dir }}/firefox
       file:
         path={{ galaxie.applications_dir }}/firefox
         state=absent

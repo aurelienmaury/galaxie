@@ -71,12 +71,13 @@ galaxie:
     root_db_password: ++monsupermotdepasse++
   firefox:
     dowloader_url: https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=fr
-    repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr
+    #repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr
     filename: firefox-lastest.tar.bz2
 
   thunderbird:
-    repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.5.1/linux-x86_64/fr
-    filename: thunderbird-38.5.1.tar.bz2
+    dowloader_url: https://download.mozilla.org/?product=thunderbird-latest&os=linux64&lang=fr
+    #repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.5.1/linux-x86_64/fr
+    filename: thunderbird-lastest.tar.bz2
 
   scripts:
     directory: /opt/galaxie/bin
