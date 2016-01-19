@@ -1,12 +1,25 @@
 # {{ ansible_managed }}
+{% if dns_set_domain  %}
 {% if inventory_hostname in groups["internal-machines"] %}
-domain {{ galaxie.localdomain }}
+domain {{ dns_internal_domain }}
 {% endif %}
+{% if inventory_hostname in groups["external-machines"] %}
+domain {{ dns_external_domain }}
+{% endif %}
+{% endif %}
+{% if dns_set_domain_name_servers %}
 {% if ResolverCheck.rc == 0 %}
-nameserver {{ galaxie.dnscache.interface }}
+{% for dnsserver in dns_nameservers %}
+nameserver {{dnsserver}}
+{% endfor %}
 {% endif %}
 {% if ResolverCheck.rc != 0 %}
-# OpenNIC IPv4 nameservers (US)
-nameserver 107.170.95.180
-nameserver 75.127.14.107
+{{ dns_default_nameservers_description }}
+{% for dnsserver in dns_default_nameservers %}
+nameserver {{dnsserver}}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if dns_set_domain_search %}
+search {% for suffix in dns_searchs %}{{suffix}} {% endfor %}
 {% endif %}

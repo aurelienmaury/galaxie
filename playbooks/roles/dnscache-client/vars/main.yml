@@ -1,0 +1,17 @@
+---
+# DNS Setting #
+dns_default_nameservers_description: "# OpenNIC IPv4 nameservers (US)"
+dns_default_nameservers: ['107.170.95.180', '75.127.14.107']
+dns_remove_resolvconf: true
+dns_set_domain: true
+dns_set_domain_name_servers: true
+dns_set_domain_search: false
+dns_internal_domain: "galaxie.ici"
+dns_external_domain: "mycompagny.com"
+dns_nameservers:
+ - "{{ galaxie.dnscache.interface }}"
+dns_searchs:
+ - "mysuffix1.com"
+ - "mysuffix2.com"
+ - "mysuffix3.com"
+dns_dhclient_file: "/etc/dhcp/dhclient.conf"

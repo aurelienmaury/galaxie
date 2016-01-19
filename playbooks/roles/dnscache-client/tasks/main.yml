@@ -18,8 +18,44 @@
     state: absent
   when: "ResolverCheck.rc == 0"
 
-#- name: add key to dhclient.conf
-#  script: dhclient_add.sh /etc/dhcp/dhclient.conf request domain-name
-#  register: dhclient_key_insertion
-#  changed_when: dhclient_key_insertion.rc == 0
-#  failed_when: dhclient_key_insertion.rc >= 2
+- name: Delete "domain-name" inside {{ dns_dhclient_file }}
+  script: dhclient_rm.sh {{ dns_dhclient_file }} request domain-name
+  register: dhclient_key_remove
+  changed_when: dhclient_key_remove.rc == 0
+  failed_when: dhclient_key_remove.rc >= 2
+  when: dns_set_domain
+
+- name: Add "domain-name" inside {{ dns_dhclient_file }}
+  script: dhclient_add.sh {{ dns_dhclient_file }} request domain-name
+  register: dhclient_key_insertion
+  changed_when: dhclient_key_insertion.rc == 0
+  failed_when: dhclient_key_insertion.rc >= 2
+  when: not dns_set_domain
+
+- name: Delete "domain-name-servers" inside {{ dns_dhclient_file }}
+  script: dhclient_rm.sh {{ dns_dhclient_file }} request domain-name-servers
+  register: dhclient_key_remove
+  changed_when: dhclient_key_remove.rc == 0
+  failed_when: dhclient_key_remove.rc >= 2
+  when: dns_set_domain_name_servers
+
+- name: Add "domain-name-servers" inside {{ dns_dhclient_file }}
+  script: dhclient_add.sh {{ dns_dhclient_file }} request domain-name-servers
+  register: dhclient_key_insertion
+  changed_when: dhclient_key_insertion.rc == 0
+  failed_when: dhclient_key_insertion.rc >= 2
+  when: not dns_set_domain_name_servers
+
+- name: Delete "domain-search" inside {{ dns_dhclient_file }}
+  script: dhclient_rm.sh {{ dns_dhclient_file }} request domain-search
+  register: dhclient_key_remove
+  changed_when: dhclient_key_remove.rc == 0
+  failed_when: dhclient_key_remove.rc >= 2
+  when: dns_set_domain_search
+
+- name: Add "domain-search" inside {{ dns_dhclient_file }}
+  script: dhclient_add.sh {{ dns_dhclient_file }} request domain-search
+  register: dhclient_key_insertion
+  changed_when: dhclient_key_insertion.rc == 0
+  failed_when: dhclient_key_insertion.rc >= 2
+  when: not dns_set_domain_search
