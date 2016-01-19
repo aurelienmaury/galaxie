@@ -17,3 +17,9 @@
     name: resolvconf
     state: absent
   when: "ResolverCheck.rc == 0"
+
+#- name: add key to dhclient.conf
+#  script: dhclient_add.sh /etc/dhcp/dhclient.conf request domain-name
+#  register: dhclient_key_insertion
+#  changed_when: dhclient_key_insertion.rc == 0
+#  failed_when: dhclient_key_insertion.rc >= 2
