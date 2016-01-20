@@ -13,7 +13,6 @@
     - php5-gd
     - php5-intl
     - php-pear
-    - php5-imagick
     - php5-imap
     - php5-json
     - php5-mcrypt

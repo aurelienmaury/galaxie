@@ -121,6 +121,7 @@ neptune
 
 [web-servers]
 mercure
+gat01
 
 [mysql-servers]
 mercure
