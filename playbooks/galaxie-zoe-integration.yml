@@ -91,12 +91,12 @@
         key="{{ lookup('file', newKey+'.pub') }}"
         state=present
 
-    - name: Current key is banished for user
-      when: newKey is defined and ansible_ssh_private_key_file is defined
-      authorized_key:
-        user="{{ galaxie.user }}"
-        key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
-        state=absent
+#    - name: Current key is banished for user
+#      when: newKey is defined and ansible_ssh_private_key_file is defined
+#      authorized_key:
+#        user="{{ galaxie.user }}"
+#        key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
+#        state=absent
 
     - name: User is sudoer
       lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "

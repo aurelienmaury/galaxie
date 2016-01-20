@@ -3,8 +3,12 @@
                 /   \  ___\__  \ |  | \__  \ \  \/  /  |/ __ \
                 \    \_\  \/ __ \|  |__/ __ \_>    <|  \  ___/_
                  \________(_____ /____(_____ /__/\_ \__|\_____/
-
+{% if inventory_hostname in groups["internal-machines"] %}
 Hostname  : {{ ansible_hostname }}.{{ galaxie.localdomain }}
+{% endif %}
+{% if inventory_hostname in groups["external-machines"] %}
+Hostname  : {{ ansible_hostname }}
+{% endif %}
 {% if ansible_default_ipv4.address | default() %}
 eth0 IPv4 : {{ ansible_default_ipv4.address }}
 {% endif %}

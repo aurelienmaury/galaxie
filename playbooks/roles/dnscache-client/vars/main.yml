@@ -7,7 +7,7 @@ dns_set_domain: true
 dns_set_domain_name_servers: true
 dns_set_domain_search: false
 dns_internal_domain: "galaxie.ici"
-dns_external_domain: "mycompagny.com"
+dns_external_domain: "gatland.eu.org"
 dns_nameservers:
  - "{{ galaxie.dnscache.interface }}"
 dns_searchs:

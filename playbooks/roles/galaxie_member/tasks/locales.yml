@@ -27,6 +27,13 @@
   notify:
     - update timezone
 
+- name: Set /etc/timezone file
+  template:
+    src=timezone.j2
+    dest=/etc/timezone
+  notify:
+    - update timezone
+
 - name: Set timezone
   debconf:
     name=tzdata
@@ -34,13 +41,6 @@
     value='{{ galaxie.language.tzdata.zones }}'
     vtype='select'
   when: ansible_os_family == "Debian"
-  notify:
-    - update timezone
-
-- name: Set /etc/timezone file
-  template:
-    src=timezone.j2
-    dest=/etc/timezone
   notify:
     - update timezone
 
