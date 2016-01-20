@@ -9,4 +9,4 @@
 #   0 - file modified
 #   1 - file unchanged (either key absent or value already present)
 #   2 - error (detected and throwed by sed)
-sed -r ":a;N;\$!ba; /$2([^;]|\n)*;/ {/$3(, |;)/! {s/($2([^;]|\n)*);/\1, $3;/g;q}};q1" -i $1
+sed -r ":a;N;\$!ba; /\n$2([^;]|\n)*;/ {/\n$2([^;]|\n)*$3(, |;)([^;]|\n)*;/! {s/\n($2([^;]|\n)*);/\n\1, $3;/g;q}};q1" -i $1
