@@ -1,0 +1,33 @@
+---
+- name: Check require installation
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - unzip
+    - python-httplib2
+    - findutils
+
+- name: Check {{ gnome_extensions_dir }}
+  file:
+    path={{ working_directory }}
+    state=directory
+    mode=0755
+
+# Gno-Menu
+- include: get-extension.yml extension_id=608 gnome_verion=3.14
+#- include: get-extension.yml extension_id=72 gnome_verion=3.14
+
+- name: set apps-grid-icon-size
+  dconf:
+    user=tuxa
+    key=/org/gnome/shell/extensions/gnomenu/apps-grid-icon-size
+    value='49'
+
+- name: set apps-list-icon-size
+  dconf:
+    user=tuxa
+    key=/org/gnome/shell/extensions/gnomenu/apps-list-icon-size
+    value=24
+
+
+#- name: set apps-list-icon-size
+#  command: "su tuxa bash -c 'dconf write /org/gnome/shell/extensions/gnomenu/apps-list-icon-size 24'"

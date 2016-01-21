@@ -1,0 +1,14 @@
+- hosts: desktops
+  user: zoe
+  sudo: true
+
+  vars_files:
+    - "galaxie-vars.yml"
+
+  roles:
+    - gnome-extensions
+
+
+
+
+

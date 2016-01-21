@@ -1,0 +1,97 @@
+---
+
+
+
+- name: Create temp file in {{ tmpdir }}/
+  command: mktemp {{ tmpdir }}/extension.XXXXXXXXX
+  changed_when: False
+  register: tmp_filename
+
+- name: Download Extension information
+  uri:
+    url="{{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}"
+    method=GET
+    return_content=yes
+    dest={{ tmp_filename.stdout }}
+  register: download_infos
+  changed_when: False
+
+- name: Parse Extension information
+  shell: cat {{ tmp_filename.stdout }}
+  register: result
+  changed_when: False
+
+- name: Converse that to usable informations
+  set_fact:
+    extension_info="{{ result.stdout | from_json }}"
+
+- name: Display extension
+  debug:
+    msg="{{ extension_info }}"
+
+- name: Download {{ gnome_extensions_url }}{{ extension_info.download_url }} to {{ working_directory }}/{{ extension_info.name }}-{{ extension_info.version }}.{{ extension_info.version_tag }}.zip
+  get_url:
+    url="{{ gnome_extensions_url }}{{ extension_info.download_url }}"
+    dest="{{ working_directory }}/{{ extension_info.name }}-{{ extension_info.version }}.{{ extension_info.version_tag }}.zip"
+  when: extension_info.download_url
+  failed_when: not extension_info.download_url
+
+- name: Check {{ gnome_extensions_dir }}/{{ extension_info.uuid }}
+  file:
+    path="{{ gnome_extensions_dir }}/{{ extension_info.uuid }}"
+    state=directory
+    mode=0755
+
+- name: Unarchive "{{ working_directory }}/{{ extension_info.name }}-{{ extension_info.version }}.{{ extension_info.version_tag }}.zip"
+  unarchive:
+    src="{{ working_directory }}/{{ extension_info.name }}-{{ extension_info.version }}.{{ extension_info.version_tag }}.zip"
+    dest="{{ gnome_extensions_dir }}/{{ extension_info.uuid }}"
+
+- name: Ensure directories are 0755
+  command: find {{ gnome_extensions_dir }}/{{ extension_info.uuid }} -type d -exec chmod 0755 {} \;
+
+- name: Ensure files are 0644
+  command: find {{ gnome_extensions_dir }}/{{ extension_info.uuid }} -type f -exec chmod 0644 {} \;
+
+- name: Delete {{ tmp_filename.stdout }}
+  file:
+    path={{ tmp_filename.stdout }}
+    state=absent
+  changed_when: False
+
+#- name: Download {{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
+#  command: wget -o {{ tmp_filename.stdout }} {{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
+#  get_url:
+#    url={{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
+#    dest={{ tmp_filename.stdout }}
+
+#
+#- name: Get enabled extension list
+#  command: gsettings get org.gnome.shell enabled-extensions
+#  register: enabled_extensions
+#  changed_when: False
+#
+#- name: List extension
+#  debug:
+#    msg="{{ enabled_extensions.stdout }}"
+#
+##  EXTENSION_LIST=$(gsettings get org.gnome.shell enabled-extensions | sed 's/^.\(.*\).$/\1/')
+##
+##  # check if extension is already enabled
+##  EXTENSION_ENABLED=$(echo ${EXTENSION_LIST} | grep ${EXTENSION_UUID})
+#
+#
+#- name: Install Gno-Menu by Panacier
+#  script: shell-extension-install {{ gnome_verion }} 608
+#  register: install_gno_menu_status
+#  changed_when: install_gno_menu_status.rc == 0
+#  failed_when: install_gno_menu_status.rc >= 2
+#  #when: install_gno_menu
+#
+#- name: Delete /tmp/extension.txt
+#  file: path=/tmp/extension.txt state=absent
+#  changed_when: False
+#
+#- name: Delete /tmp/extension.zip
+#  file: path=/tmp/extension.zip state=absent
+#  changed_when: False
