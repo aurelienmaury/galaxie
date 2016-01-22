@@ -13,21 +13,17 @@
     mode=0755
 
 # Gno-Menu
-- include: get-extension.yml extension_id=608 gnome_verion=3.14
-#- include: get-extension.yml extension_id=72 gnome_verion=3.14
+- include: get-extension.yml extension_id=608 gnome_verion=3.14 user=tuxa
+- include: configure-gnomenu.yml user=tuxa
 
-- name: set apps-grid-icon-size
-  dconf:
-    user=tuxa
-    key=/org/gnome/shell/extensions/gnomenu/apps-grid-icon-size
-    value='49'
+# Autohide Battery by iskin
+- include: get-extension.yml extension_id=595 gnome_verion=3.14 user=tuxa
 
-- name: set apps-list-icon-size
-  dconf:
-    user=tuxa
-    key=/org/gnome/shell/extensions/gnomenu/apps-list-icon-size
-    value=24
+# Gradient Top Bar by jpec
+- include: get-extension.yml extension_id=860 gnome_verion=3.14 user=tuxa
 
+# Hide App Icon by mrapp
+- include: get-extension.yml extension_id=810 gnome_verion=3.14 user=tuxa
 
 #- name: set apps-list-icon-size
 #  command: "su tuxa bash -c 'dconf write /org/gnome/shell/extensions/gnomenu/apps-list-icon-size 24'"

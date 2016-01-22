@@ -1,0 +1,72 @@
+---
+- name: set apps-grid-icon-size
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/apps-grid-icon-size
+    value=48
+
+- name: set apps-list-icon-size
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/apps-list-icon-size
+    value=24
+
+- name: set category-selection-method
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/category-selection-method
+    value="'Hover'"
+
+- name: set disable-activities-hotcorner
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/disable-activities-hotcorner
+    value=true
+
+- name: set disable-panel-menu-hotspot
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/disable-panel-menu-hotspot
+    value=false
+
+- name: set disable-panel-menu-keyboard
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/disable-panel-menu-keyboard
+    value=true
+
+- name: set hide-panel-apps
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/hide-panel-apps
+    value=true
+
+- name: set hide-panel-view
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/hide-panel-view
+    value=true
+
+- name: set hide-shortcuts
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/hide-shortcuts
+    value=true
+
+- name: set menu-layout
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/menu-layout
+    value="'Medium'"
+
+- name: set shortcuts-icon-size
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/shortcuts-icon-size
+    value=32
+
+- name: set use-panel-menu-icon
+  dconf:
+    user={{ user }}
+    key=/org/gnome/shell/extensions/gnomenu/use-panel-menu-icon
+    value=true
