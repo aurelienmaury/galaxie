@@ -1,0 +1,82 @@
+---
+# Config gnome-terminal
+
+# gconftool-2 --type bool --set /apps/gnome-terminal/profiles/Default/default_show_menubar 0
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/profiles/Default/default_show_menubar
+    type=bool
+    value=false
+
+#gconftool-2 --type int --set /apps/gnome-terminal/profiles/Default/scrollback_lines 10000
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/profiles/Default/scrollback_lines
+    type=int
+    value=10000
+
+#gconftool-2 --type bool --set /apps/gnome-terminal/profiles/Default/scrollback_unlimited 1
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/profiles/Default/scrollback_unlimited
+    type=bool
+    value=true
+
+#gconftool-2 --type bool --set /apps/gnome-terminal/profiles/Default/silent_bell 0
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/profiles/Default/silent_bell
+    type=bool
+    value=false
+
+#gconftool-2 --type string --set /apps/gnome-terminal/keybindings/next_tab "<Shift>Right"
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/keybindings/next_tab
+    type=string
+    value="<Shift>Right"
+
+#gconftool-2 --type string --set /apps/gnome-terminal/keybindings/prev_tab "<Shift>Left"
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/keybindings/prev_tab
+    type=string
+    value="<Shift>Left"
+
+#gconftool-2 --type string --set /apps/gnome-terminal/keybindings/move_tab_right "<Shift><Control>Right"
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/keybindings/move_tab_right
+    type=string
+    value="<Shift><Control>Right"
+
+#gconftool-2 --type string --set /apps/gnome-terminal/keybindings/move_tab_left "<Shift><Control>Left"
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/keybindings/move_tab_left
+    type=string
+    value="<Shift><Control>Left"
+
+#gconftool-2 --type string --set /apps/gnome-terminal/keybindings/new_tab "<Control>t"
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/keybindings/new_tab
+    type=string
+    value="<Control>t"
+
+#gconftool-2 --type string --set /apps/gnome-terminal/keybindings/zoom_in "<Ctrl>equal"
+- include:
+    gconftool-2.yml
+    config_source=xml:readwrite:/etc/gconf/gconf.xml.defaults
+    key=/apps/gnome-terminal/keybindings/zoom_in
+    type=string
+    value="<Ctrl>equal"

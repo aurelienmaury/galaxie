@@ -1,0 +1,19 @@
+---
+
+# Check if the key exist and get the value
+- name: check {{ key }} '{{ value }}'
+  command: "gconftool-2 \
+            --direct --config-source {{ config_source }} \
+            --get {{ key }} \
+            "
+  changed_when: false
+  register: status
+
+# In case set the key value
+- name: set {{ key }} '{{ value }}'
+  command: "gconftool-2 \
+            --direct --config-source {{ config_source }} \
+            --type {{ type }} \
+            --set {{ key }} '{{ value }}' \
+            "
+  when: status.stdout != '{{ value }}'
