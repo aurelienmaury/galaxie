@@ -53,19 +53,22 @@
 - name: Ensure files are 0644
   command: find {{ gnome_extensions_dir }}/{{ extension_info.uuid }} -type f -exec chmod 0644 {} \;
 
-- name: Enable {{ extension_info.uuid }}
-  become: yes
-  become_user: tuxa
-  command: gnome-shell-extension-tool -e {{ extension_info.uuid }}
-  register: enable_extension_result
-  changed_when: enable_extension_result.rc == 0
-  failed_when: enable_extension_result.rc >= 2
+#- name: Enable {{ extension_info.uuid }}
+#  become: yes
+#  become_user: tuxa
+#  command: gnome-shell-extension-tool -e {{ extension_info.uuid }}
+#  register: enable_extension_result
+#  changed_when: enable_extension_result.rc == 0
+#  failed_when: enable_extension_result.rc >= 2
 
-- name: Delete {{ tmp_filename.stdout }}
-  file:
-    path={{ tmp_filename.stdout }}
-    state=absent
-  changed_when: False
+# Enable extention
+- name: Enable extension
+  set_fact:
+    enabled_extensions: "{{ {% for extension in enabled_extensions %}{{extension}} {% endfor %} + extension_info.uuid }}"
+    with_items: enabled_extensions
+
+- name: Debug
+  debug: msg="{{ enabled_extensions }}"
 
 #- name: Download {{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
 #  command: wget -o {{ tmp_filename.stdout }} {{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}

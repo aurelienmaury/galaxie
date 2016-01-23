@@ -1,0 +1,31 @@
+---
+- name: Check require installation
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - libpolkit-agent-1-0
+    - libpolkit-backend-1-0
+    - libpolkit-gobject-1-0
+
+
+- name: Check "power" group
+  group:
+    name=power
+    state=present
+
+- name: Add "cpufreqselector" policy
+  template:
+    src=org.gnome.cpufreqselector.pkla.j2
+    dest=/etc/polkit-1/localauthority/50-local.d/org.gnome.cpufreqselector.pkla
+    backup=no
+
+- name: Add "stop-multiple-users" policy
+  template:
+    src=org.freedesktop.consolekit.system.stop-multiple-users.pkla.j2
+    dest=/etc/polkit-1/localauthority/50-local.d/org.freedesktop.consolekit.system.stop-multiple-users.pkla
+    backup=no
+
+- name: Add "install-packages" policy
+  template:
+    src=org.debian.apt.install-packages.pkla.j2
+    dest=/etc/polkit-1/localauthority/50-local.d/org.debian.apt.install-packages.pkla
+    backup=no

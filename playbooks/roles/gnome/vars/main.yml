@@ -6,3 +6,5 @@ gnome_extensions_dir: /usr/share/gnome-shell/extensions
 #gnome_verion: 3.14
 #extension_id: 608
 tmpdir: /tmp
+enabled_extensions:
+ - lulu

@@ -6,6 +6,10 @@
     - python-httplib2
     - findutils
 
+# Polkit-1
+- include: polkit.yml
+
+# Extensions Management
 - name: Check {{ gnome_extensions_dir }}
   file:
     path={{ working_directory }}
@@ -13,8 +17,8 @@
     mode=0755
 
 # Gno-Menu
-- include: get-extension.yml extension_id=608 gnome_verion=3.14 user=tuxa
-- include: configure-gnomenu.yml
+#- include: get-extension.yml extension_id=608 gnome_verion=3.14 user=tuxa
+#- include: configure-gnomenu.yml
 
 # Autohide Battery by iskin
 #- include: get-extension.yml extension_id=595 gnome_verion=3.14 user=tuxa
@@ -29,4 +33,4 @@
 #- name: set apps-list-icon-size
 #  command: "su tuxa bash -c 'dconf write /org/gnome/shell/extensions/gnomenu/apps-list-icon-size 24'"
 
-- include: configure-gnome-terminal.yml
+#- include: configure-gnome-terminal.yml

@@ -6,7 +6,7 @@
     - "galaxie-vars.yml"
 
   roles:
-    - gnome-extensions
+    - gnome
 
 
 
