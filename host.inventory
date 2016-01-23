@@ -93,10 +93,11 @@ uranus
 
 
 
-
+# Tv-head-end
 [pvr-servers]
 uranus
 
+# emby
 [media-servers]
 uranus
 gatcorp

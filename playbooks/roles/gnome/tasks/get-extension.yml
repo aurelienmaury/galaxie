@@ -1,7 +1,5 @@
 ---
 
-
-
 - name: Create temp file in {{ tmpdir }}/
   command: mktemp {{ tmpdir }}/extension.XXXXXXXXX
   changed_when: False
@@ -62,19 +60,14 @@
 #  failed_when: enable_extension_result.rc >= 2
 
 # Enable extention
-- name: Enable extension
-  set_fact:
-    enabled_extensions: "{{ {% for extension in enabled_extensions %}{{extension}} {% endfor %} + extension_info.uuid }}"
-    with_items: enabled_extensions
+#- name: Enable extension
+#  set_fact:
+#    enabled_extensions: "{{ {% for extension in enabled_extensions %}{{extension}} {% endfor %} + extension_info.uuid }}"
+#    with_items: enabled_extensions
+#
+#- name: Debug
+#  debug: msg="{{ enabled_extensions }}"
 
-- name: Debug
-  debug: msg="{{ enabled_extensions }}"
-
-#- name: Download {{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
-#  command: wget -o {{ tmp_filename.stdout }} {{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
-#  get_url:
-#    url={{ gnome_extensions_url }}/extension-info/?pk={{extension_id}}&shell_version={{gnome_verion}}
-#    dest={{ tmp_filename.stdout }}
 
 #
 #- name: Get enabled extension list
@@ -92,17 +85,3 @@
 ##  EXTENSION_ENABLED=$(echo ${EXTENSION_LIST} | grep ${EXTENSION_UUID})
 #
 #
-#- name: Install Gno-Menu by Panacier
-#  script: shell-extension-install {{ gnome_verion }} 608
-#  register: install_gno_menu_status
-#  changed_when: install_gno_menu_status.rc == 0
-#  failed_when: install_gno_menu_status.rc >= 2
-#  #when: install_gno_menu
-#
-#- name: Delete /tmp/extension.txt
-#  file: path=/tmp/extension.txt state=absent
-#  changed_when: False
-#
-#- name: Delete /tmp/extension.zip
-#  file: path=/tmp/extension.zip state=absent
-#  changed_when: False
