@@ -1,0 +1,8 @@
+prefix_dir: "/var/lib/galaxie"
+cache_dir: "{{ prefix_dir }}/src"
+optional_applications_dir: "/opt"
+os: "linux64"
+lang: "fr"
+lastest_version: "38.5.1"
+thunderbird_dowloader_url: "https://download.mozilla.org/?product=thunderbird-latest&os={{ os }}&lang={{ lang }}"
+thunderbird_filename: "thunderbird-{{ lastest_version }}.tar.bz2"

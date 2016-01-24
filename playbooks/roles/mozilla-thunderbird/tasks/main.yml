@@ -1,0 +1,83 @@
+---
+
+- name: Check directorys
+  file:
+    path="{{item}}"
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ cache_dir }}"
+    - "{{ optional_applications_dir }}"
+
+- name: Check for last version
+  script: get_basename_by_url.sh '{{ thunderbird_dowloader_url }}'
+  register: thunderbird_filename
+  failed_when: not thunderbird_filename.stdout
+  changed_when: False
+
+#- debug: msg="{{ thunderbird_filename.stdout_lines[0] }}"
+
+- name: Download {{ thunderbird_filename.stdout_lines[0] }}
+  get_url:
+    url="{{ thunderbird_dowloader_url }}"
+    dest="{{ cache_dir }}/{{ thunderbird_filename.stdout_lines[0] }}"
+  when: thunderbird_dowloader_url and thunderbird_filename
+  register: thunderbird_download
+  failed_when: not thunderbird_dowloader_url
+
+#- debug: msg="{{ thunderbird_download }}"
+
+- name: Delete {{ optional_applications_dir }}/thunderbird
+  file:
+    path={{ optional_applications_dir }}/thunderbird
+    state=absent
+  when: thunderbird_download.changed
+
+- name: Unarchive {{ thunderbird_download.dest }}
+  unarchive:
+    src="{{ thunderbird_download.dest }}"
+    dest="{{ optional_applications_dir }}"
+    copy=no
+  when: thunderbird_download.changed
+
+- name: Set permissions of {{ optional_applications_dir }}/thunderbird
+  file:
+    path={{ optional_applications_dir }}/thunderbird
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+
+- name: Set permissions of {{ optional_applications_dir }}/thunderbird/
+  file:
+    path={{ optional_applications_dir }}/thunderbird
+    owner=root
+    group=root
+    recurse=yes
+
+- name: check /usr/bin/thunderbird link
+  stat: path=/usr/bin/thunderbird
+  register: links
+
+#- debug: msg="{{ links.stat.lnk_source }}"
+
+- name: delete previus /usr/bin/thunderbird
+  file:
+    path=/usr/bin/thunderbird
+    state=absent
+  when: links.stat.lnk_source != "{{ optional_applications_dir }}/thunderbird/thunderbird" or links.stat.islnk != true
+
+
+- name: Create symbolic link
+  file:
+    src="{{ optional_applications_dir }}/thunderbird/thunderbird"
+    dest=/usr/bin/thunderbird
+    state=link
+
+- name: creat /usr/share/applications/thunderbird.desktop is ok
+  template:
+    src=templates/thunderbird.desktop.j2
+    dest=/usr/share/applications/thunderbird.desktop
+    backup=no

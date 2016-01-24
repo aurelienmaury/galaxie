@@ -3,8 +3,5 @@
 working_directory: /usr/src/extensions.gnome.org
 gnome_extensions_url: https://extensions.gnome.org
 gnome_extensions_dir: /usr/share/gnome-shell/extensions
-#gnome_verion: 3.14
-#extension_id: 608
 tmpdir: /tmp
-enabled_extensions:
- - lulu
+
