@@ -1,0 +1,82 @@
+---
+
+- name: Check directorys
+  file:
+    path="{{item}}"
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ cache_dir }}"
+    - "{{ optional_applications_dir }}"
+
+- name: Check for last version
+  script: get_basename_by_url.sh '{{ downloader_url }}'
+  register: filename
+  failed_when: not filename.stdout
+  changed_when: False
+
+#- debug: msg="{{ filename.stdout_lines[0] }}"
+
+- name: Download {{ filename.stdout_lines[0] }}
+  get_url:
+    url="{{ downloader_url }}"
+    dest="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
+  when: downloader_url and filename
+  register: firefox_download
+  failed_when: not downloader_url
+
+#- debug: msg="{{ firefox_download }}"
+
+- name: Delete {{ optional_applications_dir }}/firefox
+  file:
+    path={{ optional_applications_dir }}/firefox
+    state=absent
+  when: firefox_download.changed
+
+- name: Unarchive {{ firefox_download.dest }}
+  unarchive:
+    src="{{ firefox_download.dest }}"
+    dest="{{ optional_applications_dir }}"
+    copy=no
+  when: firefox_download.changed
+
+- name: Set permissions of {{ optional_applications_dir }}/firefox
+  file:
+    path={{ optional_applications_dir }}/firefox
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+
+- name: Set permissions of {{ optional_applications_dir }}/firefox/
+  file:
+    path={{ optional_applications_dir }}/firefox
+    owner=root
+    group=root
+    recurse=yes
+
+- name: Check /usr/bin/firefox link
+  stat: path=/usr/bin/firefox
+  register: links
+
+#- debug: msg="{{ links.stat.lnk_source }}"
+
+- name: Delete previus /usr/bin/firefox
+  file:
+    path=/usr/bin/firefox
+    state=absent
+  when: links.stat.lnk_source != "{{ optional_applications_dir }}/firefox/firefox" or links.stat.islnk != true
+
+- name: Create symbolic link
+  file:
+    src="{{ optional_applications_dir }}/firefox/firefox"
+    dest=/usr/bin/firefox
+    state=link
+
+- name: Creat /usr/share/applications/firefox.desktop is ok
+  template:
+    src=templates/firefox.desktop.j2
+    dest=/usr/share/applications/firefox.desktop
+    backup=no

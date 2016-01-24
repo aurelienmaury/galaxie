@@ -71,11 +71,6 @@ galaxie:
 
   mysql:
     root_db_password: ++monsupermotdepasse++
-  firefox:
-    dowloader_url: https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=fr
-    #repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr
-    filename: firefox-lastest.tar.bz2
-
 
   scripts:
     directory: /opt/galaxie/bin

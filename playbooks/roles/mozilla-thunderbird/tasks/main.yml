@@ -12,20 +12,20 @@
     - "{{ optional_applications_dir }}"
 
 - name: Check for last version
-  script: get_basename_by_url.sh '{{ thunderbird_dowloader_url }}'
-  register: thunderbird_filename
-  failed_when: not thunderbird_filename.stdout
+  script: get_basename_by_url.sh '{{ downloader_url }}'
+  register: filename
+  failed_when: not filename.stdout
   changed_when: False
 
-#- debug: msg="{{ thunderbird_filename.stdout_lines[0] }}"
+#- debug: msg="{{ filename.stdout_lines[0] }}"
 
-- name: Download {{ thunderbird_filename.stdout_lines[0] }}
+- name: Download {{ filename.stdout_lines[0] }}
   get_url:
-    url="{{ thunderbird_dowloader_url }}"
-    dest="{{ cache_dir }}/{{ thunderbird_filename.stdout_lines[0] }}"
-  when: thunderbird_dowloader_url and thunderbird_filename
+    url="{{ downloader_url }}"
+    dest="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
+  when: downloader_url and filename
   register: thunderbird_download
-  failed_when: not thunderbird_dowloader_url
+  failed_when: not downloader_url
 
 #- debug: msg="{{ thunderbird_download }}"
 
