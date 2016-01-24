@@ -1,0 +1,11 @@
+---
+service_name: dnscache
+supervise_dir: /var/lib/supervise
+source_dir: /usr/src/djbdns
+dnslog_user: dnslog
+interface: 127.0.0.1
+multilog_dir: /var/multilog
+multilog_user: multilog
+internal_domain: galaxie.ici
+internal_nameserver: 192.168.1.1
+internal_reserse_nameserver: 168.192.in-addr.arpa
