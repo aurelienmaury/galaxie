@@ -1,0 +1,5 @@
+---
+service_name: dnscache
+supervise_dir: /var/lib/supervise
+dnsroots_global_file: /etc/dnsroots.global
+host_for_test: github.com

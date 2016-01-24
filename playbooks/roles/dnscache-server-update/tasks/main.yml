@@ -1,11 +1,11 @@
 ---
-- name: Create temp file {{ galaxie.dnscache.dnsroots_global_file }}.XXXXXXXXX
-  command: mktemp {{ galaxie.dnscache.dnsroots_global_file }}.XXXXXXXXX
+- name: Create temp file {{ dnsroots_global_file }}.XXXXXXXXX
+  command: mktemp {{ dnsroots_global_file }}.XXXXXXXXX
   changed_when: False
   register: tmp_file
 
-- name: test if we can resolv "{{ galaxie.dnscache.host_for_test }}" by default
-  shell: "host {{ galaxie.dnscache.host_for_test }}"
+- name: test if we can resolv "{{ host_for_test }}" by default
+  shell: "host {{ host_for_test }}"
   changed_when: False
   register: ResolverCheck
 
@@ -14,9 +14,9 @@
   changed_when: False
   register: SeedDnsroot
 
-- name: Stat of {{ galaxie.dnscache.dnsroots_global_file }}
+- name: Stat of {{ dnsroots_global_file }}
   stat:
-    path="{{ galaxie.dnscache.dnsroots_global_file }}"
+    path="{{ dnsroots_global_file }}"
   register: dnsroots_global_file
 
 - name: "Stat of {{ tmp_file.stdout }}"
@@ -24,12 +24,12 @@
     path="{{ tmp_file.stdout }}"
   register: dnsroots_global_tmp_file
 
-- name: Update {{ galaxie.dnscache.dnsroots_global_file }}
-  command: cp {{ tmp_file.stdout }} {{ galaxie.dnscache.dnsroots_global_file }}
+- name: Update {{ dnsroots_global_file }}
+  command: cp {{ tmp_file.stdout }} {{ dnsroots_global_file }}
   when: "'{{dnsroots_global_file.stat.checksum}}' != '{{dnsroots_global_tmp_file.stat.checksum}}'"
 
 - name: Update dnscache dnsroots list
-  command: cp {{ galaxie.dnscache.dnsroots_global_file }} {{ galaxie.dnscache.supervise_dir }}/{{ galaxie.dnscache.service_name }}/root/servers/@
+  command: cp {{ dnsroots_global_file }} {{ supervise_dir }}/{{ service_name }}/root/servers/@
   when: "'{{dnsroots_global_file.stat.checksum}}' != '{{dnsroots_global_tmp_file.stat.checksum}}'"
   notify:
     - restart service
