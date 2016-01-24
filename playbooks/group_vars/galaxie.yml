@@ -1,0 +1,88 @@
+---
+
+galaxie_localdomain: galaxie.ici
+galaxie:
+  user: zoe
+  randomPasswordSeed: 'ZOE is Open and Extendable'
+  prefix_dir: /var/lib/galaxie
+  build_dir: /var/lib/galaxie/build
+  cache_dir: /var/lib/galaxie/src
+  debs_dir: /var/lib/galaxie/debs
+  bin_dir: /var/lib/galaxie/bin
+  conf_dir: /var/lib/galaxie/etc
+  applications_dir: /opt
+
+  localdomain: galaxie.ici
+  local_name_server: 192.168.1.1
+  local_reverse_zone: 168.192.in-addr.arpa
+
+  language:
+    # See /usr/share/i18n/SUPPORTED
+    locale: 'fr_FR.UTF-8 UTF-8'
+    lang: 'fr_FR.UTF-8'
+    language: 'fr'
+    tzdata:
+      areas: 'Europe'
+      zones: 'Paris'
+  ntp:
+    referrals:
+      - 'ntp-p1.obspm.fr'
+      - 'ap.cagb.org'
+      - 'ntp1.doowan.net'
+      - 'ntp.crashdump.fr'
+      - 'ntp.via.ecp.fr'
+    pool:
+      - '0.pool.ntp.org'
+      - '1.pool.ntp.org'
+      - '2.pool.ntp.org'
+      - '3.pool.ntp.org'
+    local:
+      - 'nabu.galaxie.ici'
+
+  apt_cacher_ng:
+    server:
+      internal: uranus.galaxie.ici
+      external: mycompany.com
+      self: 127.0.1.1
+    port: 9999
+    cache_dir: /mnt/pvr/Apt-Cacher-ng
+    user: apt-cacher-ng
+    group: apt-cacher-ng
+
+  dnscache:
+    service_name: dnscache
+    supervise_dir: /var/lib/supervise
+    source_dir: /usr/src/djbdns
+    dnslog_user: dnslog
+    interface: 127.0.0.1
+    multilog_dir: /var/multilog
+    multilog_user: multilog
+    dnsroots_global_file: /etc/dnsroots.global
+    host_for_test: github.com
+
+  zfsonlinux:
+    # The Debian GNU/Linux ZoL
+    deb_zfsonlinux_url: http://archive.zfsonlinux.org/debian/pool/main/z/zfsonlinux/zfsonlinux_6_all.deb
+    git_spl_url: https://github.com/zfsonlinux/spl.git
+    git_zfs_url: https://github.com/zfsonlinux/zfs.git
+
+  tvheadend:
+    git_url: https://github.com/tvheadend/tvheadend.git
+
+  mysql:
+    root_db_password: ++monsupermotdepasse++
+  firefox:
+    dowloader_url: https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=fr
+    #repo_url: https://ftp.mozilla.org/pub/firefox/releases/41.0.1/linux-x86_64/fr
+    filename: firefox-lastest.tar.bz2
+
+  thunderbird:
+    dowloader_url: https://download.mozilla.org/?product=thunderbird-latest&os=linux64&lang=fr
+    #repo_url: https://ftp.mozilla.org/pub/thunderbird/releases/38.5.1/linux-x86_64/fr
+    filename: thunderbird-lastest.tar.bz2
+
+  scripts:
+    directory: /opt/galaxie/bin
+
+
+
