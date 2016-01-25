@@ -1,2 +1,5 @@
 ---
-#domain: 'gatland.eu.org'
+gat01:
+  domain: 'gatland.eu.org'
+
+domain: 'gatland.eu.org'

@@ -10,7 +10,7 @@ host_for_test: github.com
 default_nameservers_description: "# OpenNIC IPv4 nameservers (US)"
 default_nameservers: ['107.170.95.180', '75.127.14.107']
 
-domain: ''
+domain: 'galaxie.ici'
 
 dns_nameservers:
  - "{{ bind_interface }}"
