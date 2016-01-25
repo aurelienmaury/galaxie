@@ -1,0 +1,70 @@
+---
+
+- name: Check directorys
+  file:
+    path="{{item}}"
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ cache_dir }}"
+    - "{{ optional_applications_dir }}"
+
+
+
+- name: Check for last version
+  script: get_basename_by_url.sh '{{ downloader_url }}'
+  register: filename
+  failed_when: not filename.stdout
+  changed_when: False
+
+#- debug: msg="{{ filename.stdout_lines[0] }}"
+
+- name: Force installation
+  file:
+    path="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
+    state=absent
+  when: force
+
+- name: Download {{ filename.stdout_lines[0] }}
+  get_url:
+    url="{{ xonotic_url }}/{{ xonotic_filname }}"
+    dest="{{ cache_dir }}/{{ xonotic_filname }}"
+  when: downloader_url and filename
+  register: xonotic_download
+  failed_when: not downloader_url
+
+- name: Delete {{ xonotic_dir }}
+  file:
+    path={{ xonotic_dir }}
+    state=absent
+  when: xonotic_download.changed
+
+- name: Unarchive {{ xonotic_download.dest }}
+  unarchive:
+    src="{{ xonotic_download.dest }}"
+    dest="{{ optional_applications_dir }}"
+    copy=no
+  when: xonotic_download.changed
+
+- name: Set permissions of {{ xonotic_dir }}
+  file:
+    path={{ xonotic_dir }}
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+
+- name: Change owner of {{ xonotic_dir }}/
+  file:
+    path={{ xonotic_dir }}
+    owner=root
+    group=root
+    recurse=yes
+
+- name: creat /usr/share/applications/xonotic.desktop is ok
+  template:
+    src=templates/xonotic.desktop.j2
+    dest=/usr/share/applications/xonotic.desktop
+    backup=no

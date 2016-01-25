@@ -1,0 +1,12 @@
+---
+
+prefix_dir: "/var/lib/galaxie"
+cache_dir: "{{ prefix_dir }}/src"
+optional_applications_dir: "/opt"
+
+xonotic_url: "http://dl.xonotic.org"
+xonotic_filname: "xonotic-0.8.1.zip"
+xonotic_dir: "{{ optional_applications_dir }}/Xonotic"
+downloader_url: "{{ xonotic_url }}/{{ xonotic_filname }}"
+
+force: false
