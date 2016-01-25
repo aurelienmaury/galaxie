@@ -2,34 +2,34 @@
 ###############
 ### * Hosts ###
 ###############
-- include: openssh-server.yml
-- include: openssh-client.yml
-- include: apt-get-client.yml
+#- include: openssh-server.yml
+#- include: openssh-client.yml
+#- include: apt-get-client.yml
 ###############
 ### Servers ###
 ###############
 
 ### Frist deal with DNS / NTP / DHCP
-- include: dnscache-server.yml
-- include: dnscache-server-update.yml
-- include: ntp-server.yml
+#- include: dnscache-server.yml
+#- include: dnscache-server-update.yml
+#- include: ntp-server.yml
 
 ### Configure Apt
-- include: apt-cacher-ng-server.yml
+#- include: apt-cacher-ng-server.yml
 
 ### Configure a LAMP (Linux Apache MySQL PHP)
-- include: apache-server.yml
-- include: mysql-server.yml
-- include: php.yml
+#- include: apache-server.yml
+#- include: mysql-server.yml
+#- include: php.yml
 
 ###############
 ### Host ###
 ###############
 ### Frist deal with DNS / NTP / DHCP
-- include: dnscache-client.yml
-- include: ntp-client.yml
-- include: apt-cacher-ng-client.yml
-- include: galaxie-member.yml
+- include: dnscache-client.yml domain={{domain}}
+#- include: ntp-client.yml
+#- include: apt-cacher-ng-client.yml
+#- include: galaxie-member.yml
 
 # Desktops
 #- include: desktops-base.yml

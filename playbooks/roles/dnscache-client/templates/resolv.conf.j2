@@ -1,25 +1,22 @@
 # {{ ansible_managed }}
-{% if dns_set_domain  %}
-{% if inventory_hostname in groups["internal-machines"] %}
-domain {{ dns_internal_domain }}
-{% endif %}
-{% if inventory_hostname in groups["external-machines"] %}
-domain {{ dns_external_domain }}
+{% if set_domain  %}
+{% if domain %}
+domain {{domain}}
 {% endif %}
 {% endif %}
-{% if dns_set_domain_name_servers %}
+{% if set_nameservers %}
 {% if ResolverCheck.rc == 0 %}
 {% for dnsserver in dns_nameservers %}
 nameserver {{dnsserver}}
 {% endfor %}
 {% endif %}
 {% if ResolverCheck.rc != 0 %}
-{{ dns_default_nameservers_description }}
-{% for dnsserver in dns_default_nameservers %}
+{{ default_nameservers_description }}
+{% for dnsserver in default_nameservers %}
 nameserver {{dnsserver}}
 {% endfor %}
 {% endif %}
 {% endif %}
-{% if dns_set_domain_search %}
+{% if set_searchs %}
 search {% for suffix in dns_searchs %}{{suffix}} {% endfor %}
 {% endif %}

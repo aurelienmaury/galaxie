@@ -1,7 +1,7 @@
 ---
 
-- name: test if we can resolv "{{ galaxie.dnscache.host_for_test }}" via {{ galaxie.dnscache.interface }}
-  shell: "host {{ galaxie.dnscache.host_for_test }} {{ galaxie.dnscache.interface }}"
+- name: test if we can resolv "{{ host_for_test }}" via {{ bind_interface }}
+  shell: "host {{ host_for_test }} {{ bind_interface }}"
   changed_when: False
   register: ResolverCheck
 
@@ -18,44 +18,44 @@
     state: absent
   when: "ResolverCheck.rc == 0"
 
-- name: Delete "domain-name" inside {{ dns_dhclient_file }}
-  script: dhclient_rm.sh {{ dns_dhclient_file }} request domain-name
+- name: Delete "domain-name" inside {{ dhclient_file }}
+  script: dhclient_rm.sh {{ dhclient_file }} request domain-name
   register: dhclient_key_remove
   changed_when: dhclient_key_remove.rc == 0
   failed_when: dhclient_key_remove.rc >= 2
-  when: dns_set_domain
+  when: set_domain
 
-- name: Add "domain-name" inside {{ dns_dhclient_file }}
-  script: dhclient_add.sh {{ dns_dhclient_file }} request domain-name
+- name: Add "domain-name" inside {{ dhclient_file }}
+  script: dhclient_add.sh {{ dhclient_file }} request domain-name
   register: dhclient_key_insertion
   changed_when: dhclient_key_insertion.rc == 0
   failed_when: dhclient_key_insertion.rc >= 2
-  when: not dns_set_domain
+  when: not set_domain
 
-- name: Delete "domain-name-servers" inside {{ dns_dhclient_file }}
-  script: dhclient_rm.sh {{ dns_dhclient_file }} request domain-name-servers
+- name: Delete "domain-name-servers" inside {{ dhclient_file }}
+  script: dhclient_rm.sh {{ dhclient_file }} request domain-name-servers
   register: dhclient_key_remove
   changed_when: dhclient_key_remove.rc == 0
   failed_when: dhclient_key_remove.rc >= 2
-  when: dns_set_domain_name_servers
+  when: set_nameservers
 
-- name: Add "domain-name-servers" inside {{ dns_dhclient_file }}
-  script: dhclient_add.sh {{ dns_dhclient_file }} request domain-name-servers
+- name: Add "domain-name-servers" inside {{ dhclient_file }}
+  script: dhclient_add.sh {{ dhclient_file }} request domain-name-servers
   register: dhclient_key_insertion
   changed_when: dhclient_key_insertion.rc == 0
   failed_when: dhclient_key_insertion.rc >= 2
-  when: not dns_set_domain_name_servers
+  when: not set_nameservers
 
-- name: Delete "domain-search" inside {{ dns_dhclient_file }}
-  script: dhclient_rm.sh {{ dns_dhclient_file }} request domain-search
+- name: Delete "domain-search" inside {{ dhclient_file }}
+  script: dhclient_rm.sh {{ dhclient_file }} request domain-search
   register: dhclient_key_remove
   changed_when: dhclient_key_remove.rc == 0
   failed_when: dhclient_key_remove.rc >= 2
-  when: dns_set_domain_search
+  when: set_searchs
 
-- name: Add "domain-search" inside {{ dns_dhclient_file }}
-  script: dhclient_add.sh {{ dns_dhclient_file }} request domain-search
+- name: Add "domain-search" inside {{ dhclient_file }}
+  script: dhclient_add.sh {{ dhclient_file }} request domain-search
   register: dhclient_key_insertion
   changed_when: dhclient_key_insertion.rc == 0
   failed_when: dhclient_key_insertion.rc >= 2
-  when: not dns_set_domain_search
+  when: not set_searchs

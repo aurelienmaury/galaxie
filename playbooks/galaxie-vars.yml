@@ -48,16 +48,16 @@ galaxie:
     user: apt-cacher-ng
     group: apt-cacher-ng
 
-  dnscache:
-    service_name: dnscache
-    supervise_dir: /var/lib/supervise
-    source_dir: /usr/src/djbdns
-    dnslog_user: dnslog
-    interface: 127.0.0.1
-    multilog_dir: /var/multilog
-    multilog_user: multilog
-    dnsroots_global_file: /etc/dnsroots.global
-    host_for_test: github.com
+#  dnscache:
+#    service_name: dnscache
+#    supervise_dir: /var/lib/supervise
+#    source_dir: /usr/src/djbdns
+#    dnslog_user: dnslog
+#    interface: 127.0.0.1
+#    multilog_dir: /var/multilog
+#    multilog_user: multilog
+#    dnsroots_global_file: /etc/dnsroots.global
+#    host_for_test: github.com
 
   zfsonlinux:
     # The Debian GNU/Linux ZoL
