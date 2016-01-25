@@ -11,8 +11,6 @@
     - "{{ cache_dir }}"
     - "{{ optional_applications_dir }}"
 
-
-
 - name: Check for last version
   script: get_basename_by_url.sh '{{ downloader_url }}'
   register: filename
@@ -29,9 +27,8 @@
 
 - name: Download {{ filename.stdout_lines[0] }}
   get_url:
-    url="{{ xonotic_url }}/{{ xonotic_filname }}"
-    dest="{{ cache_dir }}/{{ xonotic_filname }}"
-  when: downloader_url and filename
+    url="{{ downloader_url }}"
+    dest="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
   register: xonotic_download
   failed_when: not downloader_url
 
