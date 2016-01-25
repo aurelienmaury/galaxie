@@ -29,38 +29,38 @@
   get_url:
     url="{{ downloader_url }}"
     dest="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
-  register: xonotic_download
+  register: download_status
   failed_when: not downloader_url
 
-- name: Delete {{ xonotic_dir }}
+- name: Delete {{ app_root_dir }}
   file:
-    path={{ xonotic_dir }}
+    path={{ app_root_dir }}
     state=absent
-  when: xonotic_download.changed
+  when: download_status.changed
 
-- name: Unarchive {{ xonotic_download.dest }}
+- name: Unarchive {{ download_status.dest }}
   unarchive:
-    src="{{ xonotic_download.dest }}"
+    src="{{ download_status.dest }}"
     dest="{{ optional_applications_dir }}"
     copy=no
-  when: xonotic_download.changed
+  when: download_status.changed
 
-- name: Set permissions of {{ xonotic_dir }}
+- name: Set permissions of {{ app_root_dir }}
   file:
-    path={{ xonotic_dir }}
+    path={{ app_root_dir }}
     owner=root
     group=root
     state=directory
     mode=0755
 
-- name: Change owner of {{ xonotic_dir }}/
+- name: Change owner of {{ app_root_dir }}
   file:
-    path={{ xonotic_dir }}
+    path={{ app_root_dir }}
     owner=root
     group=root
     recurse=yes
 
-- name: creat /usr/share/applications/xonotic.desktop is ok
+- name: Creat /usr/share/applications/xonotic.desktop is ok
   template:
     src=templates/xonotic.desktop.j2
     dest=/usr/share/applications/xonotic.desktop

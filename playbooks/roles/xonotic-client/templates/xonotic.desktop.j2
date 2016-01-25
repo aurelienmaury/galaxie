@@ -6,12 +6,12 @@ Type=Application
 Terminal=false
 {% if ansible_system ==  "Linux" %}
 {% if ansible_architecture ==  "x86_64" %}
-Exec=/bin/bash -c 'cd "{{ xonotic_dir }}" && {{ xonotic_dir }}/xonotic-linux64-glx'
+Exec=/bin/bash -c 'cd "{{ app_root_dir }}" && {{ app_root_dir }}/xonotic-linux64-glx'
 {% endif %}
 {% if ansible_architecture !=  "x86_64" %}
-Exec=/bin/bash -c 'cd "{{ xonotic_dir }}" && {{ xonotic_dir }}/xonotic-linux32-glx'
+Exec=/bin/bash -c 'cd "{{ app_root_dir }}" && {{ app_root_dir }}/xonotic-linux32-glx'
 {% endif %}
 {% endif %}
-Icon={{ xonotic_dir }}/misc/logos/xonotic_icon.svg
+Icon={{ app_root_dir }}/misc/logos/xonotic_icon.svg
 StartupNotify=true
 Categories=Game;Shooter;
