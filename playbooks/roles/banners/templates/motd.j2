@@ -1,0 +1,15 @@
+{% if figlet_banner.stdout %}
+{{ figlet_banner.stdout }}
+{% endif %}
+{% if domain %}
+Hostname  : {{ ansible_hostname }}.{{ domain }}
+{% endif %}
+{% if not domain %}
+Hostname  : {{ ansible_hostname }}
+{% endif %}
+{% if ansible_default_ipv4 %}
+eth0 IPv4 : {{ ansible_default_ipv4.address }}
+{% endif %}
+{% if ansible_default_ipv6 %}
+eth0 IPv6 : {{ ansible_default_ipv6.address }}
+{% endif %}

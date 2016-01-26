@@ -1,8 +1,7 @@
 ---
 
 - include: locales.yml
-- include: headless.yml
-- include: motd.yml
+- include: packages.yml
 - include: bashrc.yml
 - include: vim.yml
 #- include: powersave.yml
