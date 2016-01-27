@@ -1,5 +1,5 @@
 ## Les serveurs externes qui seront utilisés pour se synchroniser (strate 1 et 1)
-{% for ref_server in galaxie.ntp.referrals %}
+{% for ref_server in galaxie_ntp_referrals %}
 server {{ ref_server }} iburst
 {% endfor %}
 

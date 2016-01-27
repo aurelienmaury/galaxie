@@ -38,16 +38,6 @@ galaxie:
     local:
       - 'nabu.galaxie.ici'
 
-  apt_cacher_ng:
-    server:
-      internal: uranus.galaxie.ici
-      external: mycompagny.com
-      self: 127.0.1.1
-    port: 9999
-    cache_dir: /mnt/pvr/Apt-Cacher-ng
-    user: apt-cacher-ng
-    group: apt-cacher-ng
-
 #  dnscache:
 #    service_name: dnscache
 #    supervise_dir: /var/lib/supervise
@@ -73,6 +63,3 @@ galaxie:
 
   scripts:
     directory: /opt/galaxie/bin
-
-
-
