@@ -7,28 +7,35 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "debian/jessie64"
-  config.vm.network "public_network"
+  config.vm.network "public_network", bridge: "en1: Wi-Fi (AirPort)"
   config.vbguest.auto_update = false
 
-  config.vm.define "internal1" do |web|
+  config.vm.define "internal_1" do |web|
     config.vm.provider "virtualbox" do |vb|
       vb.memory = "256"
-      vb.name = "internal1"
+      vb.name = "internal_1"
     end
   end
 
-  config.vm.define "internal2" do |web|
+  config.vm.define "internal_2" do |web|
     config.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-      vb.name = "internal2"
+      vb.memory = "256"
+      vb.name = "internal_2"
+    end
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.limit = "all"
+      ansible.groups = {
+        "galaxie" => ["internal_1", "internal_2"],
+        "ntp-clients" => ["internal_1"],
+        "ntp-servers" => ["internal_2"],
+        "servers:children" => ["ntp-servers"],
+        "galaxie:children" => ["servers"],
+        "all_groups:children" => ["galaxie"]
+      }
+      ansible.playbook = "playbooks/vagrant-provision.yml"
     end
   end
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.groups = {
-      "galaxie" => ["internal1", "internal2"],
-      "all_groups:children" => ["galaxie"]
-    }
-    ansible.playbook = "alfred-install.yml"
-  end
+
 end

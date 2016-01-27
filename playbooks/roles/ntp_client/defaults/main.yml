@@ -1,2 +1,14 @@
 ---
-# defaults file for galaxie-member
+galaxie_domain: galaxie.ici
+galaxie_ntp_referrals:
+  - '0.pool.ntp.org'
+  - '1.pool.ntp.org'
+  - '2.pool.ntp.org'
+  - '3.pool.ntp.org'
+galaxie_ntp_pool:
+  - '0.pool.ntp.org'
+  - '1.pool.ntp.org'
+  - '2.pool.ntp.org'
+  - '3.pool.ntp.org'
+galaxie_ntp_local:
+  - 'nabu.galaxie.ici'

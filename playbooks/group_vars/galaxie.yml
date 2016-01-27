@@ -1,6 +1,19 @@
 ---
-
-#domain: galaxie.ici
+galaxie_ansible_user: zoe
+galaxie_domain: galaxie.ici
+galaxie_ntp_referrals:
+  - 'ntp-p1.obspm.fr'
+  - 'ap.cagb.org'
+  - 'ntp1.doowan.net'
+  - 'ntp.crashdump.fr'
+  - 'ntp.via.ecp.fr'
+galaxie_ntp_pool:
+  - '0.pool.ntp.org'
+  - '1.pool.ntp.org'
+  - '2.pool.ntp.org'
+  - '3.pool.ntp.org'
+galaxie_ntp_local:
+  - 'nabu.galaxie.ici'
 
 galaxie:
   user: zoe

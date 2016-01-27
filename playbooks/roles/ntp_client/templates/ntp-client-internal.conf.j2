@@ -1,6 +1,6 @@
 # /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
 
-{% for ip_server in galaxie.ntp.local %}
+{% for ip_server in galaxie_ntp_local %}
 server {{ ip_server }} iburst
 {% endfor %}
 

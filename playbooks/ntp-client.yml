@@ -1,9 +1,5 @@
 - hosts: ntp-clients
-  user: zoe
-  sudo: true
-
-  vars_files:
-    - "galaxie-vars.yml"
+  become: true
 
   roles:
     - ntp_client

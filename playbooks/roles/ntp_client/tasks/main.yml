@@ -10,24 +10,25 @@
     pkg=ntp
     state=present
 
-- name: ntp time source {{ galaxie.ntp.local }}
-  template: src=ntp-client-internal.conf.j2 dest=/etc/ntp.conf
+- name: ntp time source {{ galaxie_ntp_local }}
+  when: "{{ 'internal-machines' in group_names }}"
+  template:
+    src="ntp-client-internal.conf.j2"
+    dest="/etc/ntp.conf"
   notify: restart ntp
-  when: inventory_hostname in groups["internal-machines"]
 
-- name: ntp time source {{ galaxie.ntp.pool }}
-  template: src=ntp-client-external.conf.j2 dest=/etc/ntp.conf
+- name: ntp time source {{ galaxie_ntp_pool }}
+  when: "{{ 'external-machines' in group_names }}"
+  template:
+    src="ntp-client-external.conf.j2"
+    dest="/etc/ntp.conf"
   notify: restart ntp
-  when: inventory_hostname in groups["external-machines"]
 
-- name: remove file /etc/dhcp/dhclient-exit-hooks.d/ntp
+- name: remove dhcp-ntp files
   file:
-    path=/etc/dhcp/dhclient-exit-hooks.d/ntp
+    path="{{ item }}"
     state=absent
-  notify: restart ntp
-
-- name: remove file /var/lib/ntp/ntp.conf.dhcp
-  file:
-    path=/var/lib/ntp/ntp.conf.dhcp
-    state=absent
+  with_items:
+    - "/etc/dhcp/dhclient-exit-hooks.d/ntp"
+    - "/var/lib/ntp/ntp.conf.dhcp"
   notify: restart ntp
