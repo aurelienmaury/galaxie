@@ -14,6 +14,7 @@ galaxie_ntp_pool:
   - '3.pool.ntp.org'
 galaxie_ntp_local:
   - 'nabu.galaxie.ici'
+galaxie_apt_cacher_ng_server_internal: uranus.galaxie.ici
 
 galaxie:
   user: zoe

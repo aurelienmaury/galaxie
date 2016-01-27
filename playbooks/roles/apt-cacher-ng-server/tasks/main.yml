@@ -8,11 +8,11 @@
     - apt-cacher-ng
     - ed
 
-- name: Creat {{ galaxie.apt_cacher_ng.cache_dir }} directory
+- name: Creat {{ galaxie_apt_cacher_ng_cache_dir }} directory
   file:
-    path={{ galaxie.apt_cacher_ng.cache_dir }}
-    owner={{ galaxie.apt_cacher_ng.user }}
-    group={{ galaxie.apt_cacher_ng.group }}
+    path={{ galaxie_apt_cacher_ng_cache_dir }}
+    owner={{ galaxie_apt_cacher_ng_user }}
+    group={{ galaxie_apt_cacher_ng_group }}
     state=directory
     mode=0755
 

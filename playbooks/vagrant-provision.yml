@@ -1,11 +1,19 @@
 - hosts: ntp-clients
   become: true
-
-  roles:
-    - ntp_client
+  roles: ['ntp_client']
 
 - hosts: ntp-servers
   become: true
+  roles: ['ntp_server']
 
-  roles:
-    - ntp_server
+- hosts: openssh-server
+  become: true
+  roles: ['openssh-server']
+
+- hosts: openssh-client
+  become: true
+  roles: ['openssh-client']
+
+- hosts: apt-cacher-ng-server
+  become: true
+  roles: ['apt-cacher-ng-server']

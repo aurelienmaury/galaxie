@@ -13,7 +13,7 @@
 
 # Storage directory for downloaded data and related maintenance activity.
 #
-CacheDir: {{ galaxie.apt_cacher_ng.cache_dir }}
+CacheDir: {{ galaxie_apt_cacher_ng_cache_dir }}
 
 # Log file directory, can be set empty to disable logging
 #
@@ -27,7 +27,7 @@ LogDir: /var/log/apt-cacher-ng
 # TCP server port for incoming http (or HTTP proxy) connections.
 # Can be set to 9999 to emulate apt-proxy.
 #
-Port:{{ galaxie.apt_cacher_ng.port }}
+Port:{{ galaxie_apt_cacher_ng_port }}
 
 # Addresses or hostnames to listen on. Multiple addresses must be separated by
 # spaces. Each entry must be an exact local address which is associated with a
@@ -38,7 +38,7 @@ Port:{{ galaxie.apt_cacher_ng.port }}
 #
 # Default: listens on all interfaces and protocols
 #
-BindAddress: {{ ansible_eth0.ipv4.address }} {{ ansible_hostname }}.{{ galaxie.localdomain }}
+BindAddress: {{ ansible_eth0.ipv4.address }} {{ ansible_hostname }}.{{ galaxie_domain }}
 
 # The specification of another HTTP proxy which shall be used for downloads.
 # It can include user name and password but see the manual for limitations.

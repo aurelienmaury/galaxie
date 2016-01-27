@@ -27,9 +27,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.limit = "all"
       ansible.groups = {
         "galaxie" => ["internal_1", "internal_2"],
+        "apt-cacher-ng-server" => ["internal_2"],
+        "openssh-client" => ["internal_1", "internal_2"],
+        "openssh-server" => ["internal_1", "internal_2"],
         "ntp-clients" => ["internal_1"],
         "ntp-servers" => ["internal_2"],
-        "servers:children" => ["ntp-servers"],
+        "servers:children" => ["ntp-servers", "apt-cacher-ng-server"],
         "galaxie:children" => ["servers"],
         "all_groups:children" => ["galaxie"]
       }
