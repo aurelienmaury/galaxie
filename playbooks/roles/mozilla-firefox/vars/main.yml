@@ -1,6 +1,0 @@
-prefix_dir: "/var/lib/galaxie"
-cache_dir: "{{ prefix_dir }}/src"
-optional_applications_dir: "/opt"
-os: "linux64"
-lang: "fr"
-downloader_url: "https://download.mozilla.org/?product=firefox-latest&os={{ os }}&lang={{ lang }}"

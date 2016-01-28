@@ -8,51 +8,51 @@
     state=directory
     mode=0755
   with_items:
-    - "{{ cache_dir }}"
-    - "{{ optional_applications_dir }}"
+    - "{{ galaxie_mozilla_firefox_cache_dir }}"
+    - "{{ galaxie_mozilla_firefox_opt_dir }}"
 
 - name: Check for last version
-  script: get_basename_by_url.sh '{{ downloader_url }}'
-  register: filename
-  failed_when: not filename.stdout
+  script: get_basename_by_url.sh '{{ galaxie_mozilla_firefox_downloader_url }}'
+  register: galaxie_mozilla_firefox_filename
+  failed_when: not galaxie_mozilla_firefox_filename.stdout
   changed_when: False
 
-#- debug: msg="{{ filename.stdout_lines[0] }}"
+#- debug: msg="{{ galaxie_mozilla_firefox_filename.stdout_lines[0] }}"
 
-- name: Download {{ filename.stdout_lines[0] }}
+- name: Download {{ galaxie_mozilla_firefox_filename.stdout_lines[0] }}
   get_url:
-    url="{{ downloader_url }}"
-    dest="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
-  when: downloader_url and filename
-  register: firefox_download
-  failed_when: not downloader_url
+    url="{{ galaxie_mozilla_firefox_downloader_url }}"
+    dest="{{ galaxie_mozilla_firefox_cache_dir }}/{{ galaxie_mozilla_firefox_filename.stdout_lines[0] }}"
+  when: galaxie_mozilla_firefox_downloader_url and galaxie_mozilla_firefox_filename
+  register: galaxie_mozilla_firefox_download
+  failed_when: not galaxie_mozilla_firefox_downloader_url
 
-#- debug: msg="{{ firefox_download }}"
+#- debug: msg="{{ galaxie_mozilla_firefox_download }}"
 
-- name: Delete {{ optional_applications_dir }}/firefox
+- name: Delete {{ galaxie_mozilla_firefox_opt_dir }}/firefox
   file:
-    path={{ optional_applications_dir }}/firefox
+    path={{ galaxie_mozilla_firefox_opt_dir }}/firefox
     state=absent
-  when: firefox_download.changed
+  when: galaxie_mozilla_firefox_download.changed
 
-- name: Unarchive {{ firefox_download.dest }}
+- name: Unarchive {{ galaxie_mozilla_firefox_download.dest }}
   unarchive:
-    src="{{ firefox_download.dest }}"
-    dest="{{ optional_applications_dir }}"
+    src="{{ galaxie_mozilla_firefox_download.dest }}"
+    dest="{{ galaxie_mozilla_firefox_opt_dir }}"
     copy=no
-  when: firefox_download.changed
+  when: galaxie_mozilla_firefox_download.changed
 
-- name: Set permissions of {{ optional_applications_dir }}/firefox
+- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/firefox
   file:
-    path={{ optional_applications_dir }}/firefox
+    path={{ galaxie_mozilla_firefox_opt_dir }}/firefox
     owner=root
     group=root
     state=directory
     mode=0755
 
-- name: Set permissions of {{ optional_applications_dir }}/firefox/
+- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/firefox/
   file:
-    path={{ optional_applications_dir }}/firefox
+    path={{ galaxie_mozilla_firefox_opt_dir }}/firefox
     owner=root
     group=root
     recurse=yes
@@ -67,11 +67,11 @@
   file:
     path=/usr/bin/firefox
     state=absent
-  when: links.stat.lnk_source != "{{ optional_applications_dir }}/firefox/firefox" or links.stat.islnk != true
+  when: links.stat.lnk_source != "{{ galaxie_mozilla_firefox_opt_dir }}/firefox/firefox" or links.stat.islnk != true
 
 - name: Create symbolic link
   file:
-    src="{{ optional_applications_dir }}/firefox/firefox"
+    src="{{ galaxie_mozilla_firefox_opt_dir }}/firefox/firefox"
     dest=/usr/bin/firefox
     state=link
 
