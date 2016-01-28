@@ -4,4 +4,5 @@ galaxie_mozilla_firefox_cache_dir: "{{ galaxie_mozilla_firefox_prefix_dir }}/src
 galaxie_mozilla_firefox_opt_dir: "/opt"
 galaxie_mozilla_firefox_os: "linux64"
 galaxie_mozilla_firefox_lang: "fr"
-galaxie_mozilla_firefox_downloader_url: "https://download.mozilla.org/?product=firefox-latest&os={{ galaxie_mozilla_firefox_os }}&lang={{ galaxie_mozilla_firefox_lang }}"
+galaxie_mozilla_firefox_app_name: "firefox"
+galaxie_mozilla_firefox_downloader_url: "https://download.mozilla.org/?product={{ galaxie_mozilla_firefox_app_name }}-latest&os={{ galaxie_mozilla_firefox_os }}&lang={{ galaxie_mozilla_firefox_lang }}"

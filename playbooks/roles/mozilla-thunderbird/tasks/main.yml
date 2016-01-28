@@ -8,76 +8,76 @@
     state=directory
     mode=0755
   with_items:
-    - "{{ cache_dir }}"
-    - "{{ optional_applications_dir }}"
+    - "{{ galaxie_mozilla_thunderbird_cache_dir }}"
+    - "{{ galaxie_mozilla_thunderbird_opt_dir }}"
 
 - name: Check for last version
-  script: get_basename_by_url.sh '{{ downloader_url }}'
-  register: filename
-  failed_when: not filename.stdout
+  script: get_basename_by_url.sh '{{ galaxie_mozilla_thunderbird_downloader_url }}'
+  register: galaxie_thunderbird_filename
+  failed_when: not galaxie_thunderbird_filename.stdout
   changed_when: False
 
-#- debug: msg="{{ filename.stdout_lines[0] }}"
+#- debug: msg="{{ galaxie_thunderbird_filename.stdout_lines[0] }}"
 
-- name: Download {{ filename.stdout_lines[0] }}
+- name: Download {{ galaxie_thunderbird_filename.stdout_lines[0] }}
   get_url:
-    url="{{ downloader_url }}"
-    dest="{{ cache_dir }}/{{ filename.stdout_lines[0] }}"
-  when: downloader_url and filename
-  register: thunderbird_download
-  failed_when: not downloader_url
+    url="{{ galaxie_mozilla_thunderbird_downloader_url }}"
+    dest="{{ galaxie_mozilla_thunderbird_cache_dir }}/{{ galaxie_thunderbird_filename.stdout_lines[0] }}"
+  when: galaxie_mozilla_thunderbird_downloader_url and galaxie_thunderbird_filename
+  register: galaxie_thunderbird_download_status
+  failed_when: not galaxie_mozilla_thunderbird_downloader_url
 
-#- debug: msg="{{ thunderbird_download }}"
+#- debug: msg="{{ galaxie_thunderbird_download_status }}"
 
-- name: Delete {{ optional_applications_dir }}/thunderbird
+- name: Delete {{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}
   file:
-    path={{ optional_applications_dir }}/thunderbird
+    path={{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}
     state=absent
-  when: thunderbird_download.changed
+  when: galaxie_thunderbird_download_status.changed
 
-- name: Unarchive {{ thunderbird_download.dest }}
+- name: Unarchive {{ galaxie_thunderbird_download_status.dest }}
   unarchive:
-    src="{{ thunderbird_download.dest }}"
-    dest="{{ optional_applications_dir }}"
+    src="{{ galaxie_thunderbird_download_status.dest }}"
+    dest="{{ galaxie_mozilla_thunderbird_opt_dir }}"
     copy=no
-  when: thunderbird_download.changed
+  when: galaxie_thunderbird_download_status.changed
 
-- name: Set permissions of {{ optional_applications_dir }}/thunderbird
+- name: Set permissions of {{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}
   file:
-    path={{ optional_applications_dir }}/thunderbird
+    path={{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}
     owner=root
     group=root
     state=directory
     mode=0755
 
-- name: Set permissions of {{ optional_applications_dir }}/thunderbird/
+- name: Set permissions of {{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}/
   file:
-    path={{ optional_applications_dir }}/thunderbird
+    path={{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}
     owner=root
     group=root
     recurse=yes
 
-- name: check /usr/bin/thunderbird link
-  stat: path=/usr/bin/thunderbird
+- name: Check symbolic link /usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
+  stat: path=/usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
   register: links
 
 #- debug: msg="{{ links.stat.lnk_source }}"
 
-- name: delete previus /usr/bin/thunderbird
+- name: Delete previus /usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
   file:
-    path=/usr/bin/thunderbird
+    path=/usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
     state=absent
-  when: links.stat.lnk_source != "{{ optional_applications_dir }}/thunderbird/thunderbird" or links.stat.islnk != true
+  when: links.stat.lnk_source != "{{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}/{{ galaxie_mozilla_thunderbird_app_name }}" or links.stat.islnk != true
 
 
-- name: Create symbolic link
+- name: Check symbolic link /usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
   file:
-    src="{{ optional_applications_dir }}/thunderbird/thunderbird"
-    dest=/usr/bin/thunderbird
+    src="{{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}/{{ galaxie_mozilla_thunderbird_app_name }}"
+    dest=/usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
     state=link
 
-- name: creat /usr/share/applications/thunderbird.desktop is ok
+- name: Check /usr/share/applications/{{ galaxie_mozilla_thunderbird_app_name }}.desktop file
   template:
-    src=templates/thunderbird.desktop.j2
-    dest=/usr/share/applications/thunderbird.desktop
+    src={{ galaxie_mozilla_thunderbird_app_name }}.desktop.j2
+    dest=/usr/share/applications/{{ galaxie_mozilla_thunderbird_app_name }}.desktop
     backup=no

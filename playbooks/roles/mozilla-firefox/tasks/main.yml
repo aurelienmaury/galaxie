@@ -29,9 +29,9 @@
 
 #- debug: msg="{{ galaxie_mozilla_firefox_download }}"
 
-- name: Delete {{ galaxie_mozilla_firefox_opt_dir }}/firefox
+- name: Delete {{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
   file:
-    path={{ galaxie_mozilla_firefox_opt_dir }}/firefox
+    path={{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
     state=absent
   when: galaxie_mozilla_firefox_download.changed
 
@@ -42,41 +42,41 @@
     copy=no
   when: galaxie_mozilla_firefox_download.changed
 
-- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/firefox
+- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
   file:
-    path={{ galaxie_mozilla_firefox_opt_dir }}/firefox
+    path={{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
     owner=root
     group=root
     state=directory
     mode=0755
 
-- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/firefox/
+- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/
   file:
-    path={{ galaxie_mozilla_firefox_opt_dir }}/firefox
+    path={{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
     owner=root
     group=root
     recurse=yes
 
-- name: Check /usr/bin/firefox link
-  stat: path=/usr/bin/firefox
+- name: Check /usr/bin/{{ galaxie_mozilla_firefox_app_name }} link
+  stat: path=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
   register: links
 
 #- debug: msg="{{ links.stat.lnk_source }}"
 
-- name: Delete previus /usr/bin/firefox
+- name: Delete previus /usr/bin/{{ galaxie_mozilla_firefox_app_name }}
   file:
-    path=/usr/bin/firefox
+    path=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
     state=absent
-  when: links.stat.lnk_source != "{{ galaxie_mozilla_firefox_opt_dir }}/firefox/firefox" or links.stat.islnk != true
+  when: links.stat.lnk_source != "{{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/{{ galaxie_mozilla_firefox_app_name }}" or links.stat.islnk != true
 
 - name: Create symbolic link
   file:
-    src="{{ galaxie_mozilla_firefox_opt_dir }}/firefox/firefox"
-    dest=/usr/bin/firefox
+    src="{{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/{{ galaxie_mozilla_firefox_app_name }}"
+    dest=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
     state=link
 
-- name: Creat /usr/share/applications/firefox.desktop is ok
+- name: Creat /usr/share/applications/{{ galaxie_mozilla_firefox_app_name }}.desktop is ok
   template:
-    src=templates/firefox.desktop.j2
-    dest=/usr/share/applications/firefox.desktop
+    src=templates/{{ galaxie_mozilla_firefox_app_name }}.desktop.j2
+    dest=/usr/share/applications/{{ galaxie_mozilla_firefox_app_name }}.desktop
     backup=no
