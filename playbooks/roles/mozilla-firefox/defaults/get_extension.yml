@@ -1,0 +1,36 @@
+### Install Extensions ###
+#https://www.eff.org/files/https-everywhere-latest.xpi
+#- name: Check {{ galaxie_mozilla_firefox_ext_https_everywhere_url }} existance
+#  script: get_basename_by_url.sh '{{ galaxie_mozilla_firefox_ext_https_everywhere_url }}'
+#  register: galaxie_mozilla_firefox_ext_https_everywhere_filename
+#  failed_when: not galaxie_mozilla_firefox_ext_https_everywhere_filename.stdout
+#  changed_when: False
+#
+#- debug: msg="{{ galaxie_mozilla_firefox_ext_https_everywhere_filename.stdout_lines[0] }}"
+#
+#- name: Download {{ galaxie_mozilla_firefox_ext_https_everywhere_filename.stdout_lines[0] }}
+#  get_url:
+#    url="{{ galaxie_mozilla_firefox_ext_https_everywhere_url }}"
+#    dest="{{ galaxie_mozilla_firefox_cache_dir }}/{{ galaxie_mozilla_firefox_ext_https_everywhere_filename.stdout_lines[0] }}"
+#  when: galaxie_mozilla_firefox_ext_https_everywhere_url and galaxie_mozilla_firefox_ext_https_everywhere_filename
+#  register: galaxie_mozilla_firefox_ext_https_everywhere_download_status
+#  failed_when: not galaxie_mozilla_firefox_ext_https_everywhere_url
+
+#- debug: msg="{{ galaxie_mozilla_firefox_download }}"
+
+#- name: Delete {{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#  file:
+#    path={{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#    state=absent
+#  when: galaxie_mozilla_firefox_download.changed
+
+#- name: Unarchive {{ galaxie_mozilla_firefox_download.dest }}
+#  unarchive:
+#    src="{{ galaxie_mozilla_firefox_download.dest }}"
+#    dest="{{ galaxie_mozilla_firefox_opt_dir }}"
+#    copy=no
+#  when: galaxie_mozilla_firefox_download.changed
+
+#- name: Install {{ galaxie_mozilla_firefox_ext_https_everywhere_filename.stdout_lines[0] }}
+#  shell: /usr/bin/{{ galaxie_mozilla_firefox_app_name }} -install-global-extension {{ galaxie_mozilla_firefox_cache_dir }}/{{ galaxie_mozilla_firefox_ext_https_everywhere_filename.stdout_lines[0] }}
+#
