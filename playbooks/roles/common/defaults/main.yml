@@ -1,2 +1,8 @@
 ---
-# defaults file for galaxie-member
+# See /usr/share/i18n/SUPPORTED
+galaxie_common_lang: 'fr_FR.UTF-8'
+galaxie_common_primary_local: 'fr_FR.UTF-8'
+galaxie_common_secondary_local: 'en_US.UTF-8'
+galaxie_common_language: 'fr'
+galaxie_common_tzdata_areas: 'Europe'
+galaxie_common_tzdata_zones: 'Paris'

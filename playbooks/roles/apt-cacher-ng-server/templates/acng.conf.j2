@@ -38,7 +38,26 @@ Port:{{ galaxie_apt_cacher_ng_port }}
 #
 # Default: listens on all interfaces and protocols
 #
-BindAddress: {{ ansible_eth0.ipv4.address }} {{ ansible_hostname }}.{{ galaxie_domain }}
+{% if not ansible_default_ipv4 %}
+{% if not ansible_default_ipv6 %}
+BindAddress: {{ galaxie_apt_cacher_ng_server_self }}
+{% endif %}
+{% endif %}
+{% if ansible_default_ipv4 %}
+{% if not ansible_default_ipv6 %}
+BindAddress: {{ ansible_default_ipv4.address }} {{ galaxie_apt_cacher_ng_server_self }}
+{% endif %}
+{% endif %}
+{% if not ansible_default_ipv4 %}
+{% if ansible_default_ipv6 %}
+BindAddress: {{ ansible_default_ipv6.address }} {{ galaxie_apt_cacher_ng_server_self }}
+{% endif %}
+{% endif %}
+{% if ansible_default_ipv4 %}
+{% if ansible_default_ipv6 %}
+BindAddress: {{ ansible_default_ipv4.address }} {{ ansible_default_ipv6.address }} {{ galaxie_apt_cacher_ng_server_self }}
+{% endif %}
+{% endif %}
 
 # The specification of another HTTP proxy which shall be used for downloads.
 # It can include user name and password but see the manual for limitations.

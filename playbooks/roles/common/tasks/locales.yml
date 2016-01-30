@@ -1,33 +1,33 @@
 ---
 
-- name: Add {{ galaxie.language.locale}} to /etc/locale.gen
-  replace:
-    dest=/etc/locale.gen
-    regexp='^\# {{ galaxie.language.locale}}|^{{ galaxie.language.locale}}'
-    replace='{{ galaxie.language.locale}}'
-  register: local
-
-- name: Add en_US.UTF-8 UTF-8 to /etc/locale.gen
-  replace:
-    dest=/etc/locale.gen
-    regexp='^\# en_US.UTF-8 UTF-8|^en_US.UTF-8 UTF-8'
-    replace='en_US.UTF-8 UTF-8'
+- name: Check if {{ galaxie_common_primary_local }} locale present
+  tags: locales
+  locale_gen:
+    name={{ item }}
+    state=present
+  with_items:
+    - "{{ galaxie_common_primary_local }}"
+    - "{{ galaxie_common_secondary_local }}"
+  register: locale_gen_status
 
 - name: Update and Set locale
-  command: /usr/sbin/update-locale LANG={{ galaxie.language.lang}} LANGUAGE={{ galaxie.language.language}}
-  when: local.changed
+  tags: locales
+  command: /usr/sbin/update-locale LANG={{ galaxie_common_primary_local }} LANGUAGE={{ galaxie_common_language }}
+  when: locale_gen_status.changed and ansible_os_family == "Debian"
 
-- name: Set timezone area {{ galaxie.language.tzdata.areas }}
+- name: Set timezone area {{ galaxie_common_tzdata_areas }}
+  tags: locales
   debconf:
     name=tzdata
     question='tzdata/Areas'
-    value='{{ galaxie.language.tzdata.areas }}'
+    value='{{ galaxie_common_tzdata_areas }}'
     vtype='select'
   when: ansible_os_family == "Debian"
   notify:
     - update timezone
 
-- name: Set /etc/timezone file
+- name: Set {{ galaxie_common_tzdata_areas }}/{{ galaxie_common_tzdata_zones }} to /etc/timezone file
+  tags: locales
   template:
     src=timezone.j2
     dest=/etc/timezone
@@ -35,18 +35,20 @@
     - update timezone
 
 - name: Set timezone
+  tags: locales
   debconf:
     name=tzdata
-    question='tzdata/Zones/{{ galaxie.language.tzdata.areas }}'
-    value='{{ galaxie.language.tzdata.zones }}'
+    question='tzdata/Zones/{{ galaxie_common_tzdata_areas }}'
+    value='{{ galaxie_common_tzdata_zones }}'
     vtype='select'
   when: ansible_os_family == "Debian"
   notify:
     - update timezone
 
 - name: desired manpages are present
+  tags: locales
   apt: pkg="{{item}}" state=present
   with_items:
     - manpages-fr
     - manpages-fr-extra
-  when: galaxie.language.language == "fr"
+  when: galaxie_common_language == "fr" and ansible_os_family == "Debian"

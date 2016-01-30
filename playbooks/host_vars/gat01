@@ -1,3 +1,8 @@
 ---
+### Banner Role ###
 galaxie_banner_text: "Gatland"
 galaxie_banner_domain: 'gatland.eu.org'
+
+### Common Role ###
+galaxie_common_tzdata_areas: 'Europe'
+galaxie_common_tzdata_zones: 'Berlin'
