@@ -57,18 +57,6 @@
     group=root
     recurse=yes
 
-- name: Check /usr/bin/{{ galaxie_mozilla_firefox_app_name }} link
-  stat: path=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
-  register: links
-
-#- debug: msg="{{ links.stat.lnk_source }}"
-
-- name: Delete previus /usr/bin/{{ galaxie_mozilla_firefox_app_name }}
-  file:
-    path=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
-    state=absent
-  when: links.stat.lnk_source != "{{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/{{ galaxie_mozilla_firefox_app_name }}" or links.stat.islnk != true
-
 - name: Create symbolic link
   file:
     src="{{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/{{ galaxie_mozilla_firefox_app_name }}"

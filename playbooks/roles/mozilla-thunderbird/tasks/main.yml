@@ -58,19 +58,6 @@
     recurse=yes
 
 - name: Check symbolic link /usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
-  stat: path=/usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
-  register: links
-
-#- debug: msg="{{ links.stat.lnk_source }}"
-
-- name: Delete previus /usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
-  file:
-    path=/usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
-    state=absent
-  when: links.stat.lnk_source != "{{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}/{{ galaxie_mozilla_thunderbird_app_name }}" or links.stat.islnk != true
-
-
-- name: Check symbolic link /usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
   file:
     src="{{ galaxie_mozilla_thunderbird_opt_dir }}/{{ galaxie_mozilla_thunderbird_app_name }}/{{ galaxie_mozilla_thunderbird_app_name }}"
     dest=/usr/bin/{{ galaxie_mozilla_thunderbird_app_name }}
