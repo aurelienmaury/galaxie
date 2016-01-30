@@ -1,6 +1,6 @@
 ---
 
-- name: bashrc is ok
+- name: Check bashrc
   copy:
     src="{{ item.src }}"
     dest="{{ item.dest }}"

@@ -1,7 +1,9 @@
 ---
 
-- name: desired packages are present
-  apt: pkg="{{item}}" state=present
+- name: Check desired packages
+  apt:
+    pkg="{{item}}"
+    state=present
   with_items:
     - bash-completion
     - dnsutils
@@ -19,8 +21,11 @@
     - grc
     - glances
 
-- name: undesired packages are absent
-  apt: pkg="{{item}}" state=absent purge=yes
+- name: Check undesired packages
+  apt:
+    pkg="{{item}}"
+    state=absent
+    purge=yes
   with_items:
     - ntpdate
     - nfs-common
