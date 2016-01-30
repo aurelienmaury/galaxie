@@ -1,3 +1,3 @@
 ---
-ansible_ssh_private_key_file: ~/.ssh/id_rsa.gat01
-domain: gatland.eu.org
+galaxie_banner_text: "Gatland"
+galaxie_banner_domain: 'gatland.eu.org'

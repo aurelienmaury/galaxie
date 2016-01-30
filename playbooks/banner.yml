@@ -4,4 +4,4 @@
   sudo: true
 
   roles:
-    - banners
+    - banner

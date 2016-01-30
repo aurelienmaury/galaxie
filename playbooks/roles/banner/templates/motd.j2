@@ -1,10 +1,10 @@
-{% if figlet_banner.stdout %}
-{{ figlet_banner.stdout }}
+{% if galaxie_banner_figlet_result.stdout %}
+{{ galaxie_banner_figlet_result.stdout }}
 {% endif %}
-{% if domain %}
-Hostname  : {{ ansible_hostname }}.{{ domain }}
+{% if galaxie_banner_domain %}
+Hostname  : {{ ansible_hostname }}.{{ galaxie_banner_domain }}
 {% endif %}
-{% if not domain %}
+{% if not galaxie_banner_domain %}
 Hostname  : {{ ansible_hostname }}
 {% endif %}
 {% if ansible_default_ipv4 %}

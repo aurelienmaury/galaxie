@@ -1,0 +1,7 @@
+---
+galaxie_banner_text: "Galaxie"
+galaxie_banner_figlet_font_dir: "/usr/share/figlet"
+galaxie_banner_figley_bin_path: "/usr/bin/figlet"
+galaxie_banner_font_name: "galaxie"
+galaxie_banner_font_filename: "galaxie.flf"
+galaxie_banner_domain: 'galaxie.ici'

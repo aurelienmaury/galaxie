@@ -29,7 +29,8 @@
 - include: dnscache-client.yml
 #- include: ntp-client.yml
 #- include: apt-cacher-ng-client.yml
-#- include: commonr.yml
+#- include: common.yml
+#- include: banner.yml
 
 # Desktops
 #- include: desktops-base.yml

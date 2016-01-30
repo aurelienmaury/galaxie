@@ -1,25 +1,28 @@
 ---
 
 - name: Check Figlet status
+  tags: banner
   apt:
     pkg=figlet
     state=present
 
-- name: Copy {{ font_filename }} to {{ figlet_font_dir }}/
+- name: Copy {{ galaxie_banner_font_filename }} to {{ galaxie_banner_figlet_font_dir }}/
+  tags: banner
   copy:
-    src="{{ font_filename }}"
-    dest="{{ figlet_font_dir }}/{{ font_filename }}"
+    src="{{ galaxie_banner_font_filename }}"
+    dest="{{ galaxie_banner_figlet_font_dir }}/{{ galaxie_banner_font_filename }}"
     owner=root
     group=root
     mode=0644
 
 - name: Generate figlet banner
-  command: /usr/bin/figlet -c -w 80 -f {{ font_name }} '{{ banner_text }}'
-  register: figlet_banner
+  tags: banner
+  command: /usr/bin/figlet -c -w 80 -f {{ galaxie_banner_font_name }} '{{ galaxie_banner_text }}'
+  register: galaxie_banner_figlet_result
   changed_when: false
 
 - name: Configure message of the day
-  tags: banners
+  tags: banner
   template:
     src=motd.j2
     dest=/etc/motd
@@ -28,15 +31,15 @@
     mode=0644
 
 - name: /etc/issue.* are empty
+  tags: banner
   template:
     src=empty.j2
     dest="{{ item }}"
     owner=root
     group=root
     mode=0644
-  tags: banners
   with_items:
     - /etc/issue
     - /etc/issue.net
-    - /etc/banners.dynamic
+    - /etc/banner.dynamic
 
