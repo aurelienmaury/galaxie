@@ -3,6 +3,6 @@ galaxie_apt_cacher_ng_server_internal: uranus.galaxie.ici
 galaxie_apt_cacher_ng_server_external: mycompany.com
 galaxie_apt_cacher_ng_server_self: 127.0.1.1
 galaxie_apt_cacher_ng_port: 9999
-galaxie_apt_cacher_ng_cache_dir: /mnt/pvr/Apt-Cacher-ng
+galaxie_apt_cacher_ng_cache_dir: /var/cache/apt-cacher-ng
 galaxie_apt_cacher_ng_user: apt-cacher-ng
 galaxie_apt_cacher_ng_group: apt-cacher-ng
