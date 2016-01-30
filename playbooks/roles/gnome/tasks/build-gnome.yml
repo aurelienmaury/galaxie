@@ -12,7 +12,7 @@
     - name: Install jhbuild build tools
       apt:
         pkg="{{item}}"
-        state=installed
+        state=absent
       with_items:
         - libsqlite3-dev
         - libgphoto2-dev

@@ -26,10 +26,10 @@
 ### Host ###
 ###############
 ### Frist deal with DNS / NTP / DHCP
-- include: dnscache-client.yml domain={{domain}}
+- include: dnscache-client.yml
 #- include: ntp-client.yml
 #- include: apt-cacher-ng-client.yml
-#- include: galaxie-member.yml
+#- include: commonr.yml
 
 # Desktops
 #- include: desktops-base.yml
