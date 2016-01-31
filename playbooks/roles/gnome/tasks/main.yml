@@ -1,4 +1,6 @@
 ---
+- include: packages.yml
+
 - name: Check require installation
   apt: pkg={{ item }} state=latest
   with_items:
@@ -10,11 +12,11 @@
 - include: polkit.yml
 
 # Extensions Management
-- name: Check {{ gnome_extensions_dir }}
-  file:
-    path={{ working_directory }}
-    state=directory
-    mode=0755
+#- name: Check {{ gnome_extensions_dir }}
+#  file:
+#    path={{ working_directory }}
+#    state=directory
+#    mode=0755
 
 # Gno-Menu
 #- include: get-extension.yml extension_id=608 gnome_verion=3.14 user=tuxa

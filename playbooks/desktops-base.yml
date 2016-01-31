@@ -31,11 +31,6 @@
         pkg="{{item}}"
         state=installed
       with_items:
-        - gdm3
-        - gnome-shell
-        - gnome-shell-extensions
-        - gnome-tweak-tool
-        - gnome-session
         - alacarte
         - dconf-tools
         - gimp
