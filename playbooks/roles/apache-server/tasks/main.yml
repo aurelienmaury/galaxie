@@ -8,8 +8,10 @@
   notify:
     - restart apache
 
-- name: Add "{{ galaxie.user }}" user in www-data group
-  user:
-    name: "{{ galaxie.user }}"
-    groups: "www-data"
-    append: yes
+#- name: Add "{{ galaxie.user }}" user in www-data group
+#  user:
+#    name: "{{ galaxie.user }}"
+#    groups: "www-data"
+#    append: yes
+
+- include: php.yml

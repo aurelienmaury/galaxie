@@ -1,6 +1,6 @@
 ---
 
-- name: check php5 installation
+- name: php5 | Check php5 installation
   apt: pkg={{ item }} state=latest
   with_items:
     - php5-cli
@@ -31,7 +31,7 @@
 
 - name: php5 | check max_execution_time
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; max_execution_time = [0-9]+|^max_execution_time = [0-9]+'
     replace='max_execution_time = 30'
   notify:
@@ -39,7 +39,7 @@
 
 - name: php5 | using max_execution_time = 30
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='max_execution_time = 30'
     state=present
   notify:
@@ -47,7 +47,7 @@
 
 - name: php5 | check max_input_time
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; max_input_time = [0-9]+|^max_input_time = [0-9]+'
     replace='max_input_time = 60'
   notify:
@@ -55,7 +55,7 @@
 
 - name: php5 | using max_input_time = 60
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='max_input_time = 60'
     state=present
   notify:
@@ -63,7 +63,7 @@
 
 - name: php5 | check memory_limit
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; memory_limit = [a-zA-Z0-9_]+|^memory_limit = [a-zA-Z0-9_]+'
     replace='memory_limit = 128M'
   notify:
@@ -71,7 +71,7 @@
 
 - name: php5 | using memory_limit = 128M
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='memory_limit = 128M'
     state=present
   notify:
@@ -79,7 +79,7 @@
 
 - name: php5 | check upload_max_filesize
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; upload_max_filesize = [a-zA-Z0-9_]+|^upload_max_filesize = [a-zA-Z0-9_]+'
     replace='upload_max_filesize = 10M'
   notify:
@@ -87,7 +87,7 @@
 
 - name: php5 | using upload_max_filesize = 10M
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='upload_max_filesize = 10M'
     state=present
   notify:
@@ -95,7 +95,7 @@
 
 - name: php5 | check register_globals
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; register_globals = [a-zA-Z0-9_]+|^register_globals = [a-zA-Z0-9_]+'
     replace='register_globals = Off'
   notify:
@@ -103,7 +103,7 @@
 
 - name: php5 | using register_globals = Off
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='register_globals = Off'
     state=present
   notify:
@@ -111,7 +111,7 @@
 
 - name: php5 | check expose_php
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; expose_php = [a-zA-Z0-9_]+|^expose_php = [a-zA-Z0-9_]+'
     replace='expose_php = Off'
   notify:
@@ -119,7 +119,7 @@
 
 - name: php5 | using expose_php = Off
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='expose_php = Off'
     state=present
   notify:
@@ -127,7 +127,7 @@
 
 - name: php5 | check mbstring.language
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; mbstring.language =[^\n]*\n+|^mbstring.language =[^\n]*\n|^\;mbstring.language =[^\n]*\n'
     replace='mbstring.language = UTF-8\n'
   notify:
@@ -135,7 +135,7 @@
 
 - name: php5 | using mbstring.language = UTF-8
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='mbstring.language = UTF-8'
     state=present
   notify:
@@ -143,7 +143,7 @@
 
 - name: php5 | check mbstring.internal_encoding
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; mbstring.internal_encoding =[^\n]*\n|^mbstring.internal_encoding =[^\n]*\n|^\;mbstring.internal_encoding =[^\n]*\n'
     replace='mbstring.internal_encoding = UTF-8\n'
   notify:
@@ -151,7 +151,7 @@
 
 - name: php5 | using mbstring.internal_encoding = UTF-8
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='mbstring.internal_encoding = UTF-8'
     state=present
   notify:
@@ -159,7 +159,7 @@
 
 - name: php5 | check mbstring.http_input
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; mbstring.http_input =[^\n]*\n|^mbstring.http_input =[^\n]*\n|^\;mbstring.http_input =[^\n]*\n'
     replace='mbstring.http_input = UTF-8\n'
   notify:
@@ -167,7 +167,7 @@
 
 - name: php5 | using mbstring.http_input = UTF-8
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='mbstring.http_input = UTF-8'
     state=present
   notify:
@@ -175,7 +175,7 @@
 
 - name: php5 | check mbstring.http_output
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; mbstring.http_output =[^\n]*\n|^mbstring.http_output =[^\n]*\n|^\;mbstring.http_output =[^\n]*\n'
     replace='mbstring.http_output = UTF-8\n'
   notify:
@@ -183,7 +183,7 @@
 
 - name: php5 | using mbstring.http_output = UTF-8
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='mbstring.http_output = UTF-8'
     state=present
   notify:
@@ -191,7 +191,7 @@
 
 - name: php5 | check mbstring.detect_order
   replace:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     regexp='^\; mbstring.detect_order =[^\n]*\n|^mbstring.detect_order =[^\n]*\n|^\;mbstring.detect_order =[^\n]*\n'
     replace='mbstring.detect_order = auto\n'
   notify:
@@ -199,7 +199,7 @@
 
 - name: php5 | using mbstring.detect_order = auto
   lineinfile:
-    dest=/etc/php5/apache2/php.ini
+    dest={{ galaxie_apache_server_php_ini_file }}
     line='mbstring.detect_order = auto'
     state=present
   notify:

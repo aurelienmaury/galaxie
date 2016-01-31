@@ -1,2 +1,2 @@
 ---
-# defaults file for galaxie-apache
+galaxie_apache_server_php_ini_file: "/etc/php5/apache2/php.ini"
