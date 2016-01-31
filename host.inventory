@@ -97,9 +97,9 @@ gat01
 uranus
 
 # emby
-[media-servers]
+[emby-servers]
 uranus
-gatcorp
+gat01
 
 [mail-servers]
 
@@ -157,7 +157,7 @@ dns-servers
 apt-cacher-ng-server
 zfs-files-servers
 tftp-servers
-media-servers
+emby-servers
 web-servers
 mysql-servers
 
