@@ -15,7 +15,7 @@
 - include: ntp-server.yml
 
 ### Configure Apt
-#- include: apt-cacher-ng-server.yml
+- include: apt-cacher-ng-server.yml
 
 ### Configure a LAMP (Linux Apache MySQL PHP)
 #- include: apache-server.yml

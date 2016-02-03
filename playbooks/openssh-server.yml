@@ -3,8 +3,5 @@
   user: zoe
   sudo: true
 
-  vars_files:
-    - "galaxie-vars.yml"
-
   roles:
     - openssh-server
