@@ -1,9 +1,5 @@
 ---
-dnscache:
-  service_name: dnscache
-  supervise_dir: /var/lib/supervise
-  source_dir: /usr/src/djbdns
-  dnslog_user: dnslog
-  interface: 127.0.0.1
-  multilog_dir: /var/multilog
-  multilog_user: multilog
+galaxie_dnscache_server_service_name: dnscache
+galaxie_dnscache_server_supervise_dir: /var/lib/supervise
+galaxie_dnscache_server_dnsroots_global_file: /etc/dnsroots.global
+galaxie_dnscache_server_host_for_test: github.com
