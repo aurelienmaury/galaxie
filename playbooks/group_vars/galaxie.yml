@@ -1,5 +1,9 @@
 ---
 galaxie_ansible_user: zoe
+### DNSCache Client Role ###
+galaxie_dnscache_client_domain: 'galaxie.ici'
+galaxie_dnscache_client_bind_interface: 127.0.0.1
+
 galaxie_domain: galaxie.ici
 galaxie_ntp_referrals:
   - 'ntp-p1.obspm.fr'
@@ -63,17 +67,6 @@ galaxie:
     cache_dir: /mnt/pvr/Apt-Cacher-ng
     user: apt-cacher-ng
     group: apt-cacher-ng
-
-#  dnscache:
-#    service_name: dnscache
-#    supervise_dir: /var/lib/supervise
-#    source_dir: /usr/src/djbdns
-#    dnslog_user: dnslog
-#    interface: 127.0.0.1
-#    multilog_dir: /var/multilog
-#    multilog_user: multilog
-#    dnsroots_global_file: /etc/dnsroots.global
-#    host_for_test: github.com
 
   zfsonlinux:
     # The Debian GNU/Linux ZoL

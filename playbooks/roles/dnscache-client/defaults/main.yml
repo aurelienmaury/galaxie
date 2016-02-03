@@ -1,24 +1,25 @@
 ---
-set_domain: true
-set_nameservers: true
-set_searchs: false
 
-bind_interface: 127.0.0.1
-host_for_test: github.com
+galaxie_dnscache_client_set_domain: true
+galaxie_dnscache_client_set_nameservers: true
+galaxie_dnscache_client_set_searchs: false
+
+galaxie_dnscache_client_bind_interface: 127.0.0.1
+galaxie_dnscache_client_host_for_test: github.com
 
 # Default DNS Settings
-default_nameservers_description: "# OpenNIC IPv4 nameservers (US)"
-default_nameservers: ['107.170.95.180', '75.127.14.107']
+galaxie_dnscache_client_default_nameservers_description: "# OpenNIC IPv4 nameservers (US)"
+galaxie_dnscache_client_default_nameservers: ['107.170.95.180', '75.127.14.107']
 
-domain: 'galaxie.ici'
+galaxie_dnscache_client_domain: ''
 
-dns_nameservers:
- - "{{ bind_interface }}"
+galaxie_dnscache_client_dns_nameservers:
+ - "{{ galaxie_dnscache_client_bind_interface }}"
 
-dns_searchs:
+galaxie_dnscache_client_dns_searchs:
  - "mysuffix1.com"
  - "mysuffix2.com"
  - "mysuffix3.com"
 
 # DHCP Client settings
-dhclient_file: "/etc/dhcp/dhclient.conf"
+galaxie_dnscache_client_dhclient_file: "/etc/dhcp/dhclient.conf"
