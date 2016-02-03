@@ -1,7 +1,7 @@
 ## Les serveurs externes qui seront utilisés pour se synchroniser (strate 1 et 1)
 
-{% for address in galaxie_ntp_referrals %}
-server {{ address }} iburst
+{% for referral in galaxie_ntp_server_ntp_referrals %}
+server {{ referral }} iburst
 {% endfor %}
 
 ## Contrôle des accès

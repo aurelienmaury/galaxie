@@ -10,9 +10,9 @@
 ###############
 
 ### Frist deal with DNS / NTP / DHCP
-#- include: dnscache-server.yml
-#- include: dnscache-server-update.yml
-#- include: ntp-server.yml
+- include: dnscache-server.yml
+- include: dnscache-server-update.yml
+- include: ntp-server.yml
 
 ### Configure Apt
 #- include: apt-cacher-ng-server.yml

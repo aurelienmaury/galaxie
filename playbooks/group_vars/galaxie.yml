@@ -2,22 +2,20 @@
 galaxie_ansible_user: zoe
 ### DNSCache Client Role ###
 galaxie_dnscache_client_domain: 'galaxie.ici'
-galaxie_dnscache_client_bind_interface: 127.0.0.1
 
-galaxie_domain: galaxie.ici
-galaxie_ntp_referrals:
+### NTP Server Role ###
+galaxie_ntp_server_ntp_referrals:
   - 'ntp-p1.obspm.fr'
   - 'ap.cagb.org'
   - 'ntp1.doowan.net'
   - 'ntp.crashdump.fr'
   - 'ntp.via.ecp.fr'
-galaxie_ntp_pool:
+galaxie_ntp_server_ntp_pool:
   - '0.pool.ntp.org'
   - '1.pool.ntp.org'
   - '2.pool.ntp.org'
   - '3.pool.ntp.org'
-galaxie_ntp_local:
-  - 'nabu.galaxie.ici'
+
 galaxie_apt_cacher_ng_server_internal: uranus.galaxie.ici
 
 galaxie:

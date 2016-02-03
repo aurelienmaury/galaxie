@@ -11,14 +11,14 @@
     pkg=ntp
     state=present
 
-- name: ntp time source {{ galaxie_ntp_referrals }}
+- name: ntp time source {{ galaxie_ntp_server_ntp_referrals }}
   when: "{{ 'internal-machines' in group_names }}"
   template:
     src="ntp-server-internal.conf.j2"
     dest="/etc/ntp.conf"
   notify: restart ntp
 
-- name: ntp time source {{ galaxie_ntp_pool }}
+- name: ntp time source {{ galaxie_ntp_server_ntp_pool }}
   when: "{{ 'external-machines' in group_names }}"
   template:
     src=ntp-server-external.conf.j2
