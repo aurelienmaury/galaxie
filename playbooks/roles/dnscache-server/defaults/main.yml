@@ -1,9 +1,11 @@
 ---
-dnscache:
-  service_name: dnscache
-  supervise_dir: /var/lib/supervise
-  source_dir: /usr/src/djbdns
-  dnslog_user: dnslog
-  interface: 127.0.0.1
-  multilog_dir: /var/multilog
-  multilog_user: multilog
+galaxie_dnscache_server_service_name: "dnscache"
+galaxie_dnscache_server_supervise_dir: "/var/lib/supervise"
+galaxie_dnscache_server_source_dir: "/usr/src/djbdns"
+galaxie_dnscache_server_dnslog_user: "dnslog"
+galaxie_dnscache_server_interface: "127.0.0.1"
+galaxie_dnscache_server_multilog_dir: "/var/multilog"
+galaxie_dnscache_server_multilog_user: "multilog"
+galaxie_dnscache_server_internal_domain: "galaxie.ici"
+galaxie_dnscache_server_internal_nameserver: "192.168.1.1"
+galaxie_dnscache_server_internal_reserse_nameserver: "168.192.in-addr.arpa"

@@ -30,7 +30,7 @@
 
 - name: source directory for djbdns building
   file:
-    path="{{ source_dir }}"
+    path="{{ galaxie_dnscache_server_source_dir }}"
     state=directory
     owner=root
     group=root
@@ -38,11 +38,11 @@
   when: djb_installed|failed
 
 - name: sourcing and compiling djbdns
-  shell: "cd {{ source_dir }} && apt-get source dbndns --compile -y"
+  shell: "cd {{ galaxie_dnscache_server_source_dir }} && apt-get source dbndns --compile -y"
   when: djb_installed|failed
 
 - name: install djbdns package
-  shell: "dpkg -i {{ source_dir }}/djbdns_1.05-8_*.deb"
+  shell: "dpkg -i {{ galaxie_dnscache_server_source_dir }}/djbdns_1.05-8_*.deb"
   when: djb_installed|failed
 
 - name: dnscache users
@@ -57,14 +57,14 @@
 
 - name: dnscache run directory
   file:
-    path="{{ supervise_dir }}"
+    path="{{ galaxie_dnscache_server_supervise_dir }}"
     state=directory
     owner=root
     group=root
     mode=0755
 
 - name: check dnscache-conf output directory exists
-  shell: "test -d {{ supervise_dir }}/{{ service_name }}"
+  shell: "test -d {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}"
   failed_when: "superviseExists.rc == 2"
   changed_when: "superviseExists.rc == 1"
   register: superviseExists
@@ -72,50 +72,50 @@
 
 - name: dnscache-conf
   when: superviseExists|failed
-  shell: "dnscache-conf {{ service_name }} {{ dnslog_user }} {{ supervise_dir }}/{{ service_name }} {{ interface }}"
+  shell: "dnscache-conf {{ galaxie_dnscache_server_service_name }} {{ galaxie_dnscache_server_dnslog_user }} {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }} {{ galaxie_dnscache_server_interface }}"
 
 - name: point logger to correct service
   lineinfile:
-    dest={{ supervise_dir }}/{{ service_name }}/log/run
+    dest={{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/log/run
     regexp='^exec'
-    line='exec setuidgid {{ dnslog_user }} {{ multilog_user }} t {{ multilog_dir }}/{{ service_name }}'
+    line='exec setuidgid {{ galaxie_dnscache_server_dnslog_user }} {{ galaxie_dnscache_server_multilog_user }} t {{ galaxie_dnscache_server_multilog_dir }}/{{ galaxie_dnscache_server_service_name }}'
     backup=yes
 
 - name: delete old logger launcher
   file:
-    path="{{ supervise_dir }}/{{ service_name }}/log/main"
+    path="{{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/log/main"
     state=absent
 
 - name: create multilog directory
   file:
-    path="{{ multilog_dir }}/{{ service_name }}"
-    owner="{{ dnslog_user }}"
-    group="{{ dnslog_user }}"
+    path="{{ galaxie_dnscache_server_multilog_dir }}/{{ galaxie_dnscache_server_service_name }}"
+    owner="{{ galaxie_dnscache_server_dnslog_user }}"
+    group="{{ galaxie_dnscache_server_dnslog_user }}"
     state=directory
     mode=2755
 
 # Deal with LAN things
-- name: Write {{ internal_nameserver }} in {{ supervise_dir }}/{{ service_name }}/root/servers/{{ internal_domain }}
+- name: Write {{ galaxie_dnscache_server_internal_nameserver }} in {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/root/servers/{{ galaxie_dnscache_server_internal_domain }}
   template:
     src=local-domain-server.j2
-    dest={{ supervise_dir }}/{{ service_name }}/root/servers/{{ internal_domain }}
+    dest={{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/root/servers/{{ galaxie_dnscache_server_internal_domain }}
     backup=no
   when: inventory_hostname in groups["internal-machines"]
   notify:
     - restart service
 
 # Deal with LAN reverse things
-- name: Write {{ internal_nameserver }} in {{ supervise_dir }}/{{ service_name }}/root/servers/{{ internal_reserse_nameserver }}
+- name: Write {{ galaxie_dnscache_server_internal_nameserver }} in {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/root/servers/{{ galaxie_dnscache_server_internal_reserse_nameserver }}
   template:
     src=local-domain-server.j2
-    dest={{ supervise_dir }}/{{ service_name }}/root/servers/{{ internal_reserse_nameserver }}
+    dest={{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/root/servers/{{ galaxie_dnscache_server_internal_reserse_nameserver }}
     backup=no
   when: inventory_hostname in groups["internal-machines"]
   notify:
     - restart service
 
 - name: check if service registered
-  shell: "/usr/sbin/update-service --list | grep {{ service_name }}"
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_dnscache_server_service_name }}"
   failed_when: "serviceRegistered.rc == 2"
   changed_when: "serviceRegistered.rc == 1"
   register: serviceRegistered
