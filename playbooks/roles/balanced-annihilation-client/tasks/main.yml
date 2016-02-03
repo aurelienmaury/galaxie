@@ -1,0 +1,70 @@
+---
+
+- name: Check directorys
+  file:
+    path="{{item}}"
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ galaxie_balanced_annihilation_cache_dir }}"
+    - "{{ galaxie_balanced_annihilation_opt_dir }}"
+
+- name: Check for last version
+  script: get_basename_by_url.sh '{{ galaxie_balanced_annihilation_downloader_url }}'
+  register: galaxie_balanced_annihilation_filename
+  failed_when: not galaxie_balanced_annihilation_filename.stdout
+  changed_when: False
+
+#- debug: msg="{{ galaxie_balanced_annihilation_filename.stdout_lines[0] }}"
+
+- name: Download {{ galaxie_balanced_annihilation_filename.stdout_lines[0] }}
+  get_url:
+    url="{{ galaxie_balanced_annihilation_downloader_url }}"
+    dest="{{ galaxie_balanced_annihilation_cache_dir }}/{{ galaxie_balanced_annihilation_filename.stdout_lines[0] }}"
+  when: galaxie_balanced_annihilation_downloader_url and galaxie_balanced_annihilation_filename
+  register: galaxie_balanced_annihilation_download
+  failed_when: not galaxie_balanced_annihilation_downloader_url
+
+#- debug: msg="{{ galaxie_balanced_annihilation_download }}"
+
+#- name: Delete {{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#  file:
+#    path={{ galaxie_balanced_annihilation_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#    state=absent
+#  when: galaxie_balanced_annihilation_download.changed
+#
+- name: Unarchive {{ galaxie_balanced_annihilation_download.dest }}
+  unarchive:
+    src="{{ galaxie_balanced_annihilation_download.dest }}"
+    dest="{{ galaxie_balanced_annihilation_opt_dir }}"
+    copy=no
+  #when: galaxie_balanced_annihilation_download.changed
+
+#- name: Set permissions of {{ galaxie_balanced_annihilation_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#  file:
+#    path={{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#    owner=root
+#    group=root
+#    state=directory
+#    mode=0755
+#
+#- name: Set permissions of {{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/
+#  file:
+#    path={{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}
+#    owner=root
+#    group=root
+#    recurse=yes
+#
+#- name: Create symbolic link
+#  file:
+#    src="{{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/{{ galaxie_mozilla_firefox_app_name }}"
+#    dest=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
+#    state=link
+#
+#- name: Creat /usr/share/applications/{{ galaxie_mozilla_firefox_app_name }}.desktop is ok
+#  template:
+#    src=templates/{{ galaxie_mozilla_firefox_app_name }}.desktop.j2
+#    dest=/usr/share/applications/{{ galaxie_mozilla_firefox_app_name }}.desktop
+#    backup=no

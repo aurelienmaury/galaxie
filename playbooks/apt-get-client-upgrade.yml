@@ -1,0 +1,11 @@
+- hosts: galaxie
+  become: true
+
+  tasks:
+  - name: Apt-get update
+    apt:
+      update_cache=yes
+
+  - name: Apt-get upgrade
+    apt:
+      upgrade=yes

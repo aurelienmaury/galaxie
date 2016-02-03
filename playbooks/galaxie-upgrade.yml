@@ -1,9 +1,0 @@
-- hosts: galaxie
-  user: zoe
-  sudo: true
-
-  vars_files:
-    - "galaxie-vars.yml"
-
-  roles:
-    - apt-get-client

@@ -1,0 +1,8 @@
+---
+galaxie_balanced_annihilation_prefix_dir: "/var/lib/galaxie"
+galaxie_balanced_annihilation_cache_dir: "{{ galaxie_balanced_annihilation_prefix_dir }}/src"
+galaxie_balanced_annihilation_opt_dir: "/opt"
+galaxie_balanced_annihilation_os: "linux64"
+galaxie_balanced_annihilation_lang: "fr"
+galaxie_balanced_annihilation_app_name: "firefox"
+galaxie_balanced_annihilation_downloader_url: "http://downloads.sourceforge.net/project/springrts/springrts/spring-100.0/spring_100.0_minimal-portable-linux64-static.7z?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fspringrts%2Ffiles%2Fspringrts%2Fspring-100.0%2F&ts=1454278870&use_mirror=netcologne"

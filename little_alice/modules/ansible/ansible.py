@@ -37,10 +37,10 @@ inventory_file = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "../../../host.inventory")
 )
 
-playbook_galaxie_upgrade_filename = 'galaxie-upgrade.yml'
+playbook_galaxie_upgrade_filename = 'apt-get-client.yml'
 playbook_restart_pbx_servers_filename = 'galaxie-restart-pbx-servers.yml'
-playbook_restart_pvr_servers_filename = 'galaxie-restart-pvr-servers.yml'
-playbook_restart_medias_servers_filename = 'galaxie-restart-medias-servers.yml'
+playbook_restart_pvr_servers_filename = 'tvheadend-server-restart.yml'
+playbook_restart_medias_servers_filename = 'emby-server-restart.yml'
 
 it_done = [
     "C'est fait",
