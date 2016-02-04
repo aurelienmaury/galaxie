@@ -18,23 +18,23 @@
 - include: apt-cacher-ng-server.yml
 
 ### Configure a LAMP (Linux Apache MySQL PHP)
-#- include: apache-server.yml
-#- include: mysql-server.yml
+- include: apache-server.yml
+- include: mysql-server.yml
 
 ###############
 ### Host ###
 ###############
 ### Frist deal with DNS / NTP / DHCP
 - include: dnscache-client.yml
-#- include: ntp-client.yml
-#- include: apt-cacher-ng-client.yml
-#- include: common.yml
-#- include: banner.yml
+- include: ntp-client.yml
+- include: apt-cacher-ng-client.yml
+- include: common.yml
+- include: banner.yml
 
 # Desktops
 #- include: desktops-base.yml
 #- include: gnome-setting.yml
-#- include: mozilla-firefox.yml
-#- include: mozilla-thunderbird.yml
+- include: mozilla-firefox.yml
+- include: mozilla-thunderbird.yml
 
 
