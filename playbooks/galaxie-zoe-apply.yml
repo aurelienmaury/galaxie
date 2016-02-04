@@ -14,12 +14,17 @@
 - include: dnscache-server-update.yml
 - include: ntp-server.yml
 
+### Well done go to the Standard cher ###
+- include: apt-get-client.yml
+- include: common.yml
+- include: openssh-server.yml
+
 ### Configure Apt
 - include: apt-cacher-ng-server.yml
 
 ### Configure a LAMP (Linux Apache MySQL PHP)
 - include: apache-server.yml
-- include: mysql-server.yml
+#- include: mysql-server.yml
 
 ###############
 ### Host ###
@@ -28,7 +33,8 @@
 - include: dnscache-client.yml
 - include: ntp-client.yml
 - include: apt-cacher-ng-client.yml
-- include: common.yml
+- include: openssh-client.yml
+
 - include: banner.yml
 
 # Desktops

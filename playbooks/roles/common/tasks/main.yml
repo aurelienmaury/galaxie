@@ -1,5 +1,5 @@
 ---
-
+- include: hostname.yml
 - include: locales.yml
 - include: packages.yml
 - include: bashrc.yml

@@ -1,5 +1,6 @@
 - hosts: ntp-clients
-  become: true
+  user: zoe
+  sudo: true
 
   roles:
     - ntp_client
