@@ -21,16 +21,16 @@
 
 - name: "Stat of {{ tmp_file.stdout }}"
   stat:
-    path="{{ tmp_file.stdout }}"
+    path={{ tmp_file.stdout }}
   register: galaxie_dnscache_server_dnsroots_global_tmp_file
 
 - name: Update {{ galaxie_dnscache_server_dnsroots_global_file }}
-  command: cp {{ tmp_file.stdout }} {{ galaxie_dnscache_server_dnsroots_global_file }}
-  when: "'{{galaxie_dnscache_server_dnsroots_global_file.stat.checksum}}' != '{{galaxie_dnscache_server_dnsroots_global_tmp_file.stat.checksum}}'"
+  command: cp {{ tmp_file.stdout }} {{ galaxie_dnscache_server_dnsroots_global_file.stat.path }}
+  when: "'{{ galaxie_dnscache_server_dnsroots_global_file.stat.checksum }}' != '{{ galaxie_dnscache_server_dnsroots_global_tmp_file.stat.checksum }}'"
 
 - name: Update dnscache dnsroots list
-  command: cp {{ galaxie_dnscache_server_dnsroots_global_file }} {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/root/servers/@
-  when: "'{{galaxie_dnscache_server_dnsroots_global_file.stat.checksum}}' != '{{galaxie_dnscache_server_dnsroots_global_tmp_file.stat.checksum}}'"
+  command: cp {{ galaxie_dnscache_server_dnsroots_global_file.stat.path }} {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}/root/servers/@
+  when: "'{{ galaxie_dnscache_server_dnsroots_global_file.stat.checksum }}' != '{{ galaxie_dnscache_server_dnsroots_global_tmp_file.stat.checksum }}'"
   notify:
     - restart service
 

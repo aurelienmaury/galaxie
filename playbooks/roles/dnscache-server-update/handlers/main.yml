@@ -2,5 +2,5 @@
 
 - name: restart service
   shell:
-    /usr/sbin/update-service --remove {{ dnscache.supervise_dir }}/{{ dnscache.service_name }} &&
-    /usr/sbin/update-service --add {{ dnscache.supervise_dir }}/{{ dnscache.service_name }}
+    /usr/sbin/update-service --remove {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }} &&
+    /usr/sbin/update-service --add {{ galaxie_dnscache_server_supervise_dir }}/{{ galaxie_dnscache_server_service_name }}
