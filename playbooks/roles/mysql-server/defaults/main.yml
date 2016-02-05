@@ -1,2 +1,2 @@
 ---
-# defaults file for galaxie-apache
+galaxie_mysql_server_root_db_password: "{{ lookup('password', '~/keystore-{{ ansible_hostname }} chars=ascii_letters,digits,hexdigits,punctuation') }}"

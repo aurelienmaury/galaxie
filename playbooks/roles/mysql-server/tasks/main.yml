@@ -9,23 +9,18 @@
   notify:
     - restart mysql
 
-- name: ensure mysql is running and starts on boot
+- name: stop the mysql demon process
   service:
     name=mysql
     state=started
-    enabled=true
 
-- name: copy .my.cnf file with root password credentials
-  template:
-    src=my.cnf.j2
-    dest=/root/.my.cnf
-    owner=root
-    mode=0600
+#- name: start the mysqld demon process using the --skip-grant-tables option
+#  shell: /usr/sbin/mysqld --skip-grant-tables --skip-networking &
 
 - name: Setup MySQL root password
   mysql_user:
     name=root
-    password={{ galaxie.mysql.root_db_password }}
+    password={{ galaxie_mysql_server_root_db_password }}
     host={{ item }}
     state=present
   with_items:
@@ -33,6 +28,13 @@
     - 127.0.0.1
     - ::1
     - localhost
+
+- name: copy .my.cnf file with root password credentials
+  template:
+    src=my.cnf.j2
+    dest=/root/.my.cnf
+    owner=root
+    mode=0600
 
 - name: ensure anonymous users are not in the database
   mysql_user:
@@ -50,3 +52,13 @@
     name=test
     state=absent
 
+- name: stop the mysqld process
+  service:
+    name=mysql
+    state=stopped
+
+- name: relaunch mysqld with the classical way
+  service:
+    name=mysql
+    state=started
+    enabled=true

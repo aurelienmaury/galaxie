@@ -51,8 +51,5 @@ galaxie:
   tvheadend:
     git_url: https://github.com/tvheadend/tvheadend.git
 
-  mysql:
-    root_db_password: ++monsupermotdepasse++
-
   scripts:
     directory: /opt/galaxie/bin
