@@ -24,7 +24,7 @@
 
 ### Configure a LAMP (Linux Apache MySQL PHP)
 - include: apache-server.yml
-#- include: mysql-server.yml
+- include: mysql-server.yml
 
 ###############
 ### Host ###
