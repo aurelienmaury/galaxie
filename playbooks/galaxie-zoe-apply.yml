@@ -2,9 +2,12 @@
 ###############
 ### * Hosts ###
 ###############
-#- include: openssh-server.yml
-#- include: openssh-client.yml
-#- include: apt-get-client.yml
+- include: openssh-server.yml
+- include: openssh-client.yml
+- include: apt-get-client.yml
+- include: apt-get-client-upgrade.yml
+- include: common.yml
+- include: banner.yml
 ###############
 ### Servers ###
 ###############
@@ -15,27 +18,25 @@
 - include: ntp-server.yml
 
 ### Well done go to the Standard cher ###
-- include: apt-get-client.yml
-- include: common.yml
-- include: openssh-server.yml
 
 ### Configure Apt
 - include: apt-cacher-ng-server.yml
 
 ### Configure a LAMP (Linux Apache MySQL PHP)
+# PHP is manage inside apache-server role
 - include: apache-server.yml
 - include: mysql-server.yml
 
 ###############
-### Host ###
+### Setting ###
 ###############
 ### Frist deal with DNS / NTP / DHCP
 - include: dnscache-client.yml
 - include: ntp-client.yml
 - include: apt-cacher-ng-client.yml
-- include: openssh-client.yml
 
-- include: banner.yml
+
+
 
 # Desktops
 #- include: desktops-base.yml

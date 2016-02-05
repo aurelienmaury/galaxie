@@ -38,7 +38,7 @@
 #
 ###############################################################################
 
-VQ="{{ qmail.qmail_dir }}"
+VQ="{{ galaxie_qmail_server_qmail_dir }}"
 
 exec env - PATH="$VQ/bin:/usr/local/bin:/usr/bin:/bin" \
   multilog t n1024 s1048576 {{ item.log_dest }} \

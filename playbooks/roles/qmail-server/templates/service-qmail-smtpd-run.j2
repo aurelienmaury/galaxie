@@ -32,7 +32,7 @@
 ###############################################################################
 
 exec 2>&1
-VQ="{{ qmail.qmail_dir }}"
+VQ="{{ galaxie_qmail_server_qmail_dir }}"
 PATH="$VQ/bin:/usr/local/bin:/usr/bin:/bin"
 QUSER=qmaild
 LOCAL=`head -1 $VQ/control/me`
@@ -41,11 +41,11 @@ LOCAL=`head -1 $VQ/control/me`
 #
 # options for tcpserver/sslserver
 
-IP={{ qmail.service_ip }}
+IP={{ galaxie_qmail_server_service_ip }}
 PORT=25
 SSL=O
 SSL_CERT="$VQ/control/servercert.pem"
-SMTP_CDB="{{ qmail.supervise_dir }}/{{ qmail.service_smtpd }}/tcp.cdb"
+SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp.cdb"
 MAX=30
 
 # these require the "tcpserver limits" patch for ucspi-tcp, available here:

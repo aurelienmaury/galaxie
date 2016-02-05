@@ -106,6 +106,9 @@ uranus
 uranus
 gat01
 
+[qmails_servers]
+mercure
+
 [mail-servers]
 
 [file-servers]
@@ -157,6 +160,7 @@ neptune
 [servers:children]
 pvr-servers
 ntp-servers
+qmails_servers
 mail-servers
 file-servers
 pabx-servers
