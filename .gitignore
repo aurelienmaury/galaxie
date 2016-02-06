@@ -9,3 +9,5 @@ little_alice/brains/brain.br
 *~
 .anjuta
 *.pyc
+playbooks/group_vars/*.yml
+playbooks/host_vars/*.yml
