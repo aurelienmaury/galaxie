@@ -1,7 +1,6 @@
 ---
 - hosts: dnscache-server
-  user: zoe
-  sudo: true
+
 
   roles:
     - dnscache-server

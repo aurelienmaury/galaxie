@@ -1,0 +1,35 @@
+---
+- name: update the memory to 32MB to avoid memory related errors
+  template:
+    src=conf-common.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/conf-common
+    mode=0644
+  tags: config
+
+### Alias Creation ###
+- name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-root
+  template:
+    src=qmail-root.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-root
+    owner={{ galaxie_qmail_server_alias_user }}
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
+  template:
+    src=qmail-postmaster.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
+    owner={{ galaxie_qmail_server_alias_user }}
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
+  template:
+    src=qmail-mailer-daemon.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
+    owner={{ galaxie_qmail_server_alias_user }}
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config

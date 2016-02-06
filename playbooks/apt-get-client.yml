@@ -1,6 +1,5 @@
 - hosts: galaxie
-  user: zoe
-  sudo: true
+
 
   roles:
     - apt-get-client

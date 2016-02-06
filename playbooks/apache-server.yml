@@ -1,6 +1,5 @@
 - hosts: web-servers
-  user: zoe
-  sudo: true
+
 
   roles:
     - apache-server

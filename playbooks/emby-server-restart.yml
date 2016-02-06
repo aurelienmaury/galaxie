@@ -1,6 +1,5 @@
 - hosts: medias-servers
-  user: zoe
-  sudo: true
+
 
   tasks:
     - name : Stop Emby Server

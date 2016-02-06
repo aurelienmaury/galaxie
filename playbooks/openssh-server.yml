@@ -1,7 +1,6 @@
 ---
 - hosts: openssh-server
-  user: zoe
-  sudo: true
+
 
   roles:
     - openssh-server

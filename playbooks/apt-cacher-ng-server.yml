@@ -1,7 +1,4 @@
 ---
 - hosts: apt-cacher-ng-server
-  user: zoe
-  sudo: true
-
   roles:
     - apt-cacher-ng-server

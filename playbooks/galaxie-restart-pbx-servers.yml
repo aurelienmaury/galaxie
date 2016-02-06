@@ -1,6 +1,5 @@
 - hosts: pabx-servers
-  user: zoe
-  sudo: true
+
 
   tasks:
     - name : Stop Asterisk

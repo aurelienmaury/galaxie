@@ -1,6 +1,5 @@
 - hosts: zfs-files-servers
-  user: zoe
-  sudo: true
+
 
   vars_files:
     - "galaxie-vars.yml"

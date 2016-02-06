@@ -1,4 +1,7 @@
 ---
+ansible_ssh_user: zoe
+ansible_become: yes
+
 galaxie_ansible_user: zoe
 ### DNSCache Client Role ###
 galaxie_dnscache_client_domain: 'galaxie.ici'

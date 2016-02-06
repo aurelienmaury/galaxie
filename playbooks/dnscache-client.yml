@@ -1,7 +1,6 @@
 ---
 - hosts: dnscache-client
-  user: zoe
-  sudo: true
+
 
   roles:
     - dnscache-client

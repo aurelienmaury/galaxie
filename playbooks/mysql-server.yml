@@ -1,6 +1,5 @@
 - hosts: mysql-servers
-  user: zoe
-  sudo: true
+
 
   roles:
     - mysql-server

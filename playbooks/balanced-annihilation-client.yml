@@ -1,6 +1,5 @@
 - hosts: desktops
-  user: zoe
-  sudo: true
+
 
   roles:
     - balanced-annihilation-client

@@ -1,6 +1,5 @@
 - hosts: pvr-servers
-  user: zoe
-  sudo: true
+
 
   tasks:
     - name : Restart TVHeadEnd
