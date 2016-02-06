@@ -1,5 +1,4 @@
 - hosts: ntp-servers
-  become: true
 
   roles:
     - ntp_server

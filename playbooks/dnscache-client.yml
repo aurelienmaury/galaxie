@@ -1,6 +1,5 @@
 ---
 - hosts: dnscache-client
 
-
   roles:
     - dnscache-client

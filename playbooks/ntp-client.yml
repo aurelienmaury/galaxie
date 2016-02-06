@@ -1,5 +1,4 @@
 - hosts: ntp-clients
 
-
   roles:
     - ntp_client

@@ -1,6 +1,5 @@
 ---
 - hosts: openssh-client
 
-
   roles:
     - openssh-client

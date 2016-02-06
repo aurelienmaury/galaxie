@@ -1,5 +1,4 @@
 - hosts: galaxie
-  become: true
 
   tasks:
   - name: Apt-get update

@@ -1,4 +1,5 @@
 ---
 - hosts: apt-cacher-ng-server
+
   roles:
     - apt-cacher-ng-server

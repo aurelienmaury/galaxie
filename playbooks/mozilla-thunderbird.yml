@@ -1,5 +1,4 @@
 - hosts: desktops
 
-
   roles:
     - mozilla-thunderbird

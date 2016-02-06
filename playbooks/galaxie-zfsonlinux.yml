@@ -1,6 +1,5 @@
 - hosts: zfs-files-servers
 
-
   vars_files:
     - "galaxie-vars.yml"
 

@@ -1,6 +1,5 @@
 - hosts: pabx-servers
 
-
   tasks:
     - name : Stop Asterisk
       service:

@@ -1,6 +1,4 @@
 - hosts: little_alice-voices
-  user: zoe
-  sudo: yes
 
   vars_files:
     - "galaxie-vars.yml"

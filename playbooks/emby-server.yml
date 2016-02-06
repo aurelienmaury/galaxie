@@ -1,5 +1,4 @@
 - hosts: emby-servers
-  become: true
 
   roles:
     - emby-server

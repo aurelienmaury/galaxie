@@ -1,6 +1,5 @@
 - hosts: tftp-servers
 
-
   vars_files:
     - "galaxie-vars.yml"
 

@@ -1,6 +1,5 @@
 ---
 - hosts: dnscache-server
 
-
   roles:
     - dnscache-server-update

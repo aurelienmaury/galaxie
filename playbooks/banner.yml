@@ -1,6 +1,5 @@
 ---
 - hosts: galaxie
 
-
   roles:
     - banner

@@ -1,7 +1,5 @@
 ---
 - hosts: qmails_servers
-  user: zoe
-  sudo: yes
 
   roles:
      - qmail-server

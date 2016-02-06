@@ -1,6 +1,5 @@
 - hosts: medias-servers
 
-
   tasks:
     - name : Stop Emby Server
       service:
