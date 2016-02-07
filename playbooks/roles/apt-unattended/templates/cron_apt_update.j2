@@ -1,0 +1,4 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DEBIAN_FRONTEND=noninteractive
+0 1 * * * root (/usr/bin/apt-get update && /usr/bin/apt-get -q -y upgrade)

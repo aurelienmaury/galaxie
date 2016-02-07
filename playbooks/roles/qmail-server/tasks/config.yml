@@ -33,3 +33,21 @@
     group={{ galaxie_qmail_server_qmail_group }}
     mode=0644
   tags: config
+
+- name: qmail configuration
+  template:
+    src={{ item }}.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/{{ item }}
+    mode=0644
+  with_items:
+    - defaultdelivery
+    - concurrencyremote
+    - concurrencyincoming
+    - spfbehavior
+    - bouncefrom
+    - doublebouncehost
+    - doublebounceto
+    - databytes
+    - timeoutsmtpd
+    - me
+  tags: config

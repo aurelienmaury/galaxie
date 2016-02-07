@@ -221,28 +221,6 @@
     - { src: '{{ galaxie_qmail_server_qmail_dir }}/bin/sendmail', dest: '/usr/sbin/sendmail' }
   tags: system
 
-###############################################################################
-#
-# Fine grained configuration
-#
-- name: qmail configuration
-  template:
-    src={{ item }}.j2
-    dest={{ galaxie_qmail_server_qmail_dir }}/control/{{ item }}
-    mode=0644
-  with_items:
-    - defaultdelivery
-    - concurrencyremote
-    - concurrencyincoming
-    - spfbehavior
-    - bouncefrom
-    - doublebouncehost
-    - doublebounceto
-    - databytes
-    - timeoutsmtpd
-    - me
-  tags: config
-
 - name: qmail-send & qmail-smtpd runnners
   template:
     src={{ item.tmpl }}
@@ -307,4 +285,5 @@
     - { service: '{{ galaxie_qmail_server_service_smtpd }}', log_dest: '{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}' }
   tags: config
 
-
+# Fine grained configuration
+- include: config.yml

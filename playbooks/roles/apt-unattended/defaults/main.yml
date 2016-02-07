@@ -1,0 +1,2 @@
+unattended_allowed_origins: [security, updates]
+unattended_package_blacklist: []

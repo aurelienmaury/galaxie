@@ -1,0 +1,4 @@
+- hosts: apt-unattended
+
+  roles:
+    - apt-unattended

@@ -20,7 +20,6 @@
     - php5-mysql
     - php5-pspell
     - php5-recode
-    - php5-snmp
     - php5-tidy
     - php5-xmlrpc
     - php5-xsl

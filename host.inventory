@@ -75,6 +75,15 @@ uranus
 gat01
 co1
 
+### apt-unattended ###
+[apt-unattended]
+jupiter
+uranus
+neptune
+mercure
+gat01
+co1
+
 # |
 # |- servers
 # |  |-- ntp-servers
@@ -93,15 +102,16 @@ co1
 # SERVERS
 # -------
 
+# tinydns
 [dns-servers]
+mercure
 
 
-
-# Tv-head-end
+# Tvheadend
 [pvr-servers]
 uranus
 
-# emby
+# Emby
 [emby-servers]
 uranus
 gat01
