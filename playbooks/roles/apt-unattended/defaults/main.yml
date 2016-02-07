@@ -1,2 +1,6 @@
 unattended_allowed_origins: [security, updates]
 unattended_package_blacklist: []
+
+galaxie_apt_unattended_periodic_file: "/etc/apt/apt.conf.d/02periodic"
+galaxie_apt_unattended_unattended_upgrades_file: "/etc/apt/apt.conf.d/50unattended-upgrades"
+galaxie_apt_unattended_listchanges_file: "/etc/apt/listchanges.conf"

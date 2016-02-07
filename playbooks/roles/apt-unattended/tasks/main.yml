@@ -3,20 +3,21 @@
   apt: pkg={{ item }} state=latest
   with_items:
     - unattended-upgrades
+    - apt-listchanges
 
-- name: check periodic configuration
+- name: check {{ galaxie_apt_unattended_periodic_file }}
   template:
     src=periodic.j2
-    dest=/etc/apt/apt.conf.d/10periodic
+    dest={{ galaxie_apt_unattended_periodic_file }}
     owner=root
     group=root
     mode=0644
   notify: restart unattended-upgrades
 
-- name: check unattended-upgrades configuration
+- name: check {{ galaxie_apt_unattended_unattended_upgrades_file }}
   template:
-    src=upgrades.j2
-    dest=/etc/apt/apt.conf.d/50unattended-upgrades
+    src=unattended-upgrades.j2
+    dest={{ galaxie_apt_unattended_unattended_upgrades_file }}
     owner=root
     group=root
     mode=0644
@@ -33,3 +34,22 @@
   file:
     path: /etc/cron.d/apt-upgrade
     state: absent
+
+- name: remove /etc/apt/apt.conf.d/10periodic
+  file:
+    path: /etc/apt/apt.conf.d/10periodic
+    state: absent
+
+- name: start unattended-upgrades
+  service:
+    name=unattended-upgrades
+    state=restarted
+    enabled=yes
+
+- name: check {{ galaxie_apt_unattended_listchanges_file }}
+  template:
+    src=listchanges_conf.j2
+    dest={{ galaxie_apt_unattended_listchanges_file }}
+    owner=root
+    group=root
+    mode=0644

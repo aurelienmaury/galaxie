@@ -63,7 +63,7 @@
 
     - name: /home/{{ galaxie.user }}/.bashrc is ok
       copy:
-        src=files/etc/skel/.bashrc
+        src=etc_skel_bashrc
         dest=/home/{{ galaxie.user }}/.bashrc
         owner={{ galaxie.user }}
         group={{ galaxie.user }}

@@ -3,6 +3,7 @@ jupiter ansible_ssh_port=1790 ansible_ssh_private_key_file=~/.ssh/id_rsa.jupiter
 uranus ansible_ssh_private_key_file=~/.ssh/id_rsa.uranus
 neptune ansible_ssh_private_key_file=~/.ssh/id_rsa.neptune
 mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
+eris ansible_ssh_port=1789 ansible_ssh_private_key_file=~/.ssh/id_rsa.eris
 gat01 ansible_ssh_private_key_file=~/.ssh/id_rsa.gat01
 co1 ansible_ssh_private_key_file=~/.ssh/id_rsa.co1
 
@@ -15,6 +16,7 @@ mercure
 [external-machines]
 gat01
 co1
+eris
 
 [zoe-voices]
 jupiter
@@ -27,6 +29,7 @@ neptune
 mercure
 gat01
 co1
+eris
 
 [openssh-client]
 jupiter
@@ -35,6 +38,7 @@ neptune
 mercure
 gat01
 co1
+eris
 
 ### DNSCACHE ###
 [dnscache-server]
@@ -44,6 +48,7 @@ neptune
 mercure
 gat01
 co1
+eris
 
 [dnscache-client]
 jupiter
@@ -52,6 +57,7 @@ neptune
 mercure
 gat01
 co1
+eris
 
 ### NTP ###
 [ntp-clients]
@@ -63,6 +69,7 @@ gat01
 co1
 
 [ntp-servers]
+eris
 
 ### APT CACHER ###
 [apt-cacher-ng-client]
@@ -74,6 +81,7 @@ neptune
 uranus
 gat01
 co1
+eris
 
 ### apt-unattended ###
 [apt-unattended]
@@ -83,6 +91,7 @@ neptune
 mercure
 gat01
 co1
+eris
 
 # |
 # |- servers
@@ -128,8 +137,7 @@ uranus
 
 [dns-resolver]
 
-[apt-cacher-ng-server]
-uranus
+
 
 [zfs-files-servers]
 jupiter
@@ -176,6 +184,7 @@ file-servers
 pabx-servers
 dns-servers
 apt-cacher-ng-server
+apt-unattended
 zfs-files-servers
 tftp-servers
 emby-servers
