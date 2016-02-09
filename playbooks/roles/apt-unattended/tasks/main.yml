@@ -4,6 +4,7 @@
   with_items:
     - unattended-upgrades
     - apt-listchanges
+    - apticron
 
 - name: check {{ galaxie_apt_unattended_periodic_file }}
   template:
@@ -45,11 +46,20 @@
     name=unattended-upgrades
     state=restarted
     enabled=yes
+  changed_when: false
 
 - name: check {{ galaxie_apt_unattended_listchanges_file }}
   template:
     src=listchanges_conf.j2
     dest={{ galaxie_apt_unattended_listchanges_file }}
+    owner=root
+    group=root
+    mode=0644
+
+- name: check {{ galaxie_apt_unattended_apticron_conf_file }}
+  template:
+    src=apticron_conf.j2
+    dest={{ galaxie_apt_unattended_apticron_conf_file }}
     owner=root
     group=root
     mode=0644

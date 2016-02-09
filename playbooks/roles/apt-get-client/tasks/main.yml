@@ -1,7 +1,7 @@
 ---
 
-- name: activate debian jessie main contrib non-free repository
-  apt_repository: repo="{{ item }}" state=present
+- name: remove debian jessie main contrib non-free repository
+  apt_repository: repo="{{ item }}" state=absent
   with_items:
     - "deb http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
     - "deb-src http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
@@ -10,12 +10,20 @@
     - "deb http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
     - "deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
 
+- name: activate debian jessie main contrib non-free repository
+  apt_repository: repo="{{ item }}" state=present
+  with_items:
+    - "deb http://ftp.fr.debian.org/debian/ stable main non-free contrib"
+    - "deb-src http://ftp.fr.debian.org/debian/ stable main non-free contrib"
+    - "deb http://security.debian.org/ stable/updates main non-free contrib"
+    - "deb-src http://security.debian.org/ stable/updates main non-free contrib"
+    - "deb http://ftp.fr.debian.org/debian/ stable-updates main non-free contrib"
+    - "deb-src http://ftp.fr.debian.org/debian/ stable-updates main non-free contrib"
+
 - name: run apt-get update
   apt:
     update_cache=yes
-    cache_valid_time=3600
 
 - name: run apt-get upgrade
   apt:
     upgrade=full
-    cache_valid_time=3600

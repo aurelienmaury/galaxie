@@ -1,6 +1,13 @@
 [apt]
 frontend=pager
-email_address=root
+email_address={{ galaxie_apt_unattended_email_contact }}
+confirm=1
+save_seen=/var/lib/apt/listchanges.db
+which=news
+
+[apticron]
+frontend=pager
+email_address={{ galaxie_apt_unattended_email_contact }}
 confirm=1
 save_seen=/var/lib/apt/listchanges.db
 which=both

@@ -1,6 +1,9 @@
 unattended_allowed_origins: [security, updates]
 unattended_package_blacklist: []
-
+galaxie_apt_unattended_email_contact: "root"
 galaxie_apt_unattended_periodic_file: "/etc/apt/apt.conf.d/02periodic"
 galaxie_apt_unattended_unattended_upgrades_file: "/etc/apt/apt.conf.d/50unattended-upgrades"
 galaxie_apt_unattended_listchanges_file: "/etc/apt/listchanges.conf"
+galaxie_apt_unattended_apticron_conf_file: "/etc/apticron/apticron.conf"
+galaxie_apt_apticron_custum_from: "root@{{ inventory_hostname }}.{{ galaxie_dnscache_client_domain }}"
+galaxie_apt_apticron_system: "{{ inventory_hostname }}.{{ galaxie_dnscache_client_domain }}"
