@@ -50,6 +50,7 @@
     name={{ item }}
     system=yes
     createhome=no
+    shell=/usr/sbin/nologin
     state=present
   with_items:
     - dnscache
