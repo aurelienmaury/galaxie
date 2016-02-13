@@ -12,6 +12,7 @@
   notify:
     - register qmail-send service
     - restart qmail-send service
+  tags: install
 
 - name: check if service {{ galaxie_qmail_server_service_smtpd }} is registered
   shell:
@@ -25,7 +26,7 @@
   notify:
     - register qmail-smtp service
     - restart qmail-smtp service
-
+  tags: install
 # il en faut un
 
 
@@ -80,7 +81,7 @@
     group={{ galaxie_qmail_server_qmail_group }}
     mode=2755
 
-# Intsalltion
+# Installation
 - name: packages for qmail building
   apt:
     pkg={{ item }}
@@ -92,6 +93,7 @@
     - ucspi-tcp
     - passwd
     - libssl-dev
+    - libperl-dev
   when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
   tags: install
 

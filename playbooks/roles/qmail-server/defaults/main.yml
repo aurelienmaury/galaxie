@@ -52,6 +52,32 @@ galaxie_qmail_server_control_doublebounceto: "postmaster"
 galaxie_qmail_server_control_databytes: "8000000"
 galaxie_qmail_server_control_timeoutsmtpd: "30"
 
+# cdb
+galaxie_qmail_server_cdb_source_repository: "http://cr.yp.to/cdb"
+galaxie_qmail_server_cdb_source_name: "cdb-0.75"
+galaxie_qmail_server_cdb_source_extension: "tar.gz"
+galaxie_qmail_server_cdb_source_url: "{{ galaxie_qmail_server_cdb_source_repository }}/{{ galaxie_qmail_server_cdb_source_name }}.{{ galaxie_qmail_server_cdb_source_extension }}"
+galaxie_qmail_server_cdb_source_dir: "{{ galaxie_qmail_server_source_dir }}/cdb-0.75"
+
+# ucpi-ssl
+galaxie_qmail_server_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
+galaxie_qmail_server_ucspi_ssl_dh_parameter_file: "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}/dhparam.pem"
+galaxie_qmail_server_ucspi_ssl_dh_bits: "2048"
+galaxie_qmail_server_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
+galaxie_qmail_server_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
+galaxie_qmail_server_ucspi_ssl_source_extension: "tgz"
+galaxie_qmail_server_ucspi_ssl_source_url: "{{ galaxie_qmail_server_ucspi_ssl_source_repository }}/{{ galaxie_qmail_server_ucspi_ssl_source_name }}.{{ galaxie_qmail_server_ucspi_ssl_source_extension }}"
+galaxie_qmail_server_ucspi_ssl_source_dir: "{{ galaxie_qmail_server_source_dir }}/{{ galaxie_qmail_server_ucspi_ssl_source_name }}"
+galaxie_qmail_server_ucspi_ssl_special_connard_dir: "{{ galaxie_qmail_server_ucspi_ssl_source_dir }}/host/superscript.com/net/{{ galaxie_qmail_server_ucspi_ssl_source_name }}"
+galaxie_qmail_server_ucspi_ssl_conf_dhfile: "{{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}/src/conf-dhfile"
+galaxie_qmail_server_ucspi_ssl_binary_list:
+  - "https@"
+  - "sslcat"
+  - "sslclient"
+  - "sslconnect"
+  - "sslprint"
+  - "sslserver"
+
 # Alias creation
 galaxie_qmail_server_alias_root: "root@{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_alias_postmaster: "root@{{ galaxie_qmail_server_domain }}"
