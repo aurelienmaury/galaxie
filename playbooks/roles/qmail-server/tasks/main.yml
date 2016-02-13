@@ -1,2 +1,15 @@
 - include: install.yml
+- include: install-mta.yml
 - include: install-qmailctl.yml
+
+- include: config-send.yml
+  when: galaxie_qmail_server_config_send
+
+- include: config-smtpd.yml
+  when: galaxie_qmail_server_config_smtpd
+
+- include: config-smtpsd.yml
+  when: galaxie_qmail_server_config_smtpsd
+
+# Fine grained configuration
+- include: config.yml
