@@ -5,6 +5,7 @@ galaxie_qmail_server_multilog_user: "multilog"
 galaxie_qmail_server_multilog_dir: "/var/multilog"
 galaxie_qmail_server_qmaill_user: "qmaill"
 galaxie_qmail_server_qmail_group: "qmail"
+galaxie_qmail_server_nofiles_group: "nofiles"
 galaxie_qmail_server_alias_user: "alias"
 galaxie_qmail_server_service_name: "qmail"
 galaxie_qmail_server_service_send: "qmail-send"
@@ -16,6 +17,9 @@ galaxie_qmail_server_qmail_dir: "/var/qmail"
 
 # Special
 galaxie_qmail_server_domain: "galaxie.ici"
+galaxie_qmail_server_config_send: true
+galaxie_qmail_server_config_smtpd: true
+galaxie_qmail_server_config_smtpsd: false
 galaxie_qmail_server_set_smtproutes: false
 galaxie_qmail_server_set_virtualdomains: false
 
@@ -50,3 +54,6 @@ galaxie_qmail_server_control_timeoutsmtpd: "30"
 galaxie_qmail_server_alias_root: "root@{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_alias_postmaster: "root@{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_alias_mailer_daemon: "root@{{ galaxie_qmail_server_domain }}"
+
+galaxie_qmail_server_alias_list:
+  - { name: nofiles, value: qmaild }

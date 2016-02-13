@@ -33,27 +33,30 @@
 #
 # install - Building and installing
 #
+
+# Users and Groups creation
 - name: create groups
   group:
     name={{ item }}
     state=present
     system=yes
   with_items:
-    - qmail
-    - nofiles
+    - "{{ galaxie_qmail_server_qmail_group }}"
+    - "{{ galaxie_qmail_server_nofiles_group }}"
   tags: install
 
 - name: create users
   user:
     name={{ item.username }}
     system=yes
+    createhome=no
     home={{ galaxie_qmail_server_qmail_dir }}
     state=present
     group={{ item.group }}
   with_items:
-    - { group: nofiles, username: qmaild }
-    - { group: nofiles, username: qmaill }
-    - { group: nofiles, username: qmailp }
+    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: qmaild }
+    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: qmaill }
+    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: qmailp }
     - { group: "{{ galaxie_qmail_server_qmail_group }}", username: qmailq }
     - { group: "{{ galaxie_qmail_server_qmail_group }}", username: qmailr }
     - { group: "{{ galaxie_qmail_server_qmail_group }}", username: qmails }
@@ -66,7 +69,7 @@
     createhome=no
     home={{ galaxie_qmail_server_qmail_dir }}/alias
     state=present
-    group=nofiles
+    group="{{ galaxie_qmail_server_nofiles_group }}"
   tags: install
 
 - name: check {{ galaxie_qmail_server_qmail_dir }}/alias directory
@@ -77,6 +80,7 @@
     group={{ galaxie_qmail_server_qmail_group }}
     mode=2755
 
+# Intsalltion
 - name: packages for qmail building
   apt:
     pkg={{ item }}
@@ -160,67 +164,73 @@
     mode=0755
   tags: system
 
-- name: create multilog directories
+# Multilog settings
+- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}" multilog directory
   file:
-    path={{ galaxie_qmail_server_multilog_dir }}/{{ item }}
-    owner={{ galaxie_qmail_server_qmaill_user }}
+    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}"
+    owner="{{ galaxie_qmail_server_qmaill_user }}"
     group=root
     state=directory
     mode=2755
-  with_items:
-    - '{{ galaxie_qmail_server_service_send }}'
-    - '{{ galaxie_qmail_server_service_smtpd }}'
-  tags: system
+  when: galaxie_qmail_server_config_send
+  tags: multilog
 
-- name: qmail-send & qmail-smtp service directories
+
+- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}" multilog directory
   file:
-    path={{ galaxie_qmail_server_supervise_dir }}/{{ item }}
+    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
+    owner="{{ galaxie_qmail_server_qmaill_user }}"
+    group=root
+    state=directory
+    mode=2755
+  when: galaxie_qmail_server_config_smtpd
+  tags: multilog
+
+- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpsd }}" multilog directory
+  file:
+    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"
+    owner="{{ galaxie_qmail_server_qmaill_user }}"
+    group=root
+    state=directory
+    mode=2755
+  when: galaxie_qmail_server_config_smtpsd
+  tags: multilog
+
+# Supervise directorie
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}" service directories
+  file:
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}"
     state=directory
     owner=root
     group=root
     mode=1755
-  with_items:
-    - '{{ galaxie_qmail_server_service_send }}'
-    - '{{ galaxie_qmail_server_service_smtpd }}'
-  tags: system
+  when: galaxie_qmail_server_config_send
+  tags: supervise
 
-- name: remove duplicate services
-  apt:
-    pkg={{ item }}
-    state=absent
-    purge=yes
-  with_items:
-    - exim4
-    - exim4-daemon-light
-    - postfix
-    - sendmail
-    - sendmail-base
-    - sendmail-bin
-    - sendmail-cf
-  tags: system
-
-- name: get local mta
-  get_url:
-    url=http://qmailrocks.thibs.com/downloads/deb-packages/mta-local_1.0_all.deb
-    dest={{ galaxie_qmail_server_source_dir }}
-  tags: system
-
-- name: install local mta
-  apt:
-    deb={{ galaxie_qmail_server_source_dir }}/mta-local_1.0_all.deb
-  tags: system
-
-- name: symlink to use qmail instead of default mta
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}" service directories
   file:
-    src={{ item.src }}
-    dest={{ item.dest }}
-    state=link
-    force=yes
-  with_items:
-    - { src: '{{ galaxie_qmail_server_qmail_dir }}/bin/sendmail', dest: '/usr/lib/sendmail' }
-    - { src: '{{ galaxie_qmail_server_qmail_dir }}/bin/sendmail', dest: '/usr/sbin/sendmail' }
-  tags: system
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
+    state=directory
+    owner=root
+    group=root
+    mode=1755
+  when: galaxie_qmail_server_config_smtpd
+  tags: supervise
 
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}" service directories
+  file:
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"
+    state=directory
+    owner=root
+    group=root
+    mode=1755
+  when: galaxie_qmail_server_config_smtpsd
+  tags: supervise
+
+# Fixe default MTA
+- include: default-mta.yml
+
+# Configure services to start
 - name: qmail-send & qmail-smtpd runnners
   template:
     src={{ item.tmpl }}
