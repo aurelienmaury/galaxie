@@ -36,21 +36,19 @@
     src="{{ galaxie_qmail_server_cdb_download.dest }}"
     dest="{{ galaxie_qmail_server_source_dir }}"
     copy=no
-  when: galaxie_qmail_server_cdb_download.changed
+#  when: galaxie_qmail_server_cdb_download.changed
   tags: cdb
 
-- name: fixe errno bug on "{{ galaxie_qmail_server_cdb_source_dir }}/error.h" file
-  replace:
-    dest="{{ galaxie_qmail_server_cdb_source_dir }}/error.h"
-    regexp="^extern int errno;"
-    replace="#include <errno.h>"
+- name: send cdb-0.75.errno.patch to "{{ galaxie_qmail_server_source_dir }}"
+  copy:
+    src=cdb-0.75.errno.patch
+    dest="{{ galaxie_qmail_server_source_dir }}/cdb-0.75.errno.patch"
   tags: cdb
 
-- name: check src/conf-dhfile
-  lineinfile:
-    dest="{{ galaxie_qmail_server_cdb_source_dir }}/error.h"
-    line="#include <errno.h>"
-    state=present
+- name: apply cdb-0.75.errno.patch
+  shell: patch < {{ galaxie_qmail_server_source_dir }}/cdb-0.75.errno.patch
+    chdir="{{ galaxie_qmail_server_cdb_source_dir }}"
+  changed_when: false
   tags: cdb
 
 - name: build {{ galaxie_qmail_server_cdb_source_name }} on "{{ galaxie_qmail_server_cdb_source_dir }}" directory

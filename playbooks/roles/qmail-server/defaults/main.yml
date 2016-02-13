@@ -59,6 +59,13 @@ galaxie_qmail_server_cdb_source_extension: "tar.gz"
 galaxie_qmail_server_cdb_source_url: "{{ galaxie_qmail_server_cdb_source_repository }}/{{ galaxie_qmail_server_cdb_source_name }}.{{ galaxie_qmail_server_cdb_source_extension }}"
 galaxie_qmail_server_cdb_source_dir: "{{ galaxie_qmail_server_source_dir }}/cdb-0.75"
 
+# checkpassword http://cr.yp.to/checkpwd/checkpassword-0.90.tar.gz
+galaxie_qmail_server_checkpassword_source_repository: "http://cr.yp.to/checkpwd"
+galaxie_qmail_server_checkpassword_source_name: "checkpassword-0.90"
+galaxie_qmail_server_checkpassword_source_extension: "tar.gz"
+galaxie_qmail_server_checkpassword_source_url: "{{ galaxie_qmail_server_checkpassword_source_repository }}/{{ galaxie_qmail_server_checkpassword_source_name }}.{{ galaxie_qmail_server_checkpassword_source_extension }}"
+galaxie_qmail_server_checkpassword_source_dir: "{{ galaxie_qmail_server_source_dir }}/checkpassword-0.90"
+
 # ucpi-ssl
 galaxie_qmail_server_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
 galaxie_qmail_server_ucspi_ssl_dh_parameter_file: "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}/dhparam.pem"
