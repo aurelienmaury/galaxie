@@ -1,0 +1,161 @@
+#!/bin/sh
+
+# For Red Hat chkconfig
+# chkconfig: - 80 30
+# description: the qmail MTA
+
+PATH={{ galaxie_qmail_server_qmail_dir }}/bin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
+export PATH
+
+QMAILDUID=`id -u qmaild`
+NOFILESGID=`id -g qmaild`
+
+case "$1" in
+  start)
+    echo "Starting qmail"
+    if svok /etc/service/{{ galaxie_qmail_server_service_send }} ; then
+      svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    else
+      echo "qmail delivery service not running"
+    fi
+    if svok /etc/service/{{ galaxie_qmail_server_service_smtpd }} ; then
+      svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    else
+      echo "qmail SMTP service not running"
+    fi
+    if svok /etc/service/{{ galaxie_qmail_server_service_smtpsd }} ; then
+      svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    else
+      echo "qmail SMTPS service not running"
+    fi
+    if [ -d /var/lock/subsys ]; then
+      touch /var/lock/subsys/qmail
+    fi
+    ;;
+  stop)
+    echo "Stopping qmail..."
+    echo "  delivery service"
+    svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "  SMTP"
+    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "  SMTPS"
+    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    if [ -f /var/lock/subsys/qmail ]; then
+      rm /var/lock/subsys/qmail
+    fi
+    ;;
+  stat)
+	svstat /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+	svstat /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+	svstat /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+	qmail-qstat
+    ;;
+  doqueue|alrm|flush)
+    echo "Flushing timeout table and sending ALRM signal to qmail."
+    {{ galaxie_qmail_server_qmail_dir }}/bin/qmail-tcpok
+    svc -a /etc/service/{{ galaxie_qmail_server_service_send }}
+    ;;
+  queue)
+    qmail-qstat
+    qmail-qread
+    ;;
+  reload|hup)
+    echo "Sending HUP signal to qmail."
+    echo "  delivery service"
+    svc -h /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "  SMTP"
+    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "  SMTPS"
+    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    ;;
+  pause)
+    echo "Pausing delivery service"
+    svc -p /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "Pausing SMTP"
+    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "Pausing SMTPS"
+    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    ;;
+  cont)
+    echo "Continuing delivery service"
+    svc -c /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "Continuing SMTP"
+    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "Continuing SMTPS"
+    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    ;;
+  restart)
+    echo "Restarting qmail:"
+    echo "* Stopping qmail."
+    svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "* Sending qmail SIGTERM and restarting."
+    svc -t /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "* Restarting qmail."
+    svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "* Stopping smtpd."
+    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "* Sending smtpd SIGTERM and restarting."
+    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "* Restarting smtpd."
+    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+    echo "* Stopping smtpsd."
+    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    echo "* Sending smtpsd SIGTERM and restarting."
+    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    echo "* Restarting smtpsd."
+    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+    ;;
+  cdb)
+    echo "Build smptpd tcp.cdb file ..."
+    cd /etc/service/{{ galaxie_qmail_server_service_smtpd }}
+    cp ./tcp ./tcp.bkp
+    chmod 644 ./tcp.cdb
+    make
+    echo "Build smptpsd tcp.cdb file ..."
+    cd /etc/service/{{ galaxie_qmail_server_service_smtpsd }}
+    cp ./tcp ./tcp.bkp
+    chmod 644 ./tcp.cdb
+    make
+    ;;
+  delqueue)
+    find {{ galaxie_qmail_server_qmail_dir }}/queue/mess -type f -exec rm {} \;
+    find {{ galaxie_qmail_server_qmail_dir }}/queue/info -type f -exec rm {} \;
+    find {{ galaxie_qmail_server_qmail_dir }}/queue/local -type f -exec rm {} \;
+    find {{ galaxie_qmail_server_qmail_dir }}/queue/intd -type f -exec rm {} \;
+    find {{ galaxie_qmail_server_qmail_dir }}/queue/todo -type f -exec rm {} \;
+    find {{ galaxie_qmail_server_qmail_dir }}/queue/remote -type f -exec rm {} \;
+  ;;
+  users)
+    echo "Build local user data base ..."
+    /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/new.tmp
+    chown root:nofiles {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb
+    chmod 0640 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb
+    mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
+    #{{ galaxie_qmail_server_qmail_dir }}/bin/qmail-pw2u < /etc/passwd > {{ galaxie_qmail_server_qmail_dir }}/users/assign && {{ galaxie_qmail_server_qmail_dir }}/bin/qmail-newu
+  ;;
+  help)
+    cat <<HELP
+   stop  -- stops mail service (smtp connections refused, nothing goes out)
+  start  -- starts mail service (smtp connection accepted, mail can go out)
+  pause  -- temporarily stops mail service (connections accepted, nothing leaves)
+   cont  -- continues paused mail service
+   stat  -- displays status of mail service
+    cdb  -- rebuild the tcpserver cdb file for smtp smtps pop3 pop3s
+  users  -- rebuild cdb file for local users
+restart  -- stops and restarts smtp, sends {{ galaxie_qmail_server_service_send }} a TERM & restarts it
+doqueue  -- schedules queued messages for immediate delivery
+delqueue -- delete all queue after a relay attack
+ reload  -- sends qmail HUP, rereading locals and virtualdomains
+  queue  -- shows status of queue
+   alrm  -- same as doqueue
+  flush  -- same as doqueue
+    hup  -- same as reload
+HELP
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|doqueue|delqueue|flush|reload|stat|pause|cont|cdb|users|queue|help}"
+    exit 1
+    ;;
+esac
+
+exit 0
