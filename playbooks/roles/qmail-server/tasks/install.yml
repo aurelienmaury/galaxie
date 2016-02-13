@@ -110,7 +110,7 @@
 - name: get qmail sources
   get_url:
     url=http://cr.yp.to/software/qmail-1.03.tar.gz
-    dest={{ galaxie_qmail_server_source_dir }}
+    dest="{{ galaxie_qmail_server_source_dir }}"
     sha256sum=21ed6c562cbb55092a66197c35c8222b84115d1acab0854fdb1ad1f301626f88
   when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
   tags: install
@@ -118,7 +118,7 @@
 - name: get qmail patches
   get_url:
     url=http://qmail.jms1.net/patches/qmail-1.03-jms1-7.10.patch
-    dest={{ galaxie_qmail_server_source_dir }}
+    dest="{{ galaxie_qmail_server_source_dir }}"
     sha256sum=3807b4adfc7dbf83e3e2e9e0c841b3443e3bc468bc91ffd240dd420a7fcaa84b
   when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
   tags: install
