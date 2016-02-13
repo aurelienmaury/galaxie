@@ -155,7 +155,7 @@
 #
 # system - Preparing system for launch
 #
-- name: supervise dir
+- name: check supervise dir
   file:
     path={{ galaxie_qmail_server_supervise_dir }}
     state=directory
@@ -164,136 +164,15 @@
     mode=0755
   tags: system
 
-# Multilog settings
-- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}" multilog directory
-  file:
-    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}"
-    owner="{{ galaxie_qmail_server_qmaill_user }}"
-    group=root
-    state=directory
-    mode=2755
+
+- include: config-send.yml
   when: galaxie_qmail_server_config_send
-  tags: multilog
 
-
-- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}" multilog directory
-  file:
-    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
-    owner="{{ galaxie_qmail_server_qmaill_user }}"
-    group=root
-    state=directory
-    mode=2755
+- include: config-smtpd.yml
   when: galaxie_qmail_server_config_smtpd
-  tags: multilog
 
-- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpsd }}" multilog directory
-  file:
-    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"
-    owner="{{ galaxie_qmail_server_qmaill_user }}"
-    group=root
-    state=directory
-    mode=2755
+- include: config-smtpsd.yml
   when: galaxie_qmail_server_config_smtpsd
-  tags: multilog
-
-# Supervise directorie
-- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}" service directories
-  file:
-    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}"
-    state=directory
-    owner=root
-    group=root
-    mode=1755
-  when: galaxie_qmail_server_config_send
-  tags: supervise
-
-- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}" service directories
-  file:
-    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
-    state=directory
-    owner=root
-    group=root
-    mode=1755
-  when: galaxie_qmail_server_config_smtpd
-  tags: supervise
-
-- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}" service directories
-  file:
-    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"
-    state=directory
-    owner=root
-    group=root
-    mode=1755
-  when: galaxie_qmail_server_config_smtpsd
-  tags: supervise
-
-# Fixe default MTA
-- include: default-mta.yml
-
-# Configure services to start
-- name: qmail-send & qmail-smtpd runnners
-  template:
-    src={{ item.tmpl }}
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ item.service }}/run
-    mode=0700
-  with_items:
-    - { service: '{{ galaxie_qmail_server_service_send }}', tmpl: 'service-qmail-send-run.j2' }
-    - { service: '{{ galaxie_qmail_server_service_smtpd }}', tmpl: 'service-qmail-smtpd-run.j2' }
-  tags: config
-
-- name: send { galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
-  template:
-    src=service-qmail-smtpd-makefile.j2
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
-    mode=0644
-    owner=root
-    group=root
-  tags: config
-
-- name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}"/tcp
-  template:
-    src=service-qmail-smtpd-tcpdb.j2
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp
-    mode=0644
-    owner=root
-    group=root
-  notify: rebuild qmail-smtpd tcpdb
-  tags: config
-
-- name: check {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
-  template:
-    src=service-qmail-smtpd-makefile.j2
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
-    mode=0644
-    owner=root
-    group=root
-  tags: config
-
-- name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp.cdb
-  shell: make
-    chdir={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/
-
-- name: qmail-send & qmail-smtpd service log directories
-  file:
-    path={{ galaxie_qmail_server_supervise_dir }}/{{ item }}/log
-    state=directory
-    owner=root
-    group=root
-    mode=0755
-  with_items:
-    - '{{ galaxie_qmail_server_service_send }}'
-    - '{{ galaxie_qmail_server_service_smtpd }}'
-  tags: config
-
-- name: qmail-send & qmail-smtpd service log runners
-  template:
-    src=service-any-log-run.j2
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ item.service }}/log/run
-    mode=0700
-  with_items:
-    - { service: '{{ galaxie_qmail_server_service_send }}', log_dest: '{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}'}
-    - { service: '{{ galaxie_qmail_server_service_smtpd }}', log_dest: '{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}' }
-  tags: config
 
 # Fine grained configuration
 - include: config.yml

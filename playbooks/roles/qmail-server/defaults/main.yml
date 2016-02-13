@@ -1,5 +1,5 @@
 ---
-# Installation and path
+# Common and path
 galaxie_qmail_server_supervise_dir: "/var/lib/supervise"
 galaxie_qmail_server_multilog_user: "multilog"
 galaxie_qmail_server_multilog_dir: "/var/multilog"
@@ -17,6 +17,8 @@ galaxie_qmail_server_qmail_dir: "/var/qmail"
 
 # Special
 galaxie_qmail_server_domain: "galaxie.ici"
+
+galaxie_qmail_server_install_qmailctl: true
 galaxie_qmail_server_config_send: true
 galaxie_qmail_server_config_smtpd: true
 galaxie_qmail_server_config_smtpsd: false

@@ -41,5 +41,5 @@
 VQ="{{ galaxie_qmail_server_qmail_dir }}"
 
 exec env - PATH="$VQ/bin:/usr/local/bin:/usr/bin:/bin" \
-  multilog t n1024 s1048576 {{ item.log_dest }} \
+  multilog t n1024 s1048576 {{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }} \
     '-*' '+*ver: status:*' =lstatus

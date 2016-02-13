@@ -1,0 +1,48 @@
+---
+# Configure service to start
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}" service directories
+  file:
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}"
+    state=directory
+    owner=root
+    group=root
+    mode=1755
+  when: galaxie_qmail_server_config_send
+  tags: supervise
+
+- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
+  template:
+    src=service-qmail-send-run.j2
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
+    mode=0700
+  when: galaxie_qmail_server_config_send
+  tags: supervise
+
+# Configure multilog service
+- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}" multilog directory
+  file:
+    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}"
+    owner="{{ galaxie_qmail_server_qmaill_user }}"
+    group=root
+    state=directory
+    mode=2755
+  when: galaxie_qmail_server_config_send
+  tags: multilog
+
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log" log directorie
+  file:
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log"
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+  when: galaxie_qmail_server_config_send
+  tags: supervise
+
+- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
+  template:
+    src=service-qmail-send-log-run.j2
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
+    mode=0700
+  when: galaxie_qmail_server_config_send
+  tags: supervise

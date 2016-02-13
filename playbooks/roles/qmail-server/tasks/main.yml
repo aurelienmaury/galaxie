@@ -1,1 +1,2 @@
 - include: install.yml
+- include: install-qmailctl.yml

@@ -13,47 +13,67 @@ NOFILESGID=`id -g qmaild`
 case "$1" in
   start)
     echo "Starting qmail"
+{% if galaxie_qmail_server_config_send %}
     if svok /etc/service/{{ galaxie_qmail_server_service_send }} ; then
       svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
     else
       echo "qmail delivery service not running"
     fi
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
     if svok /etc/service/{{ galaxie_qmail_server_service_smtpd }} ; then
       svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
     else
       echo "qmail SMTP service not running"
     fi
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     if svok /etc/service/{{ galaxie_qmail_server_service_smtpsd }} ; then
       svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
     else
       echo "qmail SMTPS service not running"
     fi
+{% endif %}
     if [ -d /var/lock/subsys ]; then
       touch /var/lock/subsys/qmail
     fi
     ;;
   stop)
     echo "Stopping qmail..."
+{% if galaxie_qmail_server_config_send %}
     echo "  delivery service"
     svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
     echo "  SMTP"
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     echo "  SMTPS"
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+{% endif %}
     if [ -f /var/lock/subsys/qmail ]; then
       rm /var/lock/subsys/qmail
     fi
     ;;
   stat)
+{% if galaxie_qmail_server_config_send %}
 	svstat /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
 	svstat /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
 	svstat /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+{% endif %}
 	qmail-qstat
     ;;
   doqueue|alrm|flush)
     echo "Flushing timeout table and sending ALRM signal to qmail."
     {{ galaxie_qmail_server_qmail_dir }}/bin/qmail-tcpok
+{% if galaxie_qmail_server_config_send %}
     svc -a /etc/service/{{ galaxie_qmail_server_service_send }}
+{% endif %}
     ;;
   queue)
     qmail-qstat
@@ -61,61 +81,89 @@ case "$1" in
     ;;
   reload|hup)
     echo "Sending HUP signal to qmail."
+{% if galaxie_qmail_server_config_send %}
     echo "  delivery service"
     svc -h /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
     echo "  SMTP"
     svc -h /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     echo "  SMTPS"
     svc -h /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+{% endif %}
     ;;
   pause)
+{% if galaxie_qmail_server_config_send %}
     echo "Pausing delivery service"
     svc -p /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
     echo "Pausing SMTP"
     svc -p /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     echo "Pausing SMTPS"
     svc -p /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+{% endif %}
     ;;
   cont)
+{% if galaxie_qmail_server_config_send %}
     echo "Continuing delivery service"
     svc -c /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
     echo "Continuing SMTP"
     svc -c /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     echo "Continuing SMTPS"
     svc -c /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+{% endif %}
     ;;
   restart)
     echo "Restarting qmail:"
+{% if galaxie_qmail_server_config_send %}
     echo "* Stopping qmail."
     svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
     echo "* Sending qmail SIGTERM and restarting."
     svc -t /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
     echo "* Restarting qmail."
     svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd %}
     echo "* Stopping smtpd."
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
     echo "* Sending smtpd SIGTERM and restarting."
     svc -t /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
     echo "* Restarting smtpd."
     svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd }} /etc/service/{{ galaxie_qmail_server_service_smtpd }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     echo "* Stopping smtpsd."
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
     echo "* Sending smtpsd SIGTERM and restarting."
     svc -t /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
     echo "* Restarting smtpsd."
     svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd }} /etc/service/{{ galaxie_qmail_server_service_smtpsd }}/log
+{% endif %}
     ;;
   cdb)
+{% if galaxie_qmail_server_config_smtpd %}
     echo "Build smptpd tcp.cdb file ..."
     cd /etc/service/{{ galaxie_qmail_server_service_smtpd }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd %}
     echo "Build smptpsd tcp.cdb file ..."
     cd /etc/service/{{ galaxie_qmail_server_service_smtpsd }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make
+{% endif %}
     ;;
   delqueue)
     find {{ galaxie_qmail_server_qmail_dir }}/queue/mess -type f -exec rm {} \;
