@@ -7,7 +7,6 @@
     owner=root
     group=root
     mode=1755
-  when: galaxie_qmail_server_config_smtpsd
   tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/run"
@@ -15,7 +14,6 @@
     src=service-qmail-smtpsd-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/run"
     mode=0700
-  when: galaxie_qmail_server_config_smtpsd
   tags: supervise
 
 # Configure multilog service
@@ -26,7 +24,6 @@
     group=root
     state=directory
     mode=2755
-  when: galaxie_qmail_server_config_smtpsd
   tags: multilog
 
 - name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/log" log directorie
@@ -36,7 +33,6 @@
     owner=root
     group=root
     mode=0755
-  when: galaxie_qmail_server_config_smtpsd
   tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/log/run"
@@ -44,5 +40,4 @@
     src=service-qmail-smtpsd-log-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/log/run"
     mode=0700
-  when: galaxie_qmail_server_config_smtpsd
   tags: supervise

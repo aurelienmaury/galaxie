@@ -7,7 +7,6 @@
     owner=root
     group=root
     mode=1755
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/run"
@@ -15,7 +14,6 @@
     src=service-qmail-smtpd-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/run"
     mode=0700
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
 # Configure multilog service
@@ -26,7 +24,6 @@
     group=root
     state=directory
     mode=2755
-  when: galaxie_qmail_server_config_smtpd
   tags: multilog
 
 - name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/log" log directorie
@@ -36,7 +33,6 @@
     owner=root
     group=root
     mode=0755
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/log/run"
@@ -44,42 +40,39 @@
     src=service-qmail-smtpd-log-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/log/run"
     mode=0700
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
 # Configure Makefile
-- name: send { galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
+- name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile" file
   template:
     src=service-qmail-smtpd-makefile.j2
     dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
     mode=0644
     owner=root
     group=root
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
-- name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}"/tcp
+- name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp" file
   template:
     src=service-qmail-smtpd-tcpdb.j2
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp"
     mode=0644
     owner=root
     group=root
   notify: rebuild qmail-smtpd tcpdb
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
-- name: check {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
+- name: check "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile" file
   template:
     src=service-qmail-smtpd-makefile.j2
     dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
     mode=0644
     owner=root
     group=root
-  when: galaxie_qmail_server_config_smtpd
   tags: supervise
 
 - name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp.cdb
   shell: make
     chdir={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/
+  changed_when: false
   tags: supervise
