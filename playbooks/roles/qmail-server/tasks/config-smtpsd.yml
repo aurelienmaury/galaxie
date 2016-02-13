@@ -73,6 +73,6 @@
 
 - name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/tcp.cdb
   shell: make
-
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"
   changed_when: false
   tags: supervise

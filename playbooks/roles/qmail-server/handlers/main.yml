@@ -1,5 +1,5 @@
 ---
-
+# qmail-send
 - name: register qmail-send service
   shell:
     /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
@@ -11,12 +11,13 @@
     /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
   when: serviceSendRegistered|success
 
-- name: register qmail-smtp service
+# qmail-smtpd
+- name: register qmail-smtpd service
   shell:
     /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}
   when: serviceSmtpRegistered|failed
 
-- name: restart qmail-smtp service
+- name: restart qmail-smtpd service
   shell:
     /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }} &&
     /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}
@@ -24,7 +25,28 @@
 
 - name: rebuild qmail-smtpd tcpdb
   shell:
-    cd {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }} && make
+    make
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
   notify:
-    - register qmail-smtp service
-    - restart qmail-smtp service
+    - register qmail-smtpd service
+    - restart qmail-smtpd service
+
+# qmail-smtpsd
+- name: register qmail-smtpsd service
+  shell:
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}
+  when: serviceSmtpRegistered|failed
+
+- name: restart qmail-smtpsd service
+  shell:
+    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }} &&
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}
+  when: serviceSmtpRegistered|success
+
+- name: rebuild qmail-smtpd tcpdb
+  shell:
+    make
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"
+  notify:
+    - register qmail-smtpsd service
+    - restart qmail-smtpsd service
