@@ -1,4 +1,5 @@
 ---
+# Installation and path
 galaxie_qmail_server_supervise_dir: "/var/lib/supervise"
 galaxie_qmail_server_multilog_user: "multilog"
 galaxie_qmail_server_multilog_dir: "/var/multilog"
@@ -11,9 +12,40 @@ galaxie_qmail_server_service_smtpd: "qmail-smtpd"
 galaxie_qmail_server_service_ip: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_source_dir: "/usr/src/qmail"
 galaxie_qmail_server_qmail_dir: "/var/qmail"
+
+# Special
 galaxie_qmail_server_domain: "galaxie.ici"
-galaxie_qmail_server_me: "{{ ansible_hostname }}.galaxie.ici"
-galaxie_qmail_server_default_delivery: "./Maildir/"
+galaxie_qmail_server_set_smtproutes: false
+galaxie_qmail_server_set_virtualdomains: false
+
+# Control
+galaxie_qmail_server_control_me: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
+galaxie_qmail_server_control_defaultdomain: "{{ galaxie_qmail_server_domain }}"
+galaxie_qmail_server_control_plusdomain: "{{ galaxie_qmail_server_domain }}"
+
+galaxie_qmail_server_control_locals:
+  - "localhost"
+  - "localhost.localdomain"
+  - "{{ ansible_hostname }}"
+  - "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
+galaxie_qmail_server_control_rcpthosts:
+  - "{{ galaxie_qmail_server_domain }}"
+  - ".{{ galaxie_qmail_server_domain }}"
+galaxie_qmail_server_control_smtproutes: ""
+
+galaxie_qmail_server_control_virtualdomains: ""
+
+galaxie_qmail_server_control_defaultdelivery: "./Maildir/"
+galaxie_qmail_server_control_concurrencyremote: "255"
+galaxie_qmail_server_control_concurrencyincoming: "30"
+galaxie_qmail_server_control_spfbehavior: "3"
+galaxie_qmail_server_control_bouncefrom: "postmaster"
+galaxie_qmail_server_control_doublebouncehost: "{{ galaxie_qmail_server_domain }}"
+galaxie_qmail_server_control_doublebounceto: "postmaster"
+galaxie_qmail_server_control_databytes: "8000000"
+galaxie_qmail_server_control_timeoutsmtpd: "30"
+
+# Alias creation
 galaxie_qmail_server_alias_root: "root@{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_alias_postmaster: "root@{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_alias_mailer_daemon: "root@{{ galaxie_qmail_server_domain }}"

@@ -40,4 +40,4 @@
 VQ="{{ galaxie_qmail_server_qmail_dir }}"
 
 exec env - PATH="$VQ/bin:/usr/local/bin:/usr/bin:/bin" \
-  qmail-start {{ galaxie_qmail_server_default_delivery }}
+  qmail-start {{ galaxie_qmail_server_control_defaultdelivery }}

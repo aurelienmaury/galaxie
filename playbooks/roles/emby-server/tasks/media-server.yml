@@ -1,0 +1,30 @@
+---
+- name: creat "{{ galaxie_emby_server_directory_group }}" group
+  group:
+    system=yes
+    name="{{ galaxie_emby_server_directory_group }}"
+    state=present
+    system=yes
+
+- name: create users {{ galaxie_emby_server_directory_user }}
+  user:
+    name=emby
+    system=yes
+    group=emby
+    comment="Emby Server default user,,,"
+    home="/var/lib/emby-server"
+    skel=false
+    shell="/bin/false"
+    state=present
+    groups="{{ galaxie_emby_server_directory_group }}"
+
+
+#- name: check directory's
+#  file:
+#    path="{{ item }}"
+#    state=directory
+#    owner="{{ galaxie_emby_server_directory_user }}"
+#    group="{{ galaxie_emby_server_directory_group }}"
+#    mode=0775
+#  with_items:
+#    - {{ galaxie_emby_server_directorys }}

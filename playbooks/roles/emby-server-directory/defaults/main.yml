@@ -1,0 +1,19 @@
+---
+galaxie_emby_server_directory_user: "emby"
+galaxie_emby_server_directory_group: "media"
+
+galaxie_emby_server_directory_root: "/home/hts"
+galaxie_emby_server_directory_parents_films: "{{ galaxie_emby_server_directory_root }}/Films"
+galaxie_emby_server_directory_childrens_films: "{{ galaxie_emby_server_directory_root }}/Enfants"
+galaxie_emby_server_directory_tv_series: "{{ galaxie_emby_server_directory_root }}/TV_Series"
+galaxie_emby_server_directory_music: "{{ galaxie_emby_server_directory_root }}/Musiques"
+galaxie_emby_server_directory_photo: "{{ galaxie_emby_server_directory_root }}/Photos"
+galaxie_emby_server_directory_sandbox: "{{ galaxie_emby_server_directory_root }}/Espace"
+
+galaxie_emby_server_directorys:
+  - "{{ galaxie_emby_server_directory_parents_films }}"
+  - "{{ galaxie_emby_server_directory_childrens_films }}"
+  - "{{ galaxie_emby_server_directory_tv_series }}"
+  - "{{ galaxie_emby_server_directory_music }}"
+  - "{{ galaxie_emby_server_directory_photo }}"
+  - "{{ galaxie_emby_server_directory_sandbox }}"
