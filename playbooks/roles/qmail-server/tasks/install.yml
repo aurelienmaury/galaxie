@@ -157,15 +157,23 @@
   when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
   tags: install
 
-- name: build and install qmail
-  shell: '{{ item }}'
-  with_items:
-    - cd {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10 && make
-    - cd {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10 && make man
-    - cd {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10 && make setup check
+- name: build qmail-1.03-jms1-7.10
+  shell: make
+    chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10"
   when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
   tags: install
 
+- name: install qmail manuel
+  shell: make man
+    chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10"
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
+
+- name: install qmail-1.03-jms1-7.10
+  shell: make setup check
+    chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10"
+  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+  tags: install
 
 ###############################################################################
 #
