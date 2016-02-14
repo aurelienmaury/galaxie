@@ -1,0 +1,6 @@
+---
+- include: build-from-source.yml
+  when: galaxie_tvheadend_server_build_from_source
+
+- include: install-via-packages.yml
+  when: not galaxie_tvheadend_server_build_from_source

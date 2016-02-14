@@ -1,0 +1,4 @@
+---
+galaxie_tvheadend_server_build_from_source: false
+galaxie_tvheadend_server_build_dir: "{{ galaxie.cache_dir }}/tvheadend_build"
+galaxie_tvheadend_server_git_src: "{{ galaxie.tvheadend.git_url }}"

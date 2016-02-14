@@ -119,6 +119,7 @@ mercure
 # Tvheadend
 [pvr-servers]
 uranus
+mercure
 
 # Emby
 [emby-servers]

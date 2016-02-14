@@ -1,0 +1,6 @@
+---
+- name: restart tvheadend
+  service: name=tvheadend state=restarted
+
+- name: restart udev
+  service: name=udev state=restarted
