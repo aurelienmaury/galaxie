@@ -1,4 +1,9 @@
 - include: install.yml
+
+# Initital setting
+- include: config.yml
+
+
 - include: install-mta.yml
 - include: install-qmailctl.yml
 - include: install-ucspi-ssl.yml
@@ -14,5 +19,3 @@
 - include: config-smtpsd.yml
   when: galaxie_qmail_server_config_smtpsd
 
-# Fine grained configuration
-- include: config.yml
