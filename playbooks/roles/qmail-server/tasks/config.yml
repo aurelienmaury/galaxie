@@ -7,63 +7,63 @@
   template:
     src=defaultdelivery.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdelivery
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_concurrencyremote }}" as max simultaneous remote deliveries
   template:
     src=concurrencyremote.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyremote
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_concurrencyincoming }}" as max simultaneous incoming SMTP connections
   template:
     src=concurrencyincoming.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyincoming
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_spfbehavior }}" as value between 1 and 6 to enable SPF checks
   template:
     src=spfbehavior.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/spfbehavior
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_bouncefrom }}" as bounce sender
   template:
     src=bouncefrom.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/bouncefrom
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_doublebouncehost }}" as double bounce sender
   template:
     src=doublebouncehost.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebouncehost
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_doublebounceto }}" to receive double bounces
   template:
     src=doublebounceto.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebounceto
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set maximum message size to be "{{ galaxie_qmail_server_control_databytes }}" bytes
   template:
     src=databytes.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/databytes
-    mode=0644
+    mode=0640
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_timeoutsmtpd }}" seconds as timeout
   template:
     src=timeoutsmtpd.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/timeoutsmtpd
-    mode=0644
+    mode=0640
   tags: config
 
 ### Fast Config
@@ -71,35 +71,35 @@
   template:
     src=me.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/me
-    mode=0644
+    mode=0640
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_defaultdomain }}" as default domain name
   template:
     src=defaultdomain.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdomain
-    mode=0644
+    mode=0640
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_plusdomain }}" as domain substituted for trailing '+'
   template:
     src=plusdomain.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/plusdomain
-    mode=0644
+    mode=0640
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_locals }}" domains that we deliver locally
   template:
     src=locals.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/locals
-    mode=0644
+    mode=0640
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_rcpthosts }}" domains that we accept mail for
   template:
     src=rcpthosts.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/rcpthosts
-    mode=0644
+    mode=0640
   tags: config
 
 ### smtproutes management
@@ -107,7 +107,7 @@
   template:
     src=smtproutes.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/smtproutes
-    mode=0644
+    mode=0640
   when: galaxie_qmail_server_set_smtproutes
   tags: config
 
@@ -123,7 +123,7 @@
   template:
     src=virtualdomains.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/virtualdomains
-    mode=0644
+    mode=0640
   when: galaxie_qmail_server_set_virtualdomains
   tags: config
 
@@ -140,7 +140,7 @@
   template:
     src=conf-common.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/conf-common
-    mode=0644
+    mode=0640
   tags: config
 
 ### Alias Creation ###
@@ -150,7 +150,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-root
     owner={{ galaxie_qmail_server_alias_user }}
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0644
+    mode=0640
   tags: config
 
 - name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
@@ -159,7 +159,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
     owner={{ galaxie_qmail_server_alias_user }}
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0644
+    mode=0640
   tags: config
 
 - name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
@@ -168,5 +168,5 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
     owner={{ galaxie_qmail_server_alias_user }}
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0644
+    mode=0640
   tags: config

@@ -62,15 +62,6 @@
   notify: rebuild qmail-smtpd tcpdb
   tags: supervise
 
-- name: check "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile" file
-  template:
-    src=service-qmail-smtpd-makefile.j2
-    dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/Makefile
-    mode=0644
-    owner=root
-    group=root
-  tags: supervise
-
 - name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp.cdb
   shell: make
     chdir={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/

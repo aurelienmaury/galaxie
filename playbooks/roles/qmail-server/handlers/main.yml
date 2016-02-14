@@ -43,7 +43,7 @@
     /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}
   when: serviceSmtpRegistered|success
 
-- name: rebuild qmail-smtpd tcpdb
+- name: rebuild qmail-smtpsd tcpdb
   shell:
     make
     chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}"

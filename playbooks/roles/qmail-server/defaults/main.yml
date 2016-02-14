@@ -85,6 +85,17 @@ galaxie_qmail_server_ucspi_ssl_binary_list:
   - "sslprint"
   - "sslserver"
 
+# certificate
+galaxie_qmail_server_openssl_key_gen: true
+galaxie_qmail_server_openssl_key_bit: "2048"
+galaxie_qmail_server_openssl_key_days: "3650"
+galaxie_qmail_server_openssl_cert_C: "FR"
+galaxie_qmail_server_openssl_cert_ST: "Ile-de-France"
+galaxie_qmail_server_openssl_cert_L: "Guitrancourt"
+galaxie_qmail_server_openssl_cert_O: "Galaxie"
+galaxie_qmail_server_openssl_cert_OU: "IT"
+galaxie_qmail_server_openssl_cert_CN: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
+galaxie_qmail_server_openssl_subj: "/C={{ galaxie_qmail_server_openssl_cert_C }}/ST={{ galaxie_qmail_server_openssl_cert_ST }}/L={{ galaxie_qmail_server_openssl_cert_L }}/O={{ galaxie_qmail_server_openssl_cert_O }}/OU={{ galaxie_qmail_server_openssl_cert_OU }}/CN={{ galaxie_qmail_server_openssl_cert_CN }}"
 # Alias creation
 galaxie_qmail_server_alias_root: "root@{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_alias_postmaster: "root@{{ galaxie_qmail_server_domain }}"
