@@ -69,6 +69,7 @@
   tags: supervise
 
 # Openssl auto signed certificate
+# http://www.xfiles.dk/guide-on-how-to-run-qmail-with-smtp-ssl/
 - name: delete "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
   file:
     path={{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem

@@ -129,13 +129,19 @@
   when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
   tags: install
 
-- name: get qmail patches
-  get_url:
-    url=http://qmail.jms1.net/patches/qmail-1.03-jms1-7.10.patch
-    dest="{{ galaxie_qmail_server_source_dir }}"
-    sha256sum=3807b4adfc7dbf83e3e2e9e0c841b3443e3bc468bc91ffd240dd420a7fcaa84b
-  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+- name: send qmail-1.03-jms1-7.10.patch to "{{ galaxie_qmail_server_source_dir }}"
+  copy:
+    src=qmail-1.03-jms1-7.10.patch
+    dest="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10.patch"
   tags: install
+
+#- name: get qmail patches
+#  get_url:
+#    url=http://qmail.jms1.net/patches/qmail-1.03-jms1-7.10.patch
+#    dest="{{ galaxie_qmail_server_source_dir }}"
+#    sha256sum=3807b4adfc7dbf83e3e2e9e0c841b3443e3bc468bc91ffd240dd420a7fcaa84b
+#  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
+#  tags: install
 
 - name: empty build directory
   file:
