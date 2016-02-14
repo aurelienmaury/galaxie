@@ -86,6 +86,6 @@
   file:
     path="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
     owner=root
-    group=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: self-certificat

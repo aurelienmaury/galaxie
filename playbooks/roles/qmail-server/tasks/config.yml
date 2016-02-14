@@ -7,6 +7,8 @@
   template:
     src=defaultdelivery.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdelivery
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -14,6 +16,8 @@
   template:
     src=concurrencyremote.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyremote
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -21,6 +25,8 @@
   template:
     src=concurrencyincoming.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyincoming
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -28,6 +34,8 @@
   template:
     src=spfbehavior.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/spfbehavior
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -35,6 +43,8 @@
   template:
     src=bouncefrom.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/bouncefrom
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -42,6 +52,8 @@
   template:
     src=doublebouncehost.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebouncehost
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -49,6 +61,8 @@
   template:
     src=doublebounceto.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebounceto
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -56,6 +70,8 @@
   template:
     src=databytes.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/databytes
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -63,6 +79,8 @@
   template:
     src=timeoutsmtpd.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/timeoutsmtpd
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -71,6 +89,8 @@
   template:
     src=me.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/me
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -78,6 +98,8 @@
   template:
     src=defaultdomain.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdomain
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -85,6 +107,8 @@
   template:
     src=plusdomain.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/plusdomain
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -92,6 +116,8 @@
   template:
     src=locals.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/locals
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -99,6 +125,8 @@
   template:
     src=rcpthosts.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/rcpthosts
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
@@ -107,6 +135,8 @@
   template:
     src=smtproutes.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/smtproutes
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   when: galaxie_qmail_server_set_smtproutes
   tags: config
@@ -123,6 +153,8 @@
   template:
     src=virtualdomains.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/virtualdomains
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   when: galaxie_qmail_server_set_virtualdomains
   tags: config
@@ -140,6 +172,8 @@
   template:
     src=conf-common.j2
     dest={{ galaxie_qmail_server_qmail_dir }}/control/conf-common
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
     mode=0640
   tags: config
 
