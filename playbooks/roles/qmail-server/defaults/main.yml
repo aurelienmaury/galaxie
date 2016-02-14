@@ -35,9 +35,9 @@ galaxie_qmail_server_control_locals:
   - "localhost.localdomain"
   - "{{ ansible_hostname }}"
   - "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
+  - "{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_control_rcpthosts:
   - "{{ galaxie_qmail_server_domain }}"
-  - ".{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_control_smtproutes: ""
 
 galaxie_qmail_server_control_virtualdomains: ""

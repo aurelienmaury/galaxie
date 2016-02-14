@@ -175,10 +175,12 @@ case "$1" in
   ;;
   users)
     echo "Build local user data base ..."
+    # for cdb auth
     /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/new.tmp
     chown root:nofiles {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb
     chmod 0640 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb
     mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
+    # for checkpassword
     #{{ galaxie_qmail_server_qmail_dir }}/bin/qmail-pw2u < /etc/passwd > {{ galaxie_qmail_server_qmail_dir }}/users/assign && {{ galaxie_qmail_server_qmail_dir }}/bin/qmail-newu
   ;;
   help)

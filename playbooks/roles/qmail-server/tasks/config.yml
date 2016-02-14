@@ -9,7 +9,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdelivery
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_concurrencyremote }}" as max simultaneous remote deliveries
@@ -18,7 +18,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyremote
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_concurrencyincoming }}" as max simultaneous incoming SMTP connections
@@ -27,7 +27,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyincoming
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_spfbehavior }}" as value between 1 and 6 to enable SPF checks
@@ -36,7 +36,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/spfbehavior
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_bouncefrom }}" as bounce sender
@@ -45,7 +45,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/bouncefrom
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_doublebouncehost }}" as double bounce sender
@@ -54,7 +54,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebouncehost
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_doublebounceto }}" to receive double bounces
@@ -63,7 +63,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebounceto
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set maximum message size to be "{{ galaxie_qmail_server_control_databytes }}" bytes
@@ -72,7 +72,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/databytes
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: Set "{{ galaxie_qmail_server_control_timeoutsmtpd }}" seconds as timeout
@@ -81,7 +81,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/timeoutsmtpd
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 ### Fast Config
@@ -91,7 +91,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/me
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_defaultdomain }}" as default domain name
@@ -100,7 +100,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdomain
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_plusdomain }}" as domain substituted for trailing '+'
@@ -109,7 +109,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/plusdomain
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_locals }}" domains that we deliver locally
@@ -118,7 +118,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/locals
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: set "{{ galaxie_qmail_server_control_rcpthosts }}" domains that we accept mail for
@@ -127,7 +127,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/rcpthosts
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 ### smtproutes management
@@ -137,7 +137,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/smtproutes
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   when: galaxie_qmail_server_set_smtproutes
   tags: config
 
@@ -155,7 +155,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/virtualdomains
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   when: galaxie_qmail_server_set_virtualdomains
   tags: config
 
@@ -174,7 +174,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/control/conf-common
     owner=root
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 ### Alias Creation ###
@@ -184,7 +184,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-root
     owner={{ galaxie_qmail_server_alias_user }}
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
@@ -193,7 +193,7 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
     owner={{ galaxie_qmail_server_alias_user }}
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
 
 - name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
@@ -202,5 +202,5 @@
     dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
     owner={{ galaxie_qmail_server_alias_user }}
     group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
+    mode=0644
   tags: config
