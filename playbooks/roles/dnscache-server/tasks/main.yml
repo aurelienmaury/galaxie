@@ -124,9 +124,3 @@
   notify:
     - register service
     - restart service
-
-#- name: enable local server name resolution
-#  template:
-#    src=templates/etc_resolv.j2
-#    dest=/etc/resolv.conf
-#    backup=yes

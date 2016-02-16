@@ -1,42 +1,33 @@
 ---
 # Info checking and notify relaunch of services
 - name: check if service {{ galaxie_qmail_server_service_send }} is registered
-  shell:
-    /usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
   failed_when: "serviceSendRegistered.rc == 2"
   changed_when: "serviceSendRegistered.rc == 1"
-  register:
-    serviceSendRegistered
-  ignore_errors:
-    yes
+  register: serviceSendRegistered
+  ignore_errors: yes
   notify:
     - register qmail-send service
     - restart qmail-send service
   tags: install
 
 - name: check if service {{ galaxie_qmail_server_service_smtpd }} is registered
-  shell:
-    /usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd }}
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd }}"
   failed_when: "serviceSmtpRegistered.rc == 2"
   changed_when: "serviceSmtpRegistered.rc == 1"
-  register:
-    serviceSmtpRegistered
-  ignore_errors:
-    yes
+  register: serviceSmtpRegistered
+  ignore_errors: yes
   notify:
     - register qmail-smtpd service
     - restart qmail-smtpd service
   tags: install
 
 - name: check if service {{ galaxie_qmail_server_service_smtpsd }} is registered
-  shell:
-    /usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd }}
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd }}"
   failed_when: "serviceSmtpRegistered.rc == 2"
   changed_when: "serviceSmtpRegistered.rc == 1"
-  register:
-    serviceSmtpRegistered
-  ignore_errors:
-    yes
+  register: serviceSmtpRegistered
+  ignore_errors: yes
   notify:
     - register qmail-smtpsd service
     - restart qmail-smtpsd service
