@@ -77,6 +77,7 @@ ansible-playbook -i host.inventory galaxie-zoe_access.yml --user=zoe --limit=192
 ```
 
 * Make the newKey value become the ansible_ssh_private_key_file value:
+Due to Ansible v2 migration that option are disable
 
 ```
 [galaxie]
