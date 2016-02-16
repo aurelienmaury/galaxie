@@ -1,0 +1,104 @@
+---
+# inspirate by: https://github.com/archlinuxcn/repo/blob/master/pycharm-community/PKGBUILD
+- name: check directorys
+  file:
+    path="{{item}}"
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ galaxie_pycharm_community_cache_dir }}"
+    - "{{ galaxie_pycharm_community_opt_dir }}"
+
+- name: download {{ galaxie_pycharm_community_source }}
+  get_url:
+    url="{{ galaxie_pycharm_community_source }}"
+    dest="{{ galaxie_pycharm_community_cache_dir }}/{{ galaxie_pycharm_community_name }}-{{ galaxie_pycharm_community_version }}.tar.gz"
+    validate_certs=False
+  when: galaxie_pycharm_community_source
+  register: galaxie_pycharm_community_download
+
+- debug: msg="{{ galaxie_pycharm_community_download }}"
+
+- name: delete {{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}
+  file:
+    path={{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}
+    state=absent
+  #when: galaxie_pycharm_community_download.changed
+
+- name: unarchive {{ galaxie_pycharm_community_download.dest }}
+  unarchive:
+    src="{{ galaxie_pycharm_community_download.dest }}"
+    dest="{{ galaxie_pycharm_community_cache_dir }}"
+    copy=no
+  #when: galaxie_pycharm_community_download.changed
+
+- name: check directorys
+  file:
+    path="{{item}}"
+    owner=root
+    group=root
+    state=directory
+    mode=0755
+  with_items:
+    - "{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}"
+
+- name: copy files to "{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}"
+  shell: cp -R {{ galaxie_pycharm_community_cache_dir }}/{{ galaxie_pycharm_community_name }}-{{ galaxie_pycharm_community_version }}/* {{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}
+
+- name: delete {{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/libyjpagent-linux64.so
+  file:
+    path="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/libyjpagent-linux64.so"
+    state=absent
+  when: not ansible_architecture == "x86_64"
+
+- name: delete {{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/fsnotifier64
+  file:
+    path="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/fsnotifier64"
+    state=absent
+  when: not ansible_architecture == "x86_64"
+
+- name: check "-Dawt.useSystemAAFontSettings=on" option inside pycharm.vmoptions file
+  lineinfile:
+    dest="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/pycharm.vmoptions"
+    state=present
+    regexp="^-Dawt.useSystemAAFontSettings"
+    line="-Dawt.useSystemAAFontSettings=on"
+  when: not ansible_architecture == "x86_64"
+
+- name: check "-Dswing.aatext=true" option inside pycharm.vmoptions file
+  lineinfile:
+    dest="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/pycharm.vmoptions"
+    state=present
+    regexp="^-Dswing.aatext="
+    line="-Dswing.aatext=true"
+  when: not ansible_architecture == "x86_64"
+
+- name: check "-Dawt.useSystemAAFontSettings=on" option inside pycharm64.vmoptions file
+  lineinfile:
+    dest="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/pycharm64.vmoptions"
+    state=present
+    regexp="^-Dawt.useSystemAAFontSettings"
+    line="-Dawt.useSystemAAFontSettings=on"
+  when: ansible_architecture == "x86_64"
+
+- name: check "-Dswing.aatext=true" option inside pycharm64.vmoptions file
+  lineinfile:
+    dest="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/pycharm64.vmoptions"
+    state=present
+    regexp="^-Dswing.aatext="
+    line="-Dswing.aatext=true"
+  when: ansible_architecture == "x86_64"
+
+- name: create symbolic link
+  file:
+    src="{{ galaxie_pycharm_community_opt_dir }}/{{ galaxie_pycharm_community_name }}/bin/pycharm.sh"
+    dest=/usr/bin/pycharm
+    state=link
+
+- name: creat /usr/share/applications/{{ galaxie_pycharm_community_name }}.desktop is ok
+  template:
+    src=templates/{{ galaxie_pycharm_community_name }}.desktop.j2
+    dest=/usr/share/applications/{{ galaxie_pycharm_community_name }}.desktop
+    backup=no
