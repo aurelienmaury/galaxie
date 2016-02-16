@@ -1,0 +1,12 @@
+---
+# inspirate from: https://github.com/archlinuxcn/repo/blob/master/pycharm-community/PKGBUILD
+galaxie_pycharm_community_name: "pycharm-community"
+galaxie_pycharm_community_version: "5.0.4"
+galaxie_pycharm_community_desc: "Powerful Python and Django IDE. Community edition."
+galaxie_pycharm_community_url: "http://www.jetbrains.com/pycharm/"
+galaxie_pycharm_community_depends:
+  - "openjdk-7-jre"
+  - "openjdk-7-jre-headless"
+  - "libgif4"
+galaxie_pycharm_community_source: "https://download.jetbrains.com/python/{{ galaxie_pycharm_community_name }}-{{ galaxie_pycharm_community_version }}.tar.gz"
+galaxie_pycharm_community_sha256sums: "edd4bdd74a05fc4bf05c0b9cc3117a320050e1360f5d8adf8de29288d1a19972"
