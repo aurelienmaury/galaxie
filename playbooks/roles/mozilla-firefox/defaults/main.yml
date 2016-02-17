@@ -2,8 +2,11 @@
 galaxie_mozilla_firefox_prefix_dir: "/var/lib/galaxie"
 galaxie_mozilla_firefox_cache_dir: "{{ galaxie_mozilla_firefox_prefix_dir }}/src"
 galaxie_mozilla_firefox_opt_dir: "/opt"
+
 galaxie_mozilla_firefox_os: "linux64"
 galaxie_mozilla_firefox_lang: "fr"
+
 galaxie_mozilla_firefox_app_name: "firefox"
+galaxie_mozilla_firefox_system_path: "/usr/bin/{{ galaxie_mozilla_firefox_app_name }}"
 galaxie_mozilla_firefox_downloader_url: "https://download.mozilla.org/?product={{ galaxie_mozilla_firefox_app_name }}-latest&os={{ galaxie_mozilla_firefox_os }}&lang={{ galaxie_mozilla_firefox_lang }}"
 #galaxie_mozilla_firefox_ext_https_everywhere_url: "https://addons.mozilla.org/firefox/downloads/latest/229918/addon-229918-latest.xpi?src=search"

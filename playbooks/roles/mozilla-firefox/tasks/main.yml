@@ -57,10 +57,24 @@
     group=root
     recurse=yes
 
+- name: check symbolic link
+  stat:
+    path="{{ galaxie_mozilla_firefox_system_path }}"
+  register: firefox_system_path
+
+#- debug: msg="{{ firefox_system_path }}"
+
+- name: delete "{{ galaxie_mozilla_firefox_system_path }}" file
+  file:
+    path="{{ galaxie_mozilla_firefox_system_path }}"
+    state=absent
+  when: not firefox_system_path.stat.islnk
+
+
 - name: Create symbolic link
   file:
     src="{{ galaxie_mozilla_firefox_opt_dir }}/{{ galaxie_mozilla_firefox_app_name }}/{{ galaxie_mozilla_firefox_app_name }}"
-    dest=/usr/bin/{{ galaxie_mozilla_firefox_app_name }}
+    dest="{{ galaxie_mozilla_firefox_system_path }}"
     state=link
 
 - name: Creat /usr/share/applications/{{ galaxie_mozilla_firefox_app_name }}.desktop is ok
