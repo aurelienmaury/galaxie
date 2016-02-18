@@ -21,28 +21,48 @@ Here the lists: (You can found it on ./defaults/main.yml too)
 
 we have make our maximum for have explicite variable name, that should minimize the need of details.
 
-# Common and path
+### Common and path
 galaxie_qmail_server_supervise_dir: "/var/lib/supervise"
+
 galaxie_qmail_server_multilog_user: "multilog"
+
 galaxie_qmail_server_multilog_dir: "/var/multilog"
+
 galaxie_qmail_server_qmaild_user: "qmaild"
+
 galaxie_qmail_server_qmaill_user: "qmaill"
+
 galaxie_qmail_server_qmailp_user: "qmailp"
+
 galaxie_qmail_server_qmailq_user: "qmailq"
+
 galaxie_qmail_server_qmailr_user: "qmailr"
+
 galaxie_qmail_server_qmails_user: "qmails"
+
 galaxie_qmail_server_qmail_group: "qmail"
+
 galaxie_qmail_server_nofiles_group: "nofiles"
+
 galaxie_qmail_server_alias_user: "alias"
+
 galaxie_qmail_server_service_name: "qmail"
+
 galaxie_qmail_server_service_send: "qmail-send"
+
 galaxie_qmail_server_service_smtpd: "qmail-smtpd"
+
 galaxie_qmail_server_service_smtpsd: "qmail-smtpsd"
+
 galaxie_qmail_server_service_ip: "{{ ansible_default_ipv4.address }}"
+
 galaxie_qmail_server_source_dir: "/usr/src/qmail"
+
 galaxie_qmail_server_qmail_dir: "/var/qmail"
 
+
 # qmail-scanner
+
 galaxie_qmail_server_qmail_scanner_user: "clamav"
 
 # simscan
