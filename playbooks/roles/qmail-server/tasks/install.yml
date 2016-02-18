@@ -60,30 +60,30 @@
     state=present
     group={{ item.group }}
   with_items:
-    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: qmaild }
-    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: qmaill }
-    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: qmailp }
-    - { group: "{{ galaxie_qmail_server_qmail_group }}", username: qmailq }
-    - { group: "{{ galaxie_qmail_server_qmail_group }}", username: qmailr }
-    - { group: "{{ galaxie_qmail_server_qmail_group }}", username: qmails }
+    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: "{{ galaxie_qmail_server_qmaild_user }}" }
+    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: "{{ galaxie_qmail_server_qmaill_user }}" }
+    - { group: "{{ galaxie_qmail_server_nofiles_group }}", username: "{{ galaxie_qmail_server_qmailp_user }}" }
+    - { group: "{{ galaxie_qmail_server_qmail_group }}", username: "{{ galaxie_qmail_server_qmailq_user }}" }
+    - { group: "{{ galaxie_qmail_server_qmail_group }}", username: "{{ galaxie_qmail_server_qmailr_user }}" }
+    - { group: "{{ galaxie_qmail_server_qmail_group }}", username: "{{ galaxie_qmail_server_qmails_user }}" }
   tags: install
 
 - name: create user '{{ galaxie_qmail_server_alias_user }}'
   user:
-    name={{ galaxie_qmail_server_alias_user }}
+    name="{{ galaxie_qmail_server_alias_user }}"
     system=yes
     createhome=no
-    home={{ galaxie_qmail_server_qmail_dir }}/alias
+    home="{{ galaxie_qmail_server_qmail_dir }}/alias"
     state=present
     group="{{ galaxie_qmail_server_nofiles_group }}"
   tags: install
 
 - name: check {{ galaxie_qmail_server_qmail_dir }}/alias directory
   file:
-    path={{ galaxie_qmail_server_qmail_dir }}/alias
+    path="{{ galaxie_qmail_server_qmail_dir }}/alias"
     state=directory
-    owner={{ galaxie_qmail_server_alias_user }}
-    group={{ galaxie_qmail_server_qmail_group }}
+    owner="{{ galaxie_qmail_server_alias_user }}"
+    group="{{ galaxie_qmail_server_qmail_group }}"
     mode=2755
 
 # Installation

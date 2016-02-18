@@ -19,3 +19,4 @@
 - include: config-smtpsd.yml
   when: galaxie_qmail_server_config_smtpsd
 
+- include: install-qfixpermissions.yml

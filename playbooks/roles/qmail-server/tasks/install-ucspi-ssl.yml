@@ -77,6 +77,20 @@
     state=present
   tags: ucspi-ssl
 
+- name: update src/conf-cadir for point to "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}".
+  replace:
+    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
+    regexp="^/usr/local/ssl/certs"
+    replace="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
+  tags: ucspi-ssl
+
+- name: check src/conf-cadir
+  lineinfile:
+    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
+    line="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
+    state=present
+  tags: ucspi-ssl
+
 - name: build {{ galaxie_qmail_server_ucspi_ssl_source_name }} binay
   shell: package/compile
     chdir="{{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}"

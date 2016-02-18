@@ -3,7 +3,12 @@
 galaxie_qmail_server_supervise_dir: "/var/lib/supervise"
 galaxie_qmail_server_multilog_user: "multilog"
 galaxie_qmail_server_multilog_dir: "/var/multilog"
+galaxie_qmail_server_qmaild_user: "qmaild"
 galaxie_qmail_server_qmaill_user: "qmaill"
+galaxie_qmail_server_qmailp_user: "qmailp"
+galaxie_qmail_server_qmailq_user: "qmailq"
+galaxie_qmail_server_qmailr_user: "qmailr"
+galaxie_qmail_server_qmails_user: "qmails"
 galaxie_qmail_server_qmail_group: "qmail"
 galaxie_qmail_server_nofiles_group: "nofiles"
 galaxie_qmail_server_alias_user: "alias"
@@ -15,15 +20,24 @@ galaxie_qmail_server_service_ip: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_source_dir: "/usr/src/qmail"
 galaxie_qmail_server_qmail_dir: "/var/qmail"
 
+# qmail-scanner
+galaxie_qmail_server_qmail_scanner_user: "clamav"
+
+# simscan
+galaxie_qmail_server_simscan_user: "simscan"
+galaxie_qmail_server_simscan_group: "simscan"
 # Special
 galaxie_qmail_server_domain: "galaxie.ici"
 
 galaxie_qmail_server_install_qmailctl: true
+galaxie_qmail_server_install_qfixpermissions: true
 galaxie_qmail_server_config_send: true
 galaxie_qmail_server_config_smtpd: true
 galaxie_qmail_server_config_smtpsd: false
 galaxie_qmail_server_set_smtproutes: false
 galaxie_qmail_server_set_virtualdomains: false
+galaxie_qmail_server_config_qmail_scanner: false
+galaxie_qmail_server_config_simscan: false
 
 # Control
 galaxie_qmail_server_control_me: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
@@ -77,6 +91,7 @@ galaxie_qmail_server_ucspi_ssl_source_url: "{{ galaxie_qmail_server_ucspi_ssl_so
 galaxie_qmail_server_ucspi_ssl_source_dir: "{{ galaxie_qmail_server_source_dir }}/{{ galaxie_qmail_server_ucspi_ssl_source_name }}"
 galaxie_qmail_server_ucspi_ssl_special_connard_dir: "{{ galaxie_qmail_server_ucspi_ssl_source_dir }}/host/superscript.com/net/{{ galaxie_qmail_server_ucspi_ssl_source_name }}"
 galaxie_qmail_server_ucspi_ssl_conf_dhfile: "{{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}/src/conf-dhfile"
+galaxie_qmail_server_ucspi_ssl_conf_cadir: "{{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}/src/conf-cadir"
 galaxie_qmail_server_ucspi_ssl_binary_list:
   - "https@"
   - "sslcat"

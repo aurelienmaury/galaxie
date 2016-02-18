@@ -1,0 +1,197 @@
+#!/bin/sh
+#
+# qfixpermissions
+# John Simpson <jms1@jms1.net> 2006-02-26
+#
+# Fixes permissions on the standard {{ galaxie_qmail_server_qmail_dir }} directories, EXCEPT for
+# {{ galaxie_qmail_server_qmail_dir }}/queue. DO NOT RUN THIS SCRIPT while any programs related to
+# qmail are running- some of the files will temporarily have the wrong
+# ownership or permissions while this script is running, and if any qmail
+# process tries to access these files during that time (which is usually
+# less than one second), you may cause problems.
+#
+# See http://qmail.jms1.net/scripts/ for the most recent version of this
+# script, or for any additional information which may be released about it
+# in the future.
+#
+# Note that this script WILL NOT TOUCH the {{ galaxie_qmail_server_qmail_dir }}/queue directory.
+# If you have (or suspect) problems with your queue directory, see
+# http://qmail.jms1.net/scripts/qfixq.shtml for information about my
+# "qfixq" script, which was designed to fix the permissions, ownership,
+# and structure of a qmail queue directory.
+#
+# 2006-07-09 jms1 - fixed a typo in a comment (the code did not change
+#   at all.) thanks to JT Justman for pointing it out.
+#
+# 2006-12-13 jms1 - fixed a typo, need "-L" instead of "-l" to find a
+#   symlink. thanks to Ingo Claro for pointing it out.
+#
+# 2007-12-14 jms1 - added code for {{ galaxie_qmail_server_qmail_dir }}/simscan, which may or may
+#   not need to be setgid. thanks to Ingo Claro for pointing out that
+#   this was missing.
+#
+# 2007-12-31 jms1 - changed the comment regarding servercert.pem and
+#   clientcert.pem being symlinks to explain that "make cert" also does this.
+#   no code was changed. thanks to "Bookworm" for pointing this out.
+#
+###############################################################################
+#
+# Copyright (C) 2006,2007 John Simpson.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# or visit http://www.gnu.org/licenses/gpl.txt
+#
+###############################################################################
+#
+# CONFIGURATION
+
+# PATH should contain the directories of all commands used by the script.
+# Currently the list of commands used is:
+#	chmod chown cp id mv rm
+#
+# It is a good idea for any shell script, especially those meant to be run
+# as root, to explicitly declare their PATH. This prevents an attacker from
+# being able to subvert a script by somehow changing the PATH which is used
+# by the shell session which starts the script.
+
+PATH="/usr/bin:/bin"
+
+# SMTPU should contain the userid (the name or the numeric UID) which
+# the "qmail-smtpd" program runs as. The /service/___/run script for your
+# SMTP service should have this information- look for the "exec tcpserver"
+# line near the end of the script, the name or number you want will be
+# immediately after the tcpserver "-u" option. Note that if this value is
+# a variable (it starts with a "$") then you will need to read the script
+# and find where the value of that variable is defined. On a standard qmail
+# system this will be "qmaild", however some broken qmail install guides are
+# telling people to use "vpopmail" as the userid instead.
+
+SMTPU="{{ galaxie_qmail_server_qmaild_user }}"		# userid that qmail-smtpd runs as
+
+{% if galaxie_qmail_server_config_qmail_scanner %}
+# If you are using qmail-scanner, QMSU should contain the userid which
+# qmail-scanner runs as. The default instructions for qmail-scanner will
+# have you create a "qscand" user for this purpose, however this can lead
+# to problems with virus scanners like "clamav". Several solutions to this
+# problem are floating around, http://qmail.jms1.net/clamav-qms.shtml
+# explains the problem and offers a few solutions.
+
+QMSU="{{ galaxie_qmail_server_qmail_scanner_user }}"		# userid that qmail-scanner runs as
+
+{% endif %}
+# If you have built qmail with "conf-qmail" set to something other than
+# /var/qmail, you will need to change this "cd" command so that it points
+# to the equivalent directory on your system.
+
+cd {{ galaxie_qmail_server_qmail_dir }}
+
+{% if galaxie_qmail_server_config_simscan %}
+# If you are using simscan, and your {{ galaxie_qmail_server_qmail_dir }}/simscan directory needs
+# to be setgid, un-comment this variable.
+
+#SIMSCAN_SETGID=1
+
+{% endif %}
+# END OF CONFIGURATION
+#
+###############################################################################
+
+chown root:{{ galaxie_qmail_server_qmail_group }} .
+
+chown -R root:{{ galaxie_qmail_server_qmail_group }} alias bin boot control doc man users
+chmod -R go=u-w alias bin boot control doc man users
+
+chown {{ galaxie_qmail_server_alias_user }}:{{ galaxie_qmail_server_qmail_group }} alias
+
+chmod 0711 bin/qmail-clean bin/qmail-getpw bin/qmail-local bin/qmail-popup \
+	bin/qmail-pw2u bin/qmail-remote bin/qmail-rspawn bin/qmail-send \
+	bin/splogger
+chmod 0700 bin/qmail-lspawn bin/qmail-newmrh bin/qmail-newu bin/qmail-start
+
+chown {{ galaxie_qmail_server_qmailq_user }}:{{ galaxie_qmail_server_qmail_group }} bin/qmail-queue
+chmod 4711 bin/qmail-queue
+
+if [ -f bin/qmail-todo ]
+then
+	chmod 0711 bin/qmail-todo
+fi
+{% if galaxie_qmail_server_config_qmail_scanner %}
+if [ -f bin/qmail-scanner-queue ]
+then
+	chown $QMSU:`id -g $QMSU` bin/qmail-scanner-queue
+	chmod 4711 bin/qmail-scanner-queue
+elif [ -f bin/qmail-scanner-queue.pl ]
+then
+	chown $QMSU:`id -g $QMSU` bin/qmail-scanner-queue.pl
+	chmod 4711 bin/qmail-scanner-queue.pl
+fi
+{% endif %}
+##############################################################################
+# some broken install guides (i.e. qmailrocks) tell you to create
+# servercert.pem and clientcert.pem as a single file, with one as a symbolic
+# link to the other. in addition, the "make cert" command (part of the TLS
+# patch) also creates this as a symlink.
+#
+# this is wrong, since qmail-smtpd and qmail-remote (the two programs which
+# need to read these files) run as different userids and different group ids.
+# the only way that a symbolic link scenario will work is if the file is
+# readable to every userid on the system, which would be a major security
+# hole, since the file contains the secret key for encrypting your SMTP
+# sessions, both incoming and outgoing.
+#
+# if either of these files are symlinks, the symlink will be replaced with a
+# normal file containing the same data. the ownership and permissions of this
+# file will be set below.
+
+if [ -L control/servercert.pem ]
+then
+	cp control/servercert.pem control/servercert.tmp
+	rm control/servercert.pem
+	mv control/servercert.tmp control/servercert.pem
+fi
+
+if [ -L control/clientcert.pem ]
+then
+	cp control/clientcert.pem control/clientcert.tmp
+	rm control/clientcert.pem
+	mv control/clientcert.tmp control/clientcert.pem
+fi
+
+# end of code to fix symlinks
+##############################################################################
+
+if [ -f control/servercert.pem ]
+then
+	chown 0:`id -g $SMTPU` control/servercert.pem
+	chmod 0640 control/servercert.pem
+fi
+
+if [ -f control/clientcert.pem ]
+then
+	chown 0:`id -g {{ galaxie_qmail_server_qmailr_user }}` control/clientcert.pem
+	chmod 0640 control/clientcert.pem
+fi
+
+{% if galaxie_qmail_server_config_simscan %}
+if [ -d simscan ]
+then
+	chown -R {{ galaxie_qmail_server_simscan_user }}:{{ galaxie_qmail_server_simscan_group }} simscan
+	chmod -R g=u-w,o= simscan
+
+	if [ -n "$SIMSCAN_SETGID" ]
+	then
+		chmod g+s simscan
+	fi
+fi
+{% endif %}
