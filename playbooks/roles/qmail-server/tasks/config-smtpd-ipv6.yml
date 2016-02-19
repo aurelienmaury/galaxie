@@ -7,14 +7,12 @@
     owner=root
     group=root
     mode=1755
-  tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/run"
   template:
     src=service-qmail-smtpd-ipv6-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/run"
     mode=0700
-  tags: supervise
 
 # Configure multilog service
 - name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}" multilog directory
@@ -24,7 +22,6 @@
     group=root
     state=directory
     mode=2755
-  tags: multilog
 
 - name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log" log directorie
   file:
@@ -33,14 +30,12 @@
     owner=root
     group=root
     mode=0755
-  tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log/run"
   template:
     src=service-qmail-smtpd-ipv6-log-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log/run"
     mode=0700
-  tags: supervise
 
 # Configure Makefile
 - name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/Makefile" file
@@ -50,7 +45,6 @@
     mode=0644
     owner=root
     group=root
-  tags: supervise
 
 - name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/tcp" file
   template:
@@ -60,10 +54,8 @@
     owner=root
     group=root
   notify: rebuild qmail-smtpd tcpdb
-  tags: supervise
 
 - name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/tcp.cdb
   shell: make
     chdir={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/
   changed_when: false
-  tags: supervise

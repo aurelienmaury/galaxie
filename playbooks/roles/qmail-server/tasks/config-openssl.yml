@@ -1,0 +1,23 @@
+---
+# Openssl auto signed certificate
+# http://www.xfiles.dk/guide-on-how-to-run-qmail-with-smtp-ssl/
+- name: delete "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
+  file:
+    path={{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem
+    state=absent
+  when: galaxie_qmail_server_openssl_key_gen
+  tags: self-certificat
+
+- name: auto signed rsa:{{ galaxie_qmail_server_openssl_key_bit }} key, valide for {{ galaxie_qmail_server_openssl_key_days }} days , to "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
+  shell:  openssl req -newkey rsa:{{ galaxie_qmail_server_openssl_key_bit }} -x509 -nodes -days {{ galaxie_qmail_server_openssl_key_days }} -out servercert.pem -keyout servercert.pem -subj "{{ galaxie_qmail_server_openssl_subj }}"
+    chdir="{{ galaxie_qmail_server_qmail_dir }}/control"
+    creates="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
+  tags: self-certificat
+
+- name: check "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem" permissions
+  file:
+    path="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0640
+  tags: self-certificat

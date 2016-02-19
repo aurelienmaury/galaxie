@@ -7,14 +7,12 @@
     owner=root
     group=root
     mode=1755
-  tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/run"
   template:
     src=service-qmail-smtpsd-ipv4-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/run"
     mode=0700
-  tags: supervise
 
 # Configure multilog service
 - name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}" multilog directory
@@ -24,7 +22,6 @@
     group=root
     state=directory
     mode=2755
-  tags: multilog
 
 - name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log" log directorie
   file:
@@ -33,14 +30,12 @@
     owner=root
     group=root
     mode=0755
-  tags: supervise
 
 - name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log/run"
   template:
     src=service-qmail-smtpsd-ipv4-log-run.j2
     dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log/run"
     mode=0700
-  tags: supervise
 
 # Configure Makefile
 - name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/Makefile" file
@@ -50,7 +45,6 @@
     mode=0644
     owner=root
     group=root
-  tags: supervise
 
 - name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/tcp" file
   template:
@@ -60,33 +54,8 @@
     owner=root
     group=root
   notify: rebuild qmail-smtpsd tcpdb
-  tags: supervise
 
 - name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/tcp.cdb
   shell: make
     chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}"
   changed_when: false
-  tags: supervise
-
-# Openssl auto signed certificate
-# http://www.xfiles.dk/guide-on-how-to-run-qmail-with-smtp-ssl/
-- name: delete "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
-  file:
-    path={{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem
-    state=absent
-  when: galaxie_qmail_server_openssl_key_gen
-  tags: self-certificat
-
-- name: auto signed rsa:{{ galaxie_qmail_server_openssl_key_bit }} key, valide for {{ galaxie_qmail_server_openssl_key_days }} days , to "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
-  shell:  openssl req -newkey rsa:{{ galaxie_qmail_server_openssl_key_bit }} -x509 -nodes -days {{ galaxie_qmail_server_openssl_key_days }} -out servercert.pem -keyout servercert.pem -subj "{{ galaxie_qmail_server_openssl_subj }}"
-    chdir="{{ galaxie_qmail_server_qmail_dir }}/control"
-    creates="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
-  tags: self-certificat
-
-- name: check "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem" permissions
-  file:
-    path="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
-    owner=root
-    group={{ galaxie_qmail_server_qmail_group }}
-    mode=0640
-  tags: self-certificat

@@ -41,11 +41,11 @@ LOCAL=`head -1 $VQ/control/me`
 #
 # options for tcpserver/sslserver
 
-IP={{ galaxie_qmail_server_service_ip }}
-PORT=25
-SSL=O
+IP={{ galaxie_qmail_server_service_ipv6 }}
+PORT=465
+SSL=1
 SSL_CERT="$VQ/control/servercert.pem"
-SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}/tcp.cdb"
+SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/tcp.cdb"
 MAX=30
 
 # these require the "tcpserver limits" patch for ucspi-tcp, available here:
@@ -124,8 +124,8 @@ QMAILSMTPD_LOG_RCPT=1
 #
 # options pertaining to the AUTH command.
 
-AUTH=0
-REQUIRE_AUTH=0
+AUTH=1
+REQUIRE_AUTH=1
 ALLOW_INSECURE_AUTH=0
 
 # if using the AUTH_CDB method
@@ -162,7 +162,7 @@ AUTH_CDB="$VQ/control/auth.cdb"
 #
 # options pertaining to the SPF mechanism.
 
-SPFBEHAVIOR=1
+SPFBEHAVIOR=3
 SPF_LOG=1
 SPF_BLOCK_PLUS_ALL=1
 
@@ -452,7 +452,7 @@ do
 	eval "if [ -n \"\$$n\" ];then echo \"$n=\\\"\$$n\\\"\";export $n;fi"
 done
 
-CMD="$SCMD -vR -l $LOCAL -c $MAX -u $QDUID -g $QDGID $ACMD $IP $PORT"
+CMD="$SCMD -6 -I {{ galaxie_qmail_server_service_ipv6_interface }} -vR -l $LOCAL -c $MAX -u $QDUID -g $QDGID $ACMD $IP $PORT"
 CMD="$CMD $RBLCMD $GREYLIST $RECORDIO $SMTPD $ARGS"
 
 echo "command-line: exec $CMD 2>&1"

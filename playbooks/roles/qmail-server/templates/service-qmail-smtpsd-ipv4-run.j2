@@ -41,11 +41,11 @@ LOCAL=`head -1 $VQ/control/me`
 #
 # options for tcpserver/sslserver
 
-IP={{ galaxie_qmail_server_service_ip }}
+IP={{ galaxie_qmail_server_service_ipv4 }}
 PORT=465
 SSL=1
 SSL_CERT="$VQ/control/servercert.pem"
-SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/tcp.cdb"
+SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/tcp.cdb"
 MAX=30
 
 # these require the "tcpserver limits" patch for ucspi-tcp, available here:
@@ -107,7 +107,7 @@ RBL_BAD="zen.spamhaus.org"
 #
 # options for qmail-smtpd itself
 
-SMTPD="{{ galaxie_qmail_server_service_smtpd }}"
+SMTPD="qmail-smtp"
 #SMTPGREETING="$LOCAL NO UCE"
 #GREETDELAY=30
 #DROP_PRE_GREET=1

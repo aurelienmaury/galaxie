@@ -38,6 +38,10 @@
   when: not galaxie_qmail_server_config_smtpd_ipv6
 
 # smtpsd
+- include: config-openssl.yml
+  when: galaxie_qmail_server_config_smtpsd_ipv4 or galaxie_qmail_server_config_smtpsd_ipv6
+  tags: config
+
 - include: config-smtpsd-ipv4.yml
   when: galaxie_qmail_server_config_smtpsd_ipv4
   tags: config
