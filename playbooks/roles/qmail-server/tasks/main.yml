@@ -1,4 +1,5 @@
 # Eequirements
+- include: config-services-stop.yml
 - include: install-ucspi-tcp-ipv6.yml
   tags: ucspi-tcp-ipv6, install
 
@@ -50,6 +51,7 @@
 
 
 # finilize
+- include: config-services-register.yml
 - include: install-qfixpermissions.yml
   tags: install
 - include: install-qmailctl.yml

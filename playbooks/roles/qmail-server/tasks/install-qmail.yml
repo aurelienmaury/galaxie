@@ -1,71 +1,4 @@
 ---
-# Remove and stop every service
-
-# qmail-send
-- name: check if service {{ galaxie_qmail_server_service_send }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
-
-- name: remove {{ galaxie_qmail_server_service_send }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
-  when: command_result|success
-
-# qmail-smtpd ipv4
-- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv4 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv4 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
-
-- name: remove {{ galaxie_qmail_server_service_smtpd_ipv4 }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
-  when: command_result|success
-
-# qmail-smtpsd ipv4
-- name: check if service {{ galaxie_qmail_server_service_smtpsd_ipv4 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd_ipv4 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
-
-- name: remove {{ galaxie_qmail_server_service_smtpsd_ipv4 }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
-  when: command_result|success
-
-# qmail-smtpd ipv6
-- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv6 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv6 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
-
-- name: remove {{ galaxie_qmail_server_service_smtpd_ipv6 }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
-  when: command_result|success
-
-# qmail-smtpsd ipv6
-- name: check if service {{ galaxie_qmail_server_service_smtpsd_ipv6 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd_ipv6 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
-
-- name: remove qmail-smtpsd-ipv6 service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
-  when: command_result|success
-
-###############################################################################
-#
-# install - Building and installing
-#
-
 # Users and Groups creation
 - name: create groups
   group:
@@ -130,6 +63,13 @@
     group=root
     mode=0755
 
+- name: get qmail sources
+  get_url:
+    url=http://cr.yp.to/software/qmail-1.03.tar.gz
+    dest="{{ galaxie_qmail_server_source_dir }}"
+    sha256sum=21ed6c562cbb55092a66197c35c8222b84115d1acab0854fdb1ad1f301626f88
+  register: qmail_download
+
 - name: empty build directory
   file:
     path={{ item }}
@@ -138,21 +78,14 @@
   with_items:
     - '{{ galaxie_qmail_server_source_dir }}/qmail-1.03'
     - '{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10'
-
-- name: get qmail sources
-  get_url:
-    url=http://cr.yp.to/software/qmail-1.03.tar.gz
-    dest="{{ galaxie_qmail_server_source_dir }}"
-    sha256sum=21ed6c562cbb55092a66197c35c8222b84115d1acab0854fdb1ad1f301626f88
-  register: qmail_download
-
+  when: qmail_download.changed
 
 - name: Unarchive {{ qmail_download.dest }}
   unarchive:
     src="{{ qmail_download.dest }}"
     dest="{{ galaxie_qmail_server_source_dir }}"
     copy=no
-  #when: qmail_download.changed
+  when: qmail_download.changed
 
 - name: send qmail-1.03-jms1-7.10.patch to "{{ galaxie_qmail_server_source_dir }}"
   copy:
@@ -167,22 +100,30 @@
 #  when: serviceSmtpRegistered|failed or serviceSendRegistered|failed
 
 - name: apply qmail patches
-  shell: '{{ item }}'
-  with_items:
-    - cd {{ galaxie_qmail_server_source_dir }}/qmail-1.03 && patch < {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10.patch
-    - mv {{ galaxie_qmail_server_source_dir }}/qmail-1.03 {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10
+  shell: patch < {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10.patch
+    chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03"
+  changed_when: false
+  when: qmail_download.changed
+
+- name: rename {{ galaxie_qmail_server_source_dir }}/qmail-1.03 to {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10
+  shell: mv {{ galaxie_qmail_server_source_dir }}/qmail-1.03 {{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10
+  changed_when: false
+  when: qmail_download.changed
 
 - name: build qmail-1.03-jms1-7.10
   shell: make
     chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10"
+  changed_when: false
 
 - name: install qmail manuel
   shell: make man
     chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10"
+  changed_when: false
 
 - name: install qmail-1.03-jms1-7.10
   shell: make setup check
     chdir="{{ galaxie_qmail_server_source_dir }}/qmail-1.03-jms1-7.10"
+  changed_when: false
 
 ###############################################################################
 #

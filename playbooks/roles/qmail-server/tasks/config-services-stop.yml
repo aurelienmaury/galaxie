@@ -1,0 +1,60 @@
+---
+# qmail-send
+- name: check if service {{ galaxie_qmail_server_service_send }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+
+- name: remove {{ galaxie_qmail_server_service_send }} service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+  when: command_result|success
+
+# qmail-smtpd ipv4
+- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv4 }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv4 }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+
+- name: remove {{ galaxie_qmail_server_service_smtpd_ipv4 }} service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+  when: command_result|success
+
+# qmail-smtpsd ipv4
+- name: check if service {{ galaxie_qmail_server_service_smtpsd_ipv4 }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd_ipv4 }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+
+- name: remove {{ galaxie_qmail_server_service_smtpsd_ipv4 }} service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+  when: command_result|success
+
+# qmail-smtpd ipv6
+- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv6 }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv6 }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+
+- name: remove {{ galaxie_qmail_server_service_smtpd_ipv6 }} service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
+  when: command_result|success
+
+# qmail-smtpsd ipv6
+- name: check if service {{ galaxie_qmail_server_service_smtpsd_ipv6 }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd_ipv6 }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+
+- name: remove qmail-smtpsd-ipv6 service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
+  when: command_result|success
