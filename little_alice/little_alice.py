@@ -19,7 +19,6 @@ from multiprocessing import Process, Queue, TimeoutError
 playbook_directory = "/home/tuxa/Projets/galaxie/playbooks"
 host_inventory_path = "/home/tuxa/Projets/galaxie/host.inventory"
 
-
 modules_dir = os.path.realpath(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "modules")
 )
@@ -42,6 +41,7 @@ eyes = Eyes()
 
 # Variable it contain the text recognised by the voice to text
 recognised = ''
+
 
 class bcolors:
     green = '\033[92m'
@@ -82,7 +82,6 @@ def text_to_speech(text):
 
 
 def speech_to_text():
-
     ears.record_to_file(ears.wavfile)
 
     recognizing = ears.decode_speech(
@@ -98,7 +97,6 @@ def speech_to_text():
 
 
 def main():
-
     brain.load_brain()
     brain.load_session()
     reload_modules_text = [
@@ -157,7 +155,6 @@ def main():
         "qui est"
     ]
 
-
     # Queue
     queue_eyes = Queue()
     queue_ears = Queue()
@@ -175,7 +172,7 @@ def main():
             recognised = speech_to_text()
 
             if not recognised == '':
-                #os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
+                # os.system(cmd % brain.kernel.respond(recognised, brain.session_name))
                 text_to_speech(brain.kernel.respond(recognised, brain.session_name))
 
             if recognised in reload_modules_text:
@@ -207,5 +204,7 @@ def main():
         little_alice_eyes.terminate()
         little_alice_eyes.join()
         os.system(sys.exit(0))
+
+
 if __name__ == '__main__':
     main()
