@@ -55,7 +55,7 @@ case "$1" in
   stop)
     echo "Stopping qmail..."
 {% if galaxie_qmail_server_config_send %}
-    echo "  delivery service"
+    echo "  {{ galaxie_qmail_server_service_send }} delivery service"
     svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpd_ipv4 %}
@@ -66,7 +66,6 @@ case "$1" in
     echo "  {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
 {% endif %}
-
 {% if galaxie_qmail_server_config_smtpd_ipv6 %}
     echo "  {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
@@ -89,6 +88,12 @@ case "$1" in
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
 	svstat /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
 {% endif %}
+{% if galaxie_qmail_server_config_smtpd_ipv6 %}
+	svstat /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
+	svstat /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% endif %}
 	qmail-qstat
     ;;
   doqueue|alrm|flush)
@@ -105,71 +110,111 @@ case "$1" in
   reload|hup)
     echo "Sending HUP signal to qmail."
 {% if galaxie_qmail_server_config_send %}
-    echo "  delivery service"
+    echo "  {{ galaxie_qmail_server_service_send }} delivery service"
     svc -h /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "  SMTP"
+    echo "  {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
     svc -h /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "  SMTPS"
+    echo "  {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
     svc -h /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd_ipv6 %}
+    echo "  {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
+    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
+    echo "  {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
+    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
 {% endif %}
     ;;
   pause)
 {% if galaxie_qmail_server_config_send %}
-    echo "Pausing delivery service"
+    echo "Pausing {{ galaxie_qmail_server_service_send }} delivery service"
     svc -p /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "Pausing SMTP"
+    echo "Pausing {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
     svc -p /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "Pausing SMTPS"
+    echo "Pausing {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
     svc -p /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd_ipv6 %}
+    echo "Pausing {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
+    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
+    echo "Pausing {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
+    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
 {% endif %}
     ;;
   cont)
 {% if galaxie_qmail_server_config_send %}
-    echo "Continuing delivery service"
+    echo "Continuing {{ galaxie_qmail_server_service_send }} delivery service"
     svc -c /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "Continuing SMTP"
+    echo "Continuing {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
     svc -c /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "Continuing SMTPS"
+    echo "Continuing {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
     svc -c /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd_ipv6 %}
+    echo "Continuing {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
+    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
+    echo "Continuing {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
+    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
 {% endif %}
     ;;
   restart)
     echo "Restarting qmail:"
 {% if galaxie_qmail_server_config_send %}
-    echo "* Stopping qmail."
+    echo "* Stopping {{ galaxie_qmail_server_service_send }}."
     svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
-    echo "* Sending qmail SIGTERM and restarting."
+    echo "* Sending {{ galaxie_qmail_server_service_send }} SIGTERM and restarting."
     svc -t /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
     echo "* Restarting qmail."
     svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "* Stopping smtpd."
+    echo "* Stopping {{ galaxie_qmail_server_service_smtpd_ipv4 }}."
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
-    echo "* Sending smtpd SIGTERM and restarting."
+    echo "* Sending {{ galaxie_qmail_server_service_smtpd_ipv4 }} SIGTERM and restarting."
     svc -t /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
-    echo "* Restarting smtpd."
+    echo "* Restarting {{ galaxie_qmail_server_service_smtpd_ipv4 }}."
     svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
 {% endif %}
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "* Stopping smtpsd."
+    echo "* Stopping {{ galaxie_qmail_server_service_smtpsd_ipv4 }}."
     svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
-    echo "* Sending smtpsd SIGTERM and restarting."
+    echo "* Sending {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SIGTERM and restarting."
     svc -t /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
-    echo "* Restarting smtpsd."
+    echo "* Restarting {{ galaxie_qmail_server_service_smtpsd_ipv4 }}."
     svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd_ipv6 %}
+    echo "* Stopping {{ galaxie_qmail_server_service_smtpd_ipv6 }}."
+    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+    echo "* Sending {{ galaxie_qmail_server_service_smtpd_ipv6 }} SIGTERM and restarting."
+    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+    echo "* Restarting {{ galaxie_qmail_server_service_smtpd_ipv6 }} smtpd."
+    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
+    echo "* Stopping {{ galaxie_qmail_server_service_smtpsd_ipv6 }}."
+    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+    echo "* Sending {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SIGTERM and restarting."
+    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+    echo "* Restarting {{ galaxie_qmail_server_service_smtpsd_ipv6 }}."
+    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
 {% endif %}
     ;;
   cdb)
@@ -183,6 +228,20 @@ case "$1" in
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
     echo "Build smptpsd tcp.cdb file ..."
     cd /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+    cp ./tcp ./tcp.bkp
+    chmod 644 ./tcp.cdb
+    make
+{% endif %}
+{% if galaxie_qmail_server_config_smtpd_ipv6 %}
+    echo "Build smptpd tcp.cdb file ..."
+    cd /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
+    cp ./tcp ./tcp.bkp
+    chmod 644 ./tcp.cdb
+    make
+{% endif %}
+{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
+    echo "Build smptpsd tcp.cdb file ..."
+    cd /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make
