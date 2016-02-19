@@ -1,7 +1,7 @@
 Role Name
 =========
 
-qmail-server is a goal it install and configure qmail server with the famous qmail Combined Patch qmail-1.03-jms1-7.10.patch from https://qmail.jms1.net/patches/combined-details.shtml 
+Qmail-server role have goal to install and configure a qmail server with the famous combined patch qmail-1.03-jms1-7.10.patch from https://qmail.jms1.net/patches/combined-details.shtml 
 
 When something special is done that the more close of jms1 way, then scripts is used for math with jms1 desin.
 
@@ -21,7 +21,8 @@ Here the lists: (You can found it on ./defaults/main.yml too)
 
 we have make our maximum for have explicite variable name, that should minimize the need of details.
 
-### Common and path
+Common and path
+
 galaxie_qmail_server_supervise_dir: "/var/lib/supervise"
 
 galaxie_qmail_server_multilog_user: "multilog"

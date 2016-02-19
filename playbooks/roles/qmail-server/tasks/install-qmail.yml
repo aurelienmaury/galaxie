@@ -95,7 +95,6 @@
     - build-essential
     - daemontools
     - daemontools-run
-    - ucspi-tcp
     - passwd
     - libssl-dev
     - libperl-dev

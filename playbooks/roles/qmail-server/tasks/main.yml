@@ -1,22 +1,56 @@
-- include: install.yml
+# Eequirements
+- include: install-ucspi-tcp-ipv6.yml
+  tags: ucspi-tcp-ipv6, install
+
+- include: install-qmail.yml
+  tags: install
 
 # Initital setting
 - include: config.yml
-
+  tags: config
 
 - include: install-mta.yml
-- include: install-qmailctl.yml
-- include: install-ucspi-ssl.yml
-- include: install-cdb.yml
-- include: install-checkpassword.yml
+  tags: install
 
+- include: install-ucspi-ssl.yml
+  tags: install
+- include: install-cdb.yml
+  tags: install
+- include: install-checkpassword.yml
+  tags: install
+
+# send
 - include: config-send.yml
   when: galaxie_qmail_server_config_send
+  tags: config
 
-- include: config-smtpd.yml
-  when: galaxie_qmail_server_config_smtpd
+# smtpd
+- include: config-smtpd-ipv4.yml
+  when: galaxie_qmail_server_config_smtpd_ipv4
+  tags: config
+- include: remove-smtpd-ipv4.yml
+  when: not galaxie_qmail_server_config_smtpd_ipv4
+- include: config-smtpd-ipv6.yml
+  tags: config
+  when: galaxie_qmail_server_config_smtpd_ipv6
+- include: remove-smtpd-ipv6.yml
+  when: not galaxie_qmail_server_config_smtpd_ipv6
 
-- include: config-smtpsd.yml
-  when: galaxie_qmail_server_config_smtpsd
+# smtpsd
+- include: config-smtpsd-ipv4.yml
+  when: galaxie_qmail_server_config_smtpsd_ipv4
+  tags: config
+- include: remove-smtpsd-ipv4.yml
+  when: not galaxie_qmail_server_config_smtpsd_ipv4
+- include: config-smtpsd-ipv6.yml
+  when: galaxie_qmail_server_config_smtpsd_ipv6
+  tags: config
+- include: remove-smtpsd-ipv6.yml
+  when: not galaxie_qmail_server_config_smtpsd_ipv6
 
+
+# finilize
 - include: install-qfixpermissions.yml
+  tags: install
+- include: install-qmailctl.yml
+  tags: install

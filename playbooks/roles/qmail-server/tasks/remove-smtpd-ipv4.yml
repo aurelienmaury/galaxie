@@ -1,0 +1,70 @@
+---
+# Stop and remove service
+- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv4 }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv4 }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+  tags: remove
+
+- name: remove qmail-smtpd-ipv4 service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd }}
+  when: command_result|success
+  tags: remove
+
+## Configure Makefile
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/Makefile" file
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/Makefile"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp" file
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp.cdb" file
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp.cdb"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp.bkp" file
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp.bkp"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/run" file
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/run"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log/run" file
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log/run"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log" drectory
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}" directory
+  file:
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}"
+    state="absent"
+  tags: remove
+
+- name: remove "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}" directory
+  file:
+    dest="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
+    state="absent"
+  tags: remove
+

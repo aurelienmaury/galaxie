@@ -16,7 +16,13 @@ galaxie_qmail_server_service_name: "qmail"
 galaxie_qmail_server_service_send: "qmail-send"
 galaxie_qmail_server_service_smtpd: "qmail-smtpd"
 galaxie_qmail_server_service_smtpsd: "qmail-smtpsd"
-galaxie_qmail_server_service_ip: "{{ ansible_default_ipv4.address }}"
+galaxie_qmail_server_service_smtpd_ipv4: "qmail-smtpd-ipv4"
+galaxie_qmail_server_service_smtpsd_ipv4: "qmail-smtpsd-ipv4"
+galaxie_qmail_server_service_smtpd_ipv6: "qmail-smtpd-ipv6"
+galaxie_qmail_server_service_smtpsd_ipv6: "qmail-smtpsd-ipv6"
+galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
+galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
+galaxie_qmail_server_service_ipv6_interface: "eth0"
 galaxie_qmail_server_source_dir: "/usr/src/qmail"
 galaxie_qmail_server_qmail_dir: "/var/qmail"
 
@@ -29,11 +35,14 @@ galaxie_qmail_server_simscan_group: "simscan"
 # Special
 galaxie_qmail_server_domain: "galaxie.ici"
 
+
 galaxie_qmail_server_install_qmailctl: true
 galaxie_qmail_server_install_qfixpermissions: true
 galaxie_qmail_server_config_send: true
-galaxie_qmail_server_config_smtpd: true
-galaxie_qmail_server_config_smtpsd: false
+galaxie_qmail_server_config_smtpd_ipv4: true
+galaxie_qmail_server_config_smtpd_ipv6: true
+galaxie_qmail_server_config_smtpsd_ipv4: false
+galaxie_qmail_server_config_smtpsd_ipv6: false
 galaxie_qmail_server_set_smtproutes: false
 galaxie_qmail_server_set_virtualdomains: false
 galaxie_qmail_server_config_qmail_scanner: false

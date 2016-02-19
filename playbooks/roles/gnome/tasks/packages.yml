@@ -24,7 +24,15 @@
     - icedove-bidiui
     - icedove-dbg
     - icedove-dev
-
+    - gir1.2-totem-1.0*
+    - gir1.2-totem-plparser-1.0*
+    - grilo-plugins-0.2*
+    - libdmapsharing-3.0-2*
+    - libgrilo-0.2-1*
+    - libtotem0*
+    - totem-common*
+    - totem
+    - totem-plugins
 
 - name: Install Gnome Minimal without everydependency
   apt:

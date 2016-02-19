@@ -1,0 +1,5 @@
+---
+- name: install ucspi-tcp-ipv6
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - ucspi-tcp-ipv6
