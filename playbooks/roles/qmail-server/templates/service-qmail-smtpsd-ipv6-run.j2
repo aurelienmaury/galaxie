@@ -45,7 +45,7 @@ IP={{ galaxie_qmail_server_service_ipv6 }}
 PORT=465
 SSL=1
 SSL_CERT="$VQ/control/servercert.pem"
-SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd }}/tcp.cdb"
+SMTP_CDB="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/tcp.cdb"
 MAX=30
 
 # these require the "tcpserver limits" patch for ucspi-tcp, available here:
