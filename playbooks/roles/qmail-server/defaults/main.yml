@@ -42,7 +42,7 @@ galaxie_qmail_server_config_send: true
 galaxie_qmail_server_config_smtpd_ipv4: true
 galaxie_qmail_server_config_smtpd_ipv6: true
 galaxie_qmail_server_config_smtpsd_ipv4: true
-galaxie_qmail_server_config_smtpsd_ipv6: false
+galaxie_qmail_server_config_smtpsd_ipv6: true
 galaxie_qmail_server_set_smtproutes: false
 galaxie_qmail_server_set_virtualdomains: false
 galaxie_qmail_server_config_qmail_scanner: false
