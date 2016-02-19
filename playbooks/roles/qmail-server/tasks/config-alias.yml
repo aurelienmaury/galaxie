@@ -1,0 +1,28 @@
+---
+### Alias Creation ###
+- name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-root
+  template:
+    src=qmail-root.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-root
+    owner="root"
+    group="{{ galaxie_qmail_server_qmail_group }}"
+    mode=0644
+  tags: alias
+
+- name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
+  template:
+    src=qmail-postmaster.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-postmaster
+    owner="root"
+    group="{{ galaxie_qmail_server_qmail_group }}"
+    mode=0644
+  tags: alias
+
+- name: check {{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
+  template:
+    src=qmail-mailer-daemon.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-mailer-daemon
+    owner="root"
+    group="{{ galaxie_qmail_server_qmail_group }}"
+    mode=0644
+  tags: alias

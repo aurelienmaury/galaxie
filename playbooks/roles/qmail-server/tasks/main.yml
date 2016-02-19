@@ -9,6 +9,8 @@
 # Initital setting
 - include: config.yml
   tags: config
+- include: config-alias.yml
+  tags: alias
 
 - include: install-mta.yml
   tags: install
