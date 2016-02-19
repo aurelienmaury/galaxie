@@ -39,8 +39,8 @@ galaxie_qmail_server_domain: "galaxie.ici"
 galaxie_qmail_server_install_qmailctl: true
 galaxie_qmail_server_install_qfixpermissions: true
 galaxie_qmail_server_config_send: true
-galaxie_qmail_server_config_smtpd_ipv4: true
-galaxie_qmail_server_config_smtpd_ipv6: true
+galaxie_qmail_server_config_smtpd_ipv4: false
+galaxie_qmail_server_config_smtpd_ipv6: false
 galaxie_qmail_server_config_smtpsd_ipv4: false
 galaxie_qmail_server_config_smtpsd_ipv6: false
 galaxie_qmail_server_set_smtproutes: false
