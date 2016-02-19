@@ -5,7 +5,7 @@
     apt:
       update_cache=yes
 
-  - name: Apt-get upgrade
+  - name: Apt-get safe upgrade
     apt:
       upgrade=safe
 
