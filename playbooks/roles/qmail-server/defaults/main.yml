@@ -17,8 +17,8 @@ galaxie_qmail_server_service_send: "qmail-send"
 galaxie_qmail_server_service_smtpd: "qmail-smtpd"
 galaxie_qmail_server_service_smtpsd: "qmail-smtpsd"
 galaxie_qmail_server_service_smtpd_ipv4: "qmail-smtpd-ipv4"
-galaxie_qmail_server_service_smtpsd_ipv4: "qmail-smtpsd-ipv4"
 galaxie_qmail_server_service_smtpd_ipv6: "qmail-smtpd-ipv6"
+galaxie_qmail_server_service_smtpsd_ipv4: "qmail-smtpsd-ipv4"
 galaxie_qmail_server_service_smtpsd_ipv6: "qmail-smtpsd-ipv6"
 galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
@@ -32,23 +32,31 @@ galaxie_qmail_server_qmail_scanner_user: "clamav"
 # simscan
 galaxie_qmail_server_simscan_user: "simscan"
 galaxie_qmail_server_simscan_group: "simscan"
+
 # Special
-galaxie_qmail_server_domain: "galaxie.ici"
 
 
-galaxie_qmail_server_install_qmailctl: true
-galaxie_qmail_server_install_qfixpermissions: true
 galaxie_qmail_server_config_send: true
 galaxie_qmail_server_config_smtpd_ipv4: true
-galaxie_qmail_server_config_smtpd_ipv6: true
+galaxie_qmail_server_config_smtpd_ipv6: false
 galaxie_qmail_server_config_smtpsd_ipv4: true
-galaxie_qmail_server_config_smtpsd_ipv6: true
-galaxie_qmail_server_set_smtproutes: false
-galaxie_qmail_server_set_virtualdomains: false
+galaxie_qmail_server_config_smtpsd_ipv6: false
+
+# special - antispam
 galaxie_qmail_server_config_qmail_scanner: false
 galaxie_qmail_server_config_simscan: false
+# special - smtproutes
+galaxie_qmail_server_set_smtproutes: false
+galaxie_qmail_server_control_smtproutes: ""
+# special - virtualdomains
+galaxie_qmail_server_set_virtualdomains: false
+galaxie_qmail_server_control_virtualdomains: ""
+# special - scripts
+galaxie_qmail_server_install_qmailctl: true
+galaxie_qmail_server_install_qfixpermissions: true
 
 # Control
+galaxie_qmail_server_domain: "galaxie.ici"
 galaxie_qmail_server_control_me: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_control_defaultdomain: "{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_control_plusdomain: "{{ galaxie_qmail_server_domain }}"
@@ -61,9 +69,7 @@ galaxie_qmail_server_control_locals:
   - "{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_control_rcpthosts:
   - "{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_control_smtproutes: ""
 
-galaxie_qmail_server_control_virtualdomains: ""
 
 galaxie_qmail_server_control_defaultdelivery: "./Maildir/"
 galaxie_qmail_server_control_concurrencyremote: "255"
