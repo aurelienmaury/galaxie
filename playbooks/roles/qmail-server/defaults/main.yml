@@ -120,10 +120,13 @@ galaxie_qmail_server_openssl_cert_O: "Galaxie"
 galaxie_qmail_server_openssl_cert_OU: "IT"
 galaxie_qmail_server_openssl_cert_CN: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
 galaxie_qmail_server_openssl_subj: "/C={{ galaxie_qmail_server_openssl_cert_C }}/ST={{ galaxie_qmail_server_openssl_cert_ST }}/L={{ galaxie_qmail_server_openssl_cert_L }}/O={{ galaxie_qmail_server_openssl_cert_O }}/OU={{ galaxie_qmail_server_openssl_cert_OU }}/CN={{ galaxie_qmail_server_openssl_cert_CN }}"
-# Alias creation
-galaxie_qmail_server_alias_root: "root@{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_alias_postmaster: "root@{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_alias_mailer_daemon: "root@{{ galaxie_qmail_server_domain }}"
 
-galaxie_qmail_server_alias_list:
-  - { name: nofiles, value: qmaild }
+# Alias creation
+# http://www.qmail.org/man/man5/dot-qmail.html
+galaxie_qmail_server_alias_admins_list:
+  - { name: "root",           value: ["root@{{ galaxie_qmail_server_domain }}"] }
+  - { name: "postmaster",     value: ["root@{{ galaxie_qmail_server_domain }}"] }
+  - { name: "mailer-daemon",  value: ["root@{{ galaxie_qmail_server_domain }}"] }
+galaxie_qmail_server_alias_users_list:
+  - { name: "lulu",           value: ["lulu@galaxie.ici"] }
+  - { name: "boris",          value: ["boris@galaxie.ici","lulu@galaxie.ici"] }

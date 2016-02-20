@@ -90,7 +90,6 @@ class Eyes(object):
                     color=self.color
                 )
 
-
                 # Draw Date at the button of the Video
                 cv2.putText(
                     frame,
