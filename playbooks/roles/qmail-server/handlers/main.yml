@@ -1,5 +1,11 @@
 ---
 # qmail-send
+- name: restart qmail-send
+  service:
+    name={{ galaxie_qmail_server_service_send }}
+    state=restarted
+    enabled=yes
+
 - name: register qmail-send service
   shell:
     /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}

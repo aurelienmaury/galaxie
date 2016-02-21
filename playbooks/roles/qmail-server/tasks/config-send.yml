@@ -1,43 +1,81 @@
 ---
-# Configure service to start
-- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}" service directories
-  file:
-    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}"
-    state=directory
-    owner=root
-    group=root
-    mode=1755
-  tags: supervise
+# Configure service to start via Native Syetemd
+# https://github.com/aperezdc/perezdecastro.org/blob/master/stash/recipe-running-qmail-send-under-systemd.markdown
+# http://mario.raval.li/2012/11/30/qmail-systemd/
 
-- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
+- name: set statup script "/lib/systemd/system/{{ galaxie_qmail_server_service_send }}.service"
   template:
-    src=service-qmail-send-run.j2
-    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
-    mode=0700
-  tags: supervise
+    src="qmail-send.service.j2"
+    dest="/lib/systemd/system/{{ galaxie_qmail_server_service_send }}.service"
+    mode=0644
+  tags: service-qmail-send
 
-# Configure multilog service
-- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}" multilog directory
+- name: check if service {{ galaxie_qmail_server_service_send }} is registered
+  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
+  failed_when: "'update-service: fatal:' in command_result.stderr"
+  changed_when: false
+  register: command_result
+  ignore_errors: yes
+  tags: service-qmail-send
+
+- name: remove {{ galaxie_qmail_server_service_send }} service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+  when: command_result|success
+  tags: service-qmail-send
+
+- name: remove previous statup script for daemontools"
   file:
-    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}"
-    owner="{{ galaxie_qmail_server_qmaill_user }}"
-    group=root
-    state=directory
-    mode=2755
-  tags: multilog
+    state=absent
+    path="{{ item }}"
+  with_items:
+    - "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
+    - "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log"
+    - "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
+    - "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}"
+    - "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}"
+  tags: service-qmail-send
 
-- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log" log directorie
-  file:
-    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log"
-    state=directory
-    owner=root
-    group=root
-    mode=0755
-  tags: supervise
+- name: enable {{ galaxie_qmail_server_service_send }}
+  service:
+    name={{ galaxie_qmail_server_service_send }}
+    state=started
+    enabled=yes
+  tags: service-qmail-send
 
-- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
-  template:
-    src=service-qmail-send-log-run.j2
-    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
-    mode=0700
-  tags: supervise
+## Configure service via daemond tools and jms1 script
+#- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}" service directories
+#  file:
+#    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}"
+#    state=directory
+#    owner=root
+#    group=root
+#    mode=1755
+#
+#- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
+#  template:
+#    src=service-qmail-send-run.j2
+#    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/run"
+#    mode=0700
+#
+## Configure multilog service
+#- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}" multilog directory
+#  file:
+#    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_send }}"
+#    owner="{{ galaxie_qmail_server_qmaill_user }}"
+#    group=root
+#    state=directory
+#    mode=2755
+#
+#- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log" log directorie
+#  file:
+#    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log"
+#    state=directory
+#    owner=root
+#    group=root
+#    mode=0755
+#
+#- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
+#  template:
+#    src=service-qmail-send-log-run.j2
+#    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}/log/run"
+#    mode=0700
