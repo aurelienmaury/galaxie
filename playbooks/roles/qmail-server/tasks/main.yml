@@ -23,7 +23,7 @@
   tags: install
 
 # send
-- include: config-send.yml
+- include: config-send-service.yml
   when: galaxie_qmail_server_config_send
   tags: config
 

@@ -1,16 +1,16 @@
 ---
 # qmail-send
-- name: check if service {{ galaxie_qmail_server_service_send }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
-  when: galaxie_qmail_server_config_send
-
-- name: add {{ galaxie_qmail_server_service_send }} service
-  shell: /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
-  when: not command_result|success and galaxie_qmail_server_config_send
+#- name: check if service {{ galaxie_qmail_server_service_send }} is registered
+#  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
+#  failed_when: "'update-service: fatal:' in command_result.stderr"
+#  changed_when: false
+#  register: command_result
+#  ignore_errors: yes
+#  when: galaxie_qmail_server_config_send
+#
+#- name: add {{ galaxie_qmail_server_service_send }} service
+#  shell: /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+#  when: not command_result|success and galaxie_qmail_server_config_send
 
 # qmail-smtpd ipv4
 - name: check if service {{ galaxie_qmail_server_service_smtpd_ipv4 }} is registered
