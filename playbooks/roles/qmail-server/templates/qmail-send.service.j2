@@ -2,7 +2,7 @@
 Description=Qmail Delivery service
 After=syslog.target network.target
 After=local-fs.target
-ConditionFileIsExecutable=/var/qmail/bin/qmail-start
+ConditionFileIsExecutable={{ galaxie_qmail_server_qmail_dir }}/bin/qmail-start
 
 [Install]
 WantedBy=multi-user.target

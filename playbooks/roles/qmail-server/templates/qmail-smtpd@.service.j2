@@ -1,0 +1,14 @@
+[Unit]
+Description=Qmail SMTPD IPv4 service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+Type=simple
+Restart=always
+StandardOutput=syslog
+StandardError=inherit
+SyslogFacility=mail
+SyslogIdentifier={{ galaxie_qmail_server_service_send }}
+Environment=PATH={{ galaxie_qmail_server_qmail_dir }}/bin:/usr/bin:/bin:/usr/sbin:/sbin
+ExecStart={{ galaxie_qmail_server_qmail_dir }}/bin/qmail-smtpd

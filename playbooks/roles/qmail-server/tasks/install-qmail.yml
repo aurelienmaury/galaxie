@@ -1,5 +1,10 @@
 ---
 # Users and Groups creation
+- name: stop {{ galaxie_qmail_server_service_send }}
+  service:
+    name="{{ galaxie_qmail_server_service_send }}"
+    state=stopped
+
 - name: create groups
   group:
     name={{ item }}

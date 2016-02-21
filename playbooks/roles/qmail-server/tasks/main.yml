@@ -57,6 +57,8 @@
 
 
 # finilize
+- include: config-man.yml
+  tags: config-man
 - include: config-services-register.yml
 - include: install-qfixpermissions.yml
   tags: install

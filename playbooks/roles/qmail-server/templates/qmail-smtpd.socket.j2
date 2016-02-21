@@ -1,0 +1,11 @@
+[Unit]
+Description=Qmail SMTPD IPv4 service Socket for Per-Connection Servers
+Documentation=man:qmail-smtpd(8)
+
+[Socket]
+ListenStream=25
+FreeBind={{ galaxie_qmail_server_service_ipv4 }}
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

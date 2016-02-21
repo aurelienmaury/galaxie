@@ -62,9 +62,9 @@
     state="absent"
   tags: remove
 
-- name: remove "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}" directory
+- name: remove "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}" directory
   file:
-    dest="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd }}"
+    dest="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}"
     state="absent"
   tags: remove
 
