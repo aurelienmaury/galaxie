@@ -1,7 +1,9 @@
 ---
 
 - name: remove debian jessie main contrib non-free repository
-  apt_repository: repo="{{ item }}" state=absent
+  apt_repository:
+    repo="{{ item }}"
+    state=absent
   with_items:
     - "deb http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
     - "deb-src http://ftp.fr.debian.org/debian/ jessie main non-free contrib"
@@ -11,7 +13,9 @@
     - "deb-src http://ftp.fr.debian.org/debian/ jessie-updates main non-free contrib"
 
 - name: activate debian jessie main contrib non-free repository
-  apt_repository: repo="{{ item }}" state=present
+  apt_repository:
+    repo="{{ item }}"
+    state=present
   with_items:
     - "deb http://ftp.fr.debian.org/debian/ stable main non-free contrib"
     - "deb-src http://ftp.fr.debian.org/debian/ stable main non-free contrib"
