@@ -64,31 +64,31 @@
 - name: generate {{ galaxie_qmail_server_ucspi_ssl_dh_bits }} bits dh parameter "{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}" fle
   shell: openssl dhparam -out {{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }} {{ galaxie_qmail_server_ucspi_ssl_dh_bits }}
     creates=/etc/ssl/certs/dhparam.pem
-#
-#- name: update src/conf-dhfile to reflect "{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}" DH parameter file.
-#  replace:
-#    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_dhfile }}"
-#    regexp="^/usr/local/ssl/pem/dh1024.pem"
-#    replace="{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}"
-#
-#- name: check src/conf-dhfile
-#  lineinfile:
-#    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_dhfile }}"
-#    line="{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}"
-#    state=present
-#
-#- name: update src/conf-cadir for point to "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}".
-#  replace:
-#    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
-#    regexp="^/usr/local/ssl/certs"
-#    replace="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
-#
-#- name: check src/conf-cadir
-#  lineinfile:
-#    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
-#    line="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
-#    state=present
-#
+
+- name: update src/conf-dhfile to reflect "{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}" DH parameter file.
+  replace:
+    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_dhfile }}"
+    regexp="^/usr/local/ssl/pem/dh1024.pem"
+    replace="{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}"
+
+- name: check src/conf-dhfile
+  lineinfile:
+    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_dhfile }}"
+    line="{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}"
+    state=present
+
+- name: update src/conf-cadir for point to "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}".
+  replace:
+    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
+    regexp="^/usr/local/ssl/certs"
+    replace="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
+
+- name: check src/conf-cadir
+  lineinfile:
+    dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
+    line="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
+    state=present
+
 - name: package/install
   shell: package/install
     chdir="{{ galaxie_qmail_server_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b"
