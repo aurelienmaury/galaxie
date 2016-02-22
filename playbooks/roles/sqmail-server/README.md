@@ -1,9 +1,9 @@
 Role Name
 =========
 
-Qmail-server role have goal to install and configure a qmail server with the famous combined patch qmail-1.03-jms1-7.10.patch from https://qmail.jms1.net/patches/combined-details.shtml 
+sqmail-server role have goal to install and configure a s/qmail server as describ by fehcom
+http://fehcom.de/sqmail/sqmail.html
 
-When something special is done that the more close of jms1 way, then scripts is used for math with jms1 desin.
 
 Requirements
 ------------

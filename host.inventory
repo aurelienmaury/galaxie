@@ -126,7 +126,7 @@ mercure
 uranus
 gat01
 
-[qmails_servers]
+[sqmail-servers]
 mercure
 co1
 eris
@@ -182,7 +182,7 @@ neptune
 [servers:children]
 pvr-servers
 ntp-servers
-qmails_servers
+sqmail-servers
 mail-servers
 file-servers
 pabx-servers
