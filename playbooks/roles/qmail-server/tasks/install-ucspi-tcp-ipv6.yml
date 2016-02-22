@@ -1,5 +1,63 @@
 ---
-- name: install ucspi-tcp-ipv6
-  apt: pkg={{ item }} state=latest
+- name: uninstall ucspi-tcp-ipv6 and packages
+  apt:
+    pkg={{ item }}
+    state=absent
   with_items:
     - ucspi-tcp-ipv6
+    - ucspi-tcp
+
+- name: check {{ galaxie_qmail_server_slashpackage_dir }} directory
+  file:
+    path="{{ galaxie_qmail_server_slashpackage_dir }}"
+    state=directory
+    mode=1755
+
+- name: check {{ galaxie_qmail_server_ucspi_tcp6_source_dir }} directory
+  file:
+    path="{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}"
+    state=directory
+
+- name: delete "{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}/{{ galaxie_qmail_server_ucspi_tcp6_source_name }}.{{ galaxie_qmail_server_ucspi_tcp6_source_extension }}"
+  file:
+    path="{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}/{{ galaxie_qmail_server_ucspi_tcp6_source_name }}.{{ galaxie_qmail_server_ucspi_tcp6_source_extension }}"
+    state=absent
+  when: galaxie_qmail_server_ucspi_tcp6_force_install
+
+- name: get "{{ galaxie_qmail_server_ucspi_tcp6_source_url }}"
+  get_url:
+    url="{{ galaxie_qmail_server_ucspi_tcp6_source_url }}"
+    dest="{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}"
+    sha256sum="b0f6df425c2f3e90c89a94c501414834ea1bc0b66b8ba381fda8ca02f25d1608"
+  register: galaxie_qmail_server_ucspi_tcp6_download
+
+- name: delete "{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00" directory
+  file:
+    path="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+    state=absent
+  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+
+- name: Unarchive {{ galaxie_qmail_server_ucspi_tcp6_download.dest }}
+  unarchive:
+    src="{{ galaxie_qmail_server_ucspi_tcp6_download.dest }}"
+    dest="{{ galaxie_qmail_server_slashpackage_dir }}"
+    copy=no
+  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+
+- name: fixe permission trouble
+  file:
+    path="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+    owner="root"
+    group="root"
+    recurse=yes
+  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+
+- name: package/install
+  shell: package/install
+    chdir="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+
+- name: package/man
+  shell: package/man
+    chdir="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+  when: galaxie_qmail_server_ucspi_tcp6_download.changed

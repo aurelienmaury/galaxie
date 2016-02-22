@@ -22,6 +22,7 @@ galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
 galaxie_qmail_server_service_ipv6_interface: "eth0"
 galaxie_qmail_server_source_dir: "/usr/src/qmail"
+galaxie_qmail_server_slashpackage_dir: "/package"
 galaxie_qmail_server_qmail_dir: "/var/qmail"
 
 # qmail-scanner
@@ -96,7 +97,15 @@ galaxie_qmail_server_checkpassword_source_extension: "tar.gz"
 galaxie_qmail_server_checkpassword_source_url: "{{ galaxie_qmail_server_checkpassword_source_repository }}/{{ galaxie_qmail_server_checkpassword_source_name }}.{{ galaxie_qmail_server_checkpassword_source_extension }}"
 galaxie_qmail_server_checkpassword_source_dir: "{{ galaxie_qmail_server_source_dir }}/checkpassword-0.90"
 
-# ucpi-ssl
+# ucspi-tcp6
+galaxie_qmail_server_ucspi_tcp6_force_install: true
+galaxie_qmail_server_ucspi_tcp6_source_repository: "http://www.fehcom.de/ipnet/ucspi-tcp6"
+galaxie_qmail_server_ucspi_tcp6_source_name: "ucspi-tcp6-1.00a"
+galaxie_qmail_server_ucspi_tcp6_source_extension: "tgz"
+galaxie_qmail_server_ucspi_tcp6_source_url: "{{ galaxie_qmail_server_ucspi_tcp6_source_repository }}/{{ galaxie_qmail_server_ucspi_tcp6_source_name }}.{{ galaxie_qmail_server_ucspi_tcp6_source_extension }}"
+galaxie_qmail_server_ucspi_tcp6_source_dir: "/usr/src"
+
+# ucspi-ssl
 galaxie_qmail_server_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
 galaxie_qmail_server_ucspi_ssl_dh_parameter_file: "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}/dhparam.pem"
 galaxie_qmail_server_ucspi_ssl_dh_bits: "2048"
