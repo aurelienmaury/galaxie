@@ -7,30 +7,30 @@
     - build-essential
     - libssl-dev
     - libperl-dev
-  tags: ucspi-ssl
 
-- name: check "{{ galaxie_qmail_server_source_dir }}" directory
+- name: check {{ galaxie_qmail_server_slashpackage_dir }} directory
   file:
-    path="{{ galaxie_qmail_server_source_dir }}"
-    owner=root
-    group=root
+    path="{{ galaxie_qmail_server_slashpackage_dir }}"
     state=directory
-    mode=0755
-  tags: ucspi-ssl
+    mode=1755
+
+- name: check {{ galaxie_qmail_server_ucspi_ssl_source_dir }} directory
+  file:
+    path="{{ galaxie_qmail_server_ucspi_ssl_source_dir }}"
+    state=directory
 
 - name: get "{{ galaxie_qmail_server_ucspi_ssl_source_url }}"
   get_url:
     url="{{ galaxie_qmail_server_ucspi_ssl_source_url }}"
-    dest={{ galaxie_qmail_server_source_dir }}
+    dest={{ galaxie_qmail_server_ucspi_ssl_source_dir }}
     sha256sum=9f3bcf66546b433b089f6f340d243065beb801b97d4026e54dd586f0022b5f1e
   register: galaxie_qmail_server_ucspi_ssl_download
-  tags: ucspi-ssl
 
-- name: delete "{{ galaxie_qmail_server_ucspi_ssl_source_dir }}"
-  file:
-    path="{{ galaxie_qmail_server_ucspi_ssl_source_dir }}"
-    state=absent
-  when: galaxie_qmail_server_ucspi_ssl_download.changed
+#- name: delete "{{ galaxie_qmail_server_ucspi_ssl_source_dir }}/"
+#  file:
+#    path="{{ galaxie_qmail_server_ucspi_ssl_source_dir }}/"
+#    state=absent
+#  when: galaxie_qmail_server_ucspi_ssl_download.changed
 
 - name: check "{{ galaxie_qmail_server_ucspi_ssl_source_dir }}" directory
   file:
@@ -39,7 +39,6 @@
     group=root
     state=directory
     mode=0755
-  tags: ucspi-ssl
 
 - name: Unarchive {{ galaxie_qmail_server_ucspi_ssl_download.dest }}
   unarchive:
@@ -47,7 +46,6 @@
     dest="{{ galaxie_qmail_server_ucspi_ssl_source_dir }}"
     copy=no
   when: galaxie_qmail_server_ucspi_ssl_download.changed
-  tags: ucspi-ssl
 
 - name: check "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}" directory
   file:
@@ -56,55 +54,46 @@
     group=root
     state=directory
     mode=0755
-  tags: ucspi-ssl
 
 - name: generate {{ galaxie_qmail_server_ucspi_ssl_dh_bits }} bits dh parameter "{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}" fle
   shell: openssl dhparam -out {{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }} {{ galaxie_qmail_server_ucspi_ssl_dh_bits }}
     creates=/etc/ssl/certs/dhparam.pem
-  tags: ucspi-ssl
 
 - name: update src/conf-dhfile to reflect "{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}" DH parameter file.
   replace:
     dest="{{ galaxie_qmail_server_ucspi_ssl_conf_dhfile }}"
     regexp="^/usr/local/ssl/pem/dh1024.pem"
     replace="{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}"
-  tags: ucspi-ssl
 
 - name: check src/conf-dhfile
   lineinfile:
     dest="{{ galaxie_qmail_server_ucspi_ssl_conf_dhfile }}"
     line="{{ galaxie_qmail_server_ucspi_ssl_dh_parameter_file }}"
     state=present
-  tags: ucspi-ssl
 
 - name: update src/conf-cadir for point to "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}".
   replace:
     dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
     regexp="^/usr/local/ssl/certs"
     replace="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
-  tags: ucspi-ssl
 
 - name: check src/conf-cadir
   lineinfile:
     dest="{{ galaxie_qmail_server_ucspi_ssl_conf_cadir }}"
     line="{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}"
     state=present
-  tags: ucspi-ssl
 
 - name: build {{ galaxie_qmail_server_ucspi_ssl_source_name }} binay
   shell: package/compile
     chdir="{{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}"
   changed_when: false
-  tags: ucspi-ssl
 
 - name: build {{ galaxie_qmail_server_ucspi_ssl_source_name }} manual
   shell: package/compile
     chdir="{{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}"
   changed_when: false
-  tags: ucspi-ssl
 
 - name: copy binary {{ galaxie_qmail_server_ucspi_ssl_source_name }}
   shell: cp {{ galaxie_qmail_server_ucspi_ssl_special_connard_dir }}/compile/{{ item }} /usr/local/bin/
   with_items: galaxie_qmail_server_ucspi_ssl_binary_list
   changed_when: false
-  tags: ucspi-ssl
