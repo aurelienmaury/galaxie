@@ -1,11 +1,12 @@
 [Unit]
-Description=Qmail SMTPD IPv4 service Socket for Per-Connection Servers
+Description=Qmail SMTPD service Socket for Per-Connection Servers
 Documentation=man:qmail-smtpd(8)
 
 [Socket]
+SocketUser={{ galaxie_qmail_server_qmaild_user }}
+SocketGroup={{ galaxie_qmail_server_nofiles_group }}
 ListenStream=25
-FreeBind={{ galaxie_qmail_server_service_ipv4 }}
-Accept=yes
+Accept=false
 
 [Install]
 WantedBy=sockets.target

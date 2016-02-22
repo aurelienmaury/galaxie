@@ -1,14 +1,18 @@
 [Unit]
-Description=Qmail SMTPD IPv4 service
+Description=Qmail SMTPD service
+Documentation=man:qmail-smtpd(8)
 
 [Service]
+User={{ galaxie_qmail_server_qmaild_user }}
+Group={{ galaxie_qmail_server_nofiles_group }}
 Type=simple
-EnvironmentFile=/etc/default/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
-Type=simple
+EnvironmentFile=/etc/default/qmail-smtpd
 Restart=always
+#StandardInput=socket
 StandardOutput=syslog
 StandardError=inherit
 SyslogFacility=mail
-SyslogIdentifier={{ galaxie_qmail_server_service_send }}
+SyslogIdentifier=qmail-smtpd
 Environment=PATH={{ galaxie_qmail_server_qmail_dir }}/bin:/usr/bin:/bin:/usr/sbin:/sbin
-ExecStart={{ galaxie_qmail_server_qmail_dir }}/bin/qmail-smtpd
+#ExecStart=tcpserver -vR -l mercure.galaxie.eu.org -c 30 -u 999 -g 998 -x /var/lib/supervise/qmail-smtpd/tcp.cdb 192.168.1.70 25 rblsmtpd -r zen.spamhaus.org -t 30 qmail-smtpd
+ExecStart={{ galaxie_qmail_server_qmail_dir }}/bin/tcp-env {{ galaxie_qmail_server_qmail_dir }}/bin/in.smtpd

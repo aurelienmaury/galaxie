@@ -33,8 +33,11 @@ galaxie_qmail_server_simscan_group: "simscan"
 
 # Special
 
-
+# via systemd
 galaxie_qmail_server_config_send: true
+galaxie_qmail_server_config_smtpd: true
+
+# via dameon tools
 galaxie_qmail_server_config_smtpd_ipv4: true
 galaxie_qmail_server_config_smtpd_ipv6: false
 galaxie_qmail_server_config_smtpsd_ipv4: true

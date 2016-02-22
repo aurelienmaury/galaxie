@@ -22,10 +22,15 @@
 - include: install-checkpassword.yml
   tags: install
 
-# send
+# qmail-send
 - include: config-send-service.yml
   when: galaxie_qmail_server_config_send
-  tags: config
+  tags: config, config-qmail-send
+
+# qmail-smtp
+- include: config-smtpd-service.yml
+  when: galaxie_qmail_server_config_smtpd
+  tags: config, config-qmail-smtpd
 
 # smtpd
 - include: config-smtpd-ipv4.yml
