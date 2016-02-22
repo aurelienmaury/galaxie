@@ -3,10 +3,10 @@ Description=Qmail SMTPD service Socket for Per-Connection Servers
 Documentation=man:qmail-smtpd(8)
 
 [Socket]
-SocketUser={{ galaxie_qmail_server_qmaild_user }}
-SocketGroup={{ galaxie_qmail_server_nofiles_group }}
 ListenStream=25
 Accept=false
+Service=qmail-smtpd.service
+BindIPv6Only=both
 
 [Install]
 WantedBy=sockets.target
