@@ -52,6 +52,16 @@
     recurse=yes
   when: galaxie_qmail_server_ucspi_tcp6_download.changed
 
+- name: check DEB_BUILD_ARCH_BITS
+  shell: dpkg-architecture 2>&1 | grep DEB_HOST_ARCH_BITS=32
+  when: ansible_os_family == "Debian"
+  register: DEB_BUILD_ARCH_BITS_EQ_32
+
+- name: check src/conf-ld file "{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
+  template:
+    src="ucspi-tcp6-conf-ld.j2"
+    dest="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
+
 - name: package/install
   shell: package/install
     chdir="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"

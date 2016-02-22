@@ -1,9 +1,11 @@
 Role Name
 =========
 
-Qmail-server role have goal to install and configure a qmail server with the famous combined patch qmail-1.03-jms1-7.10.patch from https://qmail.jms1.net/patches/combined-details.shtml 
+Qmail-server role have goal to install and configure a s/qmail server from fehcom design.
+
+s/qmail (pronounced skew-mail) is a Mail Transfer Agent (MTA) based on Qmail suited for high-speed and confidential email transport over IPv4 and IPv6 networks.
+More informations:
 http://fehcom.de/sqmail/sqmail.html
-When something special is done that the more close of jms1 way, then scripts is used for math with jms1 desin.
 
 Requirements
 ------------
