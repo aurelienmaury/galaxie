@@ -4,9 +4,9 @@ Documentation=man:qmail-smtpd(8)
 
 [Socket]
 ListenStream=25
-Accept=false
-Service=qmail-smtpd.service
-BindIPv6Only=both
+Accept=yes
+Service=qmail-smtpd@.service
+#BindIPv6Only=both
 
 [Install]
 WantedBy=sockets.target
