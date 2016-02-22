@@ -25,7 +25,6 @@
     - build-essential
     - daemontools
     - daemontools-run
-    - ucspi-tcp
   when: djb_installed|failed
 
 - name: source directory for djbdns building
