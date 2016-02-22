@@ -1,5 +1,5 @@
 ---
-- name: uninstall ucspi-tcp-ipv6 and packages
+- name: uninstall ucspi-tcp-ipv6 and ucspi-tcp packages
   apt:
     pkg={{ item }}
     state=absent
@@ -37,14 +37,14 @@
     state=absent
   when: galaxie_qmail_server_ucspi_tcp6_download.changed
 
-- name: Unarchive {{ galaxie_qmail_server_ucspi_tcp6_download.dest }}
+- name: unarchive {{ galaxie_qmail_server_ucspi_tcp6_download.dest }}
   unarchive:
     src="{{ galaxie_qmail_server_ucspi_tcp6_download.dest }}"
     dest="{{ galaxie_qmail_server_slashpackage_dir }}"
     copy=no
   when: galaxie_qmail_server_ucspi_tcp6_download.changed
 
-- name: fixe permission trouble
+- name: fixe permissions
   file:
     path="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
     owner="root"

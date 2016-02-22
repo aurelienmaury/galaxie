@@ -2,6 +2,8 @@
 - include: config-services-stop.yml
 - include: install-ucspi-tcp-ipv6.yml
   tags: ucspi-tcp-ipv6, install
+- include: install-ucspi-ssl.yml
+  tags: ucspi-ssl, install
 
 - include: install-qmail.yml
   tags: install
@@ -15,8 +17,7 @@
 - include: install-mta.yml
   tags: install
 
-- include: install-ucspi-ssl.yml
-  tags: install
+
 - include: install-cdb.yml
   tags: install
 - include: install-checkpassword.yml
