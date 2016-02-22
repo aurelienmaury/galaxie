@@ -1,0 +1,24 @@
+---
+### Alias Creation ###
+
+# http://www.qmail.org/man/man5/dot-qmail.html
+- name: check dot-qmail special alias
+  template:
+    src=dot-qmail.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-{{ item.name }}
+    owner="root"
+    group="{{ galaxie_qmail_server_qmail_group }}"
+    mode=0644
+  with_items: galaxie_qmail_server_alias_admins_list
+  tags: alias
+
+# http://www.qmail.org/man/man5/dot-qmail.html
+- name: check dot-qmail alias
+  template:
+    src=dot-qmail.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/alias/.qmail-{{ item.name }}
+    owner="root"
+    group="{{ galaxie_qmail_server_qmail_group }}"
+    mode=0644
+  with_items: galaxie_qmail_server_alias_users_list
+  tags: alias

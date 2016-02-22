@@ -1,0 +1,62 @@
+---
+# Configure services to start
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}" service directories
+  file:
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}"
+    state=directory
+    owner=root
+    group=root
+    mode=1755
+
+- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/run"
+  template:
+    src=service-qmail-smtpd-ipv4-run.j2
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/run"
+    mode=0700
+
+# Configure multilog service
+- name: creat "{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}" multilog directory
+  file:
+    path="{{ galaxie_qmail_server_multilog_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}"
+    owner="{{ galaxie_qmail_server_qmaill_user }}"
+    group=root
+    state=directory
+    mode=2755
+  tags: multilog
+
+- name: creat "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log" log directorie
+  file:
+    path="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log"
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: set statup script "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log/run"
+  template:
+    src=service-qmail-smtpd-ipv4-log-run.j2
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log/run"
+    mode=0700
+
+# Configure Makefile
+- name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/Makefile" file
+  template:
+    src=service-qmail-smtpd-makefile.j2
+    dest={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/Makefile
+    mode=0644
+    owner=root
+    group=root
+
+- name: send "{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp" file
+  template:
+    src=service-qmail-smtpd-tcpdb.j2
+    dest="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp"
+    mode=0644
+    owner=root
+    group=root
+  notify: rebuild qmail-smtpd tcpdb
+
+- name: creat {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/tcp.cdb
+  shell: make
+    chdir={{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/
+  changed_when: false

@@ -1,0 +1,23 @@
+---
+- name: install "{{ galaxie_qmail_server_qmail_dir }}/bin/qfixpermissions" script
+  template:
+    src=qfixpermissions.j2
+    dest="/usr/local/bin/qfixpermissions"
+    mode="0755"
+    owner="root"
+    group="root"
+  when: galaxie_qmail_server_install_qfixpermissions
+  tags: qfixpermissions
+
+- name: delete "/usr/local/bin/qfixpermissions"
+  file:
+    path="/usr/local/bin/qfixpermissions"
+    state=absent
+  when: not galaxie_qmail_server_install_qfixpermissions
+  tags: qfixpermissions
+
+- name: execute /usr/local/bin/qfixpermissions
+  shell: /usr/local/bin/qfixpermissions
+  when: galaxie_qmail_server_install_qfixpermissions
+  changed_when: false
+  tags: qfixpermissions

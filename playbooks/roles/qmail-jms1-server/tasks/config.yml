@@ -1,0 +1,178 @@
+---
+# Inspiration:
+# http://qmailrocks.thibs.com/qmail-configure.php
+# http://www.lifewithqmail.com/lwq.html#configuration
+
+- name: Set "{{ galaxie_qmail_server_control_defaultdelivery }}" as default mailbox type for mbox type
+  template:
+    src=defaultdelivery.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdelivery
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_concurrencyremote }}" as max simultaneous remote deliveries
+  template:
+    src=concurrencyremote.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyremote
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_concurrencyincoming }}" as max simultaneous incoming SMTP connections
+  template:
+    src=concurrencyincoming.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/concurrencyincoming
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_spfbehavior }}" as value between 1 and 6 to enable SPF checks
+  template:
+    src=spfbehavior.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/spfbehavior
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_bouncefrom }}" as bounce sender
+  template:
+    src=bouncefrom.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/bouncefrom
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_doublebouncehost }}" as double bounce sender
+  template:
+    src=doublebouncehost.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebouncehost
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_doublebounceto }}" to receive double bounces
+  template:
+    src=doublebounceto.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/doublebounceto
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set maximum message size to be "{{ galaxie_qmail_server_control_databytes }}" bytes
+  template:
+    src=databytes.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/databytes
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: Set "{{ galaxie_qmail_server_control_timeoutsmtpd }}" seconds as timeout
+  template:
+    src=timeoutsmtpd.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/timeoutsmtpd
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+### Fast Config
+- name: set "{{ galaxie_qmail_server_control_me }}" as FQDN of system
+  template:
+    src=me.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/me
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: set "{{ galaxie_qmail_server_control_defaultdomain }}" as default domain name
+  template:
+    src=defaultdomain.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/defaultdomain
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: set "{{ galaxie_qmail_server_control_plusdomain }}" as domain substituted for trailing '+'
+  template:
+    src=plusdomain.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/plusdomain
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: set "{{ galaxie_qmail_server_control_locals }}" domains that we deliver locally
+  template:
+    src=locals.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/locals
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+- name: set "{{ galaxie_qmail_server_control_rcpthosts }}" domains that we accept mail for
+  template:
+    src=rcpthosts.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/rcpthosts
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config
+
+### smtproutes management
+- name: set "{{ galaxie_qmail_server_control_smtproutes }}" artificial SMTP routes
+  template:
+    src=smtproutes.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/smtproutes
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  when: galaxie_qmail_server_set_smtproutes
+  tags: config
+
+- name: delete "{{ galaxie_qmail_server_qmail_dir }}/control/smtproutes"
+  file:
+    path={{ galaxie_qmail_server_qmail_dir }}/control/smtproutes
+    state=absent
+  when: not galaxie_qmail_server_set_smtproutes
+  tags: config
+
+### virtualdomains management
+- name: set "{{ galaxie_qmail_server_control_virtualdomains }}" virtual domains and users
+  template:
+    src=virtualdomains.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/virtualdomains
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  when: galaxie_qmail_server_set_virtualdomains
+  tags: config
+
+- name: delete "{{ galaxie_qmail_server_qmail_dir }}/control/virtualdomains"
+  file:
+    path={{ galaxie_qmail_server_qmail_dir }}/control/virtualdomains
+    state=absent
+  when: not galaxie_qmail_server_set_virtualdomains
+  tags: config
+
+#### Don't know look to prevent a bug
+
+- name: update the memory to 32MB to avoid memory related errors
+  template:
+    src=conf-common.j2
+    dest={{ galaxie_qmail_server_qmail_dir }}/control/conf-common
+    owner=root
+    group={{ galaxie_qmail_server_qmail_group }}
+    mode=0644
+  tags: config

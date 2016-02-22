@@ -1,0 +1,94 @@
+---
+# qmail-send
+- name: restart qmail-send
+  service:
+    name={{ galaxie_qmail_server_service_send }}
+    state=restarted
+    enabled=yes
+
+- name: register qmail-send service
+  shell:
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+  when: serviceSendRegistered|failed
+
+- name: restart qmail-send service
+  shell:
+    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }} &&
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+  when: serviceSendRegistered|success
+
+# qmail-smtpd-ipv4
+- name: add qmail-smtpd-ipv4 service
+  shell: /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+
+- name: remove qmail-smtpd-ipv4 service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+
+- name: restart qmail-smtpd-ipv4 service
+  shell:
+    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }} &&
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+
+- name: rebuild qmail-smtpd-ipv4 tcpdb
+  shell:
+    make
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}"
+  notify:
+    - restart qmail-smtpd-ipv4 service
+
+# qmail-smtpsd-ipv4
+- name: add qmail-smtpsd-ipv4 service
+  shell: /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+
+- name: remove qmail-smtpsd-ipv4 service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+
+- name: restart qmail-smtpsd-ipv4 service
+  shell:
+    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} &&
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+
+- name: rebuild qmail-smtpsd-ipv4 tcpdb
+  shell:
+    make
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}"
+  notify:
+    - restart qmail-smtpsd-ipv4 service
+
+# qmail-smtpd-ipv6
+- name: add qmail-smtpd-ipv6 service
+  shell: /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
+
+- name: remove qmail-smtpd-ipv6 service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
+
+- name: restart qmail-smtpd-ipv6 service
+  shell:
+    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }} &&
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
+
+- name: rebuild qmail-smtpd-ipv6 tcpdb
+  shell:
+    make
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}"
+  notify:
+    - restart qmail-smtpd-ipv6 service
+
+# qmail-smtpsd-ipv6
+- name: add qmail-smtpsd-ipv6 service
+  shell: /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
+
+- name: remove qmail-smtpsd-ipv6 service
+  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
+
+- name: restart qmail-smtpsd-ipv6 service
+  shell:
+    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} &&
+    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
+
+- name: rebuild qmail-smtpsd-ipv6 tcpdb
+  shell:
+    make
+    chdir="{{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}"
+  notify:
+    - restart qmail-smtpsd-ipv6 service

@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# service-qmail-send-run (formerly "run.qmail")
+# John Simpson <jms1@jms1.net> 2003-07-05
+#
+# daemontools "run" script for qmail
+#
+# 2005-04-11 jms1 - (no code changed.) changed the copyright notice to
+#   specify that the license is the GPL VERSION 2 ONLY. i'm not comfortable
+#   with the "or future versions" clause until i know what these "future
+#   versions" will look like.
+#
+# 2005-11-24 jms1 - (no code changed.) changed the filename as stored on
+#   the http://qmail.jms1.net/ web site.
+#
+###############################################################################
+#
+# Copyright (C) 2003-2005 John Simpson.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2, as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# or visit http://www.gnu.org/licenses/gpl.txt
+#
+###############################################################################
+#
+# Deployed via Ansible galaxie_qmail role.
+#
+###############################################################################
+
+VQ="{{ galaxie_qmail_server_qmail_dir }}"
+
+exec env - PATH="$VQ/bin:/usr/local/bin:/usr/bin:/bin" \
+  qmail-start {{ galaxie_qmail_server_control_defaultdelivery }}

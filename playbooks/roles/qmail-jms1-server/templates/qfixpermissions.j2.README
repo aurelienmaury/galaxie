@@ -1,0 +1,16 @@
+qfixpermissions script are Copyright © 1995-2016 John M. Simpson.
+Originaly covereded under the terms of the GNU General Public License,
+either version 2 or version 3, as published by the Free Software Foundation
+
+The original script have been translate to Ansible template by Tuux <tuxa@rtnp.org>
+still covereded under the terms of the GNU General Public License,
+either version 2 or version 3, as published by the Free Software Foundation
+
+More information about original file: https://qmail.jms1.net/scripts/#qfixpermissions
+File: 	https://qmail.jms1.net/scripts/qfixpermissions
+Size: 	7,300 bytes
+Date: 	2008-01-01 02:30:02 +0000
+MD5: 	b6752534a19d28cff32b684197662966
+SHA-1: 	343bda0a17e1c38d5209905128541cc15b56409b
+RIPEMD-160: 	77546acb4791b6d4e430a8592dc15c830850c6b7
+PGP Signature: 	https://qmail.jms1.net/scripts/qfixpermissions.asc
