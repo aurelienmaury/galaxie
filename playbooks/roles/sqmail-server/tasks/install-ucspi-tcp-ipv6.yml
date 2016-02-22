@@ -6,6 +6,17 @@
   with_items:
     - ucspi-tcp-ipv6
     - ucspi-tcp
+    - ucspi-proxy
+    - ucspi-unix
+
+- name: install packages for ucspi-ssl building
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libperl-dev
 
 - name: check {{ galaxie_qmail_server_slashpackage_dir }} directory
   file:

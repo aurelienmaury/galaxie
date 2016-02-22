@@ -17,10 +17,7 @@
 - include: install-mta.yml
   tags: install
 
-
 - include: install-cdb.yml
-  tags: install
-- include: install-checkpassword.yml
   tags: install
 
 # qmail-send

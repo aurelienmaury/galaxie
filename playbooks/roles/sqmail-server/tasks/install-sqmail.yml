@@ -1,0 +1,20 @@
+---
+- name: uninstall qmails debian packages
+  apt:
+    pkg={{ item }}
+    state=absent
+  with_items:
+    - qmail-run
+    - qmail-tools
+    - qmail
+    - qmail-uids-gids
+    - dot-forward
+
+- name: install require packages for s/qmail building
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libperl-dev
