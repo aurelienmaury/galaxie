@@ -22,7 +22,7 @@ galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
 galaxie_qmail_server_service_ipv6_interface: "eth0"
 
-galaxie_qmail_server_qmail_dir: "/var/qmail"
+glx_qmail_dir: "/var/qmail"
 glx_supervise_dir: "/var/lib/supervise"
 
 # qmail-scanner
