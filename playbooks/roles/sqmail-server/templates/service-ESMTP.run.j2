@@ -1,6 +1,6 @@
 #!/bin/sh
-QMAILU=`id -u qmaild`
-QMAILG=`id -g qmaild`
+QMAILU=`id -u {{ glx_sqmail_ids.qmaild.uname }}`
+QMAILG=`id -g {{ glx_sqmail_ids.qmaild.uname }}`
 HOSTNAME=`hostname`
 export UCSPITLS=""
 . {{ glx_qmail_dir }}/ssl/ssl.env

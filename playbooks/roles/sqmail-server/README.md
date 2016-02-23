@@ -4,8 +4,22 @@ Role Name
 Qmail-server role have goal to install and configure a s/qmail server from fehcom design.
 
 s/qmail (pronounced skew-mail) is a Mail Transfer Agent (MTA) based on Qmail suited for high-speed and confidential email transport over IPv4 and IPv6 networks.
-More informations:
-http://fehcom.de/sqmail/sqmail.html
+
+More informations: http://fehcom.de/sqmail/sqmail.html
+
+That role by default follow exactelly the design describ by fehcom, but add a machime of dynamic system for permit to change every path or username.
+By default that role will done the exact same result as the fehcom documentation, that mean all scripts, configuration files will have default value.
+All the power of that rool is the capability to use "host_vars" or "group_vars" and custom every path or value, the configuration will stay automaticlly consistent.
+Unfortunally that a feature it come with Ansible, then don't be usefull for "s/qmail" project.
+I do my best for workarround troubles without need to touch "s/qmail" source, actually "s/qmail have troubles it not permit easy automation.
+
+- package/man error with qmail-local
+- installation script ignore conf-svcdir value
+- script .run don't take advantage of ucspi-tcp6 conf-tcpbin file
+- 64 / 32 bit auto detection is aviable for s/qmail but put in hard value 63 for ucspi-tcp6, may be auto for ucspi-ssl, and don't care about cdb
+- (list not close)
+
+That role try to fixe all they trouble
 
 Requirements
 ------------
@@ -27,6 +41,9 @@ s/qmail:
 - scripts get all value from settings
 - conf-ids, conf-group -  by edit a value inside defaults/main.yml it will automatiquelly make consistant setting.
 
+ESMTP.run script:
+- Hard value "/var/qmail" have been replace by {{ glx_qmail_dir }} then permit to follow the global setting
+- Hard value "qmaild" have been replace by {{ glx_sqmail_ids.qmaild.uname }} then permit to follow the global setting
 Role Variables
 --------------
 
