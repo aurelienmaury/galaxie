@@ -63,3 +63,25 @@
     group="root"
     recurse=yes
   when: glx_s_qmail_download.changed
+
+# Configuration:
+# The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
+#
+# conf-break -- usually the character '-' for VERP addresses
+# conf-cc -- compiler (no change required)
+# conf-delivery -- qmail-start default-delivery
+# conf-djbdns -- DJBNDS libs (not supported yet)
+# conf-groups*) -- s/qmail groups
+# conf-home -- home dir of s/qmail [/var/qmail]
+# conf-ids*) -- Unix ids for s/qmail
+# conf-instances -- QMQ instances to be raised
+# conf-ld -- loader options to be adjusted (for i386; AMD64 default
+# conf-log -- target dir of s/qmail logs [/var/log]
+# conf-man -- target dir of man pages, usually automatically recognized
+# conf-patrn -- s/qmail paternalism [002]
+# conf-qmq -- QMQ environment settings
+# conf-spawn -- silent concurrency limit [120]
+# conf-split -- depth of s/qmail dirs [23]
+# conf-svcdir -- supervise's 'service' directory
+# conf-ucspissl -- path to UCSPI-SSL dirs
+# conf-users*) -- user names

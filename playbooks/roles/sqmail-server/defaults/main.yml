@@ -1,8 +1,22 @@
 ---
 # Common and path
 glx_slashpackage_dir: "/package"
+glx_qmail_dir: "/var/qmail"
+glx_supervise_dir: "/var/lib/supervise"
+glx_multilog_dir: "/var/multilog"
+
+#galaxie_qmail_server_alias_admins_list:
+#  - name: "root"
+#    value:
+#      - "root@{{ galaxie_qmail_server_domain }}"
+#  - name: "postmaster"
+#    value:
+#      - "root@{{ galaxie_qmail_server_domain }}"
+#  - name: "mailer-daemon"
+#    value:
+#      - "root@{{ galaxie_qmail_server_domain }}"
+
 galaxie_qmail_server_multilog_user: "multilog"
-galaxie_qmail_server_multilog_dir: "/var/multilog"
 galaxie_qmail_server_qmaild_user: "qmaild"
 galaxie_qmail_server_qmaill_user: "qmaill"
 galaxie_qmail_server_qmailp_user: "qmailp"
@@ -22,8 +36,7 @@ galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
 galaxie_qmail_server_service_ipv6_interface: "eth0"
 
-glx_qmail_dir: "/var/qmail"
-glx_supervise_dir: "/var/lib/supervise"
+
 
 # qmail-scanner
 galaxie_qmail_server_qmail_scanner_user: "clamav"
@@ -107,43 +120,47 @@ glx_ucspi_ssl_dh_bits: "2048"
 glx_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
 glx_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
 glx_ucspi_ssl_source_extension: "tgz"
+glx_ucspi_ssl_source_sha256sum: "9f3bcf66546b433b089f6f340d243065beb801b97d4026e54dd586f0022b5f1e"
 glx_ucspi_ssl_source_url: "{{ glx_ucspi_ssl_source_repository }}/{{ glx_ucspi_ssl_source_name }}.{{ glx_ucspi_ssl_source_extension }}"
 glx_ucspi_ssl_source_dir: "/usr/src"
+
+# The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
+#
 # ./src/conf-cadir
-glx_ucspi_ssl_conf_cadir: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cadir"
+glx_ucspi_ssl_conf_cadir_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cadir"
 # ./src/conf-cafile
-glx_ucspi_ssl_conf_cafile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cafile"
+glx_ucspi_ssl_conf_cafile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cafile"
 # ./src/conf-cc
-glx_ucspi_ssl_conf_cc: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cc"
+glx_ucspi_ssl_conf_cc_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cc"
 # ./src/conf-ccafile
-glx_ucspi_ssl_conf_ccafile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccafile"
+glx_ucspi_ssl_conf_ccafile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccafile"
 # ./src/conf-ccperl
-glx_ucspi_ssl_conf_ccperl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccperl"
+glx_ucspi_ssl_conf_ccperl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccperl"
 # ./src/conf-certchainfile
-glx_ucspi_ssl_conf_certchainfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certchainfile"
+glx_ucspi_ssl_conf_certchainfile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certchainfile"
 # ./src/conf-certfile
-glx_ucspi_ssl_conf_certfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certfile"
+glx_ucspi_ssl_conf_certfile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certfile"
 # ./src/conf-ciphers
-glx_ucspi_ssl_conf_ciphers: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ciphers"
+glx_ucspi_ssl_conf_ciphers_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ciphers"
 # ./src/conf-dhfile
-glx_ucspi_ssl_conf_dhfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dhfile"
+glx_ucspi_ssl_conf_dh_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dhfile"
 # ./src/conf-dl
-glx_ucspi_ssl_conf_dl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dl"
+glx_ucspi_ssl_conf_dl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dl"
 # ./src/conf-keyfile
-glx_ucspi_ssl_conf_keyfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-keyfile"
+glx_ucspi_ssl_conf_key_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-keyfile"
 # ./src/conf-ld
-glx_ucspi_ssl_conf_ld: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ld"
+glx_ucspi_ssl_conf_ld_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ld"
 # ./src/conf-ldperl
-glx_ucspi_ssl_conf_ldperl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ldperl"
+glx_ucspi_ssl_conf_ldperl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ldperl"
 # ./src/conf-perl
-glx_ucspi_ssl_conf_perl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-perl"
+glx_ucspi_ssl_conf_perl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-perl"
 # ./src/conf-rsa
-glx_ucspi_ssl_conf_rsa: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-rsa"
+glx_ucspi_ssl_conf_rsa_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-rsa"
 # ./src/conf-ssl
-glx_ucspi_ssl_conf_ssl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssl"
+glx_ucspi_ssl_conf_ssl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssl"
 glx_ucspi_ssl_kerberos_include_dir: "/usr/include/krb5"
 # ./src/conf-ssllib
-glx_ucspi_ssl_conf_ssllib: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssllib"
+glx_ucspi_ssl_conf_ssllib_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssllib"
 # ./src/conf-tcpbin
 # default /usr/local/bin
 # This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
@@ -157,6 +174,45 @@ glx_s_qmail_source_name: "sqmail-3.0.2"
 glx_s_qmail_source_extension: "tgz"
 glx_s_qmail_source_url: "{{ glx_s_qmail_source_repository }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
 glx_s_qmail_source_dir: "/usr/src"
+
+# The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
+#
+# conf-break -- usually the character '-' for VERP addresses
+glx_s_qmail_conf_break_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-break"
+# conf-cc -- compiler (no change required)
+glx_s_qmail_conf_cc_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-cc"
+# conf-delivery -- qmail-start default-delivery
+glx_s_qmail_conf_delivery_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-delivery"
+# conf-djbdns -- DJBNDS libs (not supported yet)
+glx_s_qmail_conf_djbdns_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-djbdns"
+# conf-groups*) -- s/qmail groups
+glx_s_qmail_conf_groups_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-groups"
+# conf-home -- home dir of s/qmail [/var/qmail]
+glx_s_qmail_conf_home_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-home"
+# conf-ids*) -- Unix ids for s/qmail
+glx_s_qmail_conf_ids_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-ids"
+# conf-instances -- QMQ instances to be raised
+glx_s_qmail_conf_instances_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-instances"
+# conf-ld -- loader options to be adjusted (for i386; AMD64 default
+glx_s_qmail_conf_ld_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-ld"
+# conf-log -- target dir of s/qmail logs [/var/log]
+glx_s_qmail_conf_log_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-log"
+# conf-man -- target dir of man pages, usually automatically recognized
+glx_s_qmail_conf_man_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-man"
+# conf-patrn -- s/qmail paternalism [002]
+glx_s_qmail_conf_patrn_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-patrn"
+# conf-qmq -- QMQ environment settings
+glx_s_qmail_conf_qmq_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-qmq"
+# conf-spawn -- silent concurrency limit [120]
+glx_s_qmail_conf_spawn_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-spawn"
+# conf-split -- depth of s/qmail dirs [23]
+glx_s_qmail_conf_split_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-split"
+# conf-svcdir -- supervise's 'service' directory
+glx_s_qmail_conf_svcdir_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-svcdir"
+# conf-ucspissl -- path to UCSPI-SSL dirs
+glx_s_qmail_conf_ucspissl_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-ucspissl"
+# conf-users*) -- user names
+glx_s_qmail_conf_users_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/src/conf-users"
 
 # certificate
 galaxie_qmail_server_openssl_key_gen: false

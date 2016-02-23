@@ -29,8 +29,8 @@
 - name: get "{{ glx_ucspi_ssl_source_url }}"
   get_url:
     url="{{ glx_ucspi_ssl_source_url }}"
-    dest={{ glx_ucspi_ssl_source_dir }}
-    sha256sum=9f3bcf66546b433b089f6f340d243065beb801b97d4026e54dd586f0022b5f1e
+    dest="{{ glx_ucspi_ssl_source_dir }}"
+    sha256sum="{{ glx_ucspi_ssl_source_sha256sum }}"
   register: glx_ucspi_ssl_download
 
 - name: delete "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b" directory
@@ -54,17 +54,20 @@
     recurse=yes
   when: glx_ucspi_ssl_download.changed
 
+#Configuration:
+#
+#The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
 
 #./src/conf-cadir
 - name: update src/conf-cadir for point to "{{ glx_ucspi_ssl_certificates_dir }}".
   replace:
-    dest="{{ glx_ucspi_ssl_conf_cadir }}"
+    dest="{{ glx_ucspi_ssl_conf_cadir_file }}"
     regexp="^/usr/local/ssl/certs"
     replace="{{ glx_ucspi_ssl_certificates_dir }}"
 
 - name: check src/conf-cadir
   lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_cadir }}"
+    dest="{{ glx_ucspi_ssl_conf_cadir_file }}"
     line="{{ glx_ucspi_ssl_certificates_dir }}"
     state=present
 
@@ -106,13 +109,13 @@
 
 - name: update src/conf-dhfile to reflect "{{ glx_ucspi_ssl_dh_parameter_file }}" DH parameter file.
   replace:
-    dest="{{ glx_ucspi_ssl_conf_dhfile }}"
+    dest="{{ glx_ucspi_ssl_conf_dh_file }}"
     regexp="^/usr/local/ssl/pem/dh1024.pem"
     replace="{{ glx_ucspi_ssl_dh_parameter_file }}"
 
 - name: check src/conf-dhfile
   lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_dhfile }}"
+    dest="{{ glx_ucspi_ssl_conf_dh_file }}"
     line="{{ glx_ucspi_ssl_dh_parameter_file }}"
     state=present
 
@@ -135,14 +138,14 @@
 # default : -I /usr/kerberos/include
 - name: update src/conf-ssl for include {{ glx_ucspi_ssl_kerberos_include_dir }} .
   replace:
-    dest="{{ glx_ucspi_ssl_conf_ssl }}"
+    dest="{{ glx_ucspi_ssl_conf_ssl_file }}"
     regexp="^-I /usr/kerberos/include"
     replace="-I {{ glx_ucspi_ssl_kerberos_include_dir }}"
   when: ansible_os_family == "Debian"
 
 - name: check src/conf-ssl
   lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_ssl }}"
+    dest="{{ glx_ucspi_ssl_conf_ssl_file }}"
     line="-I {{ glx_ucspi_ssl_kerberos_include_dir }}"
     state=present
   when: ansible_os_family == "Debian"
