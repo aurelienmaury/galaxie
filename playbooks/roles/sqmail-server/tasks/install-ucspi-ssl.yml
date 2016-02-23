@@ -131,10 +131,30 @@
 #./src/conf-ssl
 
 #./src/conf-ssllib
+# This will be used to compile .c files when openssl requires additional support, e.g. kerberos support on RedHat Linux.
+# default : -I /usr/kerberos/include
+- name: update src/conf-ssl for include {{ glx_ucspi_ssl_kerberos_include_dir }} .
+  replace:
+    dest="{{ glx_ucspi_ssl_conf_ssl }}"
+    regexp="^-I /usr/kerberos/include"
+    replace="-I {{ glx_ucspi_ssl_kerberos_include_dir }}"
+  when: ansible_os_family == "Debian"
+
+- name: check src/conf-ssl
+  lineinfile:
+    dest="{{ glx_ucspi_ssl_conf_ssl }}"
+    line="-I {{ glx_ucspi_ssl_kerberos_include_dir }}"
+    state=present
+  when: ansible_os_family == "Debian"
 
 #./src/conf-tcpbin
 # This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
 
+# continue by build the programme
+- name: package/compile
+  shell: package/install
+    chdir="{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b"
+  when: glx_ucspi_ssl_download.changed
 
 - name: package/install
   shell: package/install

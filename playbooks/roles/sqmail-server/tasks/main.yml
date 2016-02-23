@@ -1,69 +1,71 @@
 # Eequirements
 - include: config-services-stop.yml
+
+- include: install-cdb.yml
+  tags: install-cdb
+
 - include: install-ucspi-tcp-ipv6.yml
   tags: ucspi-tcp-ipv6, install
+
 - include: install-ucspi-ssl.yml
   tags: ucspi-ssl, install
 
 - include: install-sqmail.yml
   tags: install-sqmail
 
-# Initital setting
-- include: config.yml
-  tags: config
-- include: config-alias.yml
-  tags: alias
-
-- include: install-mta.yml
-  tags: install
-
-- include: install-cdb.yml
-  tags: install
-
-# qmail-send
-- include: config-send-service.yml
-  when: galaxie_qmail_server_config_send
-  tags: config, config-qmail-send
-
-# qmail-smtp
-- include: config-smtpd-service.yml
-  when: galaxie_qmail_server_config_smtpd
-  tags: config, config-qmail-smtpd
-
-# smtpd
-- include: config-smtpd-ipv4.yml
-  when: galaxie_qmail_server_config_smtpd_ipv4
-  tags: config
-- include: remove-smtpd-ipv4.yml
-  when: not galaxie_qmail_server_config_smtpd_ipv4
-- include: config-smtpd-ipv6.yml
-  tags: config
-  when: galaxie_qmail_server_config_smtpd_ipv6
-- include: remove-smtpd-ipv6.yml
-  when: not galaxie_qmail_server_config_smtpd_ipv6
-
-# smtpsd
-- include: config-openssl.yml
-  when: galaxie_qmail_server_config_smtpsd_ipv4 or galaxie_qmail_server_config_smtpsd_ipv6
-  tags: config
-
-- include: config-smtpsd-ipv4.yml
-  when: galaxie_qmail_server_config_smtpsd_ipv4
-  tags: config
-- include: remove-smtpsd-ipv4.yml
-  when: not galaxie_qmail_server_config_smtpsd_ipv4
-- include: config-smtpsd-ipv6.yml
-  when: galaxie_qmail_server_config_smtpsd_ipv6
-  tags: config
-- include: remove-smtpsd-ipv6.yml
-  when: not galaxie_qmail_server_config_smtpsd_ipv6
-
-
-# finilize
-- include: config-man.yml
-  tags: config-man
-- include: config-services-register.yml
-- include: install-qfixpermissions.yml
-  tags: install
-- include: install-qmailctl.yml
-  tags: install
+## Initital setting
+#- include: config.yml
+#  tags: config
+#- include: config-alias.yml
+#  tags: alias
+#
+#- include: install-mta.yml
+#  tags: install
+#
+## qmail-send
+#- include: config-send-service.yml
+#  when: galaxie_qmail_server_config_send
+#  tags: config, config-qmail-send
+#
+## qmail-smtp
+#- include: config-smtpd-service.yml
+#  when: galaxie_qmail_server_config_smtpd
+#  tags: config, config-qmail-smtpd
+#
+## smtpd
+#- include: config-smtpd-ipv4.yml
+#  when: galaxie_qmail_server_config_smtpd_ipv4
+#  tags: config
+#- include: remove-smtpd-ipv4.yml
+#  when: not galaxie_qmail_server_config_smtpd_ipv4
+#- include: config-smtpd-ipv6.yml
+#  tags: config
+#  when: galaxie_qmail_server_config_smtpd_ipv6
+#- include: remove-smtpd-ipv6.yml
+#  when: not galaxie_qmail_server_config_smtpd_ipv6
+#
+## smtpsd
+#- include: config-openssl.yml
+#  when: galaxie_qmail_server_config_smtpsd_ipv4 or galaxie_qmail_server_config_smtpsd_ipv6
+#  tags: config
+#
+#- include: config-smtpsd-ipv4.yml
+#  when: galaxie_qmail_server_config_smtpsd_ipv4
+#  tags: config
+#- include: remove-smtpsd-ipv4.yml
+#  when: not galaxie_qmail_server_config_smtpsd_ipv4
+#- include: config-smtpsd-ipv6.yml
+#  when: galaxie_qmail_server_config_smtpsd_ipv6
+#  tags: config
+#- include: remove-smtpsd-ipv6.yml
+#  when: not galaxie_qmail_server_config_smtpsd_ipv6
+#
+#
+## finilize
+#- include: config-man.yml
+#  tags: config-man
+#- include: config-services-register.yml
+#- include: install-qfixpermissions.yml
+#  tags: install
+#- include: install-qmailctl.yml
+#  tags: install

@@ -1,108 +1,108 @@
 ---
-- name: check packages for cdb building
+- name: uninstall libcdb1
   apt:
     pkg={{ item }}
-    state=present
-  with_items:
-    - build-essential
-    - cpanminus
-  tags: cdb
-
-- name: check "{{ galaxie_qmail_server_source_dir }}" directory
-  file:
-    path="{{ galaxie_qmail_server_source_dir }}"
-    owner=root
-    group=root
-    state=directory
-    mode=0755
-  tags: cdb
-
-- name: get "{{ galaxie_qmail_server_cdb_source_url }}"
-  get_url:
-    url="{{ galaxie_qmail_server_cdb_source_url }}"
-    dest={{ galaxie_qmail_server_source_dir }}
-    sha256sum=1919577799a50c080a8a05a1cbfa5fa7e7abc823d8d7df2eeb181e624b7952c5
-  register: galaxie_qmail_server_cdb_download
-  tags: cdb
-
-- name: delete "{{ galaxie_qmail_server_cdb_source_dir }}"
-  file:
-    path="{{ galaxie_qmail_server_cdb_source_dir }}"
     state=absent
-  when: galaxie_qmail_server_cdb_download.changed
-  tags: cdb
+  with_items:
+    - libcdb1
 
-- name: Unarchive {{ galaxie_qmail_server_cdb_download.dest }}
+- name: check {{ glx_slashpackage_dir }} directory
+  file:
+    path="{{ glx_slashpackage_dir }}"
+    state=directory
+    mode=1755
+
+- name: check {{ glx_cdb_source_dir }} directory
+  file:
+    path="{{ glx_cdb_source_dir }}"
+    state=directory
+
+- name: delete "{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}.{{ glx_cdb_extension }}"
+  file:
+    path="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}.{{ glx_cdb_extension }}"
+    state=absent
+  when: glx_cdb_force_install
+
+- name: get "{{ glx_cdb_download_url }}"
+  get_url:
+    url="{{ glx_cdb_download_url }}"
+    dest={{ glx_cdb_source_dir }}
+    sha256sum=1919577799a50c080a8a05a1cbfa5fa7e7abc823d8d7df2eeb181e624b7952c5
+  register: glx_cdb_source_download
+
+- name: delete "{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}" directory
+  file:
+    path="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
+    state=absent
+  when: glx_cdb_source_download.changed
+
+- name: unarchive {{ glx_cdb_source_download.dest }}
   unarchive:
-    src="{{ galaxie_qmail_server_cdb_download.dest }}"
-    dest="{{ galaxie_qmail_server_source_dir }}"
+    src="{{ glx_cdb_source_download.dest }}"
+    dest="{{ glx_cdb_source_dir }}"
     copy=no
-  when: galaxie_qmail_server_cdb_download.changed
-  tags: cdb
+  when: glx_cdb_source_download.changed
 
-- name: send cdb-0.75.errno.patch to "{{ galaxie_qmail_server_source_dir }}"
+- name: send cdb-0.75.errno.patch to "{{ glx_cdb_source_dir }}"
   copy:
     src=cdb-0.75.errno.patch
-    dest="{{ galaxie_qmail_server_source_dir }}/cdb-0.75.errno.patch"
-  tags: cdb
+    dest="{{ glx_cdb_source_dir }}/cdb-0.75.errno.patch"
+  when: glx_cdb_source_download.changed
 
 - name: apply cdb-0.75.errno.patch
-  shell: patch < {{ galaxie_qmail_server_source_dir }}/cdb-0.75.errno.patch
-    chdir="{{ galaxie_qmail_server_cdb_source_dir }}"
+  shell: patch < {{ glx_cdb_source_dir }}/cdb-0.75.errno.patch
+    chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
   changed_when: false
-  when: galaxie_qmail_server_cdb_download.changed
-  tags: cdb
+  when: glx_cdb_source_download.changed
 
-- name: build {{ galaxie_qmail_server_cdb_source_name }} on "{{ galaxie_qmail_server_cdb_source_dir }}" directory
+- name: build {{ glx_cdb_app_name }} on "{{ glx_cdb_source_dir }}" directory
   shell: make
-    chdir="{{ galaxie_qmail_server_cdb_source_dir }}"
+    chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
   changed_when: false
-  tags: cdb
 
-- name: install {{ galaxie_qmail_server_cdb_source_name }}
+- name: install {{ glx_cdb_app_name }}
   shell: make setup check
-    chdir="{{ galaxie_qmail_server_cdb_source_dir }}"
+    chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
   changed_when: false
-  tags: cdb
 
-# mkauth.j2 - https://qmail.jms1.net/scripts/mkauth.j2.shtml
-- name: installing the perl CDB_File module
-  cpanm: name=CDB_File
-  tags: cdb
-
-- name: installing the perl Getopt::Std module
-  cpanm: name=Getopt::Std
-  tags: cdb
-
-- name: resets permissions in Perl's default library path so that everything is owned by root ...
-  script: pfix
-  changed_when: false
-  tags: cdb
-
-- name: check is mkauth is present
-  template:
-    src=mkauth.j2
-    dest=/usr/local/bin/mkauth
-    owner=root
-    group=root
-    mode=0755
-  tags: cdb
-
-- name: list user
-  shell: /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/new.tmp
-  changed_when: false
-  tags: cdb
-
-- name: check "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem" permissions
-  file:
-    path="{{ galaxie_qmail_server_qmail_dir }}/control/new.cdb"
-    owner=root
-    group={{ galaxie_qmail_server_nofiles_group }}
-    mode=0640
-  changed_when: false
-  tags: cdb
-
-- name: mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
-  shell: mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
-  changed_when: false
-  tags: cdb
+## mkauth.j2 - https://qmail.jms1.net/scripts/mkauth.j2.shtml
+#- name: installing the perl CDB_File module
+#  cpanm: name=CDB_File
+#  tags: cdb
+#
+#- name: installing the perl Getopt::Std module
+#  cpanm: name=Getopt::Std
+#  tags: cdb
+#
+#- name: resets permissions in Perl's default library path so that everything is owned by root ...
+#  script: pfix
+#  changed_when: false
+#  tags: cdb
+#
+#- name: check is mkauth is present
+#  template:
+#    src=mkauth.j2
+#    dest=/usr/local/bin/mkauth
+#    owner=root
+#    group=root
+#    mode=0755
+#  tags: cdb
+#
+#- name: list user
+#  shell: /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/new.tmp
+#  changed_when: false
+#  tags: cdb
+#
+#- name: check "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem" permissions
+#  file:
+#    path="{{ galaxie_qmail_server_qmail_dir }}/control/new.cdb"
+#    owner=root
+#    group={{ galaxie_qmail_server_nofiles_group }}
+#    mode=0640
+#  changed_when: false
+#  tags: cdb
+#
+#- name: mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
+#  shell: mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
+#  changed_when: false
+#  tags: cdb

@@ -84,11 +84,12 @@ galaxie_qmail_server_control_databytes: "8000000"
 galaxie_qmail_server_control_timeoutsmtpd: "30"
 
 # cdb
-galaxie_qmail_server_cdb_source_repository: "http://cr.yp.to/cdb"
-galaxie_qmail_server_cdb_source_name: "cdb-0.75"
-galaxie_qmail_server_cdb_source_extension: "tar.gz"
-galaxie_qmail_server_cdb_source_url: "{{ galaxie_qmail_server_cdb_source_repository }}/{{ galaxie_qmail_server_cdb_source_name }}.{{ galaxie_qmail_server_cdb_source_extension }}"
-galaxie_qmail_server_cdb_source_dir: "{{ galaxie_qmail_server_source_dir }}/cdb-0.75"
+glx_cdb_force_install: true
+glx_cdb_repository: "http://cr.yp.to/cdb"
+glx_cdb_app_name: "cdb-0.75"
+glx_cdb_extension: "tar.gz"
+glx_cdb_download_url: "{{ glx_cdb_repository }}/{{ glx_cdb_app_name }}.{{ glx_cdb_extension }}"
+glx_cdb_source_dir: "/usr/src"
 
 # ucspi-tcp6
 glx_ucspi_tcp6_force_install: true
@@ -140,12 +141,13 @@ glx_ucspi_ssl_conf_perl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{
 glx_ucspi_ssl_conf_rsa: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-rsa"
 # ./src/conf-ssl
 glx_ucspi_ssl_conf_ssl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssl"
+glx_ucspi_ssl_kerberos_include_dir: "/usr/include/krb5"
 # ./src/conf-ssllib
 glx_ucspi_ssl_conf_ssllib: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssllib"
 # ./src/conf-tcpbin
 # default /usr/local/bin
 # This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
-glx_ucspi_ssl_conf_tcpbin: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-tcpbin
+glx_ucspi_ssl_conf_tcpbin: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-tcpbin"
 
 
 # s/qmail
