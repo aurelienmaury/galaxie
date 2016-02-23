@@ -108,8 +108,45 @@ glx_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
 glx_ucspi_ssl_source_extension: "tgz"
 glx_ucspi_ssl_source_url: "{{ glx_ucspi_ssl_source_repository }}/{{ glx_ucspi_ssl_source_name }}.{{ glx_ucspi_ssl_source_extension }}"
 glx_ucspi_ssl_source_dir: "/usr/src"
-glx_ucspi_ssl_conf_dhfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-dhfile"
-glx_ucspi_ssl_conf_cadir: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-cadir"
+# ./src/conf-cadir
+glx_ucspi_ssl_conf_cadir: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cadir"
+# ./src/conf-cafile
+glx_ucspi_ssl_conf_cafile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cafile"
+# ./src/conf-cc
+glx_ucspi_ssl_conf_cc: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cc"
+# ./src/conf-ccafile
+glx_ucspi_ssl_conf_ccafile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccafile"
+# ./src/conf-ccperl
+glx_ucspi_ssl_conf_ccperl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccperl"
+# ./src/conf-certchainfile
+glx_ucspi_ssl_conf_certchainfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certchainfile"
+# ./src/conf-certfile
+glx_ucspi_ssl_conf_certfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certfile"
+# ./src/conf-ciphers
+glx_ucspi_ssl_conf_ciphers: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ciphers"
+# ./src/conf-dhfile
+glx_ucspi_ssl_conf_dhfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dhfile"
+# ./src/conf-dl
+glx_ucspi_ssl_conf_dl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dl"
+# ./src/conf-keyfile
+glx_ucspi_ssl_conf_keyfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-keyfile"
+# ./src/conf-ld
+glx_ucspi_ssl_conf_ld: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ld"
+# ./src/conf-ldperl
+glx_ucspi_ssl_conf_ldperl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ldperl"
+# ./src/conf-perl
+glx_ucspi_ssl_conf_perl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-perl"
+# ./src/conf-rsa
+glx_ucspi_ssl_conf_rsa: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-rsa"
+# ./src/conf-ssl
+glx_ucspi_ssl_conf_ssl: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssl"
+# ./src/conf-ssllib
+glx_ucspi_ssl_conf_ssllib: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssllib"
+# ./src/conf-tcpbin
+# default /usr/local/bin
+# This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
+glx_ucspi_ssl_conf_tcpbin: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-tcpbin
+
 
 # s/qmail
 glx_s_qmail_force_install: true

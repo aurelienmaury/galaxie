@@ -7,6 +7,7 @@
     - build-essential
     - libssl-dev
     - libperl-dev
+    - libkrb5-dev
 
 - name: check {{ glx_slashpackage_dir }} directory
   file:
@@ -53,6 +54,44 @@
     recurse=yes
   when: glx_ucspi_ssl_download.changed
 
+
+#./src/conf-cadir
+- name: update src/conf-cadir for point to "{{ glx_ucspi_ssl_certificates_dir }}".
+  replace:
+    dest="{{ glx_ucspi_ssl_conf_cadir }}"
+    regexp="^/usr/local/ssl/certs"
+    replace="{{ glx_ucspi_ssl_certificates_dir }}"
+
+- name: check src/conf-cadir
+  lineinfile:
+    dest="{{ glx_ucspi_ssl_conf_cadir }}"
+    line="{{ glx_ucspi_ssl_certificates_dir }}"
+    state=present
+
+#./src/conf-cafile
+# An empty name means no certificate file is compiled in.
+
+#./src/conf-cc
+
+#./src/conf-ccafile
+# An empty name means no client certificate file is compiled in.
+
+#./src/conf-ccperl
+# if auto use the ot put of `head -1 ./src/conf-perl` -MExtUtils::Embed -e ccopts
+
+#./src/conf-certchainfile
+# An empty name means no certificate file is compiled in.
+
+#./src/conf-certfile
+# This is the sslserver certificate file.
+# An empty name means no certificate file is compiled in.
+
+#./src/conf-ciphers
+# This is the list of ciphers to use.
+# An empty name means use the ciphers compiled into openssl.
+
+#./src/conf-dhfile
+# This is the sslserver DH parameter file.
 - name: check "{{ glx_ucspi_ssl_certificates_dir }}" directory
   file:
     path="{{ glx_ucspi_ssl_certificates_dir }}"
@@ -77,17 +116,25 @@
     line="{{ glx_ucspi_ssl_dh_parameter_file }}"
     state=present
 
-- name: update src/conf-cadir for point to "{{ glx_ucspi_ssl_certificates_dir }}".
-  replace:
-    dest="{{ glx_ucspi_ssl_conf_cadir }}"
-    regexp="^/usr/local/ssl/certs"
-    replace="{{ glx_ucspi_ssl_certificates_dir }}"
+#./src/conf-dl
 
-- name: check src/conf-cadir
-  lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_cadir }}"
-    line="{{ glx_ucspi_ssl_certificates_dir }}"
-    state=present
+#./src/conf-keyfile
+
+#./src/conf-ld
+
+#./src/conf-ldperl
+
+#./src/conf-perl
+
+#./src/conf-rsa
+
+#./src/conf-ssl
+
+#./src/conf-ssllib
+
+#./src/conf-tcpbin
+# This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
+
 
 - name: package/install
   shell: package/install
