@@ -8,13 +8,13 @@
 
 - name: register qmail-send service
   shell:
-    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+    /usr/sbin/update-service --add {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
   when: serviceSendRegistered|failed
 
 - name: restart qmail-send service
   shell:
-    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }} &&
-    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
+    /usr/sbin/update-service --remove {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_send }} &&
+    /usr/sbin/update-service --add {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
   when: serviceSendRegistered|success
 
 # qmail-smtpd-ipv4
@@ -26,8 +26,8 @@
 
 - name: restart qmail-smtpd-ipv4 service
   shell:
-    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }} &&
-    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+    /usr/sbin/update-service --remove {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }} &&
+    /usr/sbin/update-service --add {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
 
 - name: rebuild qmail-smtpd-ipv4 tcpdb
   shell:
@@ -45,8 +45,8 @@
 
 - name: restart qmail-smtpsd-ipv4 service
   shell:
-    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} &&
-    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+    /usr/sbin/update-service --remove {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} &&
+    /usr/sbin/update-service --add {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
 
 - name: rebuild qmail-smtpsd-ipv4 tcpdb
   shell:
@@ -64,8 +64,8 @@
 
 - name: restart qmail-smtpd-ipv6 service
   shell:
-    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }} &&
-    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
+    /usr/sbin/update-service --remove {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }} &&
+    /usr/sbin/update-service --add {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
 
 - name: rebuild qmail-smtpd-ipv6 tcpdb
   shell:
@@ -83,8 +83,8 @@
 
 - name: restart qmail-smtpsd-ipv6 service
   shell:
-    /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} &&
-    /usr/sbin/update-service --add {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
+    /usr/sbin/update-service --remove {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} &&
+    /usr/sbin/update-service --add {{ glx_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
 
 - name: rebuild qmail-smtpsd-ipv6 tcpdb
   shell:

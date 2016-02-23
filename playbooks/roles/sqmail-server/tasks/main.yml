@@ -5,8 +5,8 @@
 - include: install-ucspi-ssl.yml
   tags: ucspi-ssl, install
 
-- include: install-qmail.yml
-  tags: install
+- include: install-sqmail.yml
+  tags: install-sqmail
 
 # Initital setting
 - include: config.yml

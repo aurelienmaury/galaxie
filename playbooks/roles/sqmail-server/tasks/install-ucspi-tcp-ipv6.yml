@@ -18,67 +18,67 @@
     - libssl-dev
     - libperl-dev
 
-- name: check {{ galaxie_qmail_server_slashpackage_dir }} directory
+- name: check {{ glx_slashpackage_dir }} directory
   file:
-    path="{{ galaxie_qmail_server_slashpackage_dir }}"
+    path="{{ glx_slashpackage_dir }}"
     state=directory
     mode=1755
 
-- name: check {{ galaxie_qmail_server_ucspi_tcp6_source_dir }} directory
+- name: check {{ glx_ucspi_tcp6_source_dir }} directory
   file:
-    path="{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}"
+    path="{{ glx_ucspi_tcp6_source_dir }}"
     state=directory
 
-- name: delete "{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}/{{ galaxie_qmail_server_ucspi_tcp6_source_name }}.{{ galaxie_qmail_server_ucspi_tcp6_source_extension }}"
+- name: delete "{{ glx_ucspi_tcp6_source_dir }}/{{ glx_ucspi_tcp6_source_name }}.{{ glx_ucspi_tcp6_source_extension }}"
   file:
-    path="{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}/{{ galaxie_qmail_server_ucspi_tcp6_source_name }}.{{ galaxie_qmail_server_ucspi_tcp6_source_extension }}"
+    path="{{ glx_ucspi_tcp6_source_dir }}/{{ glx_ucspi_tcp6_source_name }}.{{ glx_ucspi_tcp6_source_extension }}"
     state=absent
-  when: galaxie_qmail_server_ucspi_tcp6_force_install
+  when: glx_ucspi_tcp6_force_install
 
-- name: get "{{ galaxie_qmail_server_ucspi_tcp6_source_url }}"
+- name: get "{{ glx_ucspi_tcp6_source_url }}"
   get_url:
-    url="{{ galaxie_qmail_server_ucspi_tcp6_source_url }}"
-    dest="{{ galaxie_qmail_server_ucspi_tcp6_source_dir }}"
+    url="{{ glx_ucspi_tcp6_source_url }}"
+    dest="{{ glx_ucspi_tcp6_source_dir }}"
     sha256sum="b0f6df425c2f3e90c89a94c501414834ea1bc0b66b8ba381fda8ca02f25d1608"
-  register: galaxie_qmail_server_ucspi_tcp6_download
+  register: glx_ucspi_tcp6_download
 
-- name: delete "{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00" directory
+- name: delete "{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00" directory
   file:
-    path="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+    path="{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00"
     state=absent
-  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+  when: glx_ucspi_tcp6_download.changed
 
-- name: unarchive {{ galaxie_qmail_server_ucspi_tcp6_download.dest }}
+- name: unarchive {{ glx_ucspi_tcp6_download.dest }}
   unarchive:
-    src="{{ galaxie_qmail_server_ucspi_tcp6_download.dest }}"
-    dest="{{ galaxie_qmail_server_slashpackage_dir }}"
+    src="{{ glx_ucspi_tcp6_download.dest }}"
+    dest="{{ glx_slashpackage_dir }}"
     copy=no
-  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+  when: glx_ucspi_tcp6_download.changed
 
 - name: fixe permissions
   file:
-    path="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+    path="{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00"
     owner="root"
     group="root"
     recurse=yes
-  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+  when: glx_ucspi_tcp6_download.changed
 
 - name: check DEB_BUILD_ARCH_BITS
   shell: dpkg-architecture 2>&1 | grep DEB_HOST_ARCH_BITS=32
   when: ansible_os_family == "Debian"
   register: DEB_BUILD_ARCH_BITS_EQ_32
 
-- name: check src/conf-ld file "{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
+- name: check src/conf-ld file "{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
   template:
     src="ucspi-tcp6-conf-ld.j2"
-    dest="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
+    dest="{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
 
 - name: package/install
   shell: package/install
-    chdir="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
-  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+    chdir="{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+  when: glx_ucspi_tcp6_download.changed
 
 - name: package/man
   shell: package/man
-    chdir="{{ galaxie_qmail_server_slashpackage_dir }}/host/ucspi-tcp6-1.00"
-  when: galaxie_qmail_server_ucspi_tcp6_download.changed
+    chdir="{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00"
+  when: glx_ucspi_tcp6_download.changed

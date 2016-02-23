@@ -1,6 +1,6 @@
 ---
 # Common and path
-galaxie_qmail_server_supervise_dir: "/var/lib/supervise"
+glx_slashpackage_dir: "/package"
 galaxie_qmail_server_multilog_user: "multilog"
 galaxie_qmail_server_multilog_dir: "/var/multilog"
 galaxie_qmail_server_qmaild_user: "qmaild"
@@ -21,9 +21,9 @@ galaxie_qmail_server_service_smtpsd_ipv6: "qmail-smtpsd-ipv6"
 galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
 galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
 galaxie_qmail_server_service_ipv6_interface: "eth0"
-galaxie_qmail_server_source_dir: "/usr/src/qmail"
-galaxie_qmail_server_slashpackage_dir: "/package"
+
 galaxie_qmail_server_qmail_dir: "/var/qmail"
+glx_supervise_dir: "/var/lib/supervise"
 
 # qmail-scanner
 galaxie_qmail_server_qmail_scanner_user: "clamav"
@@ -91,26 +91,33 @@ galaxie_qmail_server_cdb_source_url: "{{ galaxie_qmail_server_cdb_source_reposit
 galaxie_qmail_server_cdb_source_dir: "{{ galaxie_qmail_server_source_dir }}/cdb-0.75"
 
 # ucspi-tcp6
-galaxie_qmail_server_ucspi_tcp6_force_install: true
-galaxie_qmail_server_ucspi_tcp6_source_repository: "http://www.fehcom.de/ipnet/ucspi-tcp6"
-galaxie_qmail_server_ucspi_tcp6_source_name: "ucspi-tcp6-1.00a"
-galaxie_qmail_server_ucspi_tcp6_source_extension: "tgz"
-galaxie_qmail_server_ucspi_tcp6_source_url: "{{ galaxie_qmail_server_ucspi_tcp6_source_repository }}/{{ galaxie_qmail_server_ucspi_tcp6_source_name }}.{{ galaxie_qmail_server_ucspi_tcp6_source_extension }}"
-galaxie_qmail_server_ucspi_tcp6_source_dir: "/usr/src"
+glx_ucspi_tcp6_force_install: true
+glx_ucspi_tcp6_source_repository: "http://www.fehcom.de/ipnet/ucspi-tcp6"
+glx_ucspi_tcp6_source_name: "ucspi-tcp6-1.00a"
+glx_ucspi_tcp6_source_extension: "tgz"
+glx_ucspi_tcp6_source_url: "{{ glx_ucspi_tcp6_source_repository }}/{{ glx_ucspi_tcp6_source_name }}.{{ glx_ucspi_tcp6_source_extension }}"
+glx_ucspi_tcp6_source_dir: "/usr/src"
 
 # ucspi-ssl
-galaxie_qmail_server_ucspi_ssl_force_install: true
-galaxie_qmail_server_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
-galaxie_qmail_server_ucspi_ssl_dh_parameter_file: "{{ galaxie_qmail_server_ucspi_ssl_certificates_dir }}/dhparam.pem"
-galaxie_qmail_server_ucspi_ssl_dh_bits: "2048"
-galaxie_qmail_server_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
-galaxie_qmail_server_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
-galaxie_qmail_server_ucspi_ssl_source_extension: "tgz"
-galaxie_qmail_server_ucspi_ssl_source_url: "{{ galaxie_qmail_server_ucspi_ssl_source_repository }}/{{ galaxie_qmail_server_ucspi_ssl_source_name }}.{{ galaxie_qmail_server_ucspi_ssl_source_extension }}"
-galaxie_qmail_server_ucspi_ssl_source_dir: "/usr/src"
-galaxie_qmail_server_ucspi_ssl_conf_dhfile: "{{ galaxie_qmail_server_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-dhfile"
-galaxie_qmail_server_ucspi_ssl_conf_cadir: "{{ galaxie_qmail_server_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-cadir"
+glx_ucspi_ssl_force_install: true
+glx_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
+glx_ucspi_ssl_dh_parameter_file: "{{ glx_ucspi_ssl_certificates_dir }}/dhparam.pem"
+glx_ucspi_ssl_dh_bits: "2048"
+glx_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
+glx_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
+glx_ucspi_ssl_source_extension: "tgz"
+glx_ucspi_ssl_source_url: "{{ glx_ucspi_ssl_source_repository }}/{{ glx_ucspi_ssl_source_name }}.{{ glx_ucspi_ssl_source_extension }}"
+glx_ucspi_ssl_source_dir: "/usr/src"
+glx_ucspi_ssl_conf_dhfile: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-dhfile"
+glx_ucspi_ssl_conf_cadir: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-cadir"
 
+# s/qmail
+glx_s_qmail_force_install: true
+glx_s_qmail_source_repository: "http://fehcom.de/sqmail"
+glx_s_qmail_source_name: "sqmail-3.0.2"
+glx_s_qmail_source_extension: "tgz"
+glx_s_qmail_source_url: "{{ glx_s_qmail_source_repository }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
+glx_s_qmail_source_dir: "/usr/src"
 
 # certificate
 galaxie_qmail_server_openssl_key_gen: false

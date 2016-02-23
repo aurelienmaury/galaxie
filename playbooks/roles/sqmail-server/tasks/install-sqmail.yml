@@ -18,3 +18,48 @@
     - build-essential
     - libssl-dev
     - libperl-dev
+
+- name: check {{ glx_slashpackage_dir }} directory
+  file:
+    path="{{ glx_slashpackage_dir }}"
+    state=directory
+    mode=1755
+
+- name: check {{ glx_s_qmail_source_dir }} directory
+  file:
+    path="{{ glx_s_qmail_source_dir }}"
+    state=directory
+
+- name: delete "{{ glx_s_qmail_source_dir }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
+  file:
+    path="{{ glx_s_qmail_source_dir }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
+    state=absent
+  when: glx_s_qmail_force_install
+
+- name: get "{{ glx_s_qmail_source_url }}"
+  get_url:
+    url="{{ glx_s_qmail_source_url }}"
+    dest={{ glx_s_qmail_source_dir }}
+    sha256sum=5501a984d83d9f0826c2d497522090f6335049be1442be74d6492dee76c735a7
+  register: glx_s_qmail_download
+
+- name: delete "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}" directory
+  file:
+    path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}"
+    state=absent
+  when: glx_s_qmail_download.changed
+
+- name: unarchive {{ glx_s_qmail_download.dest }}
+  unarchive:
+    src="{{ glx_s_qmail_download.dest }}"
+    dest="{{ glx_slashpackage_dir }}"
+    copy=no
+  when: glx_s_qmail_download.changed
+
+- name: fixe permissions
+  file:
+    path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}"
+    owner="root"
+    group="root"
+    recurse=yes
+  when: glx_s_qmail_download.changed
