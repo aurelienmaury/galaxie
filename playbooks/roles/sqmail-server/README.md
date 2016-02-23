@@ -16,11 +16,14 @@ The role use the daemons-tool provide by Debian packages
 
 Features
 --------
+each compoments:
+- tasks/*.yml file have minimal value set in hard everything is editable via defaults/main.yml file.
+
 ucspi-tcp6:
-conf-ld - auto 32/64 bit configuration
+- conf-ld - auto 32/64 bit configuration
 
 s/qmail:
-conf-ids, conf-group -  edit a value inside defaults/main.yml will automatiquelly make consistant setting.
+- conf-ids, conf-group -  edit a value inside defaults/main.yml will automatiquelly make consistant setting.
 
 Role Variables
 --------------
