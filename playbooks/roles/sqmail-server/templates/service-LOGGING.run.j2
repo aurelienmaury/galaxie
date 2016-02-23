@@ -1,0 +1,12 @@
+#!/bin/sh
+LOG_NAME=`basename ${PWD%/log}`
+LOG_SIZE="2000000"
+LOG_DIR="/var/log/${LOG_NAME}"
+if [ ! -d "${LOG_DIR}" ]; then
+        mkdir -p "${LOG_DIR}"
+        chown qmaill:nofiles "${LOG_DIR}"
+        echo "Creating log dir for ${LOG_NAME}:"
+        ls -ld "${LOG_DIR}"
+fi
+exec 2>&1
+exec setuidgid qmaill multilog t s${LOG_SIZE} "${LOG_DIR}"
