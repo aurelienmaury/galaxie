@@ -20,10 +20,12 @@ each compoments:
 - tasks/*.yml file have minimal value set in hard everything is editable via defaults/main.yml file.
 
 ucspi-tcp6:
-- conf-ld - auto 32/64 bit configuration
+- auto 32/64 bit configuration by x64 detection and switch play with -m64 on conf-ld files
 
 s/qmail:
-- conf-ids, conf-group -  edit a value inside defaults/main.yml will automatiquelly make consistant setting.
+- conf-log, get value from "glx_multilog_dir" var
+- scripts get all value from settings
+- conf-ids, conf-group -  by edit a value inside defaults/main.yml it will automatiquelly make consistant setting.
 
 Role Variables
 --------------
