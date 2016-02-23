@@ -1,4 +1,4 @@
 #!/bin/sh
-exec env - PATH="/var/qmail/bin:$PATH" \
+exec env - PATH="{{ glx_qmail_dir }}/bin:$PATH" \
     qmail-start ./Maildir/
 #qmail-start '|preline -f /usr/local/libexec/dovecot/dovecot-lda'

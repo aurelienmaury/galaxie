@@ -3,8 +3,8 @@ QMAILU=`id -u qmaild`
 QMAILG=`id -g qmaild`
 QMQP="628"
 HOSTNAME=`hostname`
-exec env PATH="/var/qmail/bin:$PATH" \
+exec env PATH="{{ glx_qmail_dir }}/bin:$PATH" \
      tcpserver -v -Rp -l $HOSTNAME \
-     -Xx /var/qmail/control/rules.qmpd.cdb \
+     -Xx {{ glx_qmail_dir }}/control/rules.qmpd.cdb \
      -u $QMAILU -g $QMAILG 0 $QMQP \
      qmail-qmqpd 2>&

@@ -5,27 +5,17 @@ glx_qmail_dir: "/var/qmail"
 glx_supervise_dir: "/var/lib/supervise"
 glx_multilog_dir: "/var/multilog"
 
-#galaxie_qmail_server_alias_admins_list:
-#  - name: "root"
-#    value:
-#      - "root@{{ galaxie_qmail_server_domain }}"
-#  - name: "postmaster"
-#    value:
-#      - "root@{{ galaxie_qmail_server_domain }}"
-#  - name: "mailer-daemon"
-#    value:
-#      - "root@{{ galaxie_qmail_server_domain }}"
 
-galaxie_qmail_server_multilog_user: "multilog"
-galaxie_qmail_server_qmaild_user: "qmaild"
-galaxie_qmail_server_qmaill_user: "qmaill"
-galaxie_qmail_server_qmailp_user: "qmailp"
-galaxie_qmail_server_qmailq_user: "qmailq"
-galaxie_qmail_server_qmailr_user: "qmailr"
-galaxie_qmail_server_qmails_user: "qmails"
-galaxie_qmail_server_qmail_group: "qmail"
-galaxie_qmail_server_nofiles_group: "nofiles"
-galaxie_qmail_server_alias_user: "alias"
+
+glx_sqmail_multilog_user: "multilog"
+glx_sqmail_qmaild_user: "qmaild"
+glx_sqmail_qmaill_user: "qmaill"
+glx_sqmail_qmailp_user: "qmailp"
+glx_sqmail_qmailq_user: "qmailq"
+glx_sqmail_qmailr_user: "qmailr"
+glx_sqmail_qmails_user: "qmails"
+glx_sqmail__alias_user: "alias"
+
 galaxie_qmail_server_service_name: "qmail"
 galaxie_qmail_server_service_send: "qmail-send"
 galaxie_qmail_server_service_smtpd_ipv4: "qmail-smtpd-ipv4"
@@ -124,6 +114,7 @@ glx_ucspi_ssl_source_sha256sum: "9f3bcf66546b433b089f6f340d243065beb801b97d4026e
 glx_ucspi_ssl_source_url: "{{ glx_ucspi_ssl_source_repository }}/{{ glx_ucspi_ssl_source_name }}.{{ glx_ucspi_ssl_source_extension }}"
 glx_ucspi_ssl_source_dir: "/usr/src"
 
+
 # The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
 #
 # ./src/conf-cadir
@@ -174,6 +165,58 @@ glx_s_qmail_source_name: "sqmail-3.0.2"
 glx_s_qmail_source_extension: "tgz"
 glx_s_qmail_source_url: "{{ glx_s_qmail_source_repository }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
 glx_s_qmail_source_dir: "/usr/src"
+
+glx_sqmail_groups:
+  - name: "nofiles"
+    name: "nofiles"
+    gid: "2108"
+    usage: "s/qmail group for auxiliar files "
+  - name: "sqmail"
+    name: "sqmail"
+    gid: "2109"
+    usage: "s/qmail group for binary and man files"
+
+glx_sqmail_ids:
+  - name: "alias"
+    name: "alias"
+    uid: "7790"
+    usage: "Alias user; alias names; ezmlml"
+    group: "{{ glx_sqmail_groups.nofiles.name }}"
+  - name: "qmaild"
+    name: "qmaild"
+    uid: "7791"
+    usage: "Daemon user (e.g. qmail-smtpd/qmail-pop3d)"
+    group: "{{ glx_sqmail_groups.nofiles.name }}"
+  - name: "qmaill"
+    name: "qmaill"
+    uid: "7792"
+    usage: "Logging user"
+    group: "{{ glx_sqmail_groups.nofiles.name }}"
+  - name: "qmailp"
+    name: "qmailp"
+    uid: "7793"
+    usage: "Password user (qmail-user)"
+    group: "{{ glx_sqmail_groups.nofiles.name }}"
+  - name: "qmailq"
+    name: "qmailq"
+    uid: "7794"
+    usage: "Queue user (qmail-queue)"
+    group: "{{ glx_sqmail_groups.sqmail.name }}"
+  - name: "qmailr"
+    name: "qmailr"
+    uid: "7795"
+    usage: "Client user (qmail-remote)"
+    group: "{{ glx_sqmail_groups.sqmail.name }}"
+  - name: "qmails"
+    name: "qmails"
+    uid: "7796"
+    usage: "Mail-generating user (qmail-send)"
+    group: "{{ glx_sqmail_groups.sqmail.name }}"
+  - name: "sqmtls"
+    name: "sqmtls"
+    uid: "7797"
+    usage: "TLS certificate user"
+    group: "{{ glx_sqmail_groups.nofiles.name }}"
 
 # The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
 #
