@@ -14,6 +14,14 @@ The role install it self requirements
 
 The role use the daemons-tool provide by Debian packages
 
+Features
+--------
+ucspi-tcp6:
+conf-ld - auto 32/64 bit configuration
+
+s/qmail:
+conf-ids, conf-group -  edit a value inside defaults/main.yml will automatiquelly make consistant setting.
+
 Role Variables
 --------------
 

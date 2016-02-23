@@ -170,52 +170,52 @@ glx_sqmail_groups:
   nofiles:
     gname: "nofiles"
     gid: "2108"
-    usage: "s/qmail group for auxiliar files "
+    description: "sqmail group for auxiliar files"
   sqmail:
     gname: "sqmail"
     gid: "2109"
-    usage: "s/qmail group for binary and man files"
+    description: "sqmail group for binary files"
 
 glx_sqmail_ids:
   alias:
     uname: "alias"
     uid: "7790"
-    usage: "Alias user; alias names; ezmlml"
+    description: "sqmail Alias user"
     group: "{{ glx_sqmail_groups.nofiles.gname }}"
   qmaild:
     uname: "qmaild"
     uid: "7791"
-    usage: "Daemon user (e.g. qmail-smtpd/qmail-pop3d)"
+    description: "sqmail Daemon user"
     group: "{{ glx_sqmail_groups.nofiles.gname }}"
   qmaill:
     uname: "qmaill"
     uid: "7792"
-    usage: "Logging user"
+    description: "sqmail Log user"
     group: "{{ glx_sqmail_groups.nofiles.gname }}"
   qmailp:
     uname: "qmailp"
     uid: "7793"
-    usage: "Password user (qmail-user)"
+    description: "sqmail Password user"
     group: "{{ glx_sqmail_groups.nofiles.gname }}"
   qmailq:
     uname: "qmailq"
     uid: "7794"
-    usage: "Queue user (qmail-queue)"
+    description: "sqmail Queue user"
     group: "{{ glx_sqmail_groups.sqmail.gname }}"
   qmailr:
     uname: "qmailr"
     uid: "7795"
-    usage: "Client user (qmail-remote)"
+    description: "sqmail Remote user"
     group: "{{ glx_sqmail_groups.sqmail.gname }}"
   qmails:
     uname: "qmails"
     uid: "7796"
-    usage: "Mail-generating user (qmail-send)"
+    description: "sqmail Send user"
     group: "{{ glx_sqmail_groups.sqmail.gname }}"
   sqmtls:
     uname: "sqmtls"
     uid: "7797"
-    usage: "TLS certificate user"
+    description: "sqmail TLS user"
     group: "{{ glx_sqmail_groups.nofiles.gname }}"
 
 # The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
