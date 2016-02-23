@@ -64,9 +64,9 @@
   when: glx_ucspi_tcp6_download.changed
 
 - name: check DEB_BUILD_ARCH_BITS
-  shell: dpkg-architecture 2>&1 | grep DEB_HOST_ARCH_BITS=32
+  shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
   when: ansible_os_family == "Debian"
-  register: DEB_BUILD_ARCH_BITS_EQ_32
+  register: DEB_BUILD_ARCH_BITS
 
 - name: check src/conf-ld file "{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
   template:

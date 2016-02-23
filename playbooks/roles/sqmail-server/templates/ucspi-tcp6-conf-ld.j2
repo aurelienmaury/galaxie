@@ -1,9 +1,9 @@
-{% if not DEB_BUILD_ARCH_BITS_EQ_32.stdout %}gcc -s -m64
+{% if DEB_BUILD_ARCH_BITS == 64 %}gcc -s -m64
 
 {% endif %}
 gcc -s
 
-clang -s{% if not DEB_BUILD_ARCH_BITS_EQ_32.stdout %} -m64{% endif %}
+clang -s{% if DEB_BUILD_ARCH_BITS == 64 %} -m64{% endif %}
 
 
 This will be used to link .o files into an executable.
