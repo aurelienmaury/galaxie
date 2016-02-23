@@ -2,14 +2,14 @@
 # Change ids on your own behalf;
 # sqmail user names require change of conf-users in addition
 #
-{{ glx_sqmail_groups.nofiles.gid }}:{{ glx_sqmail_groups.nofiles.name }}:sqmail group for auxiliar files:
-{{ glx_sqmail_groups.sqmail.gid }}:{{ glx_sqmail_groups.sqmail.name }}:sqmail group for binary files:
+{{ glx_sqmail_groups.nofiles.gid }}:{{ glx_sqmail_groups.nofiles.gname }}:sqmail group for auxiliar files:
+{{ glx_sqmail_groups.sqmail.gid }}:{{ glx_sqmail_groups.sqmail.gname }}:sqmail group for binary files:
 #
-{{ glx_sqmail_ids.alias.uid }}:{{ glx_sqmail_ids.alias.name }}:sqmail Alias user:{{ glx_sqmail_groups.nofiles.name }}:alias
-{{ glx_sqmail_ids.qmaild.uid }}:{{ glx_sqmail_ids.qmaild.name }}:sqmail Daemon user:{{ glx_sqmail_groups.nofiles.name }}
-{{ glx_sqmail_ids.qmaill.uid }}:{{ glx_sqmail_ids.qmaill.name }}:sqmail Log user:{{ glx_sqmail_groups.nofiles.name }}
-{{ glx_sqmail_ids.qmailp.uid }}:{{ glx_sqmail_ids.qmailp.name }}:sqmail Password user:{{ glx_sqmail_groups.nofiles.name }}
-{{ glx_sqmail_ids.qmailq.uid }}:{{ glx_sqmail_ids.qmailq.name }}:sqmail Queue user:{{ glx_sqmail_groups.sqmail.name }}:queue
-{{ glx_sqmail_ids.qmailr.uid }}:{{ glx_sqmail_ids.qmailr.name }}:sqmail Remote user:{{ glx_sqmail_groups.sqmail.name }}
-{{ glx_sqmail_ids.qmails.uid }}:{{ glx_sqmail_ids.qmails.name }}:sqmail Send user:{{ glx_sqmail_groups.sqmail.name }}
-{{ glx_sqmail_ids.sqmtls.uid }}:{{ glx_sqmail_ids.sqmtls.name }}:sqmail TLS user:{{ glx_sqmail_groups.nofiles.name }}
+{{ glx_sqmail_ids.alias.uid }}:{{ glx_sqmail_ids.alias.uname }}:sqmail Alias user:{{ glx_sqmail_groups.nofiles.gname }}:alias
+{{ glx_sqmail_ids.qmaild.uid }}:{{ glx_sqmail_ids.qmaild.uname }}:sqmail Daemon user:{{ glx_sqmail_groups.nofiles.gname }}
+{{ glx_sqmail_ids.qmaill.uid }}:{{ glx_sqmail_ids.qmaill.uname }}:sqmail Log user:{{ glx_sqmail_groups.nofiles.gname }}
+{{ glx_sqmail_ids.qmailp.uid }}:{{ glx_sqmail_ids.qmailp.uname }}:sqmail Password user:{{ glx_sqmail_groups.nofiles.gname }}
+{{ glx_sqmail_ids.qmailq.uid }}:{{ glx_sqmail_ids.qmailq.uname }}:sqmail Queue user:{{ glx_sqmail_groups.sqmail.gname }}:queue
+{{ glx_sqmail_ids.qmailr.uid }}:{{ glx_sqmail_ids.qmailr.uname }}:sqmail Remote user:{{ glx_sqmail_groups.sqmail.gname }}
+{{ glx_sqmail_ids.qmails.uid }}:{{ glx_sqmail_ids.qmails.uname }}:sqmail Send user:{{ glx_sqmail_groups.sqmail.gname }}
+{{ glx_sqmail_ids.sqmtls.uid }}:{{ glx_sqmail_ids.sqmtls.uname }}:sqmail TLS user:{{ glx_sqmail_groups.nofiles.gname }}
