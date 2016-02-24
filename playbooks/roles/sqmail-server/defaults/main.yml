@@ -7,15 +7,6 @@ glx_multilog_dir: "/var/multilog"
 
 
 
-glx_sqmail_multilog_user: "multilog"
-glx_sqmail_qmaild_user: "qmaild"
-glx_sqmail_qmaill_user: "qmaill"
-glx_sqmail_qmailp_user: "qmailp"
-glx_sqmail_qmailq_user: "qmailq"
-glx_sqmail_qmailr_user: "qmailr"
-glx_sqmail_qmails_user: "qmails"
-glx_sqmail__alias_user: "alias"
-
 galaxie_qmail_server_service_name: "qmail"
 galaxie_qmail_server_service_send: "qmail-send"
 galaxie_qmail_server_service_smtpd_ipv4: "qmail-smtpd-ipv4"
