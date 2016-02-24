@@ -25,153 +25,158 @@
     state=directory
     mode=1755
 
-- name: check {{ glx_s_qmail_source_dir }} directory
+- name: check {{ glx_sqmail_source_dir }} directory
   file:
-    path="{{ glx_s_qmail_source_dir }}"
+    path="{{ glx_sqmail_source_dir }}"
     state=directory
 
-- name: delete "{{ glx_s_qmail_source_dir }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
+- name: delete "{{ glx_sqmail_source_dir }}/{{ glx_sqmail_source_name }}.{{ glx_sqmail_source_extension }}"
   file:
-    path="{{ glx_s_qmail_source_dir }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
+    path="{{ glx_sqmail_source_dir }}/{{ glx_sqmail_source_name }}.{{ glx_sqmail_source_extension }}"
     state=absent
-  when: glx_s_qmail_force_install
+  when: glx_sqmail_force_install
 
-- name: get "{{ glx_s_qmail_source_url }}"
+- name: get "{{ glx_sqmail_source_url }}"
   get_url:
-    url="{{ glx_s_qmail_source_url }}"
-    dest={{ glx_s_qmail_source_dir }}
+    url="{{ glx_sqmail_source_url }}"
+    dest={{ glx_sqmail_source_dir }}
     sha256sum=5501a984d83d9f0826c2d497522090f6335049be1442be74d6492dee76c735a7
-  register: glx_s_qmail_download
+  register: glx_sqmail_download
 
-- name: delete "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}" directory
+- name: delete "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}" directory
   file:
-    path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}"
+    path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
     state=absent
-  when: glx_s_qmail_download.changed
+  when: glx_sqmail_download.changed
 
-- name: unarchive {{ glx_s_qmail_download.dest }}
+- name: unarchive {{ glx_sqmail_download.dest }}
   unarchive:
-    src="{{ glx_s_qmail_download.dest }}"
+    src="{{ glx_sqmail_download.dest }}"
     dest="{{ glx_slashpackage_dir }}"
     copy=no
-  when: glx_s_qmail_download.changed
+  when: glx_sqmail_download.changed
 
 - name: fixe permissions
   file:
-    path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}"
+    path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
     owner="root"
     group="root"
     recurse=yes
-  when: glx_s_qmail_download.changed
+  when: glx_sqmail_download.changed
 
 # Configuration:
 # The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
 #
 # conf-break -- usually the character '-' for VERP addresses
-- name: check "{{ glx_s_qmail_conf_break_path }}"
+- name: check "{{ glx_sqmail_conf_break_path }}"
   template:
     src="sqmail-conf-files/conf-break.j2"
-    dest="{{ glx_s_qmail_conf_break_path }}"
+    dest="{{ glx_sqmail_conf_break_path }}"
 
 # conf-cc -- compiler (no change required)
-- name: check "{{ glx_s_qmail_conf_cc_path }}"
+- name: check "{{ glx_sqmail_conf_cc_path }}"
   template:
     src="sqmail-conf-files/conf-cc.j2"
-    dest="{{ glx_s_qmail_conf_cc_path }}"
+    dest="{{ glx_sqmail_conf_cc_path }}"
 
 # conf-delivery -- qmail-start default-delivery
-- name: check "{{ glx_s_qmail_conf_delivery_path }}"
+- name: check "{{ glx_sqmail_conf_delivery_path }}"
   template:
     src="sqmail-conf-files/conf-delivery.j2"
-    dest="{{ glx_s_qmail_conf_delivery_path }}"
+    dest="{{ glx_sqmail_conf_delivery_path }}"
 
 # conf-djbdns -- DJBNDS libs (not supported yet)
-- name: check "{{ glx_s_qmail_conf_djbdns_path }}"
+- name: check "{{ glx_sqmail_conf_djbdns_path }}"
   template:
     src="sqmail-conf-files/conf-djbdns.j2"
-    dest="{{ glx_s_qmail_conf_djbdns_path }}"
+    dest="{{ glx_sqmail_conf_djbdns_path }}"
 
 # conf-groups*) -- s/qmail groups
-- name: check "{{ glx_s_qmail_conf_groups_path }}"
+- name: check "{{ glx_sqmail_conf_groups_path }}"
   template:
     src="sqmail-conf-files/conf-groups.j2"
-    dest="{{ glx_s_qmail_conf_groups_path }}"
+    dest="{{ glx_sqmail_conf_groups_path }}"
 
 # conf-home -- home dir of s/qmail [/var/qmail]
-- name: check "{{ glx_s_qmail_conf_home_path }}"
+- name: check "{{ glx_sqmail_conf_home_path }}"
   template:
     src="sqmail-conf-files/conf-home.j2"
-    dest="{{ glx_s_qmail_conf_home_path }}"
+    dest="{{ glx_sqmail_conf_home_path }}"
 
 # conf-ids*) -- Unix ids for s/qmail
-- name: check "{{ glx_s_qmail_conf_ids_path }}"
+- name: check "{{ glx_sqmail_conf_ids_path }}"
   template:
     src="sqmail-conf-files/conf-ids.j2"
-    dest="{{ glx_s_qmail_conf_ids_path }}"
+    dest="{{ glx_sqmail_conf_ids_path }}"
 
 # conf-instances -- QMQ instances to be raised
-- name: check "{{ glx_s_qmail_conf_instances_path }}"
+- name: check "{{ glx_sqmail_conf_instances_path }}"
   template:
     src="sqmail-conf-files/conf-instances.j2"
-    dest="{{ glx_s_qmail_conf_instances_path }}"
+    dest="{{ glx_sqmail_conf_instances_path }}"
 
 # conf-ld -- loader options to be adjusted (for i386; AMD64 default
-- name: check "{{ glx_s_qmail_conf_ld_path }}"
+- name: check "{{ glx_sqmail_conf_ld_path }}"
   template:
     src="sqmail-conf-files/conf-ld.j2"
-    dest="{{ glx_s_qmail_conf_ld_path }}"
+    dest="{{ glx_sqmail_conf_ld_path }}"
 
 # conf-log -- target dir of s/qmail logs [/var/log]
-- name: check "{{ glx_s_qmail_conf_log_path }}"
+- name: check "{{ glx_sqmail_conf_log_path }}"
   template:
     src="sqmail-conf-files/conf-log.j2"
-    dest="{{ glx_s_qmail_conf_log_path }}"
+    dest="{{ glx_sqmail_conf_log_path }}"
 
 # conf-man -- target dir of man pages, usually automatically recognized
-- name: check "{{ glx_s_qmail_conf_man_path }}"
+- name: check "{{ glx_sqmail_conf_man_path }}"
   template:
     src="sqmail-conf-files/conf-man.j2"
-    dest="{{ glx_s_qmail_conf_man_path }}"
+    dest="{{ glx_sqmail_conf_man_path }}"
 
 # conf-patrn -- s/qmail paternalism [002]
-- name: check "{{ glx_s_qmail_conf_patrn_path }}"
+- name: check "{{ glx_sqmail_conf_patrn_path }}"
   template:
     src="sqmail-conf-files/conf-patrn.j2"
-    dest="{{ glx_s_qmail_conf_patrn_path }}"
+    dest="{{ glx_sqmail_conf_patrn_path }}"
 
 # conf-qmq -- QMQ environment settings
-- name: check "{{ glx_s_qmail_conf_qmq_path }}"
+- name: check "{{ glx_sqmail_conf_qmq_path }}"
   template:
     src="sqmail-conf-files/conf-qmq.j2"
-    dest="{{ glx_s_qmail_conf_qmq_path }}"
+    dest="{{ glx_sqmail_conf_qmq_path }}"
 
 # conf-spawn -- silent concurrency limit [120]
-- name: check "{{ glx_s_qmail_conf_spawn_path }}"
+- name: check "{{ glx_sqmail_conf_spawn_path }}"
   template:
-    src="ssqmail-conf-files/conf-spawn.j2"
-    dest="{{ glx_s_qmail_conf_spawn_path }}"
+    src="sqmail-conf-files/conf-spawn.j2"
+    dest="{{ glx_sqmail_conf_spawn_path }}"
 
 # conf-split -- depth of s/qmail dirs [23]
-- name: check "{{ glx_s_qmail_conf_split_path }}"
+- name: check "{{ glx_sqmail_conf_split_path }}"
   template:
     src="sqmail-conf-files/conf-split.j2"
-    dest="{{ glx_s_qmail_conf_split_path }}"
+    dest="{{ glx_sqmail_conf_split_path }}"
 
 # conf-svcdir -- supervise's 'service' directory
-- name: check "{{ glx_s_qmail_conf_svcdir_path }}"
+- name: check "{{ glx_sqmail_conf_svcdir_path }}"
   template:
     src="sqmail-conf-files/conf-svcdir.j2"
-    dest="{{ glx_s_qmail_conf_svcdir_path }}"
+    dest="{{ glx_sqmail_conf_svcdir_path }}"
 
 # conf-ucspissl -- path to UCSPI-SSL dirs
-- name: check "{{ glx_s_qmail_conf_ucspissl_path }}"
+- name: check "{{ glx_sqmail_conf_ucspissl_path }}"
   template:
     src="sqmail-conf-files/conf-ucspissl.j2"
-    dest="{{ glx_s_qmail_conf_ucspissl_path }}"
+    dest="{{ glx_sqmail_conf_ucspissl_path }}"
 
 # conf-users*) -- user names
-- name: check "{{ glx_s_qmail_conf_users_path }}"
+- name: check "{{ glx_sqmail_conf_users_path }}"
   template:
     src="sqmail-conf-files/conf-users.j2"
-    dest="{{ glx_s_qmail_conf_users_path }}"
+    dest="{{ glx_sqmail_conf_users_path }}"
 
+# fixe package/service script it have value in hard
+- name: check "{{ glx_sqmail_package_service_path }}"
+  template:
+    src="sqmail-package/service.j2"
+    dest="{{ glx_sqmail_package_service_path }}"

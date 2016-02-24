@@ -1,8 +1,9 @@
 ---
 # Common and path
 glx_slashpackage_dir: "/package"
-glx_qmail_dir: "/var/qmail"
+glx_sqmail_dir: "/var/qmail"
 glx_supervise_dir: "/var/lib/supervise"
+glx_service_dir: "/etc/service"
 glx_multilog_dir: "/var/multilog"
 
 
@@ -150,12 +151,12 @@ glx_ucspi_ssl_conf_tcpbin: "{{ glx_slashpackage_dir }}/host/superscript.com/net/
 
 
 # s/qmail
-glx_s_qmail_force_install: true
-glx_s_qmail_source_repository: "http://fehcom.de/sqmail"
-glx_s_qmail_source_name: "sqmail-3.0.2"
-glx_s_qmail_source_extension: "tgz"
-glx_s_qmail_source_url: "{{ glx_s_qmail_source_repository }}/{{ glx_s_qmail_source_name }}.{{ glx_s_qmail_source_extension }}"
-glx_s_qmail_source_dir: "/usr/src"
+glx_sqmail_force_install: true
+glx_sqmail_source_repository: "http://fehcom.de/sqmail"
+glx_sqmail_source_name: "sqmail-3.0.2"
+glx_sqmail_source_extension: "tgz"
+glx_sqmail_source_url: "{{ glx_sqmail_source_repository }}/{{ glx_sqmail_source_name }}.{{ glx_sqmail_source_extension }}"
+glx_sqmail_source_dir: "/usr/src"
 
 glx_sqmail_groups:
   nofiles:
@@ -212,58 +213,61 @@ glx_sqmail_ids:
 # The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
 #
 # conf-break -- usually the character '-' for VERP addresses
-glx_s_qmail_conf_break_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-break"
+glx_sqmail_conf_break_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-break"
 
 # conf-cc -- compiler (no change required)
-glx_s_qmail_conf_cc_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-cc"
+glx_sqmail_conf_cc_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-cc"
 
 # conf-delivery -- qmail-start default-delivery
-glx_s_qmail_conf_delivery_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-delivery"
+glx_sqmail_conf_delivery_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-delivery"
 
 # conf-djbdns -- DJBNDS libs (not supported yet)
-glx_s_qmail_conf_djbdns_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-djbdns"
+glx_sqmail_conf_djbdns_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-djbdns"
 
 # conf-groups*) -- s/qmail groups
-glx_s_qmail_conf_groups_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-groups"
+glx_sqmail_conf_groups_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-groups"
 
 # conf-home -- home dir of s/qmail [/var/qmail]
-glx_s_qmail_conf_home_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-home"
+glx_sqmail_conf_home_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-home"
 
 # conf-ids*) -- Unix ids for s/qmail
-glx_s_qmail_conf_ids_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-ids"
+glx_sqmail_conf_ids_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-ids"
 
 # conf-instances -- QMQ instances to be raised
-glx_s_qmail_conf_instances_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-instances"
+glx_sqmail_conf_instances_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-instances"
 
 # conf-ld -- loader options to be adjusted (for i386; AMD64 default
-glx_s_qmail_conf_ld_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-ld"
+glx_sqmail_conf_ld_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-ld"
 
 # conf-log -- target dir of s/qmail logs [/var/log]
-glx_s_qmail_conf_log_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-log"
+glx_sqmail_conf_log_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-log"
 
 # conf-man -- target dir of man pages, usually automatically recognized
-glx_s_qmail_conf_man_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-man"
+glx_sqmail_conf_man_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-man"
 
 # conf-patrn -- s/qmail paternalism [002]
-glx_s_qmail_conf_patrn_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-patrn"
+glx_sqmail_conf_patrn_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-patrn"
 
 # conf-qmq -- QMQ environment settings
-glx_s_qmail_conf_qmq_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-qmq"
+glx_sqmail_conf_qmq_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-qmq"
 
 # conf-spawn -- silent concurrency limit [120]
-glx_s_qmail_conf_spawn_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-spawn"
+glx_sqmail_conf_spawn_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-spawn"
 
 # conf-split -- depth of s/qmail dirs [23]
-glx_s_qmail_conf_split_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-split"
+glx_sqmail_conf_split_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-split"
 
 # conf-svcdir -- supervise's 'service' directory
-glx_s_qmail_conf_svcdir_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-svcdir"
+glx_sqmail_conf_svcdir_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-svcdir"
 
 # conf-ucspissl -- path to UCSPI-SSL dirs
-glx_s_qmail_conf_ucspissl_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-ucspissl"
+glx_sqmail_conf_ucspissl_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-ucspissl"
 
 # conf-users*) -- user names
-glx_s_qmail_conf_users_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_s_qmail_source_name }}/conf-users"
+glx_sqmail_conf_users_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-users"
+
+# package/service
+glx_sqmail_package_service_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package/service"
 
 # certificate
 galaxie_qmail_server_openssl_key_gen: false
