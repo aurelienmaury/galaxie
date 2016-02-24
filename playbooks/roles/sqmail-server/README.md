@@ -96,9 +96,9 @@ run_smtpsub script:
 - Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
 
 ssl.env file:
-SQMTLS it make reference to "sqmail TLS user" have been replace by {{ glx_sqmail_ids.sqmtls.uname }}
-NOFILES it make reference to "sqmail group for auxiliar files" have been replace by {{ glx_sqmail_groups.nofiles.gname }}
-QMAIL it make reference to "/var/qmail" directory have been replace by {{ glx_qmail_dir }}
+- Value "SQMTLS" it make reference to "sqmail TLS user" have been replace by {{ glx_sqmail_ids.sqmtls.uname }}
+- Value "NOFILES" it make reference to "sqmail group for auxiliar files" have been replace by {{ glx_sqmail_groups.nofiles.gname }}
+- Value "QMAIL" it make reference to "/var/qmail" directory have been replace by {{ glx_qmail_dir }}
 Role Variables
 --------------
 
