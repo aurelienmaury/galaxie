@@ -1,11 +1,11 @@
 Role Name
 =========
 
-Qmail-server role have goal to install and configure a s/qmail server from fehcom design.
+Qmail-server role have goal to install and configure a s/qmail server from "fehcom" design.
 
-s/qmail (pronounced skew-mail) is a Mail Transfer Agent (MTA) based on Qmail suited for high-speed and confidential email transport over IPv4 and IPv6 networks.
+    s/qmail (pronounced skew-mail) is a Mail Transfer Agent (MTA) based on Qmail suited for high-speed and confidential email transport over IPv4 and IPv6 networks.
 
-More informations: http://fehcom.de/sqmail/sqmail.html
+For more informations: http://fehcom.de/sqmail/sqmail.html
 
 That role by default follow exactelly the design describ by fehcom, but convert a maximum of path, values, file for have a dynamic setting. By exemple all UID, GID, path, can be change , or be different by machine (not sure it's usefull).
 
