@@ -1,11 +1,11 @@
 #!/bin/sh
-QMAILU=`id -u qmaild`
-QMAILG=`id -g qmaild`
+QMAILU=`id -u {{ glx_sqmail_ids.qmaild.uname }}`
+QMAILG=`id -g {{ glx_sqmail_ids.qmaild.uname }}`
 HOSTNAME=`hostname`
 export SMTPAUTH=""
-. /var/qmail/ssl/ssl.env
-exec env PATH="/var/qmail/bin:$PATH" \
+. {{ glx_qmail_dir }}/ssl/ssl.env
+exec env PATH="{{ glx_qmail_dir }}/bin:$PATH" \
      sslserver -seV -Rp -l $HOSTNAME \
-     -Xx /var/qmail/control/rules.smtpd.cdb \
+     -Xx {{ glx_qmail_dir }}/control/rules.smtpd.cdb \
      -u $QMAILU -g $QMAILG 0 smtps \
      qmail-smtpd qmail-authuser true 2>&1

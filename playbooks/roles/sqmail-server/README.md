@@ -53,8 +53,8 @@ s/qmail:
 run_log script:
 - Value "/var/log" have been replace by "{{ glx_multilog_dir }}"
 - Value "/var/log" inside "conf-log" file have been replace by {{ glx_multilog_dir }}
-- Value "nofiles" it make reference to nofiles group have been replace by {{ glx_sqmail_groups.nofiles.gname }}, "conf-ids" and "conf-group" use the same methode then the log script recive consitent information.
-- Value "qmaill" it make reference to sqmail Log user have been replace by {{ glx_sqmail_ids.qmaill.uname }}, "conf-ids" and "conf-group" use the same methode then the log script recive consitent information.
+- Value "nofiles" it make reference to nofiles group have been replace by {{ glx_sqmail_groups.nofiles.gname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
+- Value "qmaill" it make reference to sqmail Log user have been replace by {{ glx_sqmail_ids.qmaill.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
 todo: Reference to "multilog" group , it make reference to daemontools group name should be dynamic; actually Galaxie design use daemontools Debian package but soon, daemontools will be dedicated to s/qmail, then the multilog username or UID will be under s/qmail control.
 
 run_pop3d script:
@@ -67,7 +67,38 @@ run_pop3sd script:
 - Value "Maildir" it suppose to be the maildirname have been replace by {{ glx_sqmail_maildirname }} it store "Mailbox", {{ glx_sqmail_maildirname }} is use during "defaultdelivery" control file creation, like that glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
 todo: HOSTNAME should store same value a control/me file
 
+run_qmqpd script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
 
+run_qmtpd script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
+
+run_qmtpsd script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
+
+run_send script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "./Maildir/ have been replace by {{ glx_sqmail_control_defaultdelivery }}, exactelly same value as defaultdelivery control file.
+
+run_smtpd script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
+
+run_smtpsd script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
+
+run_smtpsub script:
+- Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
+- Value "qmaild" it make reference to sqmail Daemon user have been replace by {{ glx_sqmail_ids.qmaild.uname }}, "conf-ids", "conf-users" and  "conf-groups" use the same method then the log script recive consitent informations.
+
+ssl.env file:
+SQMTLS it make reference to "sqmail TLS user" have been replace by 
+NOFILES it make reference to "sqmail group for auxiliar files" have been replace by {{ glx_sqmail_groups.nofiles.gname }}
+QMAIL it make reference to "/var/qmail" directory have been replace by {{ glx_qmail_dir }}
 Role Variables
 --------------
 
