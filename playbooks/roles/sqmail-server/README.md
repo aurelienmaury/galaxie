@@ -71,12 +71,12 @@ by exemple: glx_supervise_dir: "/var/lib/supervise" it the true Debian path, /se
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+as do by ../sqmail-server.yml all default value are inside ./defaults/main.yml file
 
     - hosts: sqmail-servers
+    
       roles:
-         - { role: username.rolename, x: 42 }
+         - sqmail-server
 
 License
 -------
