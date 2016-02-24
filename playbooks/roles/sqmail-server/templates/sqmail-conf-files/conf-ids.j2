@@ -2,14 +2,14 @@
 # Change ids on your own behalf; 
 # sqmail user names require change of conf-users in addition
 #
-2108:nofiles:sqmail group for auxiliar files:
-2109:sqmail:sqmail group for binary files:
+{{ glx_sqmail_groups.nofiles.gid }}:{{ glx_sqmail_groups.nofiles.gname }}:{{ glx_sqmail_groups.nofiles.description }}:
+{{ glx_sqmail_groups.sqmail.gid }}:{{ glx_sqmail_groups.sqmail.gname }}:{{ glx_sqmail_groups.sqmail.description }}:
 #
-7790:alias:sqmail Alias user:nofiles:alias
-7791:qmaild:sqmail Daemon user:nofiles
-7792:qmaill:sqmail Log user:nofiles
-7793:qmailp:sqmail Password user:nofiles
-7794:qmailq:sqmail Queue user:sqmail:queue
-7795:qmailr:sqmail Remote user:sqmail
-7796:qmails:sqmail Send user:sqmail
-7797:sqmtls:sqmail TLS user:nofiles
+{{ glx_sqmail_ids.alias.uid }}:{{ glx_sqmail_ids.alias.uname }}:{{ glx_sqmail_ids.alias.description }}:{{ glx_sqmail_groups.nofiles.gname }}:alias
+{{ glx_sqmail_ids.qmaild.uid }}:{{ glx_sqmail_ids.qmaild.uname }}:{{ glx_sqmail_ids.qmaild.description }}:{{ glx_sqmail_groups.nofiles.gname }}
+{{ glx_sqmail_ids.qmaill.uid }}:{{ glx_sqmail_ids.qmaill.uname }}:{{ glx_sqmail_ids.qmaill.description }}:{{ glx_sqmail_groups.nofiles.gname }}
+{{ glx_sqmail_ids.qmailp.uid }}:{{ glx_sqmail_ids.qmailp.uname }}:{{ glx_sqmail_ids.qmailp.description }}:{{ glx_sqmail_groups.nofiles.gname }}
+{{ glx_sqmail_ids.qmailq.uid }}:{{ glx_sqmail_ids.qmailq.uname }}:{{ glx_sqmail_ids.qmailq.description }}:{{ glx_sqmail_groups.sqmail.gname }}:queue
+{{ glx_sqmail_ids.qmailr.uid }}:{{ glx_sqmail_ids.qmailr.uname }}:{{ glx_sqmail_ids.qmailr.description }}:{{ glx_sqmail_groups.sqmail.gname }}
+{{ glx_sqmail_ids.qmails.uid }}:{{ glx_sqmail_ids.qmails.uname }}:{{ glx_sqmail_ids.qmails.description }}:{{ glx_sqmail_groups.sqmail.gname }}
+{{ glx_sqmail_ids.sqmtls.uid }}:{{ glx_sqmail_ids.sqmtls.uname }}:{{ glx_sqmail_ids.sqmtls.description }}:{{ glx_sqmail_groups.nofiles.gname }}
