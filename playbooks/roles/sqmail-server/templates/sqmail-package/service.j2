@@ -38,16 +38,16 @@ do
   svcname=`echo $i | awk -F: '{print $2}'`
   svc_run=`echo $i | awk -F: '{print $3}'`
 
-# Generate $home/svc dirs and populate
+# Generate {{ glx_supervise_dir }} dirs and populate
 
-  [ ! -d /$home/svc/$svcname ] && \
-    safe mkdir -p $home/svc/$svcname && \
+  [ ! -d /{{ glx_supervise_dir }}/$svcname ] && \
+    safe mkdir -p {{ glx_supervise_dir }}/$svcname && \
     safe cat $mypwd/service/$svc_run \
       | eval sed -e 's}/var/qmail}$home}g' \
-      > $home/svc/$svcname/run && \
-    safe chmod +x $home/svc/$svcname/run && \
-    safe touch $home/svc/$svcname/down && \
-    shout "Created '$home/svc/$svcname' dir" 
+      > {{ glx_supervise_dir }}/$svcname/run && \
+    safe chmod +x {{ glx_supervise_dir }}/$svcname/run && \
+    safe touch {{ glx_supervise_dir }}/$svcname/down && \
+    shout "Created '{{ glx_supervise_dir }}/$svcname' dir" 
 
 # Generate logdir for services and set permissions
 
@@ -61,20 +61,20 @@ do
 
 # Include log services
 
-  [ ! -d /$home/svc/$svcname/log -a -d $logdir/$svcname -a $log -eq 1 ] && \
-    safe mkdir -p $home/svc/$svcname/log && \
+  [ ! -d /{{ glx_supervise_dir }}/$svcname/log -a -d $logdir/$svcname -a $log -eq 1 ] && \
+    safe mkdir -p {{ glx_supervise_dir }}/$svcname/log && \
     safe cat $mypwd/service/run_log \
       | eval sed -e 's}qmaill}$qmaill}g' \
                  -e 's}nofiles}$nofiles}g' \
-      > $home/svc/$svcname/log/run && \
-    safe chmod +x $home/svc/$svcname/log/run && \
-    safe ln -s $logdir/$svcname $home/svc/$svcname/log/main && \
-    shout "Created '$home/svc/$svcname/log' dir" 
+      > {{ glx_supervise_dir }}/$svcname/log/run && \
+    safe chmod +x {{ glx_supervise_dir }}/$svcname/log/run && \
+    safe ln -s $logdir/$svcname {{ glx_supervise_dir }}/$svcname/log/main && \
+    shout "Created '{{ glx_supervise_dir }}/$svcname/log' dir" 
 
 # Put the service under supervise ({{ glx_service_dir }})
 
   [ ! -d {{ glx_service_dir }}/$svcname ] && \
-    safe ln -s $home/svc/$svcname {{ glx_service_dir }}/$svcname && \
+    safe ln -s {{ glx_supervise_dir }}/$svcname {{ glx_service_dir }}/$svcname && \
     safe ln -s $home/control {{ glx_service_dir }}/$svcname/ctl && \
     shout "Created '{{ glx_service_dir }}/$svcname' dir -- still 'down'"
 

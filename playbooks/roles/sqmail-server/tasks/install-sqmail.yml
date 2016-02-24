@@ -116,6 +116,11 @@
     dest="{{ glx_sqmail_conf_instances_path }}"
 
 # conf-ld -- loader options to be adjusted (for i386; AMD64 default
+- name: check DEB_BUILD_ARCH_BITS
+  shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
+  when: ansible_os_family == "Debian"
+  register: DEB_BUILD_ARCH_BITS
+
 - name: check "{{ glx_sqmail_conf_ld_path }}"
   template:
     src="sqmail-conf-files/conf-ld.j2"
@@ -180,3 +185,9 @@
   template:
     src="sqmail-package/service.j2"
     dest="{{ glx_sqmail_package_service_path }}"
+
+# enable or disable service
+- name: check "{{ glx_sqmail_package_services_d_path }}"
+  template:
+    src="sqmail-package/service=d.j2"
+    dest="{{ glx_sqmail_package_services_d_path }}"

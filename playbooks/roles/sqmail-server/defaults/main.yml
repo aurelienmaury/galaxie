@@ -269,6 +269,8 @@ glx_sqmail_conf_users_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmai
 # package/service
 glx_sqmail_package_service_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package/service"
 
+glx_sqmail_package_services_d_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package/service=d"
+
 # certificate
 galaxie_qmail_server_openssl_key_gen: false
 galaxie_qmail_server_openssl_key_bit: "2048"
