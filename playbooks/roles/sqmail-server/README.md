@@ -37,8 +37,10 @@ The role use the daemons-tool provide by Debian packages
 
 Features
 --------
-each compoments:
-- tasks/*.yml file have minimal value set in hard everything is editable via defaults/main.yml file.
+Like all Galaxie roles:
+- Use Ansible templating system for write the script from "./defaults/main.yml" variable file
+- don't depends of strang Ansible special modules
+- respect a documented methode, it it role that start here: http://www.fehcom.de/sqmail/sqmail.html
 
 ucspi-tcp6:
 - auto 32/64 bit configuration by x64 detection and switch play with -m64 on conf-ld files
@@ -49,29 +51,23 @@ s/qmail:
 - conf-ids, conf-group -  by edit a value inside defaults/main.yml it will automatiquelly make consistant setting.
 
 run_log script:
-- Use Ansible templating system for write the script from "./defaults/main.yml" variable file
 - Value "/var/log" have been replace by "{{ glx_multilog_dir }}"
 - Value "/var/log" inside "conf-log" file have been replace by {{ glx_multilog_dir }}
 - Value "nofiles" it make reference to nofiles group have been replace by {{ glx_sqmail_groups.nofiles.gname }}, "conf-ids" and "conf-group" use the same methode then the log script recive consitent information.
 - Value "qmaill" it make reference to sqmail Log user have been replace by {{ glx_sqmail_ids.qmaill.uname }}, "conf-ids" and "conf-group" use the same methode then the log script recive consitent information.
-todo:
-- Reference to "multilog" group , it make reference to daemontools group name should be dynamic; actually Galaxie design use daemontools Debian package but soon, daemontools will be dedicated to s/qmail, then the multilog username or UID will be under s/qmail control.
+todo: Reference to "multilog" group , it make reference to daemontools group name should be dynamic; actually Galaxie design use daemontools Debian package but soon, daemontools will be dedicated to s/qmail, then the multilog username or UID will be under s/qmail control.
 
 run_pop3d script:
 - Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
 - Value "Maildir" it suppose to be the maildirname have been replace by {{ glx_sqmail_maildirname }} it store "Mailbox", {{ glx_sqmail_maildirname }} is use during "defaultdelivery" control file creation, like that glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
-todo:
-- HOSTNAME should store same value a control/me file
+todo: HOSTNAME should store same value a control/me file
 
 run_pop3sd script:
 - Value "/var/qmail" have been replace by {{ glx_qmail_dir }}
 - Value "Maildir" it suppose to be the maildirname have been replace by {{ glx_sqmail_maildirname }} it store "Mailbox", {{ glx_sqmail_maildirname }} is use during "defaultdelivery" control file creation, like that glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
-todo:
-- HOSTNAME should store same value a control/me file
+todo: HOSTNAME should store same value a control/me file
 
-ESMTP.run script:
-- Hard value "/var/qmail" have been replace by {{ glx_qmail_dir }} then permit to follow the global setting
-- Hard value "qmaild" have been replace by {{ glx_sqmail_ids.qmaild.uname }} then permit to follow the global setting
+
 Role Variables
 --------------
 
