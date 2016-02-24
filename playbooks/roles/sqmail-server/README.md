@@ -13,18 +13,20 @@ That role by default follow exactelly the design describ by fehcom, but convert 
 It role is part of Galaxie design, if you like it please not forke, try to propose a patch or e-mail me.
 I'm not part of "fehcom" team, i'm just a humain it focus on Galaxie design devellopement, you are free to use my work without any warranty , may be in 50 years that work will be out-dated who know ...
 
-By default that role will done the exact same result as the fehcom documentation, that mean all scripts, configuration files will have default value.
-All the power of that rool is the capability to use "host_vars" or "group_vars" and custom every path or value, the configuration will stay automaticlly consistent.
-Unfortunally that a feature it come with Ansible, then don't be usefull for "s/qmail" project.
+By default that role will done the same result as the "fehcom" documentation, that mean after all conditional test and teamplate application under Ansible all scripts, configuration files will use default as descript on "fehcom" documentation.
+All the power/interest of that role is the capability to use "host_vars" or "group_vars" and custom every path or values, the configuration will stay automaticlly consistent.
+Unfortunally that a feature it come with Ansible, then don't be usefull for "s/qmail" project, except the role it self ...
+
 I do my best for workarround troubles without need to touch "s/qmail" source, actually "s/qmail have troubles it not permit easy automation.
 
+my list of thins to repport to "fehcom" team:
 - package/man error with qmail-local
 - installation script ignore conf-svcdir value
 - script .run don't take advantage of ucspi-tcp6 conf-tcpbin file
 - 64 / 32 bit auto detection is aviable for s/qmail but put in hard value for ucspi-tcp6, may be auto for ucspi-ssl, and don't care about cdb
 - (list not close)
 
-That role try to fixe or reduse the impact of they trouble
+That role try to fixe (by the hard way) or reduse the impact of they troubles
 
 Requirements
 ------------
