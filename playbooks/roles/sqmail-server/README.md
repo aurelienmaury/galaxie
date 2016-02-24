@@ -10,7 +10,7 @@ For more informations: http://fehcom.de/sqmail/sqmail.html
 
 That role by default follow exactelly the design describ by fehcom, but convert a maximum of path, values, file for have a dynamic setting. By exemple all UID, GID, path, can be change , or be different by machine (not sure it's usefull).
 
-It role is part of Galaxie design, if you like it please not forke, try to propose a patch or e-mail me.
+It role is part of Galaxie design, if you like it project please not fork it like you go to the toilet, propose a patch or why not just send me a e-mail ?
 I'm not part of "fehcom" team, i'm just a humain it focus on Galaxie design devellopement, you are free to use my work without any warranty , may be in 50 years that work will be out-dated who know ...
 
 By default that role will done the same result as the "fehcom" documentation, that mean after all conditional test and teamplate application under Ansible all scripts, configuration files will use default as descript on "fehcom" documentation.
