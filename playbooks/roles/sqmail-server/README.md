@@ -66,7 +66,7 @@ Dependencies
 ------------
 "daemontools" from D. J. Bernstein (https://cr.yp.to/daemontools.html) should be install frist.
 
-By default the role use Debian packages "daemontools" and "daemontools-run" then have default Debian system directory path, it's the frist cause about why everything is dynamic on that role.
+By default the role use Debian packages "daemontools" and "daemontools-run" then have default Debian system directory path, it's the root cause about why everything is dynamic on that role.
 
 by exemple: glx_supervise_dir: "/var/lib/supervise" it the true Debian path, /service is /etc/service
 
