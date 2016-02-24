@@ -7,7 +7,11 @@ s/qmail (pronounced skew-mail) is a Mail Transfer Agent (MTA) based on Qmail sui
 
 More informations: http://fehcom.de/sqmail/sqmail.html
 
-That role by default follow exactelly the design describ by fehcom, but add a machime of dynamic system for permit to change every path or username.
+That role by default follow exactelly the design describ by fehcom, but convert a maximum of path, values, file for have a dynamic setting. By exemple all UID, GID, path, can be change , or be different by machine (not sure it's usefull).
+
+It role is part of Galaxie design, if you like it please not forke, try to propose a patch or e-mail me.
+I'm not part of "fehcom" team, i'm just a humain it focus on Galaxie design devellopement, you are free to use my work without any warranty , may be in 50 years that work will be out-dated who know ...
+
 By default that role will done the exact same result as the fehcom documentation, that mean all scripts, configuration files will have default value.
 All the power of that rool is the capability to use "host_vars" or "group_vars" and custom every path or value, the configuration will stay automaticlly consistent.
 Unfortunally that a feature it come with Ansible, then don't be usefull for "s/qmail" project.
@@ -16,10 +20,10 @@ I do my best for workarround troubles without need to touch "s/qmail" source, ac
 - package/man error with qmail-local
 - installation script ignore conf-svcdir value
 - script .run don't take advantage of ucspi-tcp6 conf-tcpbin file
-- 64 / 32 bit auto detection is aviable for s/qmail but put in hard value 63 for ucspi-tcp6, may be auto for ucspi-ssl, and don't care about cdb
+- 64 / 32 bit auto detection is aviable for s/qmail but put in hard value for ucspi-tcp6, may be auto for ucspi-ssl, and don't care about cdb
 - (list not close)
 
-That role try to fixe all they trouble
+That role try to fixe or reduse the impact of they trouble
 
 Requirements
 ------------
