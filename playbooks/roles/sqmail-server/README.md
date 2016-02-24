@@ -67,7 +67,7 @@ Dependencies
 "daemontools" from D. J. Bernstein (https://cr.yp.to/daemontools.html) should be install frist.
 By default the role use Debian packages "daemontools" and "daemontools-run" then have default Debian supervice directory path:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+by exemple: glx_supervise_dir: "/var/lib/supervise" it the true Debian path, /service is /etc/service
 
 Example Playbook
 ----------------
