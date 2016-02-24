@@ -2,10 +2,10 @@
 QMAILU=`id -u qmaild`
 QMAILG=`id -g qmaild`
 HOSTNAME=`hostname`
-export SMTPAUTH="+cram"
-. {{ glx_qmail_dir }}/ssl/ssl.env
+export SMTPAUTH=""
+. /var/qmail/ssl/ssl.env
 exec env PATH="/var/qmail/bin:$PATH" \
      sslserver -seV -Rp -l $HOSTNAME \
-     -Xx {{ glx_qmail_dir }}/control/rules.smtpsd.cdb \
+     -Xx /var/qmail/control/rules.smtpd.cdb \
      -u $QMAILU -g $QMAILG 0 smtps \
      qmail-smtpd qmail-authuser true 2>&1

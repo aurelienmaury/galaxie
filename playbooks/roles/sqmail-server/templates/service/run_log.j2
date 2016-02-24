@@ -1,0 +1,11 @@
+#!/bin/sh
+LOG_NAME=`basename ${PWD%/log}`
+LOG_DIR="{{ glx_multilog_dir }}/${LOG_NAME}"
+if [ ! -d "${LOG_DIR}" ]; then
+	mkdir -p "${LOG_DIR}"
+	chown {{ glx_sqmail_ids.qmaill.uname }}:{{ glx_sqmail_groups.nofiles.gname }} "${LOG_DIR}"
+	echo "Creating log dir for ${LOG_NAME}:"  
+	ls -ld "${LOG_DIR}"
+fi
+exec 2>&1
+exec setuidgid {{ glx_sqmail_ids.qmaill.uname }} multilog t s2000000 "${LOG_DIR}"

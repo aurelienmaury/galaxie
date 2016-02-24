@@ -66,16 +66,16 @@ galaxie_qmail_server_control_locals:
 galaxie_qmail_server_control_rcpthosts:
   - "{{ galaxie_qmail_server_domain }}"
 
-
-galaxie_qmail_server_control_defaultdelivery: "./Maildir/"
-galaxie_qmail_server_control_concurrencyremote: "255"
-galaxie_qmail_server_control_concurrencyincoming: "30"
-galaxie_qmail_server_control_spfbehavior: "3"
-galaxie_qmail_server_control_bouncefrom: "postmaster"
-galaxie_qmail_server_control_doublebouncehost: "{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_control_doublebounceto: "postmaster"
-galaxie_qmail_server_control_databytes: "8000000"
-galaxie_qmail_server_control_timeoutsmtpd: "30"
+glx_sqmail_maildirname: "Maildir"
+glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
+glx_sqmail_control_concurrencyremote: "255"
+glx_sqmail_control_concurrencyincoming: "30"
+glx_sqmail_control_spfbehavior: "3"
+glx_sqmail_control_bouncefrom: "postmaster"
+glx_sqmail_control_doublebouncehost: "{{ galaxie_qmail_server_domain }}"
+glx_sqmail_control_doublebounceto: "postmaster"
+glx_sqmail_control_databytes: "8000000"
+glx_sqmail_control_timeoutsmtpd: "30"
 
 # cdb
 glx_cdb_force_install: true

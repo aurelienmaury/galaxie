@@ -3,9 +3,9 @@ QMAILU=`id -u qmaild`
 QMAILG=`id -g qmaild`
 QMTPS="6209"
 HOSTNAME=`hostname`
-. {{ glx_qmail_dir }}/ssl/ssl.env
-exec env PATH="{{ glx_qmail_dir }}/bin:$PATH" \
+. /var/qmail/ssl/ssl.env
+exec env PATH="/var/qmail/bin:$PATH" \
      sslserver -seV -Rp -l $HOSTNAME \
-     -Xx {{ glx_qmail_dir }}/control/rules.qmtpsd.cdb \
+     -Xx /var/qmail/control/rules.smtpd.cdb \
      -u $QMAILU -g $QMAILG 0 $QMTPS \
      qmail-qmtpd 2>&1
