@@ -5,8 +5,8 @@
 - include: install-cdb.yml
   tags: install-cdb
 
-- include: install-ucspi-tcp-ipv6.yml
-  tags: ucspi-tcp-ipv6, install
+- include: install-ucspi-tcp6.yml
+  tags: install-ucspi-tcp6, install
 
 - include: install-ucspi-ssl.yml
   tags: ucspi-ssl, install
