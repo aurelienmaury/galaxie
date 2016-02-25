@@ -286,7 +286,7 @@ galaxie_qmail_server_openssl_subj: "/C={{ galaxie_qmail_server_openssl_cert_C }}
 
 # Alias creation
 # http://www.qmail.org/man/man5/dot-qmail.html
-galaxie_qmail_server_alias_admins_list:
+glx_sqmail_alias_admins_list:
   - name: "root"
     value:
       - "root@{{ galaxie_qmail_server_domain }}"
@@ -297,7 +297,7 @@ galaxie_qmail_server_alias_admins_list:
     value:
       - "root@{{ galaxie_qmail_server_domain }}"
       
-galaxie_qmail_server_alias_users_list:
+glx_sqmail_alias_users_list:
   - name: "lulu"
     value:
       - "lulu@galaxie.ici"

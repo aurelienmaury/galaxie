@@ -112,7 +112,7 @@ chown root:{{ galaxie_qmail_server_qmail_group }} .
 chown -R root:{{ galaxie_qmail_server_qmail_group }} alias bin boot control doc man users
 chmod -R go=u-w alias bin boot control doc man users
 
-chown {{ galaxie_qmail_server_alias_user }}:{{ galaxie_qmail_server_qmail_group }} alias
+chown {{ glx_sqmail_alias_user }}:{{ galaxie_qmail_server_qmail_group }} alias
 
 chmod 0711 bin/qmail-clean bin/qmail-getpw bin/qmail-local bin/qmail-popup \
 	bin/qmail-pw2u bin/qmail-remote bin/qmail-rspawn bin/qmail-send \
