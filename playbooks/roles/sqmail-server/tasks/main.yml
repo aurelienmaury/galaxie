@@ -9,7 +9,7 @@
   tags: install-ucspi-tcp6, install
 
 - include: install-ucspi-ssl.yml
-  tags: ucspi-ssl, install
+  tags: install-ucspi-ssl, install
 
 - include: install-sqmail.yml
   tags: install-sqmail

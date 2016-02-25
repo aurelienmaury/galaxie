@@ -96,9 +96,6 @@ glx_ucspi_tcp6_source_dir: "/usr/src"
 
 # ucspi-ssl
 glx_ucspi_ssl_force_install: true
-glx_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
-glx_ucspi_ssl_dh_parameter_file: "{{ glx_ucspi_ssl_certificates_dir }}/dhparam.pem"
-glx_ucspi_ssl_dh_bits: "2048"
 glx_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
 glx_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
 glx_ucspi_ssl_source_extension: "tgz"
@@ -106,49 +103,10 @@ glx_ucspi_ssl_source_sha256sum: "9f3bcf66546b433b089f6f340d243065beb801b97d4026e
 glx_ucspi_ssl_source_url: "{{ glx_ucspi_ssl_source_repository }}/{{ glx_ucspi_ssl_source_name }}.{{ glx_ucspi_ssl_source_extension }}"
 glx_ucspi_ssl_source_dir: "/usr/src"
 
-
-# The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
-#
-# ./src/conf-cadir
-glx_ucspi_ssl_conf_cadir_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cadir"
-# ./src/conf-cafile
-glx_ucspi_ssl_conf_cafile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cafile"
-# ./src/conf-cc.j2
-glx_ucspi_ssl_conf_cc_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cc.j2"
-# ./src/conf-ccafile
-glx_ucspi_ssl_conf_ccafile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccafile"
-# ./src/conf-ccperl
-glx_ucspi_ssl_conf_ccperl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccperl"
-# ./src/conf-certchainfile
-glx_ucspi_ssl_conf_certchainfile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certchainfile"
-# ./src/conf-certfile
-glx_ucspi_ssl_conf_certfile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-certfile"
-# ./src/conf-ciphers
-glx_ucspi_ssl_conf_ciphers_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ciphers"
-# ./src/conf-dhfile
-glx_ucspi_ssl_conf_dh_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dhfile"
-# ./src/conf-dl
-glx_ucspi_ssl_conf_dl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-dl"
-# ./src/conf-keyfile
-glx_ucspi_ssl_conf_key_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-keyfile"
-# ./src/conf-ld
-glx_ucspi_ssl_conf_ld_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ld"
-# ./src/conf-ldperl
-glx_ucspi_ssl_conf_ldperl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ldperl"
-# ./src/conf-perl
-glx_ucspi_ssl_conf_perl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-perl"
-# ./src/conf-rsa
-glx_ucspi_ssl_conf_rsa_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-rsa"
-# ./src/conf-ssl
-glx_ucspi_ssl_conf_ssl_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssl"
+glx_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
+glx_ucspi_ssl_dh_parameter_file: "{{ glx_ucspi_ssl_certificates_dir }}/dhparam.pem"
 glx_ucspi_ssl_kerberos_include_dir: "/usr/include/krb5"
-# ./src/conf-ssllib
-glx_ucspi_ssl_conf_ssllib_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ssllib"
-# ./src/conf-tcpbin
-# default /usr/local/bin
-# This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
-glx_ucspi_ssl_conf_tcpbin: "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b/src/conf-tcpbin"
-
+glx_ucspi_ssl_dh_bits: "2048"
 
 # s/qmail
 glx_sqmail_force_install: true

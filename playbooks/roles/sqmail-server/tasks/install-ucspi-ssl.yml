@@ -33,9 +33,9 @@
     sha256sum="{{ glx_ucspi_ssl_source_sha256sum }}"
   register: glx_ucspi_ssl_download
 
-- name: delete "{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b" directory
+- name: delete "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}" directory
   file:
-    path="{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b"
+    path="{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}"
     state=absent
   when: glx_ucspi_ssl_download.changed
 
@@ -48,52 +48,12 @@
 
 - name: fixe permissions
   file:
-    path="{{ glx_slashpackage_dir }}/host/superscript.com/net/ucspi-ssl-0.95b"
+    path="{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}"
     owner="root"
     group="root"
     recurse=yes
   when: glx_ucspi_ssl_download.changed
 
-#Configuration:
-#
-#The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
-
-#./src/conf-cadir
-- name: update src/conf-cadir for point to "{{ glx_ucspi_ssl_certificates_dir }}".
-  replace:
-    dest="{{ glx_ucspi_ssl_conf_cadir_file }}"
-    regexp="^/usr/local/ssl/certs"
-    replace="{{ glx_ucspi_ssl_certificates_dir }}"
-
-- name: check src/conf-cadir
-  lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_cadir_file }}"
-    line="{{ glx_ucspi_ssl_certificates_dir }}"
-    state=present
-
-#./src/conf-cafile
-# An empty name means no certificate file is compiled in.
-
-#./src/conf-cc
-
-#./src/conf-ccafile
-# An empty name means no client certificate file is compiled in.
-
-#./src/conf-ccperl
-# if auto use the ot put of `head -1 ./src/conf-perl` -MExtUtils::Embed -e ccopts
-
-#./src/conf-certchainfile
-# An empty name means no certificate file is compiled in.
-
-#./src/conf-certfile
-# This is the sslserver certificate file.
-# An empty name means no certificate file is compiled in.
-
-#./src/conf-ciphers
-# This is the list of ciphers to use.
-# An empty name means use the ciphers compiled into openssl.
-
-#./src/conf-dhfile
 # This is the sslserver DH parameter file.
 - name: check "{{ glx_ucspi_ssl_certificates_dir }}" directory
   file:
@@ -107,51 +67,30 @@
   shell: openssl dhparam -out {{ glx_ucspi_ssl_dh_parameter_file }} {{ glx_ucspi_ssl_dh_bits }}
     creates=/etc/ssl/certs/dhparam.pem
 
-- name: update src/conf-dhfile to reflect "{{ glx_ucspi_ssl_dh_parameter_file }}" DH parameter file.
-  replace:
-    dest="{{ glx_ucspi_ssl_conf_dh_file }}"
-    regexp="^/usr/local/ssl/pem/dh1024.pem"
-    replace="{{ glx_ucspi_ssl_dh_parameter_file }}"
-
-- name: check src/conf-dhfile
-  lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_dh_file }}"
-    line="{{ glx_ucspi_ssl_dh_parameter_file }}"
-    state=present
-
-#./src/conf-dl
-
-#./src/conf-keyfile
-
-#./src/conf-ld
-
-#./src/conf-ldperl
-
-#./src/conf-perl
-
-#./src/conf-rsa
-
-#./src/conf-ssl
-
-#./src/conf-ssllib
-# This will be used to compile .c files when openssl requires additional support, e.g. kerberos support on RedHat Linux.
-# default : -I /usr/kerberos/include
-- name: update src/conf-ssl for include {{ glx_ucspi_ssl_kerberos_include_dir }} .
-  replace:
-    dest="{{ glx_ucspi_ssl_conf_ssl_file }}"
-    regexp="^-I /usr/kerberos/include"
-    replace="-I {{ glx_ucspi_ssl_kerberos_include_dir }}"
-  when: ansible_os_family == "Debian"
-
-- name: check src/conf-ssl
-  lineinfile:
-    dest="{{ glx_ucspi_ssl_conf_ssl_file }}"
-    line="-I {{ glx_ucspi_ssl_kerberos_include_dir }}"
-    state=present
-  when: ansible_os_family == "Debian"
-
-#./src/conf-tcpbin
-# This is the ucspi-tcp bin directory.  The ucspi-tcp executables should appear in it.
+# send conf-* files
+- name: check conf-*
+  template:
+    src="ucspi-ssl/src/{{ item }}.j2"
+    dest="{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/{{ item }}"
+  with_items:
+    - "conf-cadir"
+    - "conf-cafile"
+    - "conf-cc"
+    - "conf-ccafile"
+    - "conf-ccperl"
+    - "conf-certchainfile"
+    - "conf-certfile"
+    - "conf-ciphers"
+    - "conf-dhfile"
+    - "conf-dl"
+    - "conf-keyfile"
+    - "conf-ld"
+    - "conf-ldperl"
+    - "conf-perl"
+    - "conf-rsa"
+    - "conf-ssl"
+    - "conf-ssllib"
+    - "conf-tcpbin"
 
 # continue by build the programme
 - name: package/compile
