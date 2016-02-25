@@ -113,8 +113,8 @@ glx_ucspi_ssl_source_dir: "/usr/src"
 glx_ucspi_ssl_conf_cadir_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cadir"
 # ./src/conf-cafile
 glx_ucspi_ssl_conf_cafile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cafile"
-# ./src/conf-cc
-glx_ucspi_ssl_conf_cc_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cc"
+# ./src/conf-cc.j2
+glx_ucspi_ssl_conf_cc_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-cc.j2"
 # ./src/conf-ccafile
 glx_ucspi_ssl_conf_ccafile_file: "{{ glx_slashpackage_dir }}/host/superscript.com/net/{{ glx_ucspi_ssl_source_name }}/src/conf-ccafile"
 # ./src/conf-ccperl
@@ -214,10 +214,7 @@ glx_sqmail_ids:
 # common setting
 glx_sqmail_service_scripts_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/service"
 glx_sqmail_conf_thing_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
-
-# package/service
-glx_sqmail_package_service_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package/service"
-glx_sqmail_package_services_d_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package/service=d"
+glx_sqmail_package_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package"
 
 # certificate
 galaxie_qmail_server_openssl_key_gen: false

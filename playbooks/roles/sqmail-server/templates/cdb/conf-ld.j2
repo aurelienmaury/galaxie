@@ -1,0 +1,7 @@
+{% if DEB_BUILD_ARCH_BITS == 64 %}gcc -s -m64
+
+This is for AMD64 architecture; use else:
+{% endif %}
+gcc -s
+
+This will be used to link .o files into an executable.

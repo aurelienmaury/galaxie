@@ -43,17 +43,33 @@
     copy=no
   when: glx_cdb_source_download.changed
 
-- name: send cdb-0.75.errno.patch to "{{ glx_cdb_source_dir }}"
-  copy:
-    src=cdb-0.75.errno.patch
-    dest="{{ glx_cdb_source_dir }}/cdb-0.75.errno.patch"
-  when: glx_cdb_source_download.changed
+#- name: send cdb-0.75.errno.patch to "{{ glx_cdb_source_dir }}"
+#  copy:
+#    src=cdb-0.75.errno.patch
+#    dest="{{ glx_cdb_source_dir }}/cdb-0.75.errno.patch"
+#  when: glx_cdb_source_download.changed
+#
+#- name: apply cdb-0.75.errno.patch
+#  shell: patch < {{ glx_cdb_source_dir }}/cdb-0.75.errno.patch
+#    chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
+#  changed_when: false
+#  when: glx_cdb_source_download.changed
 
-- name: apply cdb-0.75.errno.patch
-  shell: patch < {{ glx_cdb_source_dir }}/cdb-0.75.errno.patch
-    chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
-  changed_when: false
-  when: glx_cdb_source_download.changed
+# conf-ld -- loader options to be adjusted (for i386; AMD64 default
+- name: check DEB_BUILD_ARCH_BITS
+  shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
+  when: ansible_os_family == "Debian"
+  register: DEB_BUILD_ARCH_BITS
+
+# send conf-* files
+- name: check conf-*
+  template:
+    src="cdb/{{ item }}.j2"
+    dest="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}/{{ item }}"
+  with_items:
+    - "conf-cc"
+    - "conf-home"
+    - "conf-ld"
 
 - name: build {{ glx_cdb_app_name }} on "{{ glx_cdb_source_dir }}" directory
   shell: make
@@ -64,45 +80,3 @@
   shell: make setup check
     chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
   changed_when: false
-
-## mkauth.j2 - https://qmail.jms1.net/scripts/mkauth.j2.shtml
-#- name: installing the perl CDB_File module
-#  cpanm: name=CDB_File
-#  tags: cdb
-#
-#- name: installing the perl Getopt::Std module
-#  cpanm: name=Getopt::Std
-#  tags: cdb
-#
-#- name: resets permissions in Perl's default library path so that everything is owned by root ...
-#  script: pfix
-#  changed_when: false
-#  tags: cdb
-#
-#- name: check is mkauth is present
-#  template:
-#    src=mkauth.j2
-#    dest=/usr/local/bin/mkauth
-#    owner=root
-#    group=root
-#    mode=0755
-#  tags: cdb
-#
-#- name: list user
-#  shell: /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/new.tmp
-#  changed_when: false
-#  tags: cdb
-#
-#- name: check "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem" permissions
-#  file:
-#    path="{{ galaxie_qmail_server_qmail_dir }}/control/new.cdb"
-#    owner=root
-#    group={{ galaxie_qmail_server_nofiles_group }}
-#    mode=0640
-#  changed_when: false
-#  tags: cdb
-#
-#- name: mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
-#  shell: mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
-#  changed_when: false
-#  tags: cdb

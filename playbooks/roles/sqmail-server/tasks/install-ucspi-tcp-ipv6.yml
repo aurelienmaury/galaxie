@@ -70,7 +70,7 @@
 
 - name: check src/conf-ld file "{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
   template:
-    src="ucspi-tcp6-conf-ld.j2"
+    src="conf-ld.j2"
     dest="{{ glx_slashpackage_dir }}/host/ucspi-tcp6-1.00/src/conf-ld"
 
 - name: package/install
