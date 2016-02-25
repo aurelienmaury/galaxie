@@ -3,8 +3,8 @@ QMAILU=`id -u {{ glx_sqmail_ids.qmaild.uname }}`
 QMAILG=`id -g {{ glx_sqmail_ids.qmaild.uname }}`
 HOSTNAME=`hostname`
 QMQP="628"
-exec env PATH="{{ glx_qmail_dir }}/bin:$PATH" \
+exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      tcpserver -v -Rp -l $HOSTNAME \
-     -Xx {{ glx_qmail_dir }}/control/rules.qmqpd.cdb \
+     -Xx {{ glx_sqmail_dir }}/control/rules.qmqpd.cdb \
      -u $QMAILU -g $QMAILG 0 $QMQP \
      qmail-qmqpd 2>&1

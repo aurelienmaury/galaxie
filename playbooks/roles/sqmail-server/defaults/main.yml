@@ -213,6 +213,7 @@ glx_sqmail_ids:
 # The basic s/qmail configuration is done by means of conf-XX files (in alphabetic order):
 #
 # conf-break -- usually the character '-' for VERP addresses
+glx_sqmail_service_scripts_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/service"
 glx_sqmail_conf_break_path: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/conf-break"
 
 # conf-cc -- compiler (no change required)

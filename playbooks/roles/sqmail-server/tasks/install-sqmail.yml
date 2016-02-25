@@ -189,5 +189,23 @@
 # enable or disable service
 - name: check "{{ glx_sqmail_package_services_d_path }}"
   template:
-    src="sqmail-package/service=d.j2"
+    src="sqmail-package/services=d.j2"
     dest="{{ glx_sqmail_package_services_d_path }}"
+
+# send scripts
+- name: check scripts
+  template:
+    src="service/{{ item }}.j2"
+    dest="{{ glx_sqmail_service_scripts_dir }}/{{ item }}"
+  with_items:
+    - "run_log"
+    - "run_pop3d"
+    - "run_pop3sd"
+    - "run_qmqpd"
+    - "run_qmtpd"
+    - "run_qmtpsd"
+    - "run_send"
+    - "run_smtpd"
+    - "run_smtpsd"
+    - "run_smtpsub"
+    - "ssl.env"

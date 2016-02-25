@@ -4,8 +4,8 @@ QMAILG=`id -g {{ glx_sqmail_ids.qmaild.uname }}`
 HOSTNAME=`hostname`
 export SMTPAUTH="!"
 export UCSPITLS=""
-. {{ glx_qmail_dir }}/ssl/ssl.env
-exec env PATH="{{ glx_qmail_dir }}/bin:$PATH" \
+. {{ glx_sqmail_dir }}/ssl/ssl.env
+exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      sslserver -seVn -Rp -l $HOSTNAME \
      -u $QMAILU -g $QMAILG 0 submission \
      qmail-smtpd qmail-authuser true 2>&1
