@@ -52,19 +52,28 @@
 #- include: config-openssl.yml
 #  when: galaxie_qmail_server_config_smtpsd_ipv4 or galaxie_qmail_server_config_smtpsd_ipv6
 #  tags: config
-#
-#- include: config-smtpsd-ipv4.yml
-#  when: galaxie_qmail_server_config_smtpsd_ipv4
-#  tags: config
-#- include: remove-smtpsd-ipv4.yml
-#  when: not galaxie_qmail_server_config_smtpsd_ipv4
-#- include: config-smtpsd-ipv6.yml
-#  when: galaxie_qmail_server_config_smtpsd_ipv6
-#  tags: config
-#- include: remove-smtpsd-ipv6.yml
-#  when: not galaxie_qmail_server_config_smtpsd_ipv6
-#
-#
+
+
+
+
+
+
+#svc:{{ glx_sqmail_service_smtp.name }}:{{ glx_sqmail_service_smtp.directory }}:{{ glx_sqmail_service_smtp.script }}
+#svc:{{ glx_sqmail_service_smtps.name }}:{{ glx_sqmail_service_smtps.directory }}:{{ glx_sqmail_service_smtps.script }}
+#svc:{{ glx_sqmail_service_submission.name }}:{{ glx_sqmail_service_submission.directory }}:{{ glx_sqmail_service_submission.script }}
+#svc:{{ glx_sqmail_service_pop3.name }}:{{ glx_sqmail_service_pop3.directory }}:{{ glx_sqmail_service_pop3.script }}
+#svc:{{ glx_sqmail_service_pop3s.name }}:{{ glx_sqmail_service_pop3s.directory }}:{{ glx_sqmail_service_pop3s.script }}
+#svc:{{ glx_sqmail_service_qmqp.name }}:{{ glx_sqmail_service_qmqp.directory }}:{{ glx_sqmail_service_qmqp.script }}
+#svc:{{ glx_sqmail_service_qmtp.name }}:{{ glx_sqmail_service_qmtp.directory }}:{{ glx_sqmail_service_qmtp.script }}
+#svc:{{ glx_sqmail_service_qmtps.name }}:{{ glx_sqmail_service_qmtps.directory }}:{{ glx_sqmail_service_qmtps.script }}
+
+- include: uninstall-a-service.yml
+  vars:
+     glx_service_to_check= "{{ item }}"
+  with_items: glx_sqmail_aviable_services_list
+  tags: cleanup
+
+
 ## finilize
 #- include: config-man.yml
 #  tags: config-man

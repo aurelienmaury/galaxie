@@ -1,5 +1,5 @@
 ---
-# qmail-send
+
 - name: restart qmail-send
   service:
     name={{ galaxie_qmail_server_service_send }}

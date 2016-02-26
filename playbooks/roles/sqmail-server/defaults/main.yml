@@ -6,6 +6,9 @@ glx_supervise_dir: "/var/lib/supervise"
 glx_service_dir: "/etc/service"
 glx_multilog_dir: "/var/multilog"
 
+
+
+
 glx_sqmail_service_send:
   enable: true
   name: "send"
@@ -59,6 +62,17 @@ glx_sqmail_service_qmtps:
   name: "qmtps"
   directory: "qmail-qmtpsd"
   script: "run_qmtpsd"
+
+glx_sqmail_aviable_services_list:
+  - "{{ glx_sqmail_service_send }}"
+  - "{{ glx_sqmail_service_smtp }}"
+  - "{{ glx_sqmail_service_smtps }}"
+  - "{{ glx_sqmail_service_submission }}"
+  - "{{ glx_sqmail_service_pop3 }}"
+  - "{{ glx_sqmail_service_pop3s }}"
+  - "{{ glx_sqmail_service_qmqp }}"
+  - "{{ glx_sqmail_service_qmtp }}"
+  - "{{ glx_sqmail_service_qmtps }}"
 
 # qmail-scanner
 glx_sqmail_qmail_scanner_user: "clamav"
