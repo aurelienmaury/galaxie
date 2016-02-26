@@ -8,64 +8,64 @@ glx_multilog_dir: "/var/multilog"
 
 
 
-galaxie_qmail_server_service_name: "qmail"
-galaxie_qmail_server_service_send: "qmail-send"
-galaxie_qmail_server_service_smtpd_ipv4: "qmail-smtpd-ipv4"
-galaxie_qmail_server_service_smtpd_ipv6: "qmail-smtpd-ipv6"
-galaxie_qmail_server_service_smtpsd_ipv4: "qmail-smtpsd-ipv4"
-galaxie_qmail_server_service_smtpsd_ipv6: "qmail-smtpsd-ipv6"
-galaxie_qmail_server_service_ipv4: "{{ ansible_default_ipv4.address }}"
-galaxie_qmail_server_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
-galaxie_qmail_server_service_ipv6_interface: "eth0"
+glx_sqmail_service_name: "qmail"
+glx_sqmail_service_send: "qmail-send"
+glx_sqmail_service_smtpd_ipv4: "qmail-smtpd-ipv4"
+glx_sqmail_service_smtpd_ipv6: "qmail-smtpd-ipv6"
+glx_sqmail_service_smtpsd_ipv4: "qmail-smtpsd-ipv4"
+glx_sqmail_service_smtpsd_ipv6: "qmail-smtpsd-ipv6"
+glx_sqmail_service_ipv4: "{{ ansible_default_ipv4.address }}"
+glx_sqmail_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
+glx_sqmail_service_ipv6_interface: "eth0"
 
 
 
 # qmail-scanner
-galaxie_qmail_server_qmail_scanner_user: "clamav"
+glx_sqmail_qmail_scanner_user: "clamav"
 
 # simscan
-galaxie_qmail_server_simscan_user: "simscan"
-galaxie_qmail_server_simscan_group: "simscan"
+glx_sqmail_simscan_user: "simscan"
+glx_sqmail_simscan_group: "simscan"
 
 # Special
 
 # via systemd
-galaxie_qmail_server_config_send: true
-galaxie_qmail_server_config_smtpd: true
+glx_sqmail_config_send: true
+glx_sqmail_config_smtpd: true
 
 # via dameon tools
-galaxie_qmail_server_config_smtpd_ipv4: true
-galaxie_qmail_server_config_smtpd_ipv6: false
-galaxie_qmail_server_config_smtpsd_ipv4: true
-galaxie_qmail_server_config_smtpsd_ipv6: false
+glx_sqmail_config_smtpd_ipv4: true
+glx_sqmail_config_smtpd_ipv6: false
+glx_sqmail_config_smtpsd_ipv4: true
+glx_sqmail_config_smtpsd_ipv6: false
 
 # special - antispam
-galaxie_qmail_server_config_qmail_scanner: false
-galaxie_qmail_server_config_simscan: false
+glx_sqmail_config_qmail_scanner: false
+glx_sqmail_config_simscan: false
 # special - smtproutes
-galaxie_qmail_server_set_smtproutes: false
-galaxie_qmail_server_control_smtproutes: ""
+glx_sqmail_set_smtproutes: false
+glx_sqmail_control_smtproutes: ""
 # special - virtualdomains
-galaxie_qmail_server_set_virtualdomains: false
-galaxie_qmail_server_control_virtualdomains: ""
+glx_sqmail_set_virtualdomains: false
+glx_sqmail_control_virtualdomains: ""
 # special - scripts
-galaxie_qmail_server_install_qmailctl: true
-galaxie_qmail_server_install_qfixpermissions: true
+glx_sqmail_install_qmailctl: true
+glx_sqmail_install_qfixpermissions: true
 
 # Control
-galaxie_qmail_server_domain: "galaxie.ici"
-galaxie_qmail_server_control_me: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_control_defaultdomain: "{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_control_plusdomain: "{{ galaxie_qmail_server_domain }}"
+glx_sqmail_domain: "galaxie.ici"
+glx_sqmail_control_me: "{{ ansible_hostname }}.{{ glx_sqmail_domain }}"
+glx_sqmail_control_defaultdomain: "{{ glx_sqmail_domain }}"
+glx_sqmail_control_plusdomain: "{{ glx_sqmail_domain }}"
 
-galaxie_qmail_server_control_locals:
+glx_sqmail_control_locals:
   - "localhost"
   - "localhost.localdomain"
   - "{{ ansible_hostname }}"
-  - "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
-  - "{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_control_rcpthosts:
-  - "{{ galaxie_qmail_server_domain }}"
+  - "{{ ansible_hostname }}.{{ glx_sqmail_domain }}"
+  - "{{ glx_sqmail_domain }}"
+glx_sqmail_control_rcpthosts:
+  - "{{ glx_sqmail_domain }}"
 
 glx_sqmail_maildirname: "Maildir"
 glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
@@ -73,7 +73,7 @@ glx_sqmail_control_concurrencyremote: "255"
 glx_sqmail_control_concurrencyincoming: "30"
 glx_sqmail_control_spfbehavior: "3"
 glx_sqmail_control_bouncefrom: "postmaster"
-glx_sqmail_control_doublebouncehost: "{{ galaxie_qmail_server_domain }}"
+glx_sqmail_control_doublebouncehost: "{{ glx_sqmail_domain }}"
 glx_sqmail_control_doublebounceto: "postmaster"
 glx_sqmail_control_databytes: "8000000"
 glx_sqmail_control_timeoutsmtpd: "30"
@@ -175,29 +175,29 @@ glx_sqmail_conf_thing_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail
 glx_sqmail_package_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package"
 
 # certificate
-galaxie_qmail_server_openssl_key_gen: false
-galaxie_qmail_server_openssl_key_bit: "2048"
-galaxie_qmail_server_openssl_key_days: "3650"
-galaxie_qmail_server_openssl_cert_C: "FR"
-galaxie_qmail_server_openssl_cert_ST: "Ile-de-France"
-galaxie_qmail_server_openssl_cert_L: "Paris"
-galaxie_qmail_server_openssl_cert_O: "Galaxie"
-galaxie_qmail_server_openssl_cert_OU: "IT"
-galaxie_qmail_server_openssl_cert_CN: "{{ ansible_hostname }}.{{ galaxie_qmail_server_domain }}"
-galaxie_qmail_server_openssl_subj: "/C={{ galaxie_qmail_server_openssl_cert_C }}/ST={{ galaxie_qmail_server_openssl_cert_ST }}/L={{ galaxie_qmail_server_openssl_cert_L }}/O={{ galaxie_qmail_server_openssl_cert_O }}/OU={{ galaxie_qmail_server_openssl_cert_OU }}/CN={{ galaxie_qmail_server_openssl_cert_CN }}"
+glx_sqmail_openssl_key_gen: false
+glx_sqmail_openssl_key_bit: "2048"
+glx_sqmail_openssl_key_days: "3650"
+glx_sqmail_openssl_cert_C: "FR"
+glx_sqmail_openssl_cert_ST: "Ile-de-France"
+glx_sqmail_openssl_cert_L: "Paris"
+glx_sqmail_openssl_cert_O: "Galaxie"
+glx_sqmail_openssl_cert_OU: "IT"
+glx_sqmail_openssl_cert_CN: "{{ ansible_hostname }}.{{ glx_sqmail_domain }}"
+glx_sqmail_openssl_subj: "/C={{ glx_sqmail_openssl_cert_C }}/ST={{ glx_sqmail_openssl_cert_ST }}/L={{ glx_sqmail_openssl_cert_L }}/O={{ glx_sqmail_openssl_cert_O }}/OU={{ glx_sqmail_openssl_cert_OU }}/CN={{ glx_sqmail_openssl_cert_CN }}"
 
 # Alias creation
 # http://www.qmail.org/man/man5/dot-qmail.html
 glx_sqmail_alias_admins_list:
   - name: "root"
     value:
-      - "root@{{ galaxie_qmail_server_domain }}"
+      - "root@{{ glx_sqmail_domain }}"
   - name: "postmaster"
     value:
-      - "root@{{ galaxie_qmail_server_domain }}"
+      - "root@{{ glx_sqmail_domain }}"
   - name: "mailer-daemon"
     value:
-      - "root@{{ galaxie_qmail_server_domain }}"
+      - "root@{{ glx_sqmail_domain }}"
       
 glx_sqmail_alias_users_list:
   - name: "lulu"

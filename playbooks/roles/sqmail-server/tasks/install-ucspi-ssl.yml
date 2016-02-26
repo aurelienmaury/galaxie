@@ -1,13 +1,13 @@
 ---
 - name: install packages for ucspi-ssl building
   apt:
-    pkg={{ item }}
+    pkg="{{ item }}"
     state=present
   with_items:
-    - build-essential
-    - libssl-dev
-    - libperl-dev
-    - libkrb5-dev
+    - "build-essential"
+    - "libssl-dev"
+    - "libperl-dev"
+    - "libkrb5-dev"
 
 - name: check {{ glx_slashpackage_dir }} directory
   file:
@@ -58,8 +58,8 @@
 - name: check "{{ glx_ucspi_ssl_certificates_dir }}" directory
   file:
     path="{{ glx_ucspi_ssl_certificates_dir }}"
-    owner=root
-    group=root
+    owner="root"
+    group="root"
     state=directory
     mode=0755
 
