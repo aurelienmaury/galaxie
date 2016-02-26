@@ -1,12 +1,12 @@
-svc:send:qmail-send:run_send
-svc:smtp:qmail-smtpd:run_smtpd
-svc:smtps:qmail-smtpsd:run_smtpsd
-svc:submission:qmail-smtpsub:run_smtpsub
-svc:pop3:qmail-pop3d:run_pop3d
-svc:pop3s:qmail-pop3sd:run_pop3sd
-#svc:qmqp:qmail-qmqpd:run_qmqpd 
-#svc:qmtp:qmail-qmtpd:run_qmtpd 
-#svc:qmtps:qmail-qmtpsd:run_qmtpsd
+svc:{{ glx_sqmail_service_send.name }}:{{ glx_sqmail_service_send.directory }}:{{ glx_sqmail_service_send.script }}
+svc:{{ glx_sqmail_service_smtp.name }}:{{ glx_sqmail_service_smtp.directory }}:{{ glx_sqmail_service_smtp.script }}
+svc:{{ glx_sqmail_service_smtps.name }}:{{ glx_sqmail_service_smtps.directory }}:{{ glx_sqmail_service_smtps.script }}
+svc:{{ glx_sqmail_service_submission.name }}:{{ glx_sqmail_service_submission.directory }}:{{ glx_sqmail_service_submission.script }}
+svc:{{ glx_sqmail_service_pop3.name }}:{{ glx_sqmail_service_pop3.directory }}:{{ glx_sqmail_service_pop3.script }}
+svc:{{ glx_sqmail_service_pop3s.name }}:{{ glx_sqmail_service_pop3s.directory }}:{{ glx_sqmail_service_pop3s.script }}
+svc:{{ glx_sqmail_service_qmqp.name }}:{{ glx_sqmail_service_qmqp.directory }}:{{ glx_sqmail_service_qmqp.script }}
+svc:{{ glx_sqmail_service_qmtp.name }}:{{ glx_sqmail_service_qmtp.directory }}:{{ glx_sqmail_service_qmtp.script }}
+svc:{{ glx_sqmail_service_qmtps.name }}:{{ glx_sqmail_service_qmtps.directory }}:{{ glx_sqmail_service_qmtps.script }}
 
 s/qmail supports those svc services listed after the fist colon.
 The part after the second colon referes to the service-name of the 
