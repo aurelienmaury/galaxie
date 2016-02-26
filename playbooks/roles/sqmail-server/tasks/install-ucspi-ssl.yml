@@ -67,6 +67,12 @@
   shell: openssl dhparam -out {{ glx_ucspi_ssl_dh_parameter_file }} {{ glx_ucspi_ssl_dh_bits }}
     creates=/etc/ssl/certs/dhparam.pem
 
+- name: check DEB_BUILD_ARCH
+  shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
+  when: ansible_os_family == "Debian"
+  register: DEB_BUILD_ARCH
+  changed_when: false
+
 # send conf-* files
 - name: check conf-*
   template:

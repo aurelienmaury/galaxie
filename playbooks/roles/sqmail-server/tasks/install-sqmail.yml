@@ -64,11 +64,12 @@
     recurse=yes
   when: glx_sqmail_download.changed
 
-# conf-ld -- loader options to be adjusted (for i386; AMD64 default
-- name: check DEB_BUILD_ARCH_BITS
+# conf-ld -- loader options to be adjusted (for i386; AMD64 normaly default)
+- name: check DEB_BUILD_ARCH
   shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
   when: ansible_os_family == "Debian"
-  register: DEB_BUILD_ARCH_BITS
+  register: DEB_BUILD_ARCH
+  changed_when: false
 
 # send conf-* files
 - name: check conf-*
@@ -77,7 +78,7 @@
     dest="{{ glx_sqmail_conf_thing_dir }}/{{ item }}"
   with_items:
     - "conf-break"
-    - "conf-cc.j2"
+    - "conf-cc"
     - "conf-delivery"
     - "conf-djbdns"
     - "conf-groups"
@@ -120,4 +121,4 @@
     dest="{{ glx_sqmail_package_dir }}/{{ item }}"
   with_items:
     - "service"
-    - "service=d"
+    - "services=d"

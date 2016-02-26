@@ -63,10 +63,11 @@
     recurse=yes
   when: glx_ucspi_tcp6_download.changed
 
-- name: check DEB_BUILD_ARCH_BITS
+# conf-ld -- loader options to be adjusted (for i386; AMD64 normalydefault)
+- name: check DEB_BUILD_ARCH
   shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
   when: ansible_os_family == "Debian"
-  register: DEB_BUILD_ARCH_BITS
+  register: DEB_BUILD_ARCH
   changed_when: false
 
 # send conf-* files

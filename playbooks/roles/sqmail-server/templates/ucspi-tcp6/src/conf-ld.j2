@@ -1,8 +1,9 @@
-{% if DEB_BUILD_ARCH_BITS == 64 %}gcc -s -m64
+{% if "amd64" in DEB_BUILD_ARCH.stdout %}gcc -s -m64
 
+This is for AMD64 architecture; use else:
 {% endif %}
 gcc -s
 
-clang -s {% if DEB_BUILD_ARCH_BITS == 64 %}-m64{% endif %}
+clang -s {% if "amd64" in DEB_BUILD_ARCH.stdout %}-m64{% endif %}
 
 This will be used to link .o files into an executable.
