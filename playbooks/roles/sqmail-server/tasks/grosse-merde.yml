@@ -1,0 +1,12 @@
+---
+- name: test {{ glx_service_to_check.name }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_service_to_check.directory }}
+  register: st
+
+#- debug: msg="{{ glx_service_to_check }}"
+
+- name: svc -dx {{ glx_service_to_check.directory }}
+  shell: svc -dx {{ glx_service_dir }}/{{ glx_service_to_check.directory }}
+  when: st.stat.exists and not glx_service_to_check.enable
+
