@@ -18,6 +18,8 @@
     - build-essential
     - libssl-dev
     - libperl-dev
+    - daemontools
+    - daemontools-run
 
 - name: check {{ glx_slashpackage_dir }} directory
   file:
@@ -122,3 +124,8 @@
   with_items:
     - "service"
     - "services=d"
+
+- name: package/install
+  shell: package/install
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed

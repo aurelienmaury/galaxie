@@ -4,103 +4,211 @@
 # chkconfig: - 80 30
 # description: the qmail MTA
 
-PATH={{ galaxie_qmail_server_qmail_dir }}/bin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
+PATH={{ glx_sqmail_dir }}/bin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
 export PATH
 
 QMAILDUID=`id -u qmaild`
 NOFILESGID=`id -g qmaild`
 
+COLOR_GREEN="\e[92m"
+COLOR_YELLOW="\e[93m"
+COLOR_RED="\e[91m"
+COLOR_DEFAULT="\e[39m"
+
+BOLD="\e[1m"
+BOLD_RST="e[22m"
+
+SERVICE_TEXT="s/qmail"
+
 case "$1" in
   start)
-    echo "Starting qmail"
-{% if galaxie_qmail_server_config_send %}
-    if svok /etc/service/{{ galaxie_qmail_server_service_send }} ; then
-      svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo -e "Starting $BOLD $SERVICE_TEXT $BOLD_RST"
+{% if glx_sqmail_service_send.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} ; then
+      echo "  {{ glx_sqmail_service_send.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
     else
-      echo "{{ galaxie_qmail_server_service_send }} delivery service not running"
+      echo "{{ glx_sqmail_service_send.name }} not running"
     fi
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    if svok /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} ; then
-      svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} ; then
+      echo "  {{ glx_sqmail_service_smtp.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
     else
-      echo "{{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP service not running"
+      echo "{{ glx_sqmail_service_smtp.name }} not running"
     fi
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    if svok /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} ; then
-      svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} ; then
+      echo "  {{ glx_sqmail_service_smtps.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
     else
-      echo "{{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS service not running"
+      echo "{{ glx_sqmail_service_smtps.name }} not running"
     fi
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    if svok /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} ; then
-      svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} ; then
+      echo "  {{ glx_sqmail_service_submission.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
     else
-      echo "{{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP service not running"
+      echo "{{ glx_sqmail_service_submission.name }} not running"
     fi
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    if svok /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} ; then
-      svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} ; then
+      echo "  {{ glx_sqmail_service_pop3.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
     else
-      echo "{{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS service not running"
+      echo "{{ glx_sqmail_service_pop3.name }} not running"
+    fi
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} ; then
+      echo "  {{ glx_sqmail_service_pop3s.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+    else
+      echo "{{ glx_sqmail_service_pop3s.name }} not running"
+    fi
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} ; then
+      echo "  {{ glx_sqmail_service_qmqp.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+    else
+      echo "{{ glx_sqmail_service_qmqp.name }} not running"
+    fi
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} ; then
+      echo "  {{ glx_sqmail_service_qmtp.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+    else
+      echo "{{ glx_sqmail_service_qmtp.name }} not running"
+    fi
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    if svok {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} ; then
+      echo "  {{ glx_sqmail_service_qmtps.name }}"
+      svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
+    else
+      echo "{{ glx_sqmail_service_qmtps.name }} not running"
     fi
 {% endif %}
     if [ -d /var/lock/subsys ]; then
-      touch /var/lock/subsys/qmail
+      touch /var/lock/subsys/sqmail
     fi
     ;;
   stop)
     echo "Stopping qmail..."
-{% if galaxie_qmail_server_config_send %}
-    echo "  {{ galaxie_qmail_server_service_send }} delivery service"
-    svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% if glx_sqmail_service_send.enable %}
+    echo "  {{ glx_sqmail_service_send.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "  {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    echo "  {{ glx_sqmail_service_smtp.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "  {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    echo "  {{ glx_sqmail_service_smtps.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    echo "  {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    echo "  {{ glx_sqmail_service_submission.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    echo "  {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    echo "  {{ glx_sqmail_service_pop3.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}
 {% endif %}
-    if [ -f /var/lock/subsys/qmail ]; then
-      rm /var/lock/subsys/qmail
+{% if glx_sqmail_service_pop3s.enable %}
+    echo "  {{ glx_sqmail_service_pop3s.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    echo "  {{ glx_sqmail_service_qmqp.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    echo "  {{ glx_sqmail_service_qmtp.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    echo "  {{ glx_sqmail_service_qmtps.name }}"
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}
+{% endif %}
+    if [ -f /var/lock/subsys/sqmail ]; then
+      rm /var/lock/subsys/sqmail
     fi
     ;;
   stat)
-{% if galaxie_qmail_server_config_send %}
-	svstat /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% if glx_sqmail_service_send.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-	svstat /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-	svstat /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-	svstat /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-	svstat /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    svstat {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
 {% endif %}
 	qmail-qstat
     ;;
   doqueue|alrm|flush)
     echo "Flushing timeout table and sending ALRM signal to qmail."
-    {{ galaxie_qmail_server_qmail_dir }}/bin/qmail-tcpok
-{% if galaxie_qmail_server_config_send %}
-    svc -a /etc/service/{{ galaxie_qmail_server_service_send }}
+    {{ glx_sqmail_dir }}/bin/qmail-tcpok
+{% if glx_sqmail_service_send.enable %}
+    echo "  {{ glx_sqmail_service_send.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}
+{% endif %}
+{% if glx_sqmail_service_smtp.enable %}
+    echo "  {{ glx_sqmail_service_smtp.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}
+{% endif %}
+{% if glx_sqmail_service_smtps.enable %}
+    echo "  {{ glx_sqmail_service_smtps.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}
+{% endif %}
+{% if glx_sqmail_service_submission.enable %}
+    echo "  {{ glx_sqmail_service_submission.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}
+{% endif %}
+{% if glx_sqmail_service_pop3.enable %}
+    echo "  {{ glx_sqmail_service_pop3.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    echo "  {{ glx_sqmail_service_pop3s.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    echo "  {{ glx_sqmail_service_qmqp.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    echo "  {{ glx_sqmail_service_qmtp.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    echo "  {{ glx_sqmail_service_qmtps.name }}"
+    svc -a {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}
 {% endif %}
     ;;
   queue)
@@ -108,162 +216,230 @@ case "$1" in
     qmail-qread
     ;;
   reload|hup)
-    echo "Sending HUP signal to qmail."
-{% if galaxie_qmail_server_config_send %}
-    echo "  {{ galaxie_qmail_server_service_send }} delivery service"
-    svc -h /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "Sending HUP signal to s/qmail."
+{% if glx_sqmail_service_send.enable %}
+    echo "  {{ glx_sqmail_service_send.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "  {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
-    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    echo "  {{ glx_sqmail_service_smtp.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "  {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
-    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    echo "  {{ glx_sqmail_service_smtps.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    echo "  {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
-    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    echo "  {{ glx_sqmail_service_submission.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    echo "  {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
-    svc -h /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    echo "  {{ glx_sqmail_service_pop3.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    echo "  {{ glx_sqmail_service_pop3s.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    echo "  {{ glx_sqmail_service_qmqp.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    echo "  {{ glx_sqmail_service_qmtp.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    echo "  {{ glx_sqmail_service_qmtps.name }}"
+    svc -h {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
 {% endif %}
     ;;
   pause)
-{% if galaxie_qmail_server_config_send %}
-    echo "Pausing {{ galaxie_qmail_server_service_send }} delivery service"
-    svc -p /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "Sending Pause signal to s/qmail."
+{% if glx_sqmail_service_send.enable %}
+    echo "  {{ glx_sqmail_service_send.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "Pausing {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
-    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    echo "  {{ glx_sqmail_service_smtp.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "Pausing {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
-    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    echo "  {{ glx_sqmail_service_smtps.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    echo "Pausing {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
-    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    echo "  {{ glx_sqmail_service_submission.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    echo "Pausing {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
-    svc -p /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    echo "  {{ glx_sqmail_service_pop3.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    echo "  {{ glx_sqmail_service_pop3s.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    echo "  {{ glx_sqmail_service_qmqp.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    echo "  {{ glx_sqmail_service_qmtp.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    echo "  {{ glx_sqmail_service_qmtps.name }}"
+    svc -p {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
 {% endif %}
     ;;
   cont)
-{% if galaxie_qmail_server_config_send %}
-    echo "Continuing {{ galaxie_qmail_server_service_send }} delivery service"
-    svc -c /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+    echo "Sending Continue signal to s/qmail."
+{% if glx_sqmail_service_send.enable %}
+    echo "  {{ glx_sqmail_service_send.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "Continuing {{ galaxie_qmail_server_service_smtpd_ipv4 }} SMTP"
-    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    echo "  {{ glx_sqmail_service_smtp.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "Continuing {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SMTPS"
-    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    echo "  {{ glx_sqmail_service_smtps.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    echo "Continuing {{ galaxie_qmail_server_service_smtpd_ipv6 }} SMTP"
-    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    echo "  {{ glx_sqmail_service_submission.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    echo "Continuing {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SMTPS"
-    svc -c /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    echo "  {{ glx_sqmail_service_pop3.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    echo "  {{ glx_sqmail_service_pop3s.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    echo "  {{ glx_sqmail_service_qmqp.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    echo "  {{ glx_sqmail_service_qmtp.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    echo "  {{ glx_sqmail_service_qmtps.name }}"
+    svc -c {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
 {% endif %}
     ;;
   restart)
     echo "Restarting qmail:"
-{% if galaxie_qmail_server_config_send %}
-    echo "* Stopping {{ galaxie_qmail_server_service_send }}."
-    svc -d /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
-    echo "* Sending {{ galaxie_qmail_server_service_send }} SIGTERM and restarting."
-    svc -t /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
-    echo "* Restarting qmail."
-    svc -u /etc/service/{{ galaxie_qmail_server_service_send }} /etc/service/{{ galaxie_qmail_server_service_send }}/log
+{% if glx_sqmail_service_send.enable %}
+    echo "* Stopping {{ glx_sqmail_service_send.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_send.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
+    echo "* Restarting glx_sqmail_service_send.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "* Stopping {{ galaxie_qmail_server_service_smtpd_ipv4 }}."
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
-    echo "* Sending {{ galaxie_qmail_server_service_smtpd_ipv4 }} SIGTERM and restarting."
-    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
-    echo "* Restarting {{ galaxie_qmail_server_service_smtpd_ipv4 }}."
-    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}/log
+{% if glx_sqmail_service_smtp.enable %}
+    echo "* Stopping {{ glx_sqmail_service_smtp.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_smtp.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
+    echo "* Restarting glx_sqmail_service_smtp.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "* Stopping {{ galaxie_qmail_server_service_smtpsd_ipv4 }}."
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
-    echo "* Sending {{ galaxie_qmail_server_service_smtpsd_ipv4 }} SIGTERM and restarting."
-    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
-    echo "* Restarting {{ galaxie_qmail_server_service_smtpsd_ipv4 }}."
-    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}/log
+{% if glx_sqmail_service_smtps.enable %}
+    echo "* Stopping {{ glx_sqmail_service_smtps.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_smtps.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
+    echo "* Restarting glx_sqmail_service_smtps.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    echo "* Stopping {{ galaxie_qmail_server_service_smtpd_ipv6 }}."
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
-    echo "* Sending {{ galaxie_qmail_server_service_smtpd_ipv6 }} SIGTERM and restarting."
-    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
-    echo "* Restarting {{ galaxie_qmail_server_service_smtpd_ipv6 }} smtpd."
-    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}/log
+{% if glx_sqmail_service_submission.enable %}
+    echo "* Stopping {{ glx_sqmail_service_submission.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_submission.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
+    echo "* Restarting glx_sqmail_service_submission.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    echo "* Stopping {{ galaxie_qmail_server_service_smtpsd_ipv6 }}."
-    svc -d /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
-    echo "* Sending {{ galaxie_qmail_server_service_smtpsd_ipv6 }} SIGTERM and restarting."
-    svc -t /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
-    echo "* Restarting {{ galaxie_qmail_server_service_smtpsd_ipv6 }}."
-    svc -u /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }} /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}/log
+{% if glx_sqmail_service_pop3.enable %}
+    echo "* Stopping {{ glx_sqmail_service_pop3.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_pop3.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+    echo "* Restarting glx_sqmail_service_pop3.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_pop3s.enable %}
+    echo "* Stopping {{ glx_sqmail_service_pop3s.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_pop3s.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+    echo "* Restarting glx_sqmail_service_pop3s.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    echo "* Stopping {{ glx_sqmail_service_qmqp.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_qmqp.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+    echo "* Restarting glx_sqmail_service_qmqp.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    echo "* Stopping {{ glx_sqmail_service_qmtp.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_qmtp.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+    echo "* Restarting glx_sqmail_service_qmtp.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    echo "* Stopping {{ glx_sqmail_service_qmtps.name }}."
+    svc -d {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
+    echo "* Sending {{ glx_sqmail_service_qmtps.name }} SIGTERM and restarting."
+    svc -t {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
+    echo "* Restarting glx_sqmail_service_qmtps.name."
+    svc -u {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
 {% endif %}
     ;;
   cdb)
 {% if galaxie_qmail_server_config_smtpd_ipv4 %}
     echo "Build smptpd tcp.cdb file ..."
-    cd /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+    cd {{ glx_service_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make
 {% endif %}
 {% if galaxie_qmail_server_config_smtpsd_ipv4 %}
     echo "Build smptpsd tcp.cdb file ..."
-    cd /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
-    cp ./tcp ./tcp.bkp
-    chmod 644 ./tcp.cdb
-    make
-{% endif %}
-{% if galaxie_qmail_server_config_smtpd_ipv6 %}
-    echo "Build smptpd tcp.cdb file ..."
-    cd /etc/service/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
-    cp ./tcp ./tcp.bkp
-    chmod 644 ./tcp.cdb
-    make
-{% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv6 %}
-    echo "Build smptpsd tcp.cdb file ..."
-    cd /etc/service/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
+    cd {{ glx_service_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make
 {% endif %}
     ;;
   delqueue)
-    find {{ galaxie_qmail_server_qmail_dir }}/queue/mess -type f -exec rm {} \;
-    find {{ galaxie_qmail_server_qmail_dir }}/queue/info -type f -exec rm {} \;
-    find {{ galaxie_qmail_server_qmail_dir }}/queue/local -type f -exec rm {} \;
-    find {{ galaxie_qmail_server_qmail_dir }}/queue/intd -type f -exec rm {} \;
-    find {{ galaxie_qmail_server_qmail_dir }}/queue/todo -type f -exec rm {} \;
-    find {{ galaxie_qmail_server_qmail_dir }}/queue/remote -type f -exec rm {} \;
+    find {{ glx_sqmail_dir }}/queue/mess -type f -exec rm {} \;
+    find {{ glx_sqmail_dir }}/queue/info -type f -exec rm {} \;
+    find {{ glx_sqmail_dir }}/queue/local -type f -exec rm {} \;
+    find {{ glx_sqmail_dir }}/queue/intd -type f -exec rm {} \;
+    find {{ glx_sqmail_dir }}/queue/todo -type f -exec rm {} \;
+    find {{ glx_sqmail_dir }}/queue/remote -type f -exec rm {} \;
   ;;
   users)
     echo "Build local user data base ..."
     # for cdb auth
-    /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/new.tmp
-    chown root:nofiles {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb
-    chmod 0640 {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb
-    mv {{ galaxie_qmail_server_qmail_dir }}/control/new.cdb {{ galaxie_qmail_server_qmail_dir }}/control/auth.cdb
+    /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ glx_sqmail_dir }}/control/new.cdb {{ glx_sqmail_dir }}/control/new.tmp
+    chown root:nofiles {{ glx_sqmail_dir }}/control/new.cdb
+    chmod 0640 {{ glx_sqmail_dir }}/control/new.cdb
+    mv {{ glx_sqmail_dir }}/control/new.cdb {{ glx_sqmail_dir }}/control/auth.cdb
     # for checkpassword
-    #{{ galaxie_qmail_server_qmail_dir }}/bin/qmail-pw2u < /etc/passwd > {{ galaxie_qmail_server_qmail_dir }}/users/assign && {{ galaxie_qmail_server_qmail_dir }}/bin/qmail-newu
+    #{{ glx_sqmail_dir }}/bin/qmail-pw2u < /etc/passwd > {{ glx_sqmail_dir }}/users/assign && {{ glx_sqmail_dir }}/bin/qmail-newu
   ;;
   help)
     cat <<HELP

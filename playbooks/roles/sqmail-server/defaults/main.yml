@@ -6,18 +6,6 @@ glx_supervise_dir: "/var/lib/supervise"
 glx_service_dir: "/etc/service"
 glx_multilog_dir: "/var/multilog"
 
-
-
-glx_sqmail_service_name: "qmail"
-glx_sqmail_service_send: "qmail-send"
-glx_sqmail_service_smtpd_ipv4: "qmail-smtpd-ipv4"
-glx_sqmail_service_smtpd_ipv6: "qmail-smtpd-ipv6"
-glx_sqmail_service_smtpsd_ipv4: "qmail-smtpsd-ipv4"
-glx_sqmail_service_smtpsd_ipv6: "qmail-smtpsd-ipv6"
-glx_sqmail_service_ipv4: "{{ ansible_default_ipv4.address }}"
-glx_sqmail_service_ipv6: "{{ ansible_all_ipv6_addresses[0] }}"
-glx_sqmail_service_ipv6_interface: "eth0"
-
 glx_sqmail_service_send:
   enable: true
   name: "send"
@@ -25,31 +13,31 @@ glx_sqmail_service_send:
   script: "run_send"
 
 glx_sqmail_service_smtp:
-  enable: true
+  enable: false
   name: "smtp"
   directory: "qmail-smtpd"
   script: "run_smtpd"
 
 glx_sqmail_service_smtps:
-  enable: true
+  enable: false
   name: "smtps"
   directory: "qmail-smtpsd"
   script: "run_smtpsd"
 
 glx_sqmail_service_submission:
-  enable: true
+  enable: false
   name: "submission"
   directory: "qmail-smtpsub"
   script: "run_smtpsub"
 
 glx_sqmail_service_pop3:
-  enable: true
+  enable: false
   name: "pop3"
   directory: "qmail-pop3d"
   script: "run_pop3d"
 
 glx_sqmail_service_pop3s:
-  enable: true
+  enable: false
   name: "pop3s"
   directory: "qmail-pop3sd"
   script: "run_pop3sd"
