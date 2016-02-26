@@ -89,8 +89,7 @@ glx_sqmail_control_smtproutes: ""
 glx_sqmail_set_virtualdomains: false
 glx_sqmail_control_virtualdomains: ""
 # special - scripts
-glx_sqmail_install_qmailctl: true
-glx_sqmail_install_qfixpermissions: true
+glx_sqmail_install_sqmailctl: true
 
 # Control
 glx_sqmail_domain: "galaxie.ici"

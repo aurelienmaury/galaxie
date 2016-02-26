@@ -5,10 +5,10 @@
 
 - name: Set "{{ glx_sqmail_control_defaultdelivery }}" as default mailbox type for mbox type
   template:
-    src=control/defaultdelivery.j2
-    dest={{ glx_sqmail_dir }}/control/defaultdelivery
-    owner=root
-    group={{ glx_sqmail_groups.sqmail.gname }}
+    src="control/defaultdelivery.j2"
+    dest="{{ glx_sqmail_dir }}/control/defaultdelivery"
+    owner="root"
+    group="{{ glx_sqmail_groups.sqmail.gname }}"
     mode=0644
   tags: config
 

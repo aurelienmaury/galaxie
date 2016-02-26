@@ -408,16 +408,16 @@ case "$1" in
 {% endif %}
     ;;
   cdb)
-{% if galaxie_qmail_server_config_smtpd_ipv4 %}
-    echo "Build smptpd tcp.cdb file ..."
-    cd {{ glx_service_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
+{% if glx_sqmail_service_smtp.enable %}
+    echo "Build {{ glx_sqmail_service_smtp.name }} tcp.cdb file ..."
+    cd {{ glx_service_dir }}/{{ {{ glx_sqmail_service_smtp.directory }} }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make
 {% endif %}
-{% if galaxie_qmail_server_config_smtpsd_ipv4 %}
-    echo "Build smptpsd tcp.cdb file ..."
-    cd {{ glx_service_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
+{% if glx_sqmail_service_smtps.enable %}
+    echo "Build {{ glx_sqmail_service_smtps.name }} tcp.cdb file ..."
+    cd {{ glx_service_dir }}/{{ {{ glx_sqmail_service_smtps.directory }} }}
     cp ./tcp ./tcp.bkp
     chmod 644 ./tcp.cdb
     make

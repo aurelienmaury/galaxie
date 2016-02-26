@@ -14,6 +14,9 @@
 - include: install-sqmail.yml
   tags: install-sqmail, install
 
+- include: install-sqmailctl.yml
+  tags: install-sqmailctl, install
+
 ## Initital setting
 #- include: config.yml
 #  tags: config
@@ -67,6 +70,4 @@
 #  tags: config-man
 #- include: config-services-register.yml
 #- include: install-qfixpermissions.yml
-#  tags: install
-#- include: install-qmailctl.yml
 #  tags: install
