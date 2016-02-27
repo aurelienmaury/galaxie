@@ -129,3 +129,8 @@
   shell: package/install
     chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
   when: glx_sqmail_download.changed
+
+- name: package/service
+  shell: package/install
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed

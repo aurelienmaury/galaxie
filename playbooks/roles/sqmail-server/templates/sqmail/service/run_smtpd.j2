@@ -7,5 +7,16 @@ export UCSPITLS=""
 exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      sslserver -seVn -Rp -l $HOSTNAME \
      -Xx {{ glx_sqmail_dir }}/control/rules.smtpd.cdb \
-     -u $QMAILU -g $QMAILG 0 smtp \
+     -u $QMAILU -g $QMAILG \
+     {% if ansible_default_ipv4 and ansible_default_ipv6%}
+     {{ ansible_default_ipv4.address }},{{ ansible_default_ipv6.address }}
+     {% else %}
+     {% if ansible_default_ipv4 %}
+     {{ ansible_default_ipv4.address }}
+     {% endif %}
+     {% if ansible_default_ipv6 %}
+     {{ ansible_default_ipv6.address }}
+     {% endif %}
+     {% endif %}
+     smtp \
      qmail-smtpd 2>&1

@@ -18,37 +18,14 @@
   tags: install-sqmailctl, install
 
 ## Initital setting
-#- include: config.yml
-#  tags: config
-#- include: config-alias.yml
-#  tags: alias
-#
+- include: config.yml
+  tags: config
+- include: config-alias.yml
+  tags: alias, config
+
 #- include: install-mta.yml
 #  tags: install
-#
-## qmail-send
-#- include: config-send-service.yml
-#  when: galaxie_qmail_server_config_send
-#  tags: config, config-qmail-send
-#
-## qmail-smtp
-#- include: config-smtpd-service.yml
-#  when: galaxie_qmail_server_config_smtpd
-#  tags: config, config-qmail-smtpd
-#
-## smtpd
-#- include: config-smtpd-ipv4.yml
-#  when: galaxie_qmail_server_config_smtpd_ipv4
-#  tags: config
-#- include: remove-smtpd-ipv4.yml
-#  when: not galaxie_qmail_server_config_smtpd_ipv4
-#- include: config-smtpd-ipv6.yml
-#  tags: config
-#  when: galaxie_qmail_server_config_smtpd_ipv6
-#- include: remove-smtpd-ipv6.yml
-#  when: not galaxie_qmail_server_config_smtpd_ipv6
-#
-## smtpsd
+
 #- include: config-openssl.yml
 #  when: galaxie_qmail_server_config_smtpsd_ipv4 or galaxie_qmail_server_config_smtpsd_ipv6
 #  tags: config
@@ -73,12 +50,11 @@
 #  with_items: glx_sqmail_aviable_services_list
 #  tags: cleanup
 
-#- include: uninstall-service-like-a-nurd.yml
-#  tags: cleanup
+- include: uninstall-service-like-a-nurd.yml
+  tags: cleanup
 
 ## finilize
-#- include: config-man.yml
-#  tags: config-man
+
 #- include: config-services-register.yml
 #- include: install-qfixpermissions.yml
 #  tags: install

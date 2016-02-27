@@ -412,86 +412,42 @@ case "$1" in
     printf "Flushing timeout table and sending ALRM signal to $BOLD%s$BOLD_RST service(s)\n" "$SERVICE_TEXT"
     {{ glx_sqmail_dir }}/bin/qmail-tcpok
 {% if glx_sqmail_service_send.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_send.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_send.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtp.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_smtp.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_smtps.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtps.name }}"
 {% endif %}
 {% if glx_sqmail_service_submission.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_submission.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_submission.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_pop3.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3s.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_pop3s.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3s.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmqp.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_qmqp.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmqp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtp.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_qmtp.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtps.enable %}
-    printf "$BOLD%s$BOLD_RST\n" "{{ glx_sqmail_service_qmtps.name }}"
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}
-    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
-    printf "%s" "|──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}
-    printf "%s" "└──"
-    svstat $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtps.name }}"
 {% endif %}
+    printf "\n"
     ;;
   queue)
     printf "$BOLD%s$BOLD_RST queue informations\n" "$SERVICE_TEXT"
@@ -499,121 +455,124 @@ case "$1" in
     qmail-qread
     ;;
   reload|hup)
-    echo "Sending HUP signal to s/qmail."
+    printf "Sending HUP signal to $BOLD%s$BOLD_RST service(s)\n" "$SERVICE_TEXT"
 {% if glx_sqmail_service_send.enable %}
-    echo "{{ glx_sqmail_service_send.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_send.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtp.enable %}
-    echo "{{ glx_sqmail_service_smtp.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    echo "{{ glx_sqmail_service_smtps.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtps.name }}"
 {% endif %}
 {% if glx_sqmail_service_submission.enable %}
-    echo "{{ glx_sqmail_service_submission.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_submission.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3.enable %}
-    echo "{{ glx_sqmail_service_pop3.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3s.enable %}
-    echo "{{ glx_sqmail_service_pop3s.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3s.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmqp.enable %}
-    echo "{{ glx_sqmail_service_qmqp.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmqp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtp.enable %}
-    echo "{{ glx_sqmail_service_qmtp.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtps.enable %}
-    echo "{{ glx_sqmail_service_qmtps.name }}"
     svc -h $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtps.name }}"
 {% endif %}
+    printf "\n"
     ;;
   pause)
-    echo "Sending Pause signal to s/qmail."
+    printf "Sending Pause signal to $BOLD%s$BOLD_RST service(s)\n" "$SERVICE_TEXT"
 {% if glx_sqmail_service_send.enable %}
-    echo "{{ glx_sqmail_service_send.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_send.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtp.enable %}
-    echo "{{ glx_sqmail_service_smtp.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    echo "{{ glx_sqmail_service_smtps.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtps.name }}"
 {% endif %}
 {% if glx_sqmail_service_submission.enable %}
-    echo "{{ glx_sqmail_service_submission.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_submission.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3.enable %}
-    echo "{{ glx_sqmail_service_pop3.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3s.enable %}
-    echo "{{ glx_sqmail_service_pop3s.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3s.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmqp.enable %}
-    echo "{{ glx_sqmail_service_qmqp.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmqp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtp.enable %}
-    echo "{{ glx_sqmail_service_qmtp.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtps.enable %}
-    echo "{{ glx_sqmail_service_qmtps.name }}"
     svc -p $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtps.name }}"
 {% endif %}
+    printf "\n"
     ;;
   cont)
-    echo "Sending Continue signal to s/qmail."
+    printf "Sending Continue signal to $BOLD%s$BOLD_RST service(s)\n" "$SERVICE_TEXT"
 {% if glx_sqmail_service_send.enable %}
-    echo "{{ glx_sqmail_service_send.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_send.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtp.enable %}
-    echo "{{ glx_sqmail_service_smtp.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    echo "{{ glx_sqmail_service_smtps.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_smtps.name }}"
 {% endif %}
 {% if glx_sqmail_service_submission.enable %}
-    echo "{{ glx_sqmail_service_submission.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_submission.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3.enable %}
-    echo "{{ glx_sqmail_service_pop3.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3.name }}"
 {% endif %}
 {% if glx_sqmail_service_pop3s.enable %}
-    echo "{{ glx_sqmail_service_pop3s.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_pop3s.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmqp.enable %}
-    echo "{{ glx_sqmail_service_qmqp.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmqp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtp.enable %}
-    echo "{{ glx_sqmail_service_qmtp.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtp.name }}"
 {% endif %}
 {% if glx_sqmail_service_qmtps.enable %}
-    echo "{{ glx_sqmail_service_qmtps.name }}"
     svc -c $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    printf "%s " "{{ glx_sqmail_service_qmtps.name }}"
 {% endif %}
+    printf "\n"
     ;;
   restart)
 {% if glx_sqmail_service_send.enable %}
@@ -839,30 +798,31 @@ delqueue -- delete all queue after a relay attack
    alrm  -- same as doqueue
   flush  -- same as doqueue
     hup  -- same as reload
+version  -- displays information about version and license
 HELP
     ;;
-  version|-v|--v)
+  version|-v|--version)
     cat <<VERSION
 sqmailctl v0.5 by Tuux <tuux@rtnp.org> originaly qmailctl lifewithqmail script.
 This script "sqmailctl" is part of Galaxie.
 
-    Galaxie is free software: you can redistribute it and/or modify
+    sqmailctl is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Foobar is distributed in the hope that it will be useful,
+    sqmailctl is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <https://www.gnu.org/licenses/gpl.txt>
+    along with sqmailctl.  If not, see <https://www.gnu.org/licenses/gpl.txt>
 VERSION
     ;;
 
   *)
-    echo "Usage: $0 {start|stop|restart|doqueue|delqueue|flush|reload|stat|pause|cont|cdb|users|queue|help}"
+    echo "Usage: $0 {start|stop|restart|doqueue|delqueue|flush|reload|stat|pause|cont|cdb|users|queue|help|version|-v|--version}"
     exit 1
     ;;
 esac

@@ -1,12 +1,209 @@
 ---
-- name: test {{ glx_service_to_check.name }}
+# send
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}
   stat:
-    path="{{ glx_service_dir }}/{{ glx_service_to_check.directory }}
-  register: st
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}"
+  register: send
+  when: not glx_sqmail_service_send.enable
 
-#- debug: msg="{{ glx_service_to_check }}"
+- name: svc -dt {{ glx_sqmail_service_send.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
+  when: send.stat.exists and not glx_sqmail_service_send.enable
 
-- name: svc -dx {{ glx_service_to_check.directory }}
-  shell: svc -dx {{ glx_service_dir }}/{{ glx_service_to_check.directory }}
-  when: st.stat.exists and not glx_service_to_check.enable
+- name: remove {{ glx_sqmail_service_send.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_send.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_send.directory }}"
+  when: send.stat.exists and not glx_sqmail_service_send.enable
+
+# smtp
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}"
+  register: smtp
+  when: not glx_sqmail_service_smtp.enable
+
+- name: svc -dt {{ glx_sqmail_service_smtp.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
+  when: smtp.stat.exists and not glx_sqmail_service_smtp.enable
+
+- name: remove {{ glx_sqmail_service_smtp.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_smtp.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_smtp.directory }}"
+  when: smtp.stat.exists and not glx_sqmail_service_smtp.enable
+
+# smtps
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}"
+  register: smtp
+  when: not glx_sqmail_service_smtps.enable
+
+- name: svc -dt {{ glx_sqmail_service_smtps.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
+  when: smtp.stat.exists and not glx_sqmail_service_smtps.enable
+
+- name: remove {{ glx_sqmail_service_smtps.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_smtps.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_smtps.directory }}"
+  when: smtp.stat.exists and not glx_sqmail_service_smtps.enable
+
+# submission
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}"
+  register: submission
+  when: not glx_sqmail_service_submission.enable
+
+- name: svc -dt {{ glx_sqmail_service_submission.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
+  when: submission.stat.exists and not glx_sqmail_service_submission.enable
+
+- name: remove {{ glx_sqmail_service_submission.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_submission.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_submission.directory }}"
+  when: submission.stat.exists and not glx_sqmail_service_submission.enable
+
+# pop3
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}"
+  register: pop3
+  when: not glx_sqmail_service_pop3.enable
+
+- name: svc -dt {{ glx_sqmail_service_pop3.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+  when: pop3.stat.exists and not glx_sqmail_service_pop3.enable
+
+- name: remove {{ glx_sqmail_service_pop3.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_pop3.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_pop3.directory }}"
+  when: pop3.stat.exists and not glx_sqmail_service_pop3.enable
+
+# pop3s
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}"
+  register: pop3s
+  when: not glx_sqmail_service_pop3s.enable
+
+- name: svc -dt {{ glx_sqmail_service_pop3s.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+  when: pop3s.stat.exists and not glx_sqmail_service_pop3s.enable
+
+- name: remove {{ glx_sqmail_service_pop3s.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_pop3s.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_pop3s.directory }}"
+  when: pop3s.stat.exists and not glx_sqmail_service_pop3s.enable
+
+# qmqp
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}"
+  register: qmqp
+  when: not glx_sqmail_service_qmqp.enable
+
+- name: svc -dt {{ glx_sqmail_service_qmqp.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+  when: qmqp.stat.exists and not glx_sqmail_service_qmqp.enable
+
+- name: remove {{ glx_sqmail_service_qmqp.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_qmqp.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_qmqp.directory }}"
+  when: qmqp.stat.exists and not glx_sqmail_service_qmqp.enable
+
+# qmtp
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}"
+  register: qmtp
+  when: not glx_sqmail_service_qmtp.enable
+
+- name: svc -dt {{ glx_sqmail_service_qmtp.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+  when: qmtp.stat.exists and not glx_sqmail_service_qmtp.enable
+
+- name: remove {{ glx_sqmail_service_qmtp.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_qmtp.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_qmtp.directory }}"
+  when: qmtp.stat.exists and not glx_sqmail_service_qmtp.enable
+
+# qmtps
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}"
+  register: qmtps
+  when: not glx_sqmail_service_qmtps.enable
+
+- name: svc -dt {{ glx_sqmail_service_qmtps.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
+  when: qmtps.stat.exists and not glx_sqmail_service_qmtps.enable
+
+- name: remove {{ glx_sqmail_service_qmtps.directory }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log"
+    - "{{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}"
+    - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_qmtps.directory }}"
+    - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_qmtps.directory }}"
+  when: qmtps.stat.exists and not glx_sqmail_service_qmtps.enable
+
 

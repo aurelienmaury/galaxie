@@ -1,8 +1,8 @@
 ---
-- name: install "/usr/local/bin/sqmailctl" script
+- name: install "{{ glx_prefix_dir }}/bin/sqmailctl" script
   template:
     src=sqmailctl.j2
-    dest="/usr/local/bin/sqmailctl"
+    dest="{{ glx_prefix_dir }}/bin/sqmailctl"
     mode=0750
     owner=root
     group=root
@@ -11,7 +11,7 @@
 
 - name: delete "/usr/local/bin/sqmailctl"
   file:
-    path="/usr/local/bin/sqmailctl"
+    path="{{ glx_prefix_dir }}/bin/sqmailctl"
     state=absent
   when: not glx_sqmail_install_sqmailctl
   tags: sqmailctl
