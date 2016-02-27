@@ -125,12 +125,63 @@
     - "service"
     - "services=d"
 
-- name: package/install
-  shell: package/install
+- name: package/dir -- sets up the directories
+  shell: package/dir
     chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
   when: glx_sqmail_download.changed
 
-- name: package/service
-  shell: package/install
+- name: package/ids -- sets up the s/qmail users
+  shell: package/ids
     chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
   when: glx_sqmail_download.changed
+
+- name: package/ucspissl -- hooks up the required sources and libs with package ucspi-ssl
+  shell: package/ucspissl
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/compile -- compiles the sources
+  shell: package/compile
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/upgrade -- potentially does the upgrade
+  shell: package/upgrade
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/legacy -- installs the binaries in the qmail directory
+  shell: package/legacy
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/man -- installes the man pages
+  shell: package/man
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/control -- populates the mininmal required control files for running
+  shell: package/control
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/sslenv -- sets up the SSL/TLS environments together with X.509 certs and key files (from ucspi-ssl)
+  shell: package/sslenv
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+- name: package/service -- sets up the run script for daemontools' /service and additionally the logging
+  shell: package/service
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
+#- name: package/scripts setup optional, undocumented and unmaintained scripts
+#  shell: package/scripts
+#    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+#  when: glx_sqmail_download.changed
+
+- name: package/run -- touches qmail/alias/ files and sets default-delivery
+  shell: package/run
+    chdir="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"
+  when: glx_sqmail_download.changed
+
