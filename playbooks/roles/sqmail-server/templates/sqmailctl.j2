@@ -26,11 +26,10 @@ BOLD_RST="\e[22m"
 
 case "$1" in
   start)
-    printf "Send $COLOR_GREEN%s$COLOR_DEFAULT to $BOLD%s$BOLD_RST service(s)\n" "Up" "$SERVICE_TEXT"
 {% if glx_sqmail_service_send.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_send.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}"
       printf " "
@@ -45,9 +44,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_smtp.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_smtp.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}"
       printf " "
@@ -62,9 +61,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_smtps.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}"
       printf " "
@@ -79,9 +78,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_submission.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_submission.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}"
       printf " "
@@ -96,9 +95,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_pop3.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_pop3.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}"
       printf " "
@@ -113,9 +112,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_pop3s.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_pop3s.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}"
       printf " "
@@ -130,9 +129,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_qmqp.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_qmqp.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}"
       printf " "
@@ -147,9 +146,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_qmtp.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_qmtp.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}"
       printf " "
@@ -164,9 +163,9 @@ case "$1" in
     fi
 {% endif %}
 {% if glx_sqmail_service_qmtps.enable %}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}
-    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
-    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} ; then
+    svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log; then
       printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Start {{ glx_sqmail_service_qmtps.name }} (via svc): " "ok"
       printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}"
       printf " "
@@ -185,7 +184,6 @@ case "$1" in
     fi
     ;;
   stop)
-    printf "Send $COLOR_RED%s$COLOR_DEFAULT to $BOLD%s$BOLD_RST service(s)\n" "Down" "$SERVICE_TEXT"
 {% if glx_sqmail_service_send.enable %}
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
@@ -618,78 +616,176 @@ case "$1" in
 {% endif %}
     ;;
   restart)
-    echo "Restarting qmail:"
 {% if glx_sqmail_service_send.enable %}
-    echo "{{ glx_sqmail_service_send.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
-    echo "{{ glx_sqmail_service_send.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
-    echo "{{ glx_sqmail_service_send.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_send.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_send.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_smtp.enable %}
-    echo "Stopping {{ glx_sqmail_service_smtp.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
-    echo "Sending {{ glx_sqmail_service_smtp.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_smtp.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_smtp.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_smtp.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    echo "Stopping {{ glx_sqmail_service_smtps.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
-    echo "Sending {{ glx_sqmail_service_smtps.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_smtps.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_smtps.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_smtps.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_submission.enable %}
-    echo "Stopping {{ glx_sqmail_service_submission.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
-    echo "Sending {{ glx_sqmail_service_submission.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_submission.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_submission.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_submission.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_submission.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_pop3.enable %}
-    echo "Stopping {{ glx_sqmail_service_pop3.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
-    echo "Sending {{ glx_sqmail_service_pop3.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_pop3.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_pop3.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_pop3.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_pop3s.enable %}
-    echo "Stopping {{ glx_sqmail_service_pop3s.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
-    echo "Sending {{ glx_sqmail_service_pop3s.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_pop3s.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_pop3s.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_pop3s.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_pop3s.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_qmqp.enable %}
-    echo "Stopping {{ glx_sqmail_service_qmqp.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
-    echo "Sending {{ glx_sqmail_service_qmqp.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_qmqp.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_qmqp.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_qmqp.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmqp.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_qmtp.enable %}
-    echo "Stopping {{ glx_sqmail_service_qmtp.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
-    echo "Sending {{ glx_sqmail_service_qmtp.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_qmtp.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_qmtp.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_qmtp.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtp.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
 {% if glx_sqmail_service_qmtps.enable %}
-    echo "Stopping {{ glx_sqmail_service_qmtps.name }}."
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
-    echo "Sending {{ glx_sqmail_service_qmtps.name }} SIGTERM and restarting."
     svc -t $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
-    echo "Restarting {{ glx_sqmail_service_qmtps.name }}."
     svc -u $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log
+    if svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }} && \
+       svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Restart {{ glx_sqmail_service_qmtps.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log"
+      printf "\n"
+    else
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Restart {{ glx_sqmail_service_qmtps.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}"
+      printf " "
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log"
+      printf "\n"
+    fi
 {% endif %}
     ;;
   cdb)
@@ -745,6 +841,26 @@ delqueue -- delete all queue after a relay attack
     hup  -- same as reload
 HELP
     ;;
+  version|-v|--v)
+    cat <<VERSION
+sqmailctl v0.5 by Tuux <tuux@rtnp.org> originaly qmailctl lifewithqmail script.
+This script "sqmailctl" is part of Galaxie.
+
+    Galaxie is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Foobar.  If not, see <https://www.gnu.org/licenses/gpl.txt>
+VERSION
+    ;;
+
   *)
     echo "Usage: $0 {start|stop|restart|doqueue|delqueue|flush|reload|stat|pause|cont|cdb|users|queue|help}"
     exit 1
