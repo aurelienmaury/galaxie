@@ -67,12 +67,14 @@
 #svc:{{ glx_sqmail_service_qmtp.name }}:{{ glx_sqmail_service_qmtp.directory }}:{{ glx_sqmail_service_qmtp.script }}
 #svc:{{ glx_sqmail_service_qmtps.name }}:{{ glx_sqmail_service_qmtps.directory }}:{{ glx_sqmail_service_qmtps.script }}
 
-- include: uninstall-a-service.yml
-  vars:
-     glx_service_to_check= "{{ item }}"
-  with_items: glx_sqmail_aviable_services_list
-  tags: cleanup
+#- include: uninstall-a-service.yml
+#  vars:
+#     glx_service_to_check= "{{ item }}"
+#  with_items: glx_sqmail_aviable_services_list
+#  tags: cleanup
 
+#- include: uninstall-service-like-a-nurd.yml
+#  tags: cleanup
 
 ## finilize
 #- include: config-man.yml

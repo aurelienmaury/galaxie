@@ -16,49 +16,49 @@ glx_sqmail_service_send:
   script: "run_send"
 
 glx_sqmail_service_smtp:
-  enable: false
+  enable: true
   name: "smtp"
   directory: "qmail-smtpd"
   script: "run_smtpd"
 
 glx_sqmail_service_smtps:
-  enable: false
+  enable: true
   name: "smtps"
   directory: "qmail-smtpsd"
   script: "run_smtpsd"
 
 glx_sqmail_service_submission:
-  enable: false
+  enable: true
   name: "submission"
   directory: "qmail-smtpsub"
   script: "run_smtpsub"
 
 glx_sqmail_service_pop3:
-  enable: false
+  enable: true
   name: "pop3"
   directory: "qmail-pop3d"
   script: "run_pop3d"
 
 glx_sqmail_service_pop3s:
-  enable: false
+  enable: true
   name: "pop3s"
   directory: "qmail-pop3sd"
   script: "run_pop3sd"
 
 glx_sqmail_service_qmqp:
-  enable: false
+  enable: true
   name: "qmqp"
   directory: "qmail-qmqpd"
   script: "run_qmqpd"
 
 glx_sqmail_service_qmtp:
-  enable: false
+  enable: true
   name: "qmtp"
   directory: "qmail-qmtpd"
   script: "run_qmtpd"
 
 glx_sqmail_service_qmtps:
-  enable: false
+  enable: true
   name: "qmtps"
   directory: "qmail-qmtpsd"
   script: "run_qmtpsd"
