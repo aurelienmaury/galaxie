@@ -9,7 +9,7 @@
   when: glx_sqmail_install_sqmailctl
   tags: sqmailctl
 
-- name: delete "/usr/local/bin/sqmailctl"
+- name: delete "{{ glx_prefix_dir }}/bin/sqmailctl"
   file:
     path="{{ glx_prefix_dir }}/bin/sqmailctl"
     state=absent

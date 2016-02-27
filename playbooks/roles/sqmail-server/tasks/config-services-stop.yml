@@ -1,60 +1,100 @@
 ---
-# qmail-send
-- name: check if service {{ galaxie_qmail_server_service_send }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_send }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
+# send
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}"
+  register: send
 
-- name: remove {{ galaxie_qmail_server_service_send }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_send }}
-  when: command_result|success
+- name: svc -dt {{ glx_sqmail_service_send.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
+  when: send.stat.exists
 
-# qmail-smtpd ipv4
-- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv4 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv4 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
+# smtp
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}"
+  register: smtp
 
-- name: remove {{ galaxie_qmail_server_service_smtpd_ipv4 }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv4 }}
-  when: command_result|success
+- name: svc -dt {{ glx_sqmail_service_smtp.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtp.directory }}/log
+  when: smtp.stat.exists
 
-# qmail-smtpsd ipv4
-- name: check if service {{ galaxie_qmail_server_service_smtpsd_ipv4 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd_ipv4 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
+# smtps
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}"
+  register: smtp
 
-- name: remove {{ galaxie_qmail_server_service_smtpsd_ipv4 }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv4 }}
-  when: command_result|success
+- name: svc -dt {{ glx_sqmail_service_smtps.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_smtps.directory }}/log
+  when: smtp.stat.exists
 
-# qmail-smtpd ipv6
-- name: check if service {{ galaxie_qmail_server_service_smtpd_ipv6 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpd_ipv6 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
+# submission
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}"
+  register: submission
 
-- name: remove {{ galaxie_qmail_server_service_smtpd_ipv6 }} service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpd_ipv6 }}
-  when: command_result|success
+- name: svc -dt {{ glx_sqmail_service_submission.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_submission.directory }}/log
+  when: submission.stat.exists
 
-# qmail-smtpsd ipv6
-- name: check if service {{ galaxie_qmail_server_service_smtpsd_ipv6 }} is registered
-  shell: "/usr/sbin/update-service --list | grep {{ galaxie_qmail_server_service_smtpsd_ipv6 }}"
-  failed_when: "'update-service: fatal:' in command_result.stderr"
-  changed_when: false
-  register: command_result
-  ignore_errors: yes
+# pop3
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}"
+  register: pop3
 
-- name: remove qmail-smtpsd-ipv6 service
-  shell: /usr/sbin/update-service --remove {{ galaxie_qmail_server_supervise_dir }}/{{ galaxie_qmail_server_service_smtpsd_ipv6 }}
-  when: command_result|success
+- name: svc -dt {{ glx_sqmail_service_pop3.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3.directory }}/log
+  when: pop3.stat.exists
+
+# pop3s
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}"
+  register: pop3s
+
+- name: svc -dt {{ glx_sqmail_service_pop3s.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_pop3s.directory }}/log
+  when: pop3s.stat.exists
+
+# qmqp
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}"
+  register: qmqp
+
+- name: svc -dt {{ glx_sqmail_service_qmqp.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmqp.directory }}/log
+  when: qmqp.stat.exists
+
+# qmtp
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}"
+  register: qmtp
+
+- name: svc -dt {{ glx_sqmail_service_qmtp.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtp.directory }}/log
+  when: qmtp.stat.exists
+
+# qmtps
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}"
+  register: qmtps
+
+- name: svc -dt {{ glx_sqmail_service_qmtps.directory }}
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_qmtps.directory }}/log
+  when: qmtps.stat.exists
+
