@@ -5,5 +5,5 @@ HOSTNAME=`hostname`
 exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      tcpserver -v -Rp -l $HOSTNAME \
      -Xx {{ glx_sqmail_dir }}/control/rules.smtpd.cdb \
-     -u $QMAILU -g $QMAILG 0 qmtp \
+     -u $QMAILU -g $QMAILG {{ glx_sqmail_inet_bind_info }} qmtp \
      qmail-qmtpd 2>&1

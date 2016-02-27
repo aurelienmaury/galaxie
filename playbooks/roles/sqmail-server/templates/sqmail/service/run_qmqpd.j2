@@ -6,5 +6,5 @@ QMQP="628"
 exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      tcpserver -v -Rp -l $HOSTNAME \
      -Xx {{ glx_sqmail_dir }}/control/rules.qmqpd.cdb \
-     -u $QMAILU -g $QMAILG 0 $QMQP \
+     -u $QMAILU -g $QMAILG {{ glx_sqmail_inet_bind_info }} $QMQP \
      qmail-qmqpd 2>&1

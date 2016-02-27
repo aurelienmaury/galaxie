@@ -7,5 +7,5 @@ export SMTPAUTH=""
 exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      sslserver -seV -Rp -l $HOSTNAME \
      -Xx {{ glx_sqmail_dir }}/control/rules.smtpd.cdb \
-     -u $QMAILU -g $QMAILG 0 smtps \
+     -u $QMAILU -g $QMAILG {{ glx_sqmail_inet_bind_info }} smtps \
      qmail-smtpd qmail-authuser true 2>&1

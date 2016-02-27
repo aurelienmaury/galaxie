@@ -7,6 +7,16 @@ glx_service_dir: "/etc/service"
 glx_multilog_dir: "/var/multilog"
 glx_prefix_dir: "/usr/local"
 
+# information about IP bind look sslserver or tcpserver manual
+#glx_sqmail_inet_bind_info: "192.168.42.42"
+#glx_sqmail_inet_bind_info: "-4 192.168.42.42"
+#glx_sqmail_inet_bind_info: "-I eth0 fe80::f2ad:4eff:fe00:bcb0"
+#glx_sqmail_inet_bind_info: "-6 -I eth0 fe80::f2ad:4eff:fe00:bcb0"
+#glx_sqmail_inet_bind_info: "-4 -6 -I eth0 fe80::f2ad:4eff:fe00:bcb0,192.168.42.42"
+#glx_sqmail_inet_bind_info: "2001:32d0:8:4242::42"
+#glx_sqmail_inet_bind_info: "-6 2001:32d0:8:4242::42"
+glx_sqmail_inet_bind_info: "0"
+
 
 
 

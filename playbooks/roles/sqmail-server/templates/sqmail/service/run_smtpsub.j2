@@ -7,5 +7,5 @@ export UCSPITLS=""
 . {{ glx_sqmail_dir }}/ssl/ssl.env
 exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
      sslserver -seVn -Rp -l $HOSTNAME \
-     -u $QMAILU -g $QMAILG 0 submission \
+     -u $QMAILU -g $QMAILG {{ glx_sqmail_inet_bind_info }} submission \
      qmail-smtpd qmail-authuser true 2>&1

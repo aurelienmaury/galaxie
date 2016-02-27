@@ -2,6 +2,6 @@
 HOSTNAME=`hostname`
 . {{ glx_sqmail_dir }}/ssl/ssl.env
 exec env PATH="{{ glx_sqmail_dir }}/bin:$PATH" \
-     sslserver -seV -Rp -l $HOSTNAME 0 pop3s \
+     sslserver -seV -Rp -l $HOSTNAME {{ glx_sqmail_inet_bind_info }} pop3s \
      qmail-popup $HOSTNAME qmail-authuser true \
      qmail-pop3d {{ glx_sqmail_maildirname }} 2>&1 5>&1
