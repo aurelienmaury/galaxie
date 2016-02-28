@@ -1,0 +1,159 @@
+---
+# Inspiration:
+# http://qmailrocks.thibs.com/qmail-configure.php
+# http://www.lifewithqmail.com/lwq.html#configuration
+
+- name: Set "{{ glx_sqmail_control_defaultdelivery }}" as default mailbox type for mbox type
+  template:
+    src="control/defaultdelivery.j2"
+    dest="{{ glx_sqmail_dir }}/control/defaultdelivery"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_concurrencyremote }}" as max simultaneous remote deliveries
+  template:
+    src="control/concurrencyremote.j2"
+    dest="{{ glx_sqmail_dir }}/control/concurrencyremote"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_concurrencyincoming }}" as max simultaneous incoming SMTP connections
+  template:
+    src="control/concurrencyincoming.j2"
+    dest="{{ glx_sqmail_dir }}/control/concurrencyincoming"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_spfbehavior }}" as value between 1 and 6 to enable SPF checks
+  template:
+    src="control/spfbehavior.j2"
+    dest="{{ glx_sqmail_dir }}/control/spfbehavior"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_bouncefrom }}" as bounce sender
+  template:
+    src="control/bouncefrom.j2"
+    dest="{{ glx_sqmail_dir }}/control/bouncefrom"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_doublebouncehost }}" as double bounce sender
+  template:
+    src="control/doublebouncehost.j2"
+    dest="{{ glx_sqmail_dir }}/control/doublebouncehost"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_doublebounceto }}" to receive double bounces
+  template:
+    src="control/doublebounceto.j2"
+    dest="{{ glx_sqmail_dir }}/control/doublebounceto"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set maximum message size to be "{{ glx_sqmail_control_databytes }}" bytes
+  template:
+    src="control/databytes.j2"
+    dest="{{ glx_sqmail_dir }}/control/databytes"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Set "{{ glx_sqmail_control_timeoutsmtpd }}" seconds as timeout
+  template:
+    src="control/timeoutsmtpd.j2"
+    dest="{{ glx_sqmail_dir }}/control/timeoutsmtpd"
+    owner="root"
+    group="root"
+    mode=0644
+
+### Fast Config
+- name: set "{{ glx_sqmail_control_me }}" as FQDN of system
+  template:
+    src="control/me.j2"
+    dest="{{ glx_sqmail_dir }}/control/me"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: set "{{ glx_sqmail_control_defaultdomain }}" as default domain name
+  template:
+    src="control/defaultdomain.j2"
+    dest="{{ glx_sqmail_dir }}/control/defaultdomain"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: set "{{ glx_sqmail_control_plusdomain }}" as domain substituted for trailing '+'
+  template:
+    src="control/plusdomain.j2"
+    dest="{{ glx_sqmail_dir }}/control/plusdomain"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: set "{{ glx_sqmail_control_locals }}" domains that we deliver locally
+  template:
+    src="control/locals.j2"
+    dest="{{ glx_sqmail_dir }}/control/locals"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: set "{{ glx_sqmail_control_rcpthosts }}" domains that we accept mail for
+  template:
+    src="control/rcpthosts.j2"
+    dest="{{ glx_sqmail_dir }}/control/rcpthosts"
+    owner="root"
+    group="root"
+    mode=0644
+
+### smtproutes management
+- name: set "{{ glx_sqmail_control_smtproutes }}" artificial SMTP routes
+  template:
+    src="control/smtproutes.j2"
+    dest="{{ glx_sqmail_dir }}/control/smtproutes"
+    owner="root"
+    group="root"
+    mode=0644
+  when: glx_sqmail_set_smtproutes
+
+- name: delete "{{ glx_sqmail_dir }}/control/smtproutes"
+  file:
+    path="{{ glx_sqmail_dir }}/control/smtproutes"
+    state=absent
+  when: not glx_sqmail_set_smtproutes
+
+### virtualdomains management
+- name: set "{{ glx_sqmail_control_virtualdomains }}" virtual domains and users
+  template:
+    src=c"ontrol/virtualdomains.j2"
+    dest="{{ glx_sqmail_dir }}/control/virtualdomains"
+    owner="root"
+    group="root"
+    mode=0644
+  when: glx_sqmail_set_virtualdomains
+
+- name: delete "{{ glx_sqmail_dir }}/control/virtualdomains"
+  file:
+    path="{{ glx_sqmail_dir }}/control/virtualdomains"
+    state=absent
+  when: not glx_sqmail_set_virtualdomains
+
+#### Don't know look to prevent a bug
+
+- name: update the memory to 32MB to avoid memory related errors
+  template:
+    src="control/conf-common.j2"
+    dest="{{ glx_sqmail_dir }}/control/conf-common"
+    owner="root"
+    group="root"
+    mode=0644

@@ -1,9 +1,11 @@
 # the big picture : http://www.fehcom.de/images/sqmail_Big_Picture.pdf
-# Requirements
-- include: config-services-stop.yml
+# Stop everything for permit to overwrite few binary
+- include: services-stop.yml
+  tags: install
 
+# Intall the requirements
 - include: install-cdb.yml
-  tags: install-cdb
+  tags: install-cdb, install
 
 - include: install-ucspi-tcp6.yml
   tags: install-ucspi-tcp6, install
@@ -18,8 +20,9 @@
   tags: install-sqmailctl, install
 
 ## Initital setting
-- include: config.yml
-  tags: config
+- include: config-controls.yml
+  tags: controls, config
+
 - include: config-alias.yml
   tags: alias, config
 
@@ -50,11 +53,8 @@
 #  with_items: glx_sqmail_aviable_services_list
 #  tags: cleanup
 
-- include: uninstall-service-like-a-nurd.yml
-  tags: cleanup
+
 
 ## finilize
-
-#- include: config-services-register.yml
-#- include: install-qfixpermissions.yml
-#  tags: install
+- include: services-cleanup.yml
+  tags: cleanup, install-sqmail, install

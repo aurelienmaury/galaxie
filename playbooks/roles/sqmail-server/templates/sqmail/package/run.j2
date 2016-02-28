@@ -1,0 +1,39 @@
+#!/bin/sh -e
+
+shout() { echo "$0: $@" >&2; }
+barf() { shout "fatal: $@"; exit 111; }
+safe() { "$@" || barf "cannot $@"; }
+
+here=`env - PATH=$PATH pwd`
+mypwd=${here%package}
+mypwd=${mypwd%/}
+home=`head -1 ${mypwd}/conf-home`
+
+aliasdir=""
+if [ -f ${mypwd}/conf-home ]
+then
+  aliasdir="${home}/alias"
+fi
+shout "Setting s/qmail alias-dir: ${aliasdir}"
+
+[ -d "${aliasdir}" ] || safe mkdir -p ${aliasdir}
+
+[ -f ${aliasdir}/.qmail-root ] || safe touch ${aliasdir}/.qmail-root
+[ -f ${aliasdir}/.qmail-mailer-daemon ] || safe touch ${aliasdir}/.qmail-mailer-daemon 
+[ -f ${aliasdir}/.qmail-postmaster ] || safe touch ${aliasdir}/.qmail-postmaster
+
+if [ -f ${mypwd}/conf-delivery ]
+then
+  defaultdelivery="`head -1 ${mypwd}/conf-delivery`"
+
+  if [ -f "{{ glx_supervise_dir }}/qmail-send/run" ]
+  then
+    safe cat {{ glx_supervise_dir }}/qmail-send/run | \
+      sed -e 's}./Maildir/}$defaultdelivery}' > run.default && \
+      mv run.default {{ glx_supervise_dir }}/qmail-send/run && \
+      chmod +x {{ glx_supervise_dir }}/qmail-send/run && \
+      shout "Setting qmail-start default-delivery: $defaultdelivery"
+  fi 
+fi
+
+exit 0

@@ -122,6 +122,7 @@
     src="sqmail/package/{{ item }}.j2"
     dest="{{ glx_sqmail_package_dir }}/{{ item }}"
   with_items:
+    - "run"
     - "service"
     - "services=d"
 
