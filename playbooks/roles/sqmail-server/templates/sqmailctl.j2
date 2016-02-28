@@ -187,17 +187,17 @@ case "$1" in
 {% if glx_sqmail_service_send.enable %}
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}
     svc -d $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
-    if ! (( $(svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}) )) ; then
-      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Stop {{ glx_sqmail_service_qmtps.name }} (via svc): " "ok"
-      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}"
+    if ! (( $(svok $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}) )) ; then
+      printf "[ $COLOR_GREEN%s$COLOR_DEFAULT ] Stop {{ glx_sqmail_service_send.name }} (via svc): " "ok"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}"
       printf " "
-      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log"
       printf "\n"
     else
-      printf "[$COLOR_RED%s$COLOR_DEFAULT] Stop {{ glx_sqmail_service_qmtps.name }} (via svc): " "fail"
-      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}"
+      printf "[$COLOR_RED%s$COLOR_DEFAULT] Stop {{ glx_sqmail_service_send.name }} (via svc): " "fail"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}"
       printf " "
-      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_qmtps.directory }}/log"
+      printf "$SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log"
       printf "\n"
     fi
 {% endif %}
