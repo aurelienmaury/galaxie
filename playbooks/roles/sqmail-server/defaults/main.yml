@@ -98,34 +98,44 @@ glx_sqmail_set_smtproutes: false
 glx_sqmail_control_smtproutes: ""
 # special - virtualdomains
 glx_sqmail_set_virtualdomains: false
-glx_sqmail_control_virtualdomains: ""
+
 # special - scripts
 glx_sqmail_install_sqmailctl: true
 
-# Control
+# Controls
 glx_sqmail_domain: "galaxie.ici"
+# qmail-send
 glx_sqmail_control_me: "{{ ansible_hostname }}.{{ glx_sqmail_domain }}"
-glx_sqmail_control_defaultdomain: "{{ glx_sqmail_domain }}"
-glx_sqmail_control_plusdomain: "{{ glx_sqmail_domain }}"
-
+glx_sqmail_control_queuelifetime: "604800"
+glx_sqmail_control_doublebouncehost: "{{ glx_sqmail_control_me }}"
+glx_sqmail_control_doublebounceto: "postmaster"
+glx_sqmail_control_bouncemaxbytes: "0"
+glx_sqmail_control_concurrencylocal: "10"
+glx_sqmail_control_concurrencyremote: "20"
+glx_sqmail_control_envnoathost: "{{ glx_sqmail_control_me }}"
 glx_sqmail_control_locals:
   - "localhost"
   - "localhost.localdomain"
   - "{{ ansible_hostname }}"
   - "{{ ansible_hostname }}.{{ glx_sqmail_domain }}"
   - "{{ glx_sqmail_domain }}"
+glx_sqmail_control_percenthack: ""
+glx_sqmail_control_virtualdomains: ""
+
+# qmail-smtpd
+glx_sqmail_control_defaultdomain: "{{ glx_sqmail_domain }}"
+glx_sqmail_control_plusdomain: "{{ glx_sqmail_domain }}"
+
+
 glx_sqmail_control_rcpthosts:
   - "{{ glx_sqmail_domain }}"
   - ".{{ glx_sqmail_domain }}"
 
 glx_sqmail_maildirname: "Maildir"
 glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
-glx_sqmail_control_concurrencyremote: "255"
 glx_sqmail_control_concurrencyincoming: "30"
 glx_sqmail_control_spfbehavior: "3"
 glx_sqmail_control_bouncefrom: "postmaster"
-glx_sqmail_control_doublebouncehost: "{{ glx_sqmail_domain }}"
-glx_sqmail_control_doublebounceto: "postmaster"
 glx_sqmail_control_databytes: "8000000"
 glx_sqmail_control_timeoutsmtpd: "30"
 

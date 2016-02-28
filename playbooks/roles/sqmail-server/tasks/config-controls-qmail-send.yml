@@ -1,0 +1,36 @@
+---
+- name: send configuration files to  {{ glx_sqmail_dir }}/control/
+  template:
+    src="control/{{ item }}.j2"
+    dest="{{ glx_sqmail_dir }}/control/{{ item }}"
+    owner="root"
+    group="root"
+    mode=0644
+  with_items:
+    - "queuelifetime"
+    - "doublebouncehost"
+    - "doublebounceto"
+    - "bouncemaxbytes"
+    - "concurrencylocal"
+    - "concurrencyremote"
+    - "me"
+    - "envnoathost"
+    - "locals"
+
+### percenthack" management
+
+### virtualdomains management
+- name: set "{{ glx_sqmail_control_virtualdomains }}" virtual domains and users
+  template:
+    src=c"ontrol/virtualdomains.j2"
+    dest="{{ glx_sqmail_dir }}/control/virtualdomains"
+    owner="root"
+    group="root"
+    mode=0644
+  when: glx_sqmail_set_virtualdomains
+
+- name: delete "{{ glx_sqmail_dir }}/control/virtualdomains"
+  file:
+    path="{{ glx_sqmail_dir }}/control/virtualdomains"
+    state=absent
+  when: not glx_sqmail_set_virtualdomains
