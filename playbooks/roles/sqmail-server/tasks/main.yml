@@ -26,6 +26,12 @@
 - include: config-controls-qmail-send.yml
   tags: controls, config
 
+- include: config-controls-qmail-smtpd.yml
+  tags: controls, config
+
+- include: config-controls-qmail-remote.yml
+  tags: controls, config
+
 - include: config-alias.yml
   tags: alias, config
 

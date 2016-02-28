@@ -122,6 +122,9 @@ glx_sqmail_control_locals:
 glx_sqmail_control_percenthack: ""
 glx_sqmail_control_virtualdomains: ""
 
+# qmail-remote
+glx_sqmail_control_timeoutconnect: "60"
+glx_sqmail_control_timeoutremote: "1200"
 # qmail-smtpd
 glx_sqmail_control_defaultdomain: "{{ glx_sqmail_domain }}"
 glx_sqmail_control_plusdomain: "{{ glx_sqmail_domain }}"

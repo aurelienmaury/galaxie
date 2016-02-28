@@ -1,1 +1,30 @@
 ---
+- name: send control files in {{ glx_sqmail_dir }}/control/
+  template:
+    src="control/{{ item }}.j2"
+    dest="{{ glx_sqmail_dir }}/control/{{ item }}"
+    owner="root"
+    group="root"
+    mode=0644
+  with_items:
+    - "badmailfrom"
+    - "badloadertypes"
+    - "badmimetypes"
+    - "badrcptto"
+    - "databytes"
+    - "timeoutsmtpd"
+    - "rcpthosts"
+    - "rules.smtpd.txt"
+
+- name: update {{ glx_sqmail_dir }}/control/badloadertypes.cdb
+  shell: "{{ glx_sqmail_dir }}/bin/qmail-badloadertypes"
+  changed_when: false
+
+- name: update {{ glx_sqmail_dir }}/control/badmimetypes.cdb
+  shell: "{{ glx_sqmail_dir }}/bin/qmail-badmimetypes"
+  changed_when: false
+
+- name: update {{ glx_sqmail_dir }}/control/rules.smtpd.cdb
+  shell: tcprules rules.smtpd.cdb rules.smtpd.tmp < rules.smtpd.txt
+    chdir="{{ glx_sqmail_dir }}/control"
+  changed_when: false

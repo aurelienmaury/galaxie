@@ -1,0 +1,27 @@
+---
+- name: send control files in {{ glx_sqmail_dir }}/control/
+  template:
+    src="control/{{ item }}.j2"
+    dest="{{ glx_sqmail_dir }}/control/{{ item }}"
+    owner="root"
+    group="root"
+    mode=0644
+  with_items:
+    - "timeoutconnect"
+    - "timeoutremote"
+
+### smtproutes management
+- name: set "{{ glx_sqmail_control_smtproutes }}" artificial SMTP routes
+  template:
+    src="control/smtproutes.j2"
+    dest="{{ glx_sqmail_dir }}/control/smtproutes"
+    owner="root"
+    group="root"
+    mode=0644
+  when: glx_sqmail_set_smtproutes
+
+- name: delete "{{ glx_sqmail_dir }}/control/smtproutes"
+  file:
+    path="{{ glx_sqmail_dir }}/control/smtproutes"
+    state=absent
+  when: not glx_sqmail_set_smtproutes

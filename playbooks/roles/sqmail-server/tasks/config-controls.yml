@@ -11,14 +11,6 @@
     group="root"
     mode=0644
 
-- name: Set "{{ glx_sqmail_control_concurrencyincoming }}" as max simultaneous incoming SMTP connections
-  template:
-    src="control/concurrencyincoming.j2"
-    dest="{{ glx_sqmail_dir }}/control/concurrencyincoming"
-    owner="root"
-    group="root"
-    mode=0644
-
 - name: Set "{{ glx_sqmail_control_spfbehavior }}" as value between 1 and 6 to enable SPF checks
   template:
     src="control/spfbehavior.j2"
@@ -31,22 +23,6 @@
   template:
     src="control/bouncefrom.j2"
     dest="{{ glx_sqmail_dir }}/control/bouncefrom"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: Set maximum message size to be "{{ glx_sqmail_control_databytes }}" bytes
-  template:
-    src="control/databytes.j2"
-    dest="{{ glx_sqmail_dir }}/control/databytes"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: Set "{{ glx_sqmail_control_timeoutsmtpd }}" seconds as timeout
-  template:
-    src="control/timeoutsmtpd.j2"
-    dest="{{ glx_sqmail_dir }}/control/timeoutsmtpd"
     owner="root"
     group="root"
     mode=0644
@@ -68,30 +44,6 @@
     group="root"
     mode=0644
 
-- name: set "{{ glx_sqmail_control_rcpthosts }}" domains that we accept mail for
-  template:
-    src="control/rcpthosts.j2"
-    dest="{{ glx_sqmail_dir }}/control/rcpthosts"
-    owner="root"
-    group="root"
-    mode=0644
-
-### smtproutes management
-- name: set "{{ glx_sqmail_control_smtproutes }}" artificial SMTP routes
-  template:
-    src="control/smtproutes.j2"
-    dest="{{ glx_sqmail_dir }}/control/smtproutes"
-    owner="root"
-    group="root"
-    mode=0644
-  when: glx_sqmail_set_smtproutes
-
-- name: delete "{{ glx_sqmail_dir }}/control/smtproutes"
-  file:
-    path="{{ glx_sqmail_dir }}/control/smtproutes"
-    state=absent
-  when: not glx_sqmail_set_smtproutes
-
 #### Don't know look to prevent a bug
 
 - name: update the memory to 32MB to avoid memory related errors
@@ -103,60 +55,6 @@
     mode=0644
 
 #### ctl from s/qmail source
-
-- name: set unacceptable base64 encoded LOADER list in {{ glx_sqmail_dir }}/control/badloadertypes
-  template:
-    src="control/badloadertypes.j2"
-    dest="{{ glx_sqmail_dir }}/control/badloadertypes"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: update {{ glx_sqmail_dir }}/control/badloadertypes.cdb
-  shell: "{{ glx_sqmail_dir }}/bin/qmail-badloadertypes"
-  changed_when: false
-
-- name: set unacceptable envelope sender addresses in {{ glx_sqmail_dir }}/control/badmailfrom
-  template:
-    src="control/badmailfrom.j2"
-    dest="{{ glx_sqmail_dir }}/control/badmailfrom"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: set unacceptable base64 encoded MIME types in message in {{ glx_sqmail_dir }}/control/badmimetypes
-  template:
-    src="control/badmimetypes.j2"
-    dest="{{ glx_sqmail_dir }}/control/badmimetypes"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: update {{ glx_sqmail_dir }}/control/badmimetypes.cdb
-  shell: "{{ glx_sqmail_dir }}/bin/qmail-badmimetypes"
-  changed_when: false
-
-- name: set unacceptable envelope recipient addresses in {{ glx_sqmail_dir }}/control/badrcptto
-  template:
-    src="control/badrcptto.j2"
-    dest="{{ glx_sqmail_dir }}/control/badrcptto"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: set smtpd rules {{ glx_sqmail_dir }}/control/rules.smtpd.txt
-  template:
-    src="control/rules.smtpd.txt.j2"
-    dest="{{ glx_sqmail_dir }}/control/rules.smtpd.txt"
-    owner="root"
-    group="root"
-    mode=0644
-
-- name: update {{ glx_sqmail_dir }}/control/rules.smtpd.cdb
-  shell: tcprules rules.smtpd.cdb rules.smtpd.tmp < rules.smtpd.txt
-    chdir="{{ glx_sqmail_dir }}/control"
-  changed_when: false
-
 - name: set qmtpd rules {{ glx_sqmail_dir }}/control/rules.qmtpd.txt
   template:
     src="control/rules.qmtpd.txt.j2"
