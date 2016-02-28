@@ -23,13 +23,16 @@
 - include: config-controls.yml
   tags: controls, config
 
-- include: config-controls-qmail-send.yml
+- include: config-qmail-send.yml
   tags: controls, config
 
-- include: config-controls-qmail-smtpd.yml
+- include: config-qmail-smtpd.yml
   tags: controls, config
 
-- include: config-controls-qmail-remote.yml
+- include: config-qmail-remote.yml
+  tags: controls, config
+
+- include: config-qmail-inject.yml
   tags: controls, config
 
 - include: config-alias.yml
@@ -66,4 +69,7 @@
 
 ## finilize
 - include: services-cleanup.yml
+  tags: cleanup, install-sqmail, install
+
+- include: cleanup.yml
   tags: cleanup, install-sqmail, install

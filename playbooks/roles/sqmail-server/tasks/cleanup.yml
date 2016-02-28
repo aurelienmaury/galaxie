@@ -1,0 +1,9 @@
+---
+- name: clean up controls files
+  file:
+    path="{{ glx_sqmail_dir }}/control/{{ item }}"
+    state=absent
+  with_items:
+    - "defaultdelivery"
+    - "conf-common"
+    - "spfbehavior"

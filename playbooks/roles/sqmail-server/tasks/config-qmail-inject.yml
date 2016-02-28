@@ -1,0 +1,11 @@
+---
+- name: send configuration files to  {{ glx_sqmail_dir }}/control/
+  template:
+    src="control/{{ item }}.j2"
+    dest="{{ glx_sqmail_dir }}/control/{{ item }}"
+    owner="root"
+    group="root"
+    mode=0644
+  with_items:
+    - "plusdomain"
+    - "defaultdomain"
