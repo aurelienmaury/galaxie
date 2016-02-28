@@ -17,9 +17,6 @@ glx_prefix_dir: "/usr/local"
 #glx_sqmail_inet_bind_info: "-6 2001:32d0:8:4242::42"
 glx_sqmail_inet_bind_info: "0"
 
-
-
-
 glx_sqmail_service_send:
   enable: true
   name: "send"
@@ -130,6 +127,12 @@ glx_sqmail_control_doublebouncehost: "{{ glx_sqmail_domain }}"
 glx_sqmail_control_doublebounceto: "postmaster"
 glx_sqmail_control_databytes: "8000000"
 glx_sqmail_control_timeoutsmtpd: "30"
+
+glx_sqmail_badloadertypes_list:
+  - "Mi5kb"
+  - "MzIuZ"
+  - "MyLmR"
+  - "MyLkR"
 
 # cdb
 glx_cdb_force_install: true

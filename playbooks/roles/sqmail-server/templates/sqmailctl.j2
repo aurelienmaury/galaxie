@@ -1,17 +1,29 @@
 #!/usr/bin/env bash
+#
+# sqmailctl  start the s/qmail MTA
+# (c) Jérôme Ornech <tuux@rtnp.org>
+#
+#   This package is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+### BEGIN INIT INFO
+# Provides:          sqmailctl
+# Short-Description: s/qmail MTA
+# Description:       Controls the s/qmail MTA
+### END INIT INFO
 
-# For Red Hat chkconfig
-# chkconfig: - 80 30
-# description: the qmail MTA
 
-PATH={{ glx_sqmail_dir }}/bin:/bin:/usr/bin:/usr/local/bin:/usr/local/sbin
-export PATH
 
 SERVICE_TEXT="s/qmail"
 SERVICE_DIRECTORY="{{ glx_service_dir }}"
+QMAIL_DIRECTORY="{{ glx_sqmail_dir }}"
 
 QMAILDUID=`id -u qmaild`
 NOFILESGID=`id -g qmaild`
+
+export PATH="$QMAIL_DIRECTORY/bin:${PATH:+$PATH:}/usr/sbin:/sbin"
 
 # Screen fun thing
 COLOR_GREEN="\e[92m"
@@ -410,7 +422,7 @@ case "$1" in
     ;;
   doqueue|alrm|flush)
     printf "Flushing timeout table and sending ALRM signal to $BOLD%s$BOLD_RST service(s)\n" "$SERVICE_TEXT"
-    {{ glx_sqmail_dir }}/bin/qmail-tcpok
+    $QMAIL_DIRECTORY/bin/qmail-tcpok
 {% if glx_sqmail_service_send.enable %}
     svc -a $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }} $SERVICE_DIRECTORY/{{ glx_sqmail_service_send.directory }}/log
     printf "%s " "{{ glx_sqmail_service_send.name }}"
@@ -748,39 +760,93 @@ case "$1" in
 {% endif %}
     ;;
   cdb)
+    # badloadertypes.cdb see qmail-smtpd manual
+    if [ -f $QMAIL_DIRECTORY/control/badloadertypes ]; then
+        printf "Update $QMAIL_DIRECTORY/control/badloadertypes.cdb\n"
+        qmail-badloadertypes
+    fi
+    #badmimetypes.cdb see qmail-smtpd manual
+    if [ -f $QMAIL_DIRECTORY/control/badmimetypes ]; then
+        printf "Update $QMAIL_DIRECTORY/control/badmimetypes.cdb\n"
+        qmail-badmimetypes
+    fi
+    #mailfromrules.cdb
+    if [ -f $QMAIL_DIRECTORY/control/mailfromrules ]; then
+        printf "Update $QMAIL_DIRECTORY/control/mailfromrules.cdb\n"
+        qmail-mfrules
+    fi
+    #morercpthosts.cdb
+    if [ -f $QMAIL_DIRECTORY/control/morercpthosts ]; then
+        printf "Update $QMAIL_DIRECTORY/control/morercpthosts.cdb\n"
+        qmail-newmrh
+    fi
 {% if glx_sqmail_service_smtp.enable %}
-    #echo "Build {{ glx_sqmail_service_smtp.name }} tcp.cdb file ..."
-    #cd $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtp.directory }}
-    #cp ./tcp ./tcp.bkp
-    #chmod 644 ./tcp.cdb
-    #make
+    #qmail-smtpd on port 25: rules.smtpd.cdb
+    if [ -f $QMAIL_DIRECTORY/control/rules.smtpd.txt ]; then
+        printf "Update $QMAIL_DIRECTORY/control/rules.smtpd.cdb\n"
+        cd $QMAIL_DIRECTORY/control/
+        tcprules rules.smtpd.cdb rules.smtpd.tmp < rules.smtpd.txt
+    fi
 {% endif %}
 {% if glx_sqmail_service_smtps.enable %}
-    #echo "Build {{ glx_sqmail_service_smtps.name }} tcp.cdb file ..."
-    #cd $SERVICE_DIRECTORY/{{ glx_sqmail_service_smtps.directory }}
-    #cp ./tcp ./tcp.bkp
-    #chmod 644 ./tcp.cdb
-    #make
+    #qmail-smtpd on port 465: rules.smtpsd.cdb
+    if [ -f $QMAIL_DIRECTORY/control/rules.smtpsd.txt ]; then
+        printf "Update $QMAIL_DIRECTORY/control/rules.smtpsd.cdb\n"
+        cd $QMAIL_DIRECTORY/control/
+        tcprules rules.smtpsd.cdb rules.smtpsd.tmp < rules.smtpsd.txt
+    fi
+{% endif %}
+{% if glx_sqmail_service_submission.enable %}
+    #qmail-smtpd on port 578: rules.sub.cdb
+    if [ -f $QMAIL_DIRECTORY/control/rules.sub.txt ]; then
+        printf "Update $QMAIL_DIRECTORY/control/rules.sub.cdb\n"
+        cd $QMAIL_DIRECTORY/control/
+        tcprules rules.sub.cdb rules.sub.tmp < rules.sub.txt
+    fi
+{% endif %}
+{% if glx_sqmail_service_qmtp.enable %}
+    #qmail-qmtpd on port 209: rules.qmtpd.cdb
+    if [ -f $QMAIL_DIRECTORY/control/rules.qmtpd.txt ]; then
+        printf "Update $QMAIL_DIRECTORY/control/rules.qmtpd.cdb\n"
+        cd $QMAIL_DIRECTORY/control/
+        tcprules rules.qmtpd.cdb rules.qmtpd.tmp < rules.qmtpd.txt
+    fi
+{% endif %}
+{% if glx_sqmail_service_qmtps.enable %}
+    #qmail-qmtpd on port 6209: rules.qmtpsd.cdb
+    if [ -f $QMAIL_DIRECTORY/control/rules.qmtpsd.txt ]; then
+        printf "Update $QMAIL_DIRECTORY/control/rules.qmtpsd.cdb\n"
+        cd $QMAIL_DIRECTORY/control/
+        tcprules rules.qmtpsd.cdb rules.qmtpsd.tmp < rules.qmtpsd.txt
+    fi
+{% endif %}
+{% if glx_sqmail_service_qmqp.enable %}
+    #qmail-qmqpd on port 628: rules.qmqpd.cdb
+    if [ -f $QMAIL_DIRECTORY/control/rules.qmqpd.txt ]; then
+        printf "Update $QMAIL_DIRECTORY/control/rules.qmqpd.cdb\n"
+        cd $QMAIL_DIRECTORY/control/
+        tcprules rules.qmqpd.cdb rules.qmqpd.tmp < rules.qmqpd.txt
+    fi
 {% endif %}
     ;;
   delqueue)
-    find {{ glx_sqmail_dir }}/queue/mess -type f -exec rm {} \;
-    find {{ glx_sqmail_dir }}/queue/info -type f -exec rm {} \;
-    find {{ glx_sqmail_dir }}/queue/local -type f -exec rm {} \;
-    find {{ glx_sqmail_dir }}/queue/intd -type f -exec rm {} \;
-    find {{ glx_sqmail_dir }}/queue/todo -type f -exec rm {} \;
-    find {{ glx_sqmail_dir }}/queue/remote -type f -exec rm {} \;
-  ;;
+    find $QMAIL_DIRECTORY/queue/mess -type f -exec rm {} \;
+    find $QMAIL_DIRECTORY/queue/info -type f -exec rm {} \;
+    find $QMAIL_DIRECTORY/queue/local -type f -exec rm {} \;
+    find $QMAIL_DIRECTORY/queue/intd -type f -exec rm {} \;
+    find $QMAIL_DIRECTORY/queue/todo -type f -exec rm {} \;
+    find $QMAIL_DIRECTORY/queue/remote -type f -exec rm {} \;
+    ;;
   users)
     echo "Build local user data base ..."
     # for cdb auth
-    /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 {{ glx_sqmail_dir }}/control/new.cdb {{ glx_sqmail_dir }}/control/new.tmp
-    chown root:nofiles {{ glx_sqmail_dir }}/control/new.cdb
-    chmod 0640 {{ glx_sqmail_dir }}/control/new.cdb
-    mv {{ glx_sqmail_dir }}/control/new.cdb {{ glx_sqmail_dir }}/control/auth.cdb
+    /usr/local/bin/mkauth | /usr/local/bin/cdbmake-12 $QMAIL_DIRECTORY/control/new.cdb $QMAIL_DIRECTORY/control/new.tmp
+    chown root:nofiles $QMAIL_DIRECTORY/control/new.cdb
+    chmod 0640 $QMAIL_DIRECTORY/control/new.cdb
+    mv $QMAIL_DIRECTORY/control/new.cdb $QMAIL_DIRECTORY/control/auth.cdb
     # for checkpassword
-    #{{ glx_sqmail_dir }}/bin/qmail-pw2u < /etc/passwd > {{ glx_sqmail_dir }}/users/assign && {{ glx_sqmail_dir }}/bin/qmail-newu
-  ;;
+    #$QMAIL_DIRECTORY/bin/qmail-pw2u < /etc/passwd > $QMAIL_DIRECTORY/users/assign && $QMAIL_DIRECTORY/bin/qmail-newu
+    ;;
   help)
     cat <<HELP
    stop  -- stops mail service (smtp connections refused, nothing goes out)

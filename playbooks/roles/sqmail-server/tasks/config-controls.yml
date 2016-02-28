@@ -157,3 +157,16 @@
     owner="root"
     group="root"
     mode=0644
+
+#### ctl from s/qmail source
+
+- name: set unacceptable base64 encoded LOADER list in {{ glx_sqmail_dir }}/control/badloadertypes
+  template:
+    src="control/badloadertypes.j2"
+    dest="{{ glx_sqmail_dir }}/control/badloadertypes"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: Update {{ glx_sqmail_dir }}/control/badloadertypes
+  shell: "{{ glx_sqmail_dir }}/bin/qmail-badloadertypes"
