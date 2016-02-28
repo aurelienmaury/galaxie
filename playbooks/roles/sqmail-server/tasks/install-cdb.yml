@@ -43,18 +43,6 @@
     copy=no
   when: glx_cdb_source_download.changed
 
-#- name: send cdb-0.75.errno.patch to "{{ glx_cdb_source_dir }}"
-#  copy:
-#    src=cdb-0.75.errno.patch
-#    dest="{{ glx_cdb_source_dir }}/cdb-0.75.errno.patch"
-#  when: glx_cdb_source_download.changed
-#
-#- name: apply cdb-0.75.errno.patch
-#  shell: patch < {{ glx_cdb_source_dir }}/cdb-0.75.errno.patch
-#    chdir="{{ glx_cdb_source_dir }}/{{ glx_cdb_app_name }}"
-#  changed_when: false
-#  when: glx_cdb_source_download.changed
-
 # conf-ld -- loader options to be adjusted (for i386; AMD64 normalydefault)
 - name: check DEB_BUILD_ARCH
   shell: dpkg-architecture 2>&1 | grep '^DEB_BUILD_ARCH=' | cut -d'=' -f2
