@@ -202,7 +202,7 @@ glx_sqmail_control_rules_qmtpd:
   - ':deny'
 
 # cdb
-glx_cdb_force_install: true
+glx_cdb_force_install: false
 glx_cdb_repository: "http://cr.yp.to/cdb"
 glx_cdb_app_name: "cdb-0.75"
 glx_cdb_extension: "tar.gz"
@@ -210,7 +210,7 @@ glx_cdb_download_url: "{{ glx_cdb_repository }}/{{ glx_cdb_app_name }}.{{ glx_cd
 glx_cdb_source_dir: "/usr/src"
 
 # ucspi-tcp6
-glx_ucspi_tcp6_force_install: true
+glx_ucspi_tcp6_force_install: false
 glx_ucspi_tcp6_source_repository: "http://www.fehcom.de/ipnet/ucspi-tcp6"
 glx_ucspi_tcp6_source_name: "ucspi-tcp6-1.00a"
 glx_ucspi_tcp6_source_extension: "tgz"
@@ -218,7 +218,7 @@ glx_ucspi_tcp6_source_url: "{{ glx_ucspi_tcp6_source_repository }}/{{ glx_ucspi_
 glx_ucspi_tcp6_source_dir: "/usr/src"
 
 # ucspi-ssl
-glx_ucspi_ssl_force_install: true
+glx_ucspi_ssl_force_install: false
 glx_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
 glx_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
 glx_ucspi_ssl_source_extension: "tgz"

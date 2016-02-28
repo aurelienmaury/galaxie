@@ -2,6 +2,8 @@
 QMAILU=`id -u {{ glx_sqmail_ids.qmaild.uname }}`
 QMAILG=`id -g {{ glx_sqmail_ids.qmaild.uname }}`
 HOSTNAME=`hostname`
+export HELOCHECK="."
+export MFDNSCHECK=""
 export SMTPAUTH="!"
 export UCSPITLS=""
 . {{ glx_sqmail_dir }}/ssl/ssl.env
