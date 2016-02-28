@@ -11,6 +11,7 @@
     - "badloadertypes"
     - "badmimetypes"
     - "badrcptto"
+    - "badhelo"
     - "databytes"
     - "timeoutsmtpd"
     - "rcpthosts"

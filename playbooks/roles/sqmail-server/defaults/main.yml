@@ -126,6 +126,11 @@ glx_sqmail_control_virtualdomains: ""
 glx_sqmail_control_timeoutconnect: "60"
 glx_sqmail_control_timeoutremote: "1200"
 # qmail-smtpd
+glx_sqmail_control_badhelo:
+  - "{{ ansible_default_ipv4.address }}"
+  - "{{ ansible_hostname }}.{{ glx_sqmail_domain }}"
+  - "localhost"
+  - "localhost.localdomain"
 glx_sqmail_control_defaultdomain: "{{ glx_sqmail_domain }}"
 glx_sqmail_control_plusdomain: "{{ glx_sqmail_domain }}"
 
