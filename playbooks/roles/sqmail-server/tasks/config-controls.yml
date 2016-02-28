@@ -168,5 +168,60 @@
     group="root"
     mode=0644
 
-- name: Update {{ glx_sqmail_dir }}/control/badloadertypes
+- name: update {{ glx_sqmail_dir }}/control/badloadertypes.cdb
   shell: "{{ glx_sqmail_dir }}/bin/qmail-badloadertypes"
+  changed_when: false
+
+- name: set unacceptable envelope sender addresses in {{ glx_sqmail_dir }}/control/badmailfrom
+  template:
+    src="control/badmailfrom.j2"
+    dest="{{ glx_sqmail_dir }}/control/badmailfrom"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: set unacceptable base64 encoded MIME types in message in {{ glx_sqmail_dir }}/control/badmimetypes
+  template:
+    src="control/badmimetypes.j2"
+    dest="{{ glx_sqmail_dir }}/control/badmimetypes"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: update {{ glx_sqmail_dir }}/control/badmimetypes.cdb
+  shell: "{{ glx_sqmail_dir }}/bin/qmail-badmimetypes"
+  changed_when: false
+
+- name: set unacceptable envelope recipient addresses in {{ glx_sqmail_dir }}/control/badrcptto
+  template:
+    src="control/badrcptto.j2"
+    dest="{{ glx_sqmail_dir }}/control/badrcptto"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: set smtpd rules {{ glx_sqmail_dir }}/control/rules.smtpd.txt
+  template:
+    src="control/rules.smtpd.txt.j2"
+    dest="{{ glx_sqmail_dir }}/control/rules.smtpd.txt"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: update {{ glx_sqmail_dir }}/control/rules.smtpd.cdb
+  shell: tcprules rules.smtpd.cdb rules.smtpd.tmp < rules.smtpd.txt
+    chdir="{{ glx_sqmail_dir }}/control"
+  changed_when: false
+
+- name: set qmtpd rules {{ glx_sqmail_dir }}/control/rules.qmtpd.txt
+  template:
+    src="control/rules.qmtpd.txt.j2"
+    dest="{{ glx_sqmail_dir }}/control/rules.qmtpd.txt"
+    owner="root"
+    group="root"
+    mode=0644
+
+- name: update {{ glx_sqmail_dir }}/control/rules.qmtpd.cdb
+  shell: tcprules rules.qmtpd.cdb rules.qmtpd.tmp < rules.qmtpd.txt
+    chdir="{{ glx_sqmail_dir }}/control"
+  changed_when: false

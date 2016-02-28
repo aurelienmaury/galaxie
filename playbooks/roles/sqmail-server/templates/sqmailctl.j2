@@ -770,12 +770,12 @@ case "$1" in
         printf "Update $QMAIL_DIRECTORY/control/badmimetypes.cdb\n"
         qmail-badmimetypes
     fi
-    #mailfromrules.cdb
+    #mailfromrules.cdb see qmail-smtpd manual
     if [ -f $QMAIL_DIRECTORY/control/mailfromrules ]; then
         printf "Update $QMAIL_DIRECTORY/control/mailfromrules.cdb\n"
         qmail-mfrules
     fi
-    #morercpthosts.cdb
+    #morercpthosts.cdb see qmail-smtpd manual
     if [ -f $QMAIL_DIRECTORY/control/morercpthosts ]; then
         printf "Update $QMAIL_DIRECTORY/control/morercpthosts.cdb\n"
         qmail-newmrh

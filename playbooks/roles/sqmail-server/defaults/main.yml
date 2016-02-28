@@ -116,6 +116,7 @@ glx_sqmail_control_locals:
   - "{{ glx_sqmail_domain }}"
 glx_sqmail_control_rcpthosts:
   - "{{ glx_sqmail_domain }}"
+  - ".{{ glx_sqmail_domain }}"
 
 glx_sqmail_maildirname: "Maildir"
 glx_sqmail_control_defaultdelivery: "./{{ glx_sqmail_maildirname }}/"
@@ -128,11 +129,59 @@ glx_sqmail_control_doublebounceto: "postmaster"
 glx_sqmail_control_databytes: "8000000"
 glx_sqmail_control_timeoutsmtpd: "30"
 
-glx_sqmail_badloadertypes_list:
+glx_sqmail_control_badloadertypes:
   - "Mi5kb"
   - "MzIuZ"
   - "MyLmR"
   - "MyLkR"
+
+glx_sqmail_control_badmailfrom:
+  - "# Wildmat evaluates from least specific to most specific"
+  - "*"
+  - "! "
+  - "!*@*.*"
+  - "*%*"
+
+glx_sqmail_control_badmimetypes:
+  - "TVqQAAMAA"
+  - "TVpQAAIAA"
+  - "TVpAALQAc"
+  - "TVpyAXkAX"
+  - "TVrmAU4AA"
+  - "TVrhARwAk"
+  - "TVoFAQUAA"
+  - "TVoAAAQAA"
+  - "TVoIARMAA"
+  - "TVouARsAA"
+  - "TVrQAT8AA"
+  - "TVoAAAEAA"
+
+glx_sqmail_control_badrcptto:
+  - "# Wildmat evaluates from least specifc to most specific"
+  - "*%*"
+  - "*\ *@*"
+  - "!*@*.*"
+
+glx_sqmail_control_rules_smtpd:
+  - '10.0.0.0/8:allow,RELAYCLIENT=""'
+  - '172.16.0.0/12:allow,RELAYCLIENT=""'
+  - '192.168.0.0/16:allow,RELAYCLIENT=""'
+  - '127.0.0.1/31:allow,RELAYCLIENT=""'
+  - '::1/127:allow,RELAYCLIENT=""'
+  - 'fe80::/10:allow,RELAYCLIENT=""'
+  - 'fc00::/7:allow,RELAYCLIENT=""'
+  - '=localhost:allow,RELAYCLIENT=""'
+  - '=:allow'
+  - ':deny'
+
+glx_sqmail_control_rules_qmtpd:
+  - '10.0.0.0/8:allow'
+  - '172.16.0.0/12:allow'
+  - '192.168.0.0/16:allow'
+  - '127.0.0.1/31:allow'
+  - 'fe80::/10:allow'
+  - 'fc00::/7:allow'
+  - ':deny'
 
 # cdb
 glx_cdb_force_install: true
