@@ -7,9 +7,9 @@
   register: send
   when: not glx_sqmail_service_send.enable
 
-- name: svc -dt {{ glx_sqmail_service_send.directory }}
+- name: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
   shell: svc -dt {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }} {{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}/log
-  when: not glx_sqmail_service_send.enable and send.stat.exist
+  when: not glx_sqmail_service_send.enable and send.stat.exists
 
 - name: remove {{ glx_sqmail_service_send.directory }} files and directory
   file:
@@ -20,7 +20,7 @@
     - "{{ glx_service_dir }}/{{ glx_sqmail_service_send.directory }}"
     - "{{ glx_supervise_dir }}/{{ glx_sqmail_service_send.directory }}"
     - "{{ glx_multilog_dir}}/{{ glx_sqmail_service_send.directory }}"
-  when: not glx_sqmail_service_send.enable and send.stat.exist
+  when: not glx_sqmail_service_send.enable and send.stat.exists
 
 # smtp
 ###############################################################################

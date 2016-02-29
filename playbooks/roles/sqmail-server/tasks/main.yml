@@ -21,22 +21,22 @@
 
 ## Initital setting
 - include: config-controls.yml
-  tags: controls, config
+  tags: controls, config, install-sqmail, install
 
 - include: config-qmail-send.yml
-  tags: controls, config
+  tags: controls, config, install-sqmail, install
 
 - include: config-qmail-smtpd.yml
-  tags: controls, config
+  tags: controls, config, install-sqmail, install
 
 - include: config-qmail-remote.yml
-  tags: controls, config
+  tags: controls, config, install-sqmail, install
 
 - include: config-qmail-inject.yml
-  tags: controls, config
+  tags: controls, config, install-sqmail, install
 
 - include: config-alias.yml
-  tags: alias, config
+  tags: alias, config, install-sqmail, install
 
 #- include: install-mta.yml
 #  tags: install
@@ -69,7 +69,7 @@
 
 ## finilize
 - include: services-cleanup.yml
-  tags: cleanup, install-sqmail, install
+  tags: cleanup, install-sqmail, install-sqmail, install
 
 - include: cleanup.yml
   tags: cleanup, install-sqmail, install

@@ -18,13 +18,13 @@ glx_prefix_dir: "/usr/local"
 glx_sqmail_inet_bind_info: "0"
 
 glx_sqmail_service_send:
-  enable: false
+  enable: true
   name: "send"
   directory: "qmail-send"
   script: "run_send"
 
 glx_sqmail_service_smtp:
-  enable: false
+  enable: true
   name: "smtp"
   directory: "qmail-smtpd"
   script: "run_smtpd"
@@ -36,7 +36,7 @@ glx_sqmail_service_smtps:
   script: "run_smtpsd"
 
 glx_sqmail_service_submission:
-  enable: false
+  enable: true
   name: "submission"
   directory: "qmail-smtpsub"
   script: "run_smtpsub"
