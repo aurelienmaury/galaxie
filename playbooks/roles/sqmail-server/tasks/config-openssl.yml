@@ -11,9 +11,9 @@
     - "{{ glx_sqmail_dir }}/control/servercert.pem"
   when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert
 
-- name: generate {{ glx_ucspi_ssl_dh_bits }} bits dh parameter "{{ glx_ucspi_ssl_dh_parameter_file }}" fle
-  shell: openssl dhparam -out {{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_dh_bits }}.pem {{ glx_ucspi_ssl_dh_bits }}
-    creates={{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_dh_bits }}.pem
+- name: generate {{ glx_sqmail_openssl_key_bit }} bits dh parameter "{{ glx_sqmail_ssl_dir }}/dh{{ glx_sqmail_openssl_key_bit }}.pem" fle
+  shell: openssl dhparam -out {{ glx_sqmail_ssl_dir }}/dh{{ glx_sqmail_openssl_key_bit }}.pem {{ glx_sqmail_openssl_key_bit }}
+    creates={{ glx_sqmail_ssl_dir }}/dh{{ glx_sqmail_openssl_key_bit }}.pem
   when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert
 
 - name: auto signed rsa:{{ glx_sqmail_openssl_key_bit }} key, valide for {{ glx_sqmail_openssl_key_days }} days , to "{{ glx_sqmail_dir }}/control/servercert.pem"
@@ -21,14 +21,14 @@
     chdir="{{ glx_sqmail_ssl_dir }}"
   when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert
 
-- name: check "{{ glx_sqmail_dir }}/control/servercert.pem" permissions
+- name: check {{ glx_sqmail_ssl_dir }}/ keys permissions
   file:
-    path="{{ glx_sqmail_dir }}/control/servercert.pem"
+    path="{{ item }}"
     owner=root
-    group={{ glx_sqmail_qmail_group }}
+    group={{ glx_sqmail_groups.sqmail.gname }}
     mode=0640
   with_items:
-    - "{{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_dh_bits }}.pem"
+    - "{{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_rsa_key_size }}.pem"
     - "{{ glx_sqmail_ssl_dir }}/{{ glx_sqmail_control_me }}.pem"
     - "{{ glx_sqmail_ssl_dir }}/{{ glx_sqmail_control_me }}.key"
   when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert

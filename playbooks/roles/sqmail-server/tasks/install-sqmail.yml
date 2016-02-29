@@ -45,6 +45,10 @@
     sha256sum=5501a984d83d9f0826c2d497522090f6335049be1442be74d6492dee76c735a7
   register: glx_sqmail_download
 
+#- name: send sqmail source
+#  file:
+#    source="{{ glx_sqmail_source_name }}.{{ glx_sqmail_source_extension }}"
+
 - name: delete "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}" directory
   file:
     path="{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}"

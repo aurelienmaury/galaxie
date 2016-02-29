@@ -203,24 +203,27 @@ glx_sqmail_control_rules_qmtpd:
   - ':deny'
 
 # cdb
-glx_cdb_force_install: false
-glx_cdb_repository: "http://cr.yp.to/cdb"
+glx_cdb_force_install: true
+glx_cdb_repository: "https://raw.githubusercontent.com/aurelienmaury/galaxie/master/playbooks/roles/sqmail-server/files"
+#glx_cdb_repository: "http://cr.yp.to/cdb"
 glx_cdb_app_name: "cdb-0.75"
 glx_cdb_extension: "tar.gz"
 glx_cdb_download_url: "{{ glx_cdb_repository }}/{{ glx_cdb_app_name }}.{{ glx_cdb_extension }}"
 glx_cdb_source_dir: "/usr/src"
 
 # ucspi-tcp6
-glx_ucspi_tcp6_force_install: false
-glx_ucspi_tcp6_source_repository: "http://www.fehcom.de/ipnet/ucspi-tcp6"
+glx_ucspi_tcp6_force_install: true
+glx_ucspi_tcp6_source_repository: "https://raw.githubusercontent.com/aurelienmaury/galaxie/master/playbooks/roles/sqmail-server/files"
+#glx_ucspi_tcp6_source_repository: "http://www.fehcom.de/ipnet/ucspi-tcp6"
 glx_ucspi_tcp6_source_name: "ucspi-tcp6-1.00a"
 glx_ucspi_tcp6_source_extension: "tgz"
 glx_ucspi_tcp6_source_url: "{{ glx_ucspi_tcp6_source_repository }}/{{ glx_ucspi_tcp6_source_name }}.{{ glx_ucspi_tcp6_source_extension }}"
 glx_ucspi_tcp6_source_dir: "/usr/src"
 
 # ucspi-ssl
-glx_ucspi_ssl_force_install: false
-glx_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
+glx_ucspi_ssl_force_install: true
+glx_ucspi_ssl_source_repository: "https://raw.githubusercontent.com/aurelienmaury/galaxie/master/playbooks/roles/sqmail-server/files"
+#glx_ucspi_ssl_source_repository: "http://www.fehcom.de/ipnet/ucspi-ssl"
 glx_ucspi_ssl_source_name: "ucspi-ssl-0.95b"
 glx_ucspi_ssl_source_extension: "tgz"
 glx_ucspi_ssl_source_sha256sum: "9f3bcf66546b433b089f6f340d243065beb801b97d4026e54dd586f0022b5f1e"
@@ -230,11 +233,12 @@ glx_ucspi_ssl_source_dir: "/usr/src"
 glx_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
 glx_ucspi_ssl_dh_parameter_file: "{{ glx_ucspi_ssl_certificates_dir }}/dhparam.pem"
 glx_ucspi_ssl_kerberos_include_dir: "/usr/include/krb5"
-glx_ucspi_ssl_rsa_key_size: "2048"
+glx_ucspi_ssl_rsa_key_size: "1024"
 
 # s/qmail
 glx_sqmail_force_install: true
-glx_sqmail_source_repository: "http://fehcom.de/sqmail"
+glx_sqmail_source_repository: "https://raw.githubusercontent.com/aurelienmaury/galaxie/master/playbooks/roles/sqmail-server/files"
+#glx_sqmail_source_repository: "http://fehcom.de/sqmail"
 glx_sqmail_source_name: "sqmail-3.0.2"
 glx_sqmail_source_extension: "tgz"
 glx_sqmail_source_url: "{{ glx_sqmail_source_repository }}/{{ glx_sqmail_source_name }}.{{ glx_sqmail_source_extension }}"
@@ -300,8 +304,8 @@ glx_sqmail_package_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_so
 
 # certificate
 glx_sqmail_openssl_use_self_signed_cert: true
-glx_sqmail_openssl_key_gen: false
-glx_sqmail_openssl_key_bit: "2048"
+glx_sqmail_openssl_key_gen: true
+glx_sqmail_openssl_key_bit: "1024"
 glx_sqmail_openssl_key_days: "3650"
 glx_sqmail_openssl_cert_C: "FR"
 glx_sqmail_openssl_cert_ST: "Ile-de-France"

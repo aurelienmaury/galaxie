@@ -63,8 +63,8 @@
     state=directory
     mode=0755
 
-- name: generate {{ glx_ucspi_ssl_dh_bits }} bits dh parameter "{{ glx_ucspi_ssl_dh_parameter_file }}" fle
-  shell: openssl dhparam -out {{ glx_ucspi_ssl_dh_parameter_file }} {{ glx_ucspi_ssl_dh_bits }}
+- name: generate {{ glx_sqmail_openssl_key_bit }} bits dh parameter "{{ glx_ucspi_ssl_dh_parameter_file }}" fle
+  shell: openssl dhparam -out {{ glx_ucspi_ssl_dh_parameter_file }} {{ glx_sqmail_openssl_key_bit }}
     creates=/etc/ssl/certs/dhparam.pem
 
 - name: check DEB_BUILD_ARCH
