@@ -1,23 +1,34 @@
 ---
 # Openssl auto signed certificate
 # http://www.xfiles.dk/guide-on-how-to-run-qmail-with-smtp-ssl/
-- name: delete "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
+- name: previous SSL keys and setting"
   file:
-    path={{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem
+    path="{{ item }}"
     state=absent
-  when: galaxie_qmail_server_openssl_key_gen
-  tags: self-certificat
+  with_items:
+    - "{{ glx_sqmail_ssl_dir }}/{{ glx_sqmail_control_me }}.key"
+    - "{{ glx_sqmail_ssl_dir }}/{{ glx_sqmail_control_me }}.pem"
+    - "{{ glx_sqmail_dir }}/control/servercert.pem"
+  when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert
 
-- name: auto signed rsa:{{ galaxie_qmail_server_openssl_key_bit }} key, valide for {{ galaxie_qmail_server_openssl_key_days }} days , to "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
-  shell:  openssl req -newkey rsa:{{ galaxie_qmail_server_openssl_key_bit }} -x509 -nodes -days {{ galaxie_qmail_server_openssl_key_days }} -out servercert.pem -keyout servercert.pem -subj "{{ galaxie_qmail_server_openssl_subj }}"
-    chdir="{{ galaxie_qmail_server_qmail_dir }}/control"
-    creates="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
-  tags: self-certificat
+- name: generate {{ glx_ucspi_ssl_dh_bits }} bits dh parameter "{{ glx_ucspi_ssl_dh_parameter_file }}" fle
+  shell: openssl dhparam -out {{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_dh_bits }}.pem {{ glx_ucspi_ssl_dh_bits }}
+    creates={{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_dh_bits }}.pem
+  when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert
 
-- name: check "{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem" permissions
+- name: auto signed rsa:{{ glx_sqmail_openssl_key_bit }} key, valide for {{ glx_sqmail_openssl_key_days }} days , to "{{ glx_sqmail_dir }}/control/servercert.pem"
+  shell:  openssl req -newkey rsa:{{ glx_sqmail_openssl_key_bit }} -x509 -nodes -days {{ glx_sqmail_openssl_key_days }} -out {{ glx_sqmail_control_me }}.pem -keyout {{ glx_sqmail_control_me }}.key -subj "{{ glx_sqmail_openssl_subj }}"
+    chdir="{{ glx_sqmail_ssl_dir }}"
+  when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert
+
+- name: check "{{ glx_sqmail_dir }}/control/servercert.pem" permissions
   file:
-    path="{{ galaxie_qmail_server_qmail_dir }}/control/servercert.pem"
+    path="{{ glx_sqmail_dir }}/control/servercert.pem"
     owner=root
-    group={{ galaxie_qmail_server_qmail_group }}
+    group={{ glx_sqmail_qmail_group }}
     mode=0640
-  tags: self-certificat
+  with_items:
+    - "{{ glx_sqmail_ssl_dir }}/dh{{ glx_ucspi_ssl_dh_bits }}.pem"
+    - "{{ glx_sqmail_ssl_dir }}/{{ glx_sqmail_control_me }}.pem"
+    - "{{ glx_sqmail_ssl_dir }}/{{ glx_sqmail_control_me }}.key"
+  when: glx_sqmail_openssl_key_gen and glx_sqmail_openssl_use_self_signed_cert

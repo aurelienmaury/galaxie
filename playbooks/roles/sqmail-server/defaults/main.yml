@@ -2,6 +2,7 @@
 # Common and path
 glx_slashpackage_dir: "/package"
 glx_sqmail_dir: "/var/qmail"
+glx_sqmail_ssl_dir: "{{ glx_sqmail_dir }}/ssl"
 glx_supervise_dir: "/var/lib/supervise"
 glx_service_dir: "/etc/service"
 glx_multilog_dir: "/var/multilog"
@@ -229,7 +230,7 @@ glx_ucspi_ssl_source_dir: "/usr/src"
 glx_ucspi_ssl_certificates_dir: "/etc/ssl/certs"
 glx_ucspi_ssl_dh_parameter_file: "{{ glx_ucspi_ssl_certificates_dir }}/dhparam.pem"
 glx_ucspi_ssl_kerberos_include_dir: "/usr/include/krb5"
-glx_ucspi_ssl_dh_bits: "2048"
+glx_ucspi_ssl_rsa_key_size: "2048"
 
 # s/qmail
 glx_sqmail_force_install: true
@@ -298,6 +299,7 @@ glx_sqmail_conf_thing_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail
 glx_sqmail_package_dir: "{{ glx_slashpackage_dir }}/mail/sqmail/{{ glx_sqmail_source_name }}/package"
 
 # certificate
+glx_sqmail_openssl_use_self_signed_cert: true
 glx_sqmail_openssl_key_gen: false
 glx_sqmail_openssl_key_bit: "2048"
 glx_sqmail_openssl_key_days: "3650"

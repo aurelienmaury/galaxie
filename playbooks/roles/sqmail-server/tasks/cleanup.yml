@@ -7,3 +7,4 @@
     - "defaultdelivery"
     - "conf-common"
     - "spfbehavior"
+    - "servercert.pem"

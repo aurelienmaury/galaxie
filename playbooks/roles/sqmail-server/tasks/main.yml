@@ -38,6 +38,9 @@
 - include: config-alias.yml
   tags: alias, config, install-sqmail, install
 
+- include: config-openssl.yml
+  tags: config, install-sqmail, install
+
 #- include: install-mta.yml
 #  tags: install
 
