@@ -1,0 +1,39 @@
+---
+- name: create temp file roots.XXXXXXXXX
+  command: mktemp roots.XXXXXXXXX
+  changed_when: false
+  register: tmp_file
+
+- name: test if we can resolv "{{ glx_ndjbdns_host_for_test }}" by default
+  shell: "host {{ glx_ndjbdns_host_for_test }}"
+  changed_when: false
+  register: ResolverCheck
+
+- name: Seed dnsroots
+  shell: "dnsip `dnsqr ns . | awk '/answer:/ { print $5; }' |sort`  > {{ tmp_file.stdout }}"
+  changed_when: false
+  register: SeedDnsroot
+
+- name: stat of {{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/roots
+  stat:
+    path="{{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/roots"
+  register: glx_ndjbdns_roots_file
+
+- name: stat of {{ tmp_file.stdout }}
+  stat:
+    path={{ tmp_file.stdout }}
+  register: glx_ndjbdns_roots_tmp_file
+
+- name: update dnscache dnsroots list
+  command: cp {{ glx_ndjbdns_roots_tmp_file.stat.path }} {{ glx_ndjbdns_roots_file.stat.path}}
+  when: "'{{ glx_ndjbdns_roots_file.stat.checksum }}' != '{{ glx_ndjbdns_roots_tmp_file.stat.checksum }}'"
+#  notify:
+#    - restart service
+
+- name: delete {{ tmp_file.stdout }}
+  file:
+    path="{{ tmp_file.stdout }}"
+    state=absent
+  changed_when: false
+  always_run: true
+

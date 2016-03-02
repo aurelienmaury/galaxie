@@ -41,11 +41,13 @@ co1
 eris
 
 ### DNSCACHE ###
+[ndjbdns-servers]
+mercure
+
 [dnscache-server]
 jupiter
 uranus
 neptune
-mercure
 gat01
 co1
 eris

@@ -1,0 +1,26 @@
+---
+- name: check daemon uid
+  shell: id -u daemon
+  register: daemon_uid
+  changed_when: false
+
+- name: check daemon gid
+  shell: id -g daemon
+  register: daemon_gid
+  changed_when: false
+
+- name: check if tinydns is configured the good way
+  lineinfile:
+    dest="{{ glx_ndjbdns_sysconfdir }}/ndjbdns/tinydns.conf"
+    regexp="^{{ item.key }}="
+    line="{{ item.key }}={{ item.value }}"
+    insertafter="{{ item.key }}="
+    state=present
+    backup=no
+  with_items:
+    - { key: "DATALIMIT",     value: "300000" }
+    - { key: "IP",            value: "{{ ansible_default_ipv4.address }}" }
+    - { key: "UID",           value: "{{ daemon_uid.stdout }}" }
+    - { key: "GID",           value: "{{ daemon_gid.stdout }}" }
+    - { key: "ROOT",          value: "{{ glx_ndjbdns_sysconfdir }}/ndjbdns" }
+    - { key: "DEBUG_LEVEL",   value: "1" }

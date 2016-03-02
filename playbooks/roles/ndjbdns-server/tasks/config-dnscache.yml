@@ -1,0 +1,31 @@
+---
+- name: check daemon uid
+  shell: id -u daemon
+  register: daemon_uid
+  changed_when: false
+
+- name: check daemon gid
+  shell: id -g daemon
+  register: daemon_gid
+  changed_when: false
+
+- name: check if dnscache is configured the good way
+  lineinfile:
+    dest="{{ glx_ndjbdns_sysconfdir }}/ndjbdns/dnscache.conf"
+    regexp="^{{ item.key }}="
+    line="{{ item.key }}={{ item.value }}"
+    insertafter="{{ item.key }}="
+    state=present
+    backup=no
+  with_items:
+    - { key: "DATALIMIT",     value: "8000000" }
+    - { key: "CACHESIZE",     value: "5000000" }
+    - { key: "IP",            value: "127.0.0.1" }
+    - { key: "IPSEND",        value: "0.0.0.0" }
+    - { key: "UID",           value: "{{ daemon_uid.stdout }}" }
+    - { key: "GID",           value: "{{ daemon_gid.stdout }}" }
+    - { key: "ROOT",          value: "{{ glx_ndjbdns_sysconfdir }}/ndjbdns" }
+    - { key: "HIDETTL",       value: "" }
+    - { key: "FORWARDONLY",   value: "" }
+    - { key: "MERGEQUERIES",  value: "1" }
+    - { key: "DEBUG_LEVEL",   value: "1" }
