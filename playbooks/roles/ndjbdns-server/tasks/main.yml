@@ -1,0 +1,60 @@
+---
+- name: delete previous {{ glx_ndjbdns_source_dir }} source directory
+  file:
+    path="{{ glx_ndjbdns_source_dir }}"
+    state=absent
+  when: glx_ndjbdns_force_install
+
+- name: check {{ glx_ndjbdns_source_dir }} directory
+  file:
+    path="{{ glx_ndjbdns_source_dir }}"
+    state=directory
+
+- name: install required software
+  action: apt pkg="{{item}}" state=installed
+  with_items:
+    - git
+    - checkinstall
+
+- name: get n-djbdns sources from {{ glx_ndjbdns_git_repo }} git repository
+  git:
+    repo="{{ glx_ndjbdns_git_repo }}"
+    dest="{{ glx_ndjbdns_source_dir }}"
+    update=yes
+
+- name: exec aclocal for fixe https://github.com/pjps/ndjbdns/issues/14
+  shell: aclocal
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+- name: exec autoconf from fixe https://github.com/pjps/ndjbdns/issues/14
+  shell: autoconf
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+- name: exec automake  --add-missing from fixe https://github.com/pjps/ndjbdns/issues/14
+  shell: automake --add-missing
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+- name: exec automake from fixe https://github.com/pjps/ndjbdns/issues/14
+  shell: automake
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+- name: exec configure
+  shell: ./configure --prefix={{ glx_ndjbdns_prefix_directory }}
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+- name: exec make
+  shell: make
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+- name: exec make install
+  shell: make install
+    chdir="{{ glx_ndjbdns_source_dir }}"
+
+#  register: command
+#  failed_when: command.rc >= 2
+#  changed_when: false
+#  with_items:
+#    - "aclocal"
+#    - "autoconf"
+#    - "automake --add-missing"
+#    - "automake"

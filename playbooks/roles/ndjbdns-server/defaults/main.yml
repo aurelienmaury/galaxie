@@ -1,0 +1,5 @@
+---
+glx_ndjbdns_force_install: true
+glx_ndjbdns_git_repo: "https://github.com/pjps/ndjbdns.git"
+glx_ndjbdns_source_dir: "/usr/src/ndjbdns"
+glx_ndjbdns_prefix_directory: "/usr/local"
