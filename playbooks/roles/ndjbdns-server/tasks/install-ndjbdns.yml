@@ -25,15 +25,34 @@
 - name: fixe https://github.com/pjps/ndjbdns/issues/14
   shell: aclocal && autoconf && automake --add-missing
     chdir="{{ glx_ndjbdns_source_dir }}"
+  changed_when: false
 
 - name: ./configure --prefix={{ glx_ndjbdns_prefix }} --sysconfdir={{ glx_ndjbdns_sysconfdir }}
   shell: ./configure --prefix={{ glx_ndjbdns_prefix }} --sysconfdir={{ glx_ndjbdns_sysconfdir }}
     chdir="{{ glx_ndjbdns_source_dir }}"
+  changed_when: false
 
 - name: make
   shell: make
     chdir="{{ glx_ndjbdns_source_dir }}"
+  changed_when: false
 
-- name: exec make install
+- name: make install
   shell: make install
     chdir="{{ glx_ndjbdns_source_dir }}"
+  changed_when: false
+
+- name: copy services
+  shell: cp {{ item }} /lib/systemd/system/
+    chdir="{{ glx_ndjbdns_source_dir }}/etc/systemd"
+  with_items:
+    - "axfrdns@.service"
+    - "axfrdns.socket"
+    - "dnscache.service"
+    - "rbldns.service"
+    - "tinydns.service"
+    - "walldns.service"
+  changed_when: false
+
+- name: regen unit files
+  shell: systemctl daemon-reload
