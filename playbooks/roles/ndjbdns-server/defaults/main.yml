@@ -6,3 +6,7 @@ glx_ndjbdns_prefix: "/usr/local"
 glx_ndjbdns_sysconfdir: "/etc"
 
 glx_ndjbdns_host_for_test: "github.com"
+
+glx_ndjbdns_internal_domain: "galaxie.ici"
+glx_ndjbdns_internal_nameserver: "192.168.1.1"
+glx_ndjbdns_internal_reserse_nameserver: "168.192.in-addr.arpa"

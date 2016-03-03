@@ -29,3 +29,23 @@
     - { key: "FORWARDONLY",   value: "" }
     - { key: "MERGEQUERIES",  value: "1" }
     - { key: "DEBUG_LEVEL",   value: "1" }
+
+# Deal with LAN things
+- name: Write {{ glx_ndjbdns_internal_nameserver }} in {{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/{{ glx_ndjbdns_internal_domain }}
+  template:
+    src=local-domain-server.j2
+    dest="{{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/{{ glx_ndjbdns_internal_domain }}"
+    backup=no
+  when: inventory_hostname in groups["internal-machines"]
+  notify:
+    - restart service
+
+# Deal with LAN reverse things
+- name: Write {{ glx_ndjbdns_internal_nameserver }} in {{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/{{ glx_ndjbdns_internal_reserse_nameserver }}
+  template:
+    src=local-domain-server.j2
+    dest="{{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/{{ glx_ndjbdns_internal_reserse_nameserver }}"
+    backup=no
+  when: inventory_hostname in groups["internal-machines"]
+  notify:
+    - restart service
