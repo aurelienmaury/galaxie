@@ -57,6 +57,12 @@
     - "walldns.service"
   changed_when: false
 
+- name: check /etc/rsyslog.d/20-ndjbdns.conf
+  template:
+    src=etc/rsyslog.d/20-ndjbdns.conf.j2
+    dest="/etc/rsyslog.d/20-ndjbdns.conf"
+    backup=no
+
 - name: copy ndjbdns.logrotate to {{ glx_ndjbdns_sysconfdir }}/logrotate.d/ndjbdns
   shell: cp ndjbdns.logrotate {{ glx_ndjbdns_sysconfdir }}/logrotate.d/ndjbdns
     chdir="{{ glx_ndjbdns_source_dir }}"
