@@ -15,6 +15,9 @@
   with_items:
     - git
     - checkinstall
+    - build-essential
+    - automake
+    - pkg-config
 
 - name: get n-djbdns sources from {{ glx_ndjbdns_git_repo }} git repository
   git:
@@ -52,6 +55,11 @@
     - "rbldns.service"
     - "tinydns.service"
     - "walldns.service"
+  changed_when: false
+
+- name: copy ndjbdns.logrotate to {{ glx_ndjbdns_sysconfdir }}/logrotate.d/ndjbdns
+  shell: cp ndjbdns.logrotate {{ glx_ndjbdns_sysconfdir }}/logrotate.d/ndjbdns
+    chdir="{{ glx_ndjbdns_source_dir }}"
   changed_when: false
 
 - name: regen unit files

@@ -6,6 +6,9 @@ mercure ansible_ssh_private_key_file=~/.ssh/id_rsa.mercure
 eris ansible_ssh_port=1789 ansible_ssh_private_key_file=~/.ssh/id_rsa.eris
 gat01 ansible_ssh_private_key_file=~/.ssh/id_rsa.gat01
 co1 ansible_ssh_private_key_file=~/.ssh/id_rsa.co1
+odin ansible_ssh_private_key_file=~/.ssh/id_rsa.odin
+frigg ansible_ssh_private_key_file=~/.ssh/id_rsa.frigg
+
 
 [internal-machines]
 jupiter
@@ -17,6 +20,8 @@ mercure
 gat01
 co1
 eris
+odin
+frigg
 
 [zoe-voices]
 jupiter
@@ -30,6 +35,8 @@ mercure
 gat01
 co1
 eris
+frigg
+odin
 
 [openssh-client]
 jupiter
@@ -39,10 +46,14 @@ mercure
 gat01
 co1
 eris
+frigg
+odin
 
 ### DNSCACHE ###
 [ndjbdns-servers]
 mercure
+frigg
+odin
 
 [dnscache-server]
 jupiter
@@ -69,6 +80,8 @@ neptune
 mercure
 gat01
 co1
+frigg
+odin
 
 [ntp-servers]
 eris
@@ -84,6 +97,8 @@ uranus
 gat01
 co1
 eris
+frigg
+odin
 
 ### apt-unattended ###
 [apt-unattended]
@@ -94,6 +109,8 @@ mercure
 gat01
 co1
 eris
+frigg
+odin
 
 # |
 # |- servers
