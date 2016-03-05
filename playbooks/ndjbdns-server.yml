@@ -2,4 +2,4 @@
 - hosts: ndjbdns-servers
 
   roles:
-     - ndjbdns-server
+     - { role: ndjbdns-server, glx_ndjbdns_upgrade_roots: true }
