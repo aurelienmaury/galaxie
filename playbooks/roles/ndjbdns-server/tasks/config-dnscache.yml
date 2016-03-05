@@ -1,4 +1,29 @@
 ---
+# send
+###############################################################################
+- name: test {{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }}
+  stat:
+    path="{{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name}}"
+  register: dnscache
+  when: glx_ndjbdns_dnscache_service.enable
+
+#- debug: msg="{{ dnscache }}"
+
+- name: svc -dt {{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }} {{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }}/log
+  shell: svc -dt {{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }} {{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }}/log
+  when: glx_ndjbdns_dnscache_service.enable and dnscache.stat.exists
+
+- name: remove {{ glx_ndjbdns_dnscache_service.name }} files and directory
+  file:
+    path="{{ item }}"
+    state=absent
+  with_items:
+    - "{{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }}/log"
+    - "{{ glx_service_dir }}/{{ glx_ndjbdns_dnscache_service.name }}"
+    - "{{ glx_supervise_dir }}/{{ glx_ndjbdns_dnscache_service.name }}"
+    - "{{ glx_multilog_dir}}/{{ glx_ndjbdns_dnscache_service.name }}"
+  when: glx_ndjbdns_dnscache_service.enable and dnscache.stat.exists
+
 - name: check daemon uid
   shell: id -u daemon
   register: daemon_uid
@@ -8,6 +33,12 @@
   shell: id -g daemon
   register: daemon_gid
   changed_when: false
+
+- name: enable dnscache
+  service:
+    name=dnscache
+    enabled=yes
+  when: glx_ndjbdns_dnscache_service.enable
 
 - name: check if dnscache is configured the good way
   lineinfile:
@@ -29,6 +60,8 @@
     - { key: "FORWARDONLY",   value: "" }
     - { key: "MERGEQUERIES",  value: "1" }
     - { key: "DEBUG_LEVEL",   value: "1" }
+  notify:
+    - restart dnscache
 
 # Deal with LAN things
 - name: Write {{ glx_ndjbdns_internal_nameserver }} in {{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/{{ glx_ndjbdns_internal_domain }}
@@ -38,7 +71,7 @@
     backup=no
   when: inventory_hostname in groups["internal-machines"]
   notify:
-    - restart service
+    - restart dnscache
 
 # Deal with LAN reverse things
 - name: Write {{ glx_ndjbdns_internal_nameserver }} in {{ glx_ndjbdns_sysconfdir }}/ndjbdns/servers/{{ glx_ndjbdns_internal_reserse_nameserver }}
@@ -48,4 +81,4 @@
     backup=no
   when: inventory_hostname in groups["internal-machines"]
   notify:
-    - restart service
+    - restart dnscache

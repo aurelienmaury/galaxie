@@ -49,19 +49,21 @@ eris
 frigg
 odin
 
-### DNSCACHE ###
+### DNSCACHE & TINYDNS & every DJBDNS thing###
 [ndjbdns-servers]
-mercure
-frigg
-odin
-
-[dnscache-server]
 jupiter
-uranus
 neptune
+uranus
+mercure
+eris
 gat01
 co1
-eris
+frigg
+odin
+co1
+
+[dnscache-server]
+
 
 [dnscache-client]
 jupiter
@@ -71,6 +73,8 @@ mercure
 gat01
 co1
 eris
+frigg
+odin
 
 ### NTP ###
 [ntp-clients]
@@ -150,6 +154,8 @@ mercure
 co1
 eris
 uranus
+frigg
+odin
 
 [mail-servers]
 

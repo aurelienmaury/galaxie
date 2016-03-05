@@ -1,5 +1,5 @@
 ---
-- hosts: dnscache-server
+- hosts: ndjbdns-servers
 
   roles:
-    - dnscache-server-update
+    - { role: ndjbdns-server, glx_ndjbdns_upgrade_roots: true }

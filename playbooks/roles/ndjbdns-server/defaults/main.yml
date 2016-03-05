@@ -1,5 +1,6 @@
 ---
 glx_ndjbdns_force_install: true
+glx_ndjbdns_upgrade_roots: false
 glx_ndjbdns_git_repo: "https://github.com/pjps/ndjbdns.git"
 glx_ndjbdns_source_dir: "/usr/src/ndjbdns"
 glx_ndjbdns_prefix: "/usr/local"
@@ -10,3 +11,28 @@ glx_ndjbdns_host_for_test: "github.com"
 glx_ndjbdns_internal_domain: "galaxie.ici"
 glx_ndjbdns_internal_nameserver: "192.168.1.1"
 glx_ndjbdns_internal_reserse_nameserver: "168.192.in-addr.arpa"
+
+glx_ndjbdns_axfrdns_service:
+  enable: false
+  name: "axfrdns"
+
+glx_ndjbdns_dnscache_service:
+  enable: true
+  name: "dnscache"
+
+glx_ndjbdns_rbldns_service:
+  enable: false
+  name: "rbldns"
+
+glx_ndjbdns_tinydns_service:
+  enable: true
+  name: "tinydns"
+
+glx_ndjbdns_walldns_service:
+  enable: false
+  name: "walldns"
+
+### Clean previus design Debian dnscache ###
+glx_supervise_dir: "/var/lib/supervise"
+glx_service_dir: "/etc/service"
+glx_multilog_dir: "/var/multilog"

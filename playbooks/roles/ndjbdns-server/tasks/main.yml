@@ -1,12 +1,15 @@
 ---
 - include: install-ndjbdns.yml
   tags: install
+  when: not glx_ndjbdns_upgrade_roots
 
 - include: config-dnscache.yml
   tags: config, config-dnscache
+  when: not glx_ndjbdns_upgrade_roots
 
 - include: update-roots.yml
   tags: config, upgrade-roots
 
 - include: config-tinydns.yml
   tags: config, config-tinydns
+  when: not glx_ndjbdns_upgrade_roots

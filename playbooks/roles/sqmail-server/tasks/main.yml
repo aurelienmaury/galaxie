@@ -2,17 +2,17 @@
 # Stop everything for permit to overwrite few binary
 - include: services-stop.yml
   tags: install
-
-# Intall the requirements
-- include: install-cdb.yml
-  tags: install-cdb, install
-
-- include: install-ucspi-tcp6.yml
-  tags: install-ucspi-tcp6, install
-
-- include: install-ucspi-ssl.yml
-  tags: install-ucspi-ssl, install
-
+#
+## Intall the requirements
+#- include: install-cdb.yml
+#  tags: install-cdb, install
+#
+#- include: install-ucspi-tcp6.yml
+#  tags: install-ucspi-tcp6, install
+#
+#- include: install-ucspi-ssl.yml
+#  tags: install-ucspi-ssl, install
+#
 - include: install-sqmail.yml
   tags: install-sqmail, install
 

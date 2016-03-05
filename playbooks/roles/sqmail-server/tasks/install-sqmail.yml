@@ -4,22 +4,25 @@
     pkg={{ item }}
     state=absent
   with_items:
-    - qmail-run
-    - qmail-tools
-    - qmail
-    - qmail-uids-gids
-    - dot-forward
+    - "qmail-run"
+    - "qmail-tools"
+    - "qmail"
+    - "qmail-uids-gids"
+    - "dot-forward"
+    - "exim4-base"
+    - "exim4-config"
+    - "exim4-daemon-light"
 
 - name: install require packages for s/qmail building
   apt:
     pkg={{ item }}
     state=present
   with_items:
-    - build-essential
-    - libssl-dev
-    - libperl-dev
-    - daemontools
-    - daemontools-run
+    - "build-essential"
+    - "libssl-dev"
+    - "libperl-dev"
+    - "daemontools"
+    - "daemontools-run"
 
 - name: check {{ glx_slashpackage_dir }} directory
   file:

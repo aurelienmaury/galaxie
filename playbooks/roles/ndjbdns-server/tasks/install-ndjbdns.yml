@@ -18,6 +18,7 @@
     - build-essential
     - automake
     - pkg-config
+    - rsyslog
 
 - name: get n-djbdns sources from {{ glx_ndjbdns_git_repo }} git repository
   git:
@@ -62,6 +63,8 @@
     src=etc/rsyslog.d/20-ndjbdns.conf.j2
     dest="/etc/rsyslog.d/20-ndjbdns.conf"
     backup=no
+  notify:
+    - restart rsyslog
 
 - name: copy ndjbdns.logrotate to {{ glx_ndjbdns_sysconfdir }}/logrotate.d/ndjbdns
   shell: cp ndjbdns.logrotate {{ glx_ndjbdns_sysconfdir }}/logrotate.d/ndjbdns

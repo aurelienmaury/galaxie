@@ -1,1 +1,61 @@
 ---
+### axfrdns ###
+- name: restart axfrdns
+  service:
+    name=axfrdns
+    state=restarted
+
+- name: enable axfrdns
+  service:
+    name=axfrdns
+    enabled=yes
+
+### rbldns ###
+- name: restart rbldns
+  service:
+    name=rbldns
+    state=restarted
+
+- name: enable rbldns
+  service:
+    name=rbldns
+    enabled=yes
+
+### dnscache ###
+- name: restart dnscache
+  service:
+    name=dnscache
+    state=restarted
+
+- name: enable dnscache
+  service:
+    name=dnscache
+    enabled=yes
+
+### tinydns ###
+- name: restart tinydns
+  service:
+    name=tinydns
+    state=restarted
+
+- name: enable tinydns
+  service:
+    name=tinydns
+    enabled=yes
+
+### walldns ###
+- name: restart walldns
+  service:
+    name=walldns
+    state=restarted
+
+- name: enable walldns
+  service:
+    name=walldns
+    enabled=yes
+
+### rsyslog ###
+- name: restart rsyslog
+  service:
+    name=rsyslog
+    state=restarted
