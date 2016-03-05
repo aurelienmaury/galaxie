@@ -1,28 +1,37 @@
 ---
 - name: Prepares target hosts to Galaxie's playbooks
-  hosts: galaxie
-  sudo: yes
-
-  vars_files:
-    - "galaxie-vars.yml"
+  hosts: galaxie_orphans
+  become: yes
 
   vars_prompt:
-    newPassword: "Which password to set for current connection user? (Blank if you don't want to change)"
+    - name: newPassword
+      prompt: "Which password to set for current connection user? (Blank if you don't want to change)"
 
-  tasks:
+  vars:
+    galaxie:
+      user: zoe
+      randomPasswordSeed: randomGarantiedString
+    newKey: /Users/amaury/Git/galaxie/playbooks/id_vagrant_zoe
+
+  pre_tasks:
+    - fail: msg="galaxie.user is undefined"
+      when: not galaxie.user
+    - fail: msg="newKey is undefined"
+      when: not newKey
+
     - name: New key is present
       when: newKey is defined
       stat:
-        path="{{newKey}}"
+        path="{{ newKey }}"
       register: localKey
       delegate_to: localhost
-      sudo: no
+      become: no
 
     - name: New key not present => generation
       command: "ssh-keygen -t rsa -b 2048 -f {{newKey}}"
       when: newKey is defined and not localKey.stat.exists
       delegate_to: localhost
-      sudo: no
+      become: no
 
     - name: check python-apt package present
       shell: dpkg -s python-apt
@@ -91,73 +100,53 @@
         key="{{ lookup('file', newKey+'.pub') }}"
         state=present
 
-#    - name: Current key is banished for user
-#      when: newKey is defined and ansible_ssh_private_key_file is defined
-#      authorized_key:
-#        user="{{ galaxie.user }}"
-#        key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
+    - name: Current key is banished for user
+      when: newKey is defined and ansible_ssh_private_key_file is defined
+      authorized_key:
+        user="{{ galaxie.user }}"
+        key="{{ lookup('file', ansible_ssh_private_key_file+'.pub') }}"
 #        state=absent
 
+# TODO cosmetic
     - name: User is sudoer
-      lineinfile: "dest=/etc/sudoers state='present' regexp='^zoe' line='zoe ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
+      lineinfile: "dest=/etc/sudoers state='present' regexp='^{{ galaxie.user }}' line='{{ galaxie.user }} ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s' "
 
     - name: system upgrade
       apt:
-        upgrade=yes
+        upgrade=full
       when: ansible_distribution == 'Debian'
 
-    - name: install ntp
-      apt:
-        pkg=ntp
-        state=present
-        update-cache=yes
-        cache_valid_time=3600
-      when: ansible_distribution == 'Debian'
+  roles:
+    - ntp_client
 
-    - name: ntp is configured
-      template:
-        src=templates/ntp-base.conf.j2
-        dest=/etc/ntp.conf
-
-    - name: restart ntp (always)
-      service:
-        name=ntp
-        state=restarted
-
-    - name: waiting for ntp sync (up to 15 minutes, in general under 1 minute)
-      action: shell /usr/bin/ntpq --peers | /usr/bin/tr -s " " | /usr/bin/cut -d " " -f1,2 | /bin/grep -e "^\*" | /bin/grep -v "127\."
-      register: ntpSync
-      until: ntpSync.stdout != ""
-      retries: 90
-      delay: 10
-
+  tasks:
 # regenerer les clés serveur
-# http://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/
+# [inspired_by] http://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/
 
     - name: CHECK - key generation trace is present
-      shell: if [ -f "/etc/ssh/.zoe_generated_keys" ]; then /bin/true; else /bin/false; fi
-      register: zoe_generated_keys
+      shell: if [ -f "/etc/ssh/.glx_generated_keys" ]; then /bin/true; else /bin/false; fi
+      register: glx_generated_keys
       ignore_errors: true
 
-#    - name: cleaning old ssh_keys
-#      shell: /bin/rm -f /etc/ssh/ssh_host_*
-#      when: zoe_generated_keys|failed
+    - name: cleaning old ssh_keys
+      shell: /bin/rm -f /etc/ssh/ssh_host_*
+      when: glx_generated_keys|failed
 
-#    - name: cleaning old ssh_keys
-#      shell: /usr/sbin/dpkg-reconfigure openssh-server
-#      when: zoe_generated_keys|failed
+    - name: cleaning old ssh_keys
+      shell: /usr/sbin/dpkg-reconfigure openssh-server
+      when: glx_generated_keys|failed
 
     - name: leaving trace of key generation
       file:
-        path=/etc/ssh/.zoe_generated_keys
+        path="/etc/ssh/.glx_generated_keys"
         owner=root
         group=root
         state=touch
-      when: zoe_generated_keys|failed
+      when: glx_generated_keys|failed
 
     - debug: msg="new server keys generated, update your ~/.ssh/known_hosts or you'll get a warning on next connection."
-      when: zoe_generated_keys|failed
+      when: glx_generated_keys|failed
 
     - name: next step
-      debug: msg="Integrated in Zoe's family, change 'newKey' to 'ansible_ssh_private_key_file' in your inventory for server {{ inventory_hostname }}"
+      debug: msg="Integrated in the Galaxie's family, you must now use {{ newKey }} to connect to {{ inventory_hostname }}"
       when: newKey is defined
